@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_03_190854) do
+ActiveRecord::Schema.define(version: 2020_08_03_211354) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -118,6 +118,23 @@ ActiveRecord::Schema.define(version: 2020_08_03_190854) do
     t.index ["user_id"], name: "index_api_tokens_on_user_id"
   end
 
+  create_table "favorites", force: :cascade do |t|
+    t.string "favoritable_type", null: false
+    t.bigint "favoritable_id", null: false
+    t.string "favoritor_type", null: false
+    t.bigint "favoritor_id", null: false
+    t.string "scope", default: "favorite", null: false
+    t.boolean "blocked", default: false, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["blocked"], name: "index_favorites_on_blocked"
+    t.index ["favoritable_id", "favoritable_type"], name: "fk_favoritables"
+    t.index ["favoritable_type", "favoritable_id"], name: "index_favorites_on_favoritable_type_and_favoritable_id"
+    t.index ["favoritor_id", "favoritor_type"], name: "fk_favorites"
+    t.index ["favoritor_type", "favoritor_id"], name: "index_favorites_on_favoritor_type_and_favoritor_id"
+    t.index ["scope"], name: "index_favorites_on_scope"
+  end
+
   create_table "pay_charges", force: :cascade do |t|
     t.bigint "owner_id"
     t.string "processor", null: false
@@ -216,12 +233,39 @@ ActiveRecord::Schema.define(version: 2020_08_03_190854) do
     t.string "gender", null: false
     t.string "country_code", null: false
     t.boolean "moderator", default: false
+    t.text "favoritor_score"
+    t.text "favoritor_total"
+    t.text "favoritable_score"
+    t.text "favoritable_total"
+    t.integer "cached_votes_total", default: 0
+    t.integer "cached_votes_score", default: 0
+    t.integer "cached_votes_up", default: 0
+    t.integer "cached_votes_down", default: 0
+    t.integer "cached_weighted_score", default: 0
+    t.integer "cached_weighted_total", default: 0
+    t.float "cached_weighted_average", default: 0.0
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["invitation_token"], name: "index_users_on_invitation_token", unique: true
     t.index ["invitations_count"], name: "index_users_on_invitations_count"
     t.index ["invited_by_id"], name: "index_users_on_invited_by_id"
     t.index ["invited_by_type", "invited_by_id"], name: "index_users_on_invited_by_type_and_invited_by_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  create_table "votes", force: :cascade do |t|
+    t.string "votable_type"
+    t.bigint "votable_id"
+    t.string "voter_type"
+    t.bigint "voter_id"
+    t.boolean "vote_flag"
+    t.string "vote_scope"
+    t.integer "vote_weight"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["votable_id", "votable_type", "vote_scope"], name: "index_votes_on_votable_id_and_votable_type_and_vote_scope"
+    t.index ["votable_type", "votable_id"], name: "index_votes_on_votable_type_and_votable_id"
+    t.index ["voter_id", "voter_type", "vote_scope"], name: "index_votes_on_voter_id_and_voter_type_and_vote_scope"
+    t.index ["voter_type", "voter_id"], name: "index_votes_on_voter_type_and_voter_id"
   end
 
   add_foreign_key "account_invitations", "accounts"
