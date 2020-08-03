@@ -12,3 +12,15 @@
  *
  *= require_self
  */
+
+ a.side-menu-title-navbar-only {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+    color: #2d3748;
+    user-select: none;
+    letter-spacing: 0.1em;
+
+    &:hover {
+        color: #718096;
+    }
+ }
