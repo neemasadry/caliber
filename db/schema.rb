@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_15_173316) do
+ActiveRecord::Schema.define(version: 2020_08_03_190854) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -183,17 +183,22 @@ ActiveRecord::Schema.define(version: 2020_07_15_173316) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
+    t.integer "sign_in_count", default: 0, null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string "current_sign_in_ip"
+    t.string "last_sign_in_ip"
     t.string "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string "unconfirmed_email"
-    t.string "first_name"
-    t.string "last_name"
-    t.string "time_zone"
+    t.string "first_name", null: false
+    t.string "last_name", null: false
+    t.string "time_zone", null: false
     t.datetime "accepted_terms_at"
     t.datetime "accepted_privacy_at"
     t.datetime "announcements_read_at"
-    t.boolean "admin"
+    t.boolean "admin", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "invitation_token"
@@ -205,6 +210,12 @@ ActiveRecord::Schema.define(version: 2020_07_15_173316) do
     t.bigint "invited_by_id"
     t.integer "invitations_count", default: 0
     t.string "preferred_language"
+    t.string "username", null: false
+    t.text "avatar_image_data"
+    t.date "date_of_birth", null: false
+    t.string "gender", null: false
+    t.string "country_code", null: false
+    t.boolean "moderator", default: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["invitation_token"], name: "index_users_on_invitation_token", unique: true
     t.index ["invitations_count"], name: "index_users_on_invitations_count"

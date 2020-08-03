@@ -30,6 +30,11 @@
     </div>
 
     <div class="form-group">
+      <%= f.label :username, "Username" %>
+      <%= f.text_field :username, autofocus: true, autocomplete: "username", placeholder: "johndoe123", class: "form-control" %>
+    </div>
+
+    <div class="form-group">
       <%= f.label :email %>
       <%= f.email_field :email, autocomplete: "email", placeholder: true, class: "form-control" %>
     </div>
@@ -40,6 +45,35 @@
       <% if @minimum_password_length %>
         <p class="text-sm text-gray-600 mt-3"><%= t('devise.shared.minimum_password_length', count: @minimum_password_length) %></p>
       <% end %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :gender %>
+      <div class="relative">
+        <%= f.select :gender, options_for_select(["Male", "Female"]), {include_blank: true}, { class: "select" } %>
+        <div class="caret"><svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg></div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :date_of_birth, "Date of Birth" %>
+      <%= f.text_field :date_of_birth,
+          data: {
+            controller: "flatpickr",
+            flatpickr_date_format: "Y-m-d",
+            flatpickr_alt_format: t("date.formats.long"),
+            flatpickr_min_date: Time.zone.now - 110.years,
+            flatpickr_max_date: Time.zone.now
+          }, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :country_code %>
+
+      <div class="relative">
+        <%= f.country_select :country_code, { prompt: "Select country of residence...", priority_countries: ["US", "CA", "GB", "FR", "DE", "AE", "ES", "CN"] }, { class: "select" } %>
+        <div class="caret"><svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg></div>
+      </div>
     </div>
 
     <div class="form-group">
@@ -63,7 +97,7 @@
     </div>
 
     <div class="form-group">
-      <%= f.button t('.sign_up'), class: "btn btn-primary", data: { disable_with: t(".submitting") } %>
+      <%= f.submit t('.sign_up'), class: "btn btn-primary", data: { disable_with: t(".submitting") } %>
     </div>
   <% end %>
 

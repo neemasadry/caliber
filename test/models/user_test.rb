@@ -5,14 +5,20 @@
 #  id                     :bigint           not null, primary key
 #  accepted_privacy_at    :datetime
 #  accepted_terms_at      :datetime
-#  admin                  :boolean
+#  admin                  :boolean          default(FALSE)
 #  announcements_read_at  :datetime
+#  avatar_image_data      :text
 #  confirmation_sent_at   :datetime
 #  confirmation_token     :string
 #  confirmed_at           :datetime
+#  country_code           :string           not null
+#  current_sign_in_at     :datetime
+#  current_sign_in_ip     :string
+#  date_of_birth          :date             not null
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
-#  first_name             :string
+#  first_name             :string           not null
+#  gender                 :string           not null
 #  invitation_accepted_at :datetime
 #  invitation_created_at  :datetime
 #  invitation_limit       :integer
@@ -20,13 +26,18 @@
 #  invitation_token       :string
 #  invitations_count      :integer          default(0)
 #  invited_by_type        :string
-#  last_name              :string
+#  last_name              :string           not null
+#  last_sign_in_at        :datetime
+#  last_sign_in_ip        :string
+#  moderator              :boolean          default(FALSE)
 #  preferred_language     :string
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
-#  time_zone              :string
+#  sign_in_count          :integer          default(0), not null
+#  time_zone              :string           not null
 #  unconfirmed_email      :string
+#  username               :string           not null
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #  invited_by_id          :bigint

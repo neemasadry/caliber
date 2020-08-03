@@ -15,11 +15,11 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.2]
       t.datetime :remember_created_at
 
       ## Trackable
-      # t.integer  :sign_in_count, default: 0, null: false
-      # t.datetime :current_sign_in_at
-      # t.datetime :last_sign_in_at
-      # t.string   :current_sign_in_ip
-      # t.string   :last_sign_in_ip
+      t.integer  :sign_in_count, default: 0, null: false
+      t.datetime :current_sign_in_at
+      t.datetime :last_sign_in_at
+      t.string   :current_sign_in_ip
+      t.string   :last_sign_in_ip
 
       ## Confirmable
       t.string :confirmation_token
@@ -32,13 +32,14 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.2]
       # t.string   :unlock_token # Only if unlock strategy is :email or :both
       # t.datetime :locked_at
 
-      t.string :first_name
-      t.string :last_name
-      t.string :time_zone
+      t.string :first_name, null: false
+      t.string :last_name, null: false
+      t.string :time_zone, null: false
+
       t.datetime :accepted_terms_at
       t.datetime :accepted_privacy_at
       t.datetime :announcements_read_at
-      t.boolean :admin
+      t.boolean :admin, default: false
 
       t.timestamps null: false
     end
