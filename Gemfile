@@ -44,6 +44,10 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem "spring"
   gem "spring-watcher-listen", "~> 2.0.0"
+
+  ### ADDED ###
+  gem 'better_errors', '~> 2.5', '>= 2.5.1'
+  gem 'binding_of_caller', '~> 0.8.0'
 end
 
 group :test do
@@ -89,3 +93,37 @@ gem "whenever", require: false
 if File.exist?("config/jumpstart/Gemfile")
   eval_gemfile "config/jumpstart/Gemfile"
 end
+
+
+
+# App specific gems
+gem 'noticed'
+gem 'simple_discussion', '~> 1.2'
+
+gem 'pundit', '~> 2.1'
+gem 'faraday', '~> 1.0', '>= 1.0.1'
+gem 'measured-rails', '~> 2.5', '>= 2.5.2'
+gem 'acts_as_favoritor', github: 'jonhue/acts_as_favoritor' # , '~> 5.0'
+gem 'acts_as_votable', '~> 0.12.1'
+gem 'acts-as-taggable-on', '~> 6.0'
+gem 'country_select'
+gem 'faker', '~> 1.6', '>= 1.6.6'
+gem 'searchkick', '~> 4.3'
+gem 'friendly_id', '~> 5.2.4'
+gem 'jsonb_accessor', '~> 1.1'
+
+# File Management and Cloud Storage
+gem 'cloudinary', '~> 1.16', '>= 1.16.1'
+gem 'shrine', '~> 3.2', '>= 3.2.1'
+gem 'fastimage' # Used for Shrine
+gem 'marcel' # Used for Shrine
+gem 'shrine-cloudinary', '~> 1.1', '>= 1.1.1'
+
+# Integrations
+# gem 'honeybadger', '~> 4.0'
+
+gem 'discard', '~> 1.2'
+gem 'paper_trail'
+gem 'merit', '~> 4.0'
+gem 'impressionist'
+gem 'counter_culture', '~> 2.0'
