@@ -46,6 +46,7 @@
 #  reset_password_sent_at  :datetime
 #  reset_password_token    :string
 #  sign_in_count           :integer          default(0), not null
+#  slug                    :string
 #  time_zone               :string           not null
 #  unconfirmed_email       :string
 #  username                :string           not null
@@ -88,6 +89,16 @@ class User < ApplicationRecord
   # We don't need users to confirm their email address on create,
   # just when they change it
   before_create :skip_confirmation!
+
+  ### Begin: APP SPECIFIC ###
+  extend FriendlyId
+  friendly_id :username, use: :slugged
+
+  acts_as_favoritor
+  acts_as_favoritable
+
+  acts_as_voter
+  ### End: APP SPECIFIC ###
 
   # Validations
   validates :first_name, presence: true, length: { in: 2..50 }
