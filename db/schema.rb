@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_04_195616) do
+ActiveRecord::Schema.define(version: 2020_08_04_213737) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -407,6 +407,28 @@ ActiveRecord::Schema.define(version: 2020_08_04_195616) do
     t.integer "trial_period_days", default: 0
   end
 
+  create_table "reviews", force: :cascade do |t|
+    t.string "reviewable_type", null: false
+    t.bigint "reviewable_id", null: false
+    t.bigint "user_id", null: false
+    t.string "title", limit: 100, null: false
+    t.integer "quality", default: 0, null: false
+    t.integer "value", default: 0, null: false
+    t.integer "compliment", default: 0, null: false
+    t.jsonb "ratings"
+    t.integer "cached_votes_total", default: 0
+    t.integer "cached_votes_score", default: 0
+    t.integer "cached_votes_up", default: 0
+    t.integer "cached_votes_down", default: 0
+    t.integer "cached_weighted_score", default: 0
+    t.integer "cached_weighted_total", default: 0
+    t.float "cached_weighted_average", default: 0.0
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["reviewable_type", "reviewable_id"], name: "index_reviews_on_reviewable_type_and_reviewable_id"
+    t.index ["user_id"], name: "index_reviews_on_user_id"
+  end
+
   create_table "shoes", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "brand_id", null: false
@@ -614,6 +636,7 @@ ActiveRecord::Schema.define(version: 2020_08_04_195616) do
   add_foreign_key "fragrances", "users"
   add_foreign_key "jewelries", "brands"
   add_foreign_key "jewelries", "users"
+  add_foreign_key "reviews", "users"
   add_foreign_key "shoes", "brands"
   add_foreign_key "shoes", "users"
   add_foreign_key "taggings", "tags"
