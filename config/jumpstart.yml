@@ -10,3 +10,5 @@ email_provider: ''
 personal_accounts: true
 livereload: true
 register_with_account: false
+integrations:
+- honeybadger
