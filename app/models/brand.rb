@@ -48,6 +48,7 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class Brand < ApplicationRecord
+  extend FriendlyId
   include BrandImageUploader::Attachment(:brand_image)
   # include ActiveModel::Validations
   # include Discard::Model
@@ -55,6 +56,7 @@ class Brand < ApplicationRecord
   belongs_to :account
   belongs_to :user
 
+  friendly_id :alias, use: :slugged
   acts_as_favoritor
   has_paper_trail
 

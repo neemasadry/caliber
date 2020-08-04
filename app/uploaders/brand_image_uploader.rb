@@ -2,7 +2,7 @@ class BrandImageUploader < Shrine
 
   plugin :upload_options, store: ->(io, context) do
     {
-      folder: "#{Rails.env}/store/brands/avatars/",
+      folder: "#{Rails.env}/store/brands/logos/",
       tags: ["brands", "companies", "entrepreneurs"]
     }
   end

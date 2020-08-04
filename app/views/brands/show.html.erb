@@ -6,14 +6,21 @@
     </div>
 
     <div class="bg-white rounded shadow p-8">
+
+            <div class="mb-4">
+        <h5>Brand image data</h5>
+        <%= image_tag(@brand.brand_image_url) %>
+      </div>
+
             <div class="mb-4">
         <h5>User</h5>
-        <%= @brand.user %>
+        <%= @brand.user.username %>
       </div>
             <div class="mb-4">
         <h5>Account</h5>
-        <%= @brand.account %>
+        <%= @brand.account.name %>
       </div>
+
             <div class="mb-4">
         <h5>Name</h5>
         <%= @brand.name %>
@@ -22,10 +29,7 @@
         <h5>Alias</h5>
         <%= @brand.alias %>
       </div>
-            <div class="mb-4">
-        <h5>Brand image data</h5>
-        <%= @brand.brand_image_data %>
-      </div>
+
             <div class="mb-4">
         <h5>Category</h5>
         <%= @brand.category %>
@@ -114,10 +118,7 @@
         <h5>Pinterest link</h5>
         <%= @brand.pinterest_link %>
       </div>
-            <div class="mb-4">
-        <h5>Slug</h5>
-        <%= @brand.slug %>
-      </div>
-          </div>
+
+    </div>
   </div>
 </div>
