@@ -4,7 +4,7 @@
 
   <div class="form-group">
     <%= form.label :account_id, "Account" %>
-    <%= form.select :account_id, current_user.accounts.collect { |account| [account.name, account.id] }, {include_blank: true, disabled: current_user.accounts.where(personal: true).first.id }, { class: "form-control" } %>
+    <%= form.select :account_id, current_user.accounts.collect { |account| [account.name, account.id] unless account.brand.present? }, {include_blank: true, disabled: current_user.accounts.where(personal: true).first.id }, { class: "form-control" } %>
     <p class="text-sm text-gray-600">You must use an account aside from your default personal account.</p>
   </div>
 
