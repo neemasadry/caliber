@@ -8,6 +8,7 @@
     </div>
 
     <div class="flex flex-col items-center lg:flex-row">
+      <%= link_to content_tag(:span, t(".announcements")), announcements_path, class: ["text-gray-700 no-underline block lg:my-0 my-2 lg:px-4", unread_announcements_class(current_user)] %>
       <%= link_to t(".about"), about_path, class: "text-gray-700 no-underline block lg:my-0 my-2 lg:px-4" %>
       <%= link_to t(".privacy"), privacy_path, class: "text-gray-700 hover:text-gray-800 no-underline block lg:my-0 my-2 lg:px-4" %>
       <%= link_to t(".terms"), terms_path, class: "text-gray-700 hover:text-gray-800 no-underline block lg:my-0 my-2 lg:pl-4" %>
