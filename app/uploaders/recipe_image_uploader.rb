@@ -1,0 +1,3 @@
+class RecipeImageUploader < Shrine
+
+end

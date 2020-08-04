@@ -1,0 +1,3 @@
+class GuideImageUploader < Shrine
+
+end
