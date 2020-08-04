@@ -5,6 +5,8 @@ class CreateAccounts < ActiveRecord::Migration[6.0]
       t.belongs_to :owner, foreign_key: {to_table: :users}
       t.boolean :personal, default: false
 
+      #t.jsonb :brand_avatar_data
+
       t.timestamps
     end
   end
