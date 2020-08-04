@@ -1,0 +1,59 @@
+<div class="container mx-auto my-8 px-4">
+  <div class="max-w-3xl mx-auto">
+    <div class="flex justify-between items-center mb-4">
+      <h1 class="h3"><%= link_to 'Jewelries', jewelries_path %> > Jewelry #<%= @jewelry.id %></h1>
+      <%= link_to 'Edit', edit_jewelry_path(@jewelry), class: "btn btn-link" %>
+    </div>
+
+    <div class="bg-white rounded shadow p-8">
+            <div class="mb-4">
+        <h5>User</h5>
+        <%= @jewelry.user %>
+      </div>
+            <div class="mb-4">
+        <h5>Brand</h5>
+        <%= @jewelry.brand %>
+      </div>
+            <div class="mb-4">
+        <h5>Name</h5>
+        <%= @jewelry.name %>
+      </div>
+            <div class="mb-4">
+        <h5>Product image data</h5>
+        <%= @jewelry.product_image_data %>
+      </div>
+            <div class="mb-4">
+        <h5>Description</h5>
+        <%= @jewelry.description %>
+      </div>
+            <div class="mb-4">
+        <h5>Retail price</h5>
+        <%= @jewelry.retail_price %>
+      </div>
+            <div class="mb-4">
+        <h5>Type of</h5>
+        <%= @jewelry.type_of %>
+      </div>
+            <div class="mb-4">
+        <h5>Gender</h5>
+        <%= @jewelry.gender %>
+      </div>
+            <div class="mb-4">
+        <h5>Material</h5>
+        <%= @jewelry.material %>
+      </div>
+            <div class="mb-4">
+        <h5>Primary color</h5>
+        <%= @jewelry.primary_color %>
+      </div>
+            <div class="mb-4">
+        <h5>Secondary color</h5>
+        <%= @jewelry.secondary_color %>
+      </div>
+            <div class="mb-4">
+        <h5>Product url</h5>
+        <%= @jewelry.product_url %>
+      </div>
+          </div>
+  </div>
+</div>

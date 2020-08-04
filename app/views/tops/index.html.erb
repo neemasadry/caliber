@@ -1,0 +1,71 @@
+<div class="container mx-auto my-8 px-4">
+  <div class="flex justify-between items-center mb-4">
+    <h1 class="h3">Tops</h1>
+
+    <% if @tops.any? %>
+      <%= link_to 'New Top', new_top_path, class: "btn btn-primary" %>
+    <% end %>
+  </div>
+
+  <% if @tops.any? %>
+    <div class="bg-white rounded shadow table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @tops, :user_id, 'User', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @tops, :brand_id, 'Brand', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @tops, :name, 'Name', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @tops, :product_image_data, 'Product image data', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @tops, :description, 'Description', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @tops, :retail_price, 'Retail price', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @tops, :type_of, 'Type of', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @tops, :gender, 'Gender', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @tops, :material, 'Material', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @tops, :primary_color, 'Primary color', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @tops, :secondary_color, 'Secondary color', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @tops, :product_url, 'Product url', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs text-gray-700 w-20">Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+        <% @tops.each do |top| %>
+          <tr class="group border-t border-gray-400 hover:bg-gray-100">
+                      <td class="p-3"><%= top.user_id %></td>
+                      <td class="p-3"><%= top.brand_id %></td>
+                      <td class="p-3"><%= top.name %></td>
+                      <td class="p-3"><%= top.product_image_data %></td>
+                      <td class="p-3"><%= top.description %></td>
+                      <td class="p-3"><%= top.retail_price %></td>
+                      <td class="p-3"><%= top.type_of %></td>
+                      <td class="p-3"><%= top.gender %></td>
+                      <td class="p-3"><%= top.material %></td>
+                      <td class="p-3"><%= top.primary_color %></td>
+                      <td class="p-3"><%= top.secondary_color %></td>
+                      <td class="p-3"><%= top.product_url %></td>
+          
+            <td>
+              <%= link_to "View", top, class: "btn btn-link no-underline" %>
+            </td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <% if @pagy.pages > 1 %>
+      <div class="text-center my-6">
+        <%== pagy_nav(@pagy) %>
+      </div>
+    <% end %>
+
+  <% else %>
+    <div class="bg-white rounded shadow flex flex-col items-center justify-between p-8 lg:flex-row">
+      <%= image_tag "empty.svg", class: "mb-4 lg:w-1/2" %>
+      <div class="flex-1 text-center">
+        <p class="h3 mb-4">Create your first Top</p>
+        <%= link_to 'New Top', new_top_path, class: "btn btn-primary" %>
+      </div>
+    </div>
+  <% end %>
+</div>

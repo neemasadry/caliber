@@ -1,0 +1,51 @@
+<div class="container mx-auto my-8 px-4">
+  <div class="max-w-3xl mx-auto">
+    <div class="flex justify-between items-center mb-4">
+      <h1 class="h3"><%= link_to 'Cosmetics', cosmetics_path %> > Cosmetic #<%= @cosmetic.id %></h1>
+      <%= link_to 'Edit', edit_cosmetic_path(@cosmetic), class: "btn btn-link" %>
+    </div>
+
+    <div class="bg-white rounded shadow p-8">
+            <div class="mb-4">
+        <h5>User</h5>
+        <%= @cosmetic.user %>
+      </div>
+            <div class="mb-4">
+        <h5>Brand</h5>
+        <%= @cosmetic.brand %>
+      </div>
+            <div class="mb-4">
+        <h5>Name</h5>
+        <%= @cosmetic.name %>
+      </div>
+            <div class="mb-4">
+        <h5>Product image data</h5>
+        <%= @cosmetic.product_image_data %>
+      </div>
+            <div class="mb-4">
+        <h5>Description</h5>
+        <%= @cosmetic.description %>
+      </div>
+            <div class="mb-4">
+        <h5>Retail price</h5>
+        <%= @cosmetic.retail_price %>
+      </div>
+            <div class="mb-4">
+        <h5>Type of</h5>
+        <%= @cosmetic.type_of %>
+      </div>
+            <div class="mb-4">
+        <h5>Gender</h5>
+        <%= @cosmetic.gender %>
+      </div>
+            <div class="mb-4">
+        <h5>Ingredients</h5>
+        <%= @cosmetic.ingredients %>
+      </div>
+            <div class="mb-4">
+        <h5>Product url</h5>
+        <%= @cosmetic.product_url %>
+      </div>
+          </div>
+  </div>
+</div>

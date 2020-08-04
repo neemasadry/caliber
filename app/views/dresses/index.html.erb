@@ -1,0 +1,71 @@
+<div class="container mx-auto my-8 px-4">
+  <div class="flex justify-between items-center mb-4">
+    <h1 class="h3">Dresses</h1>
+
+    <% if @dresses.any? %>
+      <%= link_to 'New Dress', new_dress_path, class: "btn btn-primary" %>
+    <% end %>
+  </div>
+
+  <% if @dresses.any? %>
+    <div class="bg-white rounded shadow table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @dresses, :user_id, 'User', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @dresses, :brand_id, 'Brand', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @dresses, :name, 'Name', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @dresses, :product_image_data, 'Product image data', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @dresses, :description, 'Description', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @dresses, :retail_price, 'Retail price', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @dresses, :type_of, 'Type of', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @dresses, :gender, 'Gender', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @dresses, :material, 'Material', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @dresses, :primary_color, 'Primary color', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @dresses, :secondary_color, 'Secondary color', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @dresses, :product_url, 'Product url', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs text-gray-700 w-20">Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+        <% @dresses.each do |dress| %>
+          <tr class="group border-t border-gray-400 hover:bg-gray-100">
+                      <td class="p-3"><%= dress.user_id %></td>
+                      <td class="p-3"><%= dress.brand_id %></td>
+                      <td class="p-3"><%= dress.name %></td>
+                      <td class="p-3"><%= dress.product_image_data %></td>
+                      <td class="p-3"><%= dress.description %></td>
+                      <td class="p-3"><%= dress.retail_price %></td>
+                      <td class="p-3"><%= dress.type_of %></td>
+                      <td class="p-3"><%= dress.gender %></td>
+                      <td class="p-3"><%= dress.material %></td>
+                      <td class="p-3"><%= dress.primary_color %></td>
+                      <td class="p-3"><%= dress.secondary_color %></td>
+                      <td class="p-3"><%= dress.product_url %></td>
+          
+            <td>
+              <%= link_to "View", dress, class: "btn btn-link no-underline" %>
+            </td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <% if @pagy.pages > 1 %>
+      <div class="text-center my-6">
+        <%== pagy_nav(@pagy) %>
+      </div>
+    <% end %>
+
+  <% else %>
+    <div class="bg-white rounded shadow flex flex-col items-center justify-between p-8 lg:flex-row">
+      <%= image_tag "empty.svg", class: "mb-4 lg:w-1/2" %>
+      <div class="flex-1 text-center">
+        <p class="h3 mb-4">Create your first Dress</p>
+        <%= link_to 'New Dress', new_dress_path, class: "btn btn-primary" %>
+      </div>
+    </div>
+  <% end %>
+</div>

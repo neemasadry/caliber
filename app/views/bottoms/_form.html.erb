@@ -1,0 +1,76 @@
+<%= form_with(model: bottom) do |form| %>
+  <%= render "shared/error_messages", resource: form.object %>
+
+  <div class="form-group">
+    <%= form.label :user_id %>
+    <%= form.text_field :user_id, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :brand_id %>
+    <%= form.text_field :brand_id, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :name %>
+    <%= form.text_field :name, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :product_image_data %>
+    <%= form.text_field :product_image_data, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :description %>
+    <%= form.text_area :description, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :retail_price %>
+    <%= form.text_field :retail_price, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :retail_price %>
+    <%= form.text_field :retail_price, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :type_of %>
+    <%= form.text_field :type_of, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :gender %>
+    <%= form.text_field :gender, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :material %>
+    <%= form.text_area :material, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :primary_color %>
+    <%= form.text_field :primary_color, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :secondary_color %>
+    <%= form.text_field :secondary_color, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :product_url %>
+    <%= form.text_area :product_url, class: "form-control" %>
+  </div>
+
+  <div class="form-group flex justify-between">
+    <%= form.button class: "btn btn-primary" %>
+
+    <% if form.object.persisted? %>
+      <%= link_to 'Delete', form.object, class: "btn btn-danger outline", method: :delete, data: { remote: true, confirm: "Are you sure?" } %>
+    <% end %>
+  </div>
+<% end %>

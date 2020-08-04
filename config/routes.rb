@@ -1,5 +1,13 @@
 # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 Rails.application.routes.draw do
+  resources :tops
+  resources :shoes
+  resources :jewelries
+  resources :fragrances
+  resources :dresses
+  resources :cosmetics
+  resources :bottoms
+  resources :accessories
   resources :brands
   # Jumpstart views
   if Rails.env.development? || Rails.env.test?
