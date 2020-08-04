@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_04_120929) do
+ActiveRecord::Schema.define(version: 2020_08_04_131531) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -116,6 +116,43 @@ ActiveRecord::Schema.define(version: 2020_08_04_120929) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["token"], name: "index_api_tokens_on_token", unique: true
     t.index ["user_id"], name: "index_api_tokens_on_user_id"
+  end
+
+  create_table "brands", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "account_id", null: false
+    t.string "name", limit: 150, null: false
+    t.string "alias", limit: 50, null: false
+    t.string "category", limit: 100, null: false
+    t.integer "price_range", null: false
+    t.date "founding_date", null: false
+    t.string "mission", limit: 125, null: false
+    t.text "about", null: false
+    t.text "story", null: false
+    t.jsonb "brand_image_data"
+    t.string "email", limit: 100, null: false
+    t.string "phone", limit: 20
+    t.string "address1", limit: 100, null: false
+    t.string "address2", limit: 100
+    t.string "city", limit: 100, null: false
+    t.string "state_code", limit: 5, null: false
+    t.string "country_code", limit: 5, null: false
+    t.string "zipcode", limit: 15, null: false
+    t.text "instagram_link"
+    t.text "youtube_link"
+    t.text "facebook_link"
+    t.text "twitter_link"
+    t.text "snapchat_link"
+    t.text "tiktok_link"
+    t.text "pinterest_link"
+    t.string "slug"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["account_id"], name: "index_brands_on_account_id"
+    t.index ["alias"], name: "index_brands_on_alias", unique: true
+    t.index ["name"], name: "index_brands_on_name"
+    t.index ["slug"], name: "index_brands_on_slug", unique: true
+    t.index ["user_id"], name: "index_brands_on_user_id"
   end
 
   create_table "favorites", force: :cascade do |t|
@@ -337,6 +374,8 @@ ActiveRecord::Schema.define(version: 2020_08_04_120929) do
   add_foreign_key "account_users", "users"
   add_foreign_key "accounts", "users", column: "owner_id"
   add_foreign_key "api_tokens", "users"
+  add_foreign_key "brands", "accounts"
+  add_foreign_key "brands", "users"
   add_foreign_key "taggings", "tags"
   add_foreign_key "user_connected_accounts", "users"
 end
