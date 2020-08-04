@@ -290,6 +290,7 @@ ActiveRecord::Schema.define(version: 2020_08_04_195616) do
     t.text "product_image_data", null: false
     t.text "description", null: false
     t.decimal "retail_price", precision: 10, scale: 2, null: false
+    t.date "release_date"
     t.string "type_of", limit: 80, null: false
     t.string "gender", limit: 6, null: false
     t.text "ingredients"
