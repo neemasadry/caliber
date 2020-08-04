@@ -1,10 +1,13 @@
 <%= form_with(model: brand) do |form| %>
   <%= render "shared/error_messages", resource: form.object %>
 
+
   <div class="form-group">
-    <%= form.label :brand_image, "Logo" %>
-    <%= form.file_field :brand_image, class: "form-control" %>
+    <%= form.label :account_id, "Account" %>
+    <%= form.select :account_id, current_user.accounts.collect { |account| [account.name, account.id] }, {include_blank: true, disabled: current_user.accounts.where(personal: true).first.id }, { class: "form-control" } %>
+    <p class="text-sm text-gray-600">You must use an account aside from your default personal account.</p>
   </div>
+
 
   <div class="form-group">
     <%= form.label :name %>
@@ -34,6 +37,11 @@
   <div class="form-group">
     <%= form.label :price_range %>
     <%= form.number_field :price_range, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :brand_image, "Logo" %>
+    <%= form.file_field :brand_image, class: "form-control" %>
   </div>
 
   <hr class="my-4">

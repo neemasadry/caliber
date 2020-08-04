@@ -1,4 +1,4 @@
-class BrandImageUploader < Shrine
+class BrandAvatarUploader < Shrine
 
   plugin :upload_options, store: ->(io, context) do
     {
