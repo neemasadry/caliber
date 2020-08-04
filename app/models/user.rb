@@ -65,7 +65,9 @@
 #
 
 class User < ApplicationRecord
+  extend FriendlyId
   include ActionText::Attachable
+  include AvatarImageUploader::Attachment(:avatar_image)
 
   # Include default devise modules. Others available are:
   # :lockable, :timeoutable, andle :trackable
@@ -92,8 +94,8 @@ class User < ApplicationRecord
   before_create :skip_confirmation!
 
   ### Begin: APP SPECIFIC ###
-  extend FriendlyId
   friendly_id :username, use: :slugged
+  searchkick word_start: [:first_name, :last_name, :username], word_middle: [:first_name, :last_name, :username]
 
   acts_as_favoritor
   acts_as_favoritable

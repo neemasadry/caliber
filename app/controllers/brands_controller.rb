@@ -26,7 +26,7 @@ class BrandsController < ApplicationController
 
   # POST /brands
   def create
-    @brand = Brand.new(brand_params.merge(user_id: current_user.id, account_id: current_account.id))
+    @brand = Brand.new(brand_params.merge(user_id: current_user.id))
 
     if @brand.save
       redirect_to @brand, notice: "Brand was successfully created."

@@ -29,6 +29,7 @@ class CreateBrands < ActiveRecord::Migration[6.0]
       t.string :zipcode, null: false, limit: 15
 
       # Social media links
+      t.text :homepage_link, null: true, limit: 500
       t.text :instagram_link, null: true, limit: 500
       t.text :youtube_link, null: true, limit: 500
       t.text :facebook_link, null: true, limit: 500

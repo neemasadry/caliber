@@ -4,12 +4,14 @@ module ApplicationHelper
   def avatar_url_for(user, opts = {})
     size = opts[:size] || 48
 
-    if user.respond_to?(:avatar) && user.avatar.attached? && user.avatar.variable?
-      user.avatar.variant(combine_options: {
-        thumbnail: "#{size}x#{size}^",
-        gravity: "center",
-        extent: "#{size}x#{size}"
-      })
+    # if user.respond_to?(:avatar) && user.avatar.attached? && user.avatar.variable?
+    #   user.avatar.variant(combine_options: {
+    #     thumbnail: "#{size}x#{size}^",
+    #     gravity: "center",
+    #     extent: "#{size}x#{size}"
+    #   })
+    if user.respond_to?(:avatar_image_data) && user.avatar_image_url.present?
+      user.avatar_image_url(width: "#{size}", height: "#{size}", crop: :fit, gravity: "center")
     else
       hash = Digest::MD5.hexdigest(user.email.downcase)
       "https://secure.gravatar.com/avatar/#{hash}.png?height=#{size}&width=#{size}"

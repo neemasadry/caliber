@@ -14,6 +14,7 @@
 #  email            :string(100)      not null
 #  facebook_link    :text
 #  founding_date    :date             not null
+#  homepage_link    :text
 #  instagram_link   :text
 #  mission          :string(125)      not null
 #  name             :string(150)      not null

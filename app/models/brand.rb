@@ -14,6 +14,7 @@
 #  email            :string(100)      not null
 #  facebook_link    :text
 #  founding_date    :date             not null
+#  homepage_link    :text
 #  instagram_link   :text
 #  mission          :string(125)      not null
 #  name             :string(150)      not null
@@ -52,7 +53,7 @@ class Brand < ApplicationRecord
   # include Discard::Model
 
   belongs_to :account
-  belongs_to :brand_owner, class_name: "User"
+  belongs_to :user
 
   acts_as_favoritor
   has_paper_trail

@@ -138,6 +138,7 @@ ActiveRecord::Schema.define(version: 2020_08_04_131531) do
     t.string "state_code", limit: 5, null: false
     t.string "country_code", limit: 5, null: false
     t.string "zipcode", limit: 15, null: false
+    t.text "homepage_link"
     t.text "instagram_link"
     t.text "youtube_link"
     t.text "facebook_link"
