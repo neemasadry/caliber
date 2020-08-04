@@ -16,7 +16,7 @@ class CreateBrands < ActiveRecord::Migration[6.0]
       t.text :story, null: false, limit: 6000
 
       ### SET TO null: false IN PRODUCTION ###
-      t.jsonb :brand_image_data
+      t.jsonb :brand_logo_data
 
       # Contact info
       t.string :email, null: false, limit: 100

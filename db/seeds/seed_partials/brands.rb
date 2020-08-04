@@ -2,7 +2,7 @@
 # Clear all previous seeded Brands to avoid duplication errors
 Brand.destroy_all
 
-logo_uploader = BrandImageUploader.new(:store)
+logo_uploader = BrandLogoUploader.new(:store)
 
 logo_path = "db/seeds/brand_images/logos/"
 
@@ -19,7 +19,7 @@ Brand.create!(
   user_id: 3,
   account_id: Account.find_by(name: acosta_forte).id,
   name: acosta_forte,
-  brand_image_data: uploaded_forte_logo,
+  brand_logo_data: uploaded_forte_logo,
   alias: "forte",
   category: "Grooming & Hygiene",
   founding_date: "2020-02-24",
@@ -56,7 +56,7 @@ Brand.create!(
   user_id: 5,
   account_id: Account.find_by(name: amarino_pnp).id,
   name: amarino_pnp,
-  brand_image_data: uploaded_pete_and_pedro_logo,
+  brand_logo_data: uploaded_pete_and_pedro_logo,
   alias: "peteandpedro",
   category: "Grooming & Hygiene",
   founding_date: "2013-04-01",
@@ -93,7 +93,7 @@ Brand.create!(
     user_id: 5,
     account_id: Account.find_by(name: amarino_th).id,
     name: amarino_th,
-    brand_image_data: uploaded_teige_hanley_logo,
+    brand_logo_data: uploaded_teige_hanley_logo,
     alias: "tiegehanley",
     category: "Grooming & Hygiene",
     founding_date: "2016-05-21",
@@ -137,7 +137,7 @@ Brand.create!(
     user_id: 7,
     account_id: Account.find_by(name: jzuniga_esntls).id,
     name: jzuniga_esntls,
-    brand_image_data: uploaded_esntls_logo,
+    brand_logo_data: uploaded_esntls_logo,
     alias: "esntls",
     category: "Clothing & Accessories",
     founding_date: "2017-05-21",
@@ -168,7 +168,7 @@ Brand.create!(
     user_id: 7,
     account_id: Account.find_by(name: jzuniga_jb).id,
     name: jzuniga_jb,
-    brand_image_data: {},
+    brand_logo_data: {},
     alias: "jadeblack",
     category: "Clothing & Accessories",
     founding_date: "2017-05-21",
@@ -206,7 +206,7 @@ Brand.create!(
     user_id: 8,
     account_id: Account.find_by(name: kjenner_ks).id,
     name: kjenner_ks,
-    brand_image_data: uploaded_kylie_skin_logo,
+    brand_logo_data: uploaded_kylie_skin_logo,
     alias: "kylieskin",
     category: "Beauty & Hygiene",
     founding_date: "2014-05-21",

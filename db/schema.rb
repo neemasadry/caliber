@@ -129,7 +129,7 @@ ActiveRecord::Schema.define(version: 2020_08_04_131531) do
     t.string "mission", limit: 125, null: false
     t.text "about", null: false
     t.text "story", null: false
-    t.jsonb "brand_image_data"
+    t.jsonb "brand_logo_data"
     t.string "email", limit: 100, null: false
     t.string "phone", limit: 20
     t.string "address1", limit: 100, null: false
