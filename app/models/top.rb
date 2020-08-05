@@ -38,6 +38,5 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class Top < ApplicationRecord
-  belongs_to :user
-  belongs_to :brand
+  include Products
 end

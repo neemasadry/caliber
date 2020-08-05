@@ -9,7 +9,10 @@ class CreateReviews < ActiveRecord::Migration[6.0]
       t.integer :quality, null: false, default: 0
       t.integer :value, null: false, default: 0
       t.integer :compliment, null: false, default: 0
-      t.jsonb   :ratings
+      t.jsonb   :ratings, null: false
+
+      # Slug for FriendlyID
+      t.string :slug, index: { unique: true }
 
       # caching for acts_as_votable
       t.integer :cached_votes_total, default: 0

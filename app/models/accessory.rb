@@ -38,5 +38,17 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class Accessory < ApplicationRecord
+  # Products (under models/concerns) contains everything that all product categories share
   include Products
+
+  public
+
+    def self.review_ratings
+      [
+        :accessory_durability,
+        :accessory_comfort,
+        :accessory_design,
+        :accessory_uniqueness
+      ]
+    end
 end

@@ -20,7 +20,7 @@
       </div>
             <div class="mb-4">
         <h5>Product image data</h5>
-        <%= @accessory.product_image_data %>
+        <%= image_tag @accessory.product_image_url %>
       </div>
             <div class="mb-4">
         <h5>Description</h5>
@@ -30,10 +30,7 @@
         <h5>Retail price</h5>
         <%= @accessory.retail_price %>
       </div>
-            <div class="mb-4">
-        <h5>Retail price</h5>
-        <%= @accessory.retail_price %>
-      </div>
+
             <div class="mb-4">
         <h5>Type of</h5>
         <%= @accessory.type_of %>
@@ -44,7 +41,7 @@
       </div>
             <div class="mb-4">
         <h5>Material</h5>
-        <%= @accessory.material %>
+        <%= @accessory.materials %>
       </div>
             <div class="mb-4">
         <h5>Primary color</h5>

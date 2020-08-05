@@ -1,0 +1,49 @@
+<h4 class="mb-2">Accessory Ratings</h4>
+
+<div class="flex flex-wrap overflow-hidden md:-mx-1 lg:-mx-1 xl:-mx-1">
+
+  <div class="w-full overflow-hidden md:my-1 md:px-1 md:w-1/2 lg:my-1 lg:px-1 lg:w-1/2 xl:my-1 xl:px-1 xl:w-1/2">
+    <div class="form-group">
+      <%= f.label :accessory_durability, "Durability", class: "block text-sm font-medium leading-5 text-gray-700" %>
+
+      <div class="relative">
+        <%= f.select :accessory_durability, options_for_select(1..10), { include_blank: true }, { class: "mt-1 form-select block w-full pl-3 pr-10 py-2 text-base leading-6 border-gray-300 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5"} %>
+        <div class="caret"><svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="w-full overflow-hidden md:my-1 md:px-1 md:w-1/2 lg:my-1 lg:px-1 lg:w-1/2 xl:my-1 xl:px-1 xl:w-1/2">
+    <div class="form-group">
+      <%= f.label :accessory_comfort, "Space & Comfort", class: "block text-sm font-medium leading-5 text-gray-700" %>
+
+      <div class="relative">
+        <%= f.select :accessory_comfort, options_for_select(1..10), { include_blank: true }, { class: "mt-1 form-select block w-full pl-3 pr-10 py-2 text-base leading-6 border-gray-300 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5"} %>
+        <div class="caret"><svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="w-full overflow-hidden md:my-1 md:px-1 md:w-1/2 lg:my-1 lg:px-1 lg:w-1/2 xl:my-1 xl:px-1 xl:w-1/2">
+    <div class="form-group">
+      <%= f.label :accessory_design, "Design", class: "block text-sm font-medium leading-5 text-gray-700" %>
+
+      <div class="relative">
+        <%= f.select :accessory_design, options_for_select(1..10), { include_blank: true }, { class: "mt-1 form-select block w-full pl-3 pr-10 py-2 text-base leading-6 border-gray-300 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5"} %>
+        <div class="caret"><svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="w-full overflow-hidden md:my-1 md:px-1 md:w-1/2 lg:my-1 lg:px-1 lg:w-1/2 xl:my-1 xl:px-1 xl:w-1/2">
+    <div class="form-group">
+      <%= f.label :accessory_uniqueness, "Uniqueness", class: "block text-sm font-medium leading-5 text-gray-700" %>
+
+      <div class="relative">
+        <%= f.select :accessory_uniqueness, options_for_select(1..10), { include_blank: true }, { class: "mt-1 form-select block w-full pl-3 pr-10 py-2 text-base leading-6 border-gray-300 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5"} %>
+        <div class="caret"><svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg></div>
+      </div>
+    </div>
+  </div>
+
+</div>

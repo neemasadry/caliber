@@ -42,15 +42,4 @@ module Products
     self.class.name != "Fragrance"
   end
 
-  public
-
-    def self.review_ratings
-      [
-        :accessory_durability,
-        :accessory_comfort,
-        :accessory_design,
-        :accessory_uniqueness
-      ]
-    end
-
 end

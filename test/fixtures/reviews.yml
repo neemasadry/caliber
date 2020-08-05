@@ -12,8 +12,9 @@
 #  cached_weighted_total   :integer          default(0)
 #  compliment              :integer          default(0), not null
 #  quality                 :integer          default(0), not null
-#  ratings                 :jsonb
+#  ratings                 :jsonb            not null
 #  reviewable_type         :string           not null
+#  slug                    :string
 #  title                   :string(100)      not null
 #  value                   :integer          default(0), not null
 #  created_at              :datetime         not null
@@ -24,6 +25,7 @@
 # Indexes
 #
 #  index_reviews_on_reviewable_type_and_reviewable_id  (reviewable_type,reviewable_id)
+#  index_reviews_on_slug                               (slug) UNIQUE
 #  index_reviews_on_user_id                            (user_id)
 #
 # Foreign Keys

@@ -1,12 +1,12 @@
 <div class="container mx-auto my-8 px-4">
   <div class="max-w-3xl mx-auto">
     <div class="flex justify-between items-center mb-4">
-      <h1 class="h3">New Review</h1>
-      <%= link_to 'Cancel', reviews_path, class: "btn btn-link" %>
+      <h1 class="h3">New Review for <%= "#{@reviewable.name}" %></h1>
+      <%= link_to 'Cancel', new_polymorphic_path([@reviewable]), class: "btn btn-link" %>
     </div>
 
     <div class="bg-white rounded shadow p-8">
-      <%= render 'form', review: @review %>
+      <%= render partial: 'form', locals: { reviewable: @reviewable, review: @review } %>
     </div>
   </div>
 </div>

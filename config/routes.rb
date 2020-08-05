@@ -1,15 +1,48 @@
 # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 Rails.application.routes.draw do
-  resources :reviews
-  resources :tops
-  resources :shoes
-  resources :jewelries
-  resources :fragrances
-  resources :dresses
-  resources :cosmetics
-  resources :bottoms
-  resources :accessories
+
   resources :brands
+
+
+  resources :accessories, model_name: "Accessory" do
+    resources :reviews
+  end
+
+
+  resources :bottoms, model_name: "Bottom" do
+    resources :reviews
+  end
+
+
+  resources :cosmetics, model_name: "Cosmetic" do
+    resources :reviews
+  end
+
+
+  resources :dresses, model_name: "Dress" do
+    resources :reviews
+  end
+
+
+  resources :fragrances, model_name: "Fragrance" do
+    resources :reviews
+  end
+
+
+  resources :jewelries, model_name: "Jewelry" do
+    resources :reviews
+  end
+
+
+  resources :shoes, model_name: "Shoe" do
+    resources :reviews
+  end
+
+
+  resources :tops, model_name: "Top" do
+    resources :reviews
+  end
+
   # Jumpstart views
   if Rails.env.development? || Rails.env.test?
     mount Jumpstart::Engine, at: "/jumpstart"

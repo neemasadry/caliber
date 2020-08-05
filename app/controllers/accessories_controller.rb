@@ -25,7 +25,7 @@ class AccessoriesController < ApplicationController
 
   # POST /accessories
   def create
-    @accessory = Accessory.new(accessory_params)
+    @accessory = Accessory.new(accessory_params.merge(user_id: current_user.id).merge(brand_id: Brand.find_by(alias: "peteandpedro").id))
 
     if @accessory.save
       redirect_to @accessory, notice: "Accessory was successfully created."
@@ -53,11 +53,11 @@ class AccessoriesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_accessory
-    @accessory = Accessory.find(params[:id])
+    @accessory = Accessory.friendly.find(params[:id])
   end
 
   # Only allow a trusted parameter "white list" through.
   def accessory_params
-    params.require(:accessory).permit(:user_id, :brand_id, :name, :product_image_data, :description, :retail_price, :retail_price, :type_of, :gender, :materials, :primary_color, :secondary_color, :product_url)
+    params.require(:accessory).permit(:user_id, :brand_id, :name, :product_image, :description, :retail_price, :retail_price, :type_of, :gender, :materials, :primary_color, :secondary_color, :product_url)
   end
 end

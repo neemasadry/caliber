@@ -415,7 +415,8 @@ ActiveRecord::Schema.define(version: 2020_08_04_213737) do
     t.integer "quality", default: 0, null: false
     t.integer "value", default: 0, null: false
     t.integer "compliment", default: 0, null: false
-    t.jsonb "ratings"
+    t.jsonb "ratings", null: false
+    t.string "slug"
     t.integer "cached_votes_total", default: 0
     t.integer "cached_votes_score", default: 0
     t.integer "cached_votes_up", default: 0
@@ -426,6 +427,7 @@ ActiveRecord::Schema.define(version: 2020_08_04_213737) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["reviewable_type", "reviewable_id"], name: "index_reviews_on_reviewable_type_and_reviewable_id"
+    t.index ["slug"], name: "index_reviews_on_slug", unique: true
     t.index ["user_id"], name: "index_reviews_on_user_id"
   end
 

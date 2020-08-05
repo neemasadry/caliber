@@ -1,9 +1,11 @@
 class ReviewsController < ApplicationController
+  before_action :authenticate_user!, except: [:index, :show]
   before_action :set_review, only: [:show, :edit, :update, :destroy]
+  before_action :set_reviewable
 
   # GET /reviews
   def index
-    @pagy, @reviews = pagy(Review.sort_by_params(params[:sort], sort_direction))
+    @pagy, @reviews = pagy(Review.where({reviewable: @reviewable}), items: 10)
 
     # We explicitly load the records to avoid triggering multiple DB calls in the views when checking if records exist and iterating over them.
     # Calling @reviews.any? in the view will use the loaded records to check existence instead of making an extra DB call.
@@ -16,7 +18,7 @@ class ReviewsController < ApplicationController
 
   # GET /reviews/new
   def new
-    @review = Review.new
+    @review = Review.new(reviewable: @reviewable)
   end
 
   # GET /reviews/1/edit
@@ -25,10 +27,10 @@ class ReviewsController < ApplicationController
 
   # POST /reviews
   def create
-    @review = Review.new(review_params)
+    @review = Review.new(review_params.merge(user_id: current_user.id, reviewable: @reviewable))
 
     if @review.save
-      redirect_to @review, notice: "Review was successfully created."
+      redirect_to [@reviewable, @review], notice: "Review was successfully created."
     else
       render :new
     end
@@ -51,13 +53,23 @@ class ReviewsController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
-  def set_review
-    @review = Review.find(params[:id])
-  end
+    # Use callbacks to share common setup or constraints between actions.
+    def set_review
+      @review = Review.find(params[:id])
+    end
 
-  # Only allow a trusted parameter "white list" through.
-  def review_params
-    params.require(:review).permit(:reviewable_id, :reviewable_type, :user_id, :title, :body, :quality, :value, :compliment, :ratings)
-  end
+    # Only allow a trusted parameter "white list" through.
+    def review_params
+      params.require(:review).permit(:reviewable_id, :reviewable_type, :user_id, :title, :body, :quality, :value, :compliment, :ratings)
+    end
+
+    # Search for parent model to build new_XXX_review_path
+    def set_reviewable
+      reviewable_type = params[:model_name].constantize
+      reviewable_foreign_key = params[:model_name].foreign_key
+      reviewable_id = params[reviewable_foreign_key]
+
+      @reviewable = reviewable_type.friendly.find(reviewable_id)
+    end # set_reviewable
+
 end

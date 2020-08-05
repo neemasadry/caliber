@@ -3,7 +3,7 @@
     <h1 class="h3">Reviews</h1>
 
     <% if @reviews.any? %>
-      <%= link_to 'New Review', new_review_path, class: "btn btn-primary" %>
+      <%= link_to 'New Review', polymorphic_path([@reviewable, Review.new]), class: "btn btn-primary" %>
     <% end %>
   </div>
 
@@ -12,10 +12,7 @@
       <table class="table">
         <thead>
           <tr>
-            <th class="p-3 uppercase text-left text-xs"><%= sortable @reviews, :reviewable_id, 'Reviewable', class: 'text-gray-700' %></th>
-            <th class="p-3 uppercase text-left text-xs"><%= sortable @reviews, :user_id, 'User', class: 'text-gray-700' %></th>
             <th class="p-3 uppercase text-left text-xs"><%= sortable @reviews, :title, 'Title', class: 'text-gray-700' %></th>
-            <th class="p-3 uppercase text-left text-xs"><%= sortable @reviews, :body, 'Body', class: 'text-gray-700' %></th>
             <th class="p-3 uppercase text-left text-xs"><%= sortable @reviews, :quality, 'Quality', class: 'text-gray-700' %></th>
             <th class="p-3 uppercase text-left text-xs"><%= sortable @reviews, :value, 'Value', class: 'text-gray-700' %></th>
             <th class="p-3 uppercase text-left text-xs"><%= sortable @reviews, :compliment, 'Compliment', class: 'text-gray-700' %></th>
@@ -27,17 +24,14 @@
         <tbody>
         <% @reviews.each do |review| %>
           <tr class="group border-t border-gray-400 hover:bg-gray-100">
-                      <td class="p-3"><%= review.reviewable_id %></td>
-                      <td class="p-3"><%= review.user_id %></td>
-                      <td class="p-3"><%= review.title %></td>
-                      <td class="p-3"><%= review.body %></td>
-                      <td class="p-3"><%= review.quality %></td>
-                      <td class="p-3"><%= review.value %></td>
-                      <td class="p-3"><%= review.compliment %></td>
-                      <td class="p-3"><%= review.ratings %></td>
-          
+            <td class="p-3"><%= review.title %></td>
+            <td class="p-3"><%= review.quality %></td>
+            <td class="p-3"><%= review.value %></td>
+            <td class="p-3"><%= review.compliment %></td>
+            <td class="p-3"><%= review.ratings %></td>
+
             <td>
-              <%= link_to "View", review, class: "btn btn-link no-underline" %>
+              <%= link_to "View", polymorphic_path([@reviewable, review]), class: "btn btn-link no-underline" %>
             </td>
           </tr>
         <% end %>
@@ -56,8 +50,9 @@
       <%= image_tag "empty.svg", class: "mb-4 lg:w-1/2" %>
       <div class="flex-1 text-center">
         <p class="h3 mb-4">Create your first Review</p>
-        <%= link_to 'New Review', new_review_path, class: "btn btn-primary" %>
+        <%= link_to 'New Review', new_polymorphic_path([@reviewable, Review.new]), class: "btn btn-primary" %>
       </div>
     </div>
   <% end %>
 </div>
+<% console %>

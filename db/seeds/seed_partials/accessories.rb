@@ -2,7 +2,7 @@ require 'csv'
 
 Accessory.destroy_all
 
-uploader = ProductImageUploader.new(:store, upload_options: { folder: "/products/accessories/", tags: ["Jade Black", "Sunglasses", "Accessories"] })
+uploader = ProductImageUploader.new(:store)
 
 jade_black_csv_text = File.read(Rails.root.join('db', 'seeds', 'Jade_Black', 'Mens', 'Jade-Black-(Crawl-Run)---2020-03-28T163728Z.csv'))
 csv = CSV.parse(jade_black_csv_text, headers: true, encoding: "utf-8")
@@ -15,7 +15,7 @@ csv.each do |row|
   t.retail_price = row['retail_price']
   t.type_of = row['type_of']
   t.gender = "Male"
-  t.material = row['material']
+  t.materials = row['material']
   t.primary_color = "N/A"
   t.secondary_color = "N/A"
   t.product_url = row['url']
@@ -41,7 +41,7 @@ csv.each do |row|
   # ### End: ActiveStorage ###
 
 	t.save! # Use bang to return ActiveRecord validation errors
-	puts "#{t.name} by #{t.brand} saved."
+	puts "#{t.name} by #{t.brand} saved.\n\n"
   image1_path.close
   image2_path.close
   imageDemo_path.close

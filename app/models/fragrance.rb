@@ -41,6 +41,5 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class Fragrance < ApplicationRecord
-  belongs_to :user
-  belongs_to :brand
+  include Products
 end
