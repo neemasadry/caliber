@@ -17,7 +17,6 @@
 #  ingredients             :text
 #  middle_notes            :string(150)
 #  name                    :string(100)      not null
-#  product_image_data      :text             not null
 #  product_url             :text
 #  release_date            :date
 #  retail_price            :decimal(10, 2)   not null

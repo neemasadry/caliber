@@ -19,7 +19,6 @@ ActiveRecord::Schema.define(version: 2020_08_04_213737) do
     t.bigint "user_id", null: false
     t.bigint "brand_id", null: false
     t.string "name", limit: 100, null: false
-    t.text "product_image_data", null: false
     t.text "description", null: false
     t.decimal "retail_price", precision: 10, scale: 2, null: false
     t.string "type_of", limit: 80, null: false
@@ -150,7 +149,6 @@ ActiveRecord::Schema.define(version: 2020_08_04_213737) do
     t.bigint "user_id", null: false
     t.bigint "brand_id", null: false
     t.string "name", limit: 100, null: false
-    t.text "product_image_data", null: false
     t.text "description", null: false
     t.decimal "retail_price", precision: 10, scale: 2, null: false
     t.string "type_of", limit: 80, null: false
@@ -216,7 +214,6 @@ ActiveRecord::Schema.define(version: 2020_08_04_213737) do
     t.bigint "user_id", null: false
     t.bigint "brand_id", null: false
     t.string "name", limit: 100, null: false
-    t.text "product_image_data", null: false
     t.text "description", null: false
     t.decimal "retail_price", precision: 10, scale: 2, null: false
     t.string "type_of", limit: 80, null: false
@@ -242,7 +239,6 @@ ActiveRecord::Schema.define(version: 2020_08_04_213737) do
     t.bigint "user_id", null: false
     t.bigint "brand_id", null: false
     t.string "name", limit: 100, null: false
-    t.text "product_image_data", null: false
     t.text "description", null: false
     t.decimal "retail_price", precision: 10, scale: 2, null: false
     t.string "type_of", limit: 80, null: false
@@ -287,7 +283,6 @@ ActiveRecord::Schema.define(version: 2020_08_04_213737) do
     t.bigint "user_id", null: false
     t.bigint "brand_id", null: false
     t.string "name", limit: 100, null: false
-    t.text "product_image_data", null: false
     t.text "description", null: false
     t.decimal "retail_price", precision: 10, scale: 2, null: false
     t.date "release_date"
@@ -329,7 +324,6 @@ ActiveRecord::Schema.define(version: 2020_08_04_213737) do
     t.bigint "user_id", null: false
     t.bigint "brand_id", null: false
     t.string "name", limit: 100, null: false
-    t.text "product_image_data", null: false
     t.text "description", null: false
     t.decimal "retail_price", precision: 10, scale: 2, null: false
     t.string "type_of", limit: 80, null: false
@@ -407,6 +401,19 @@ ActiveRecord::Schema.define(version: 2020_08_04_213737) do
     t.integer "trial_period_days", default: 0
   end
 
+  create_table "product_images", force: :cascade do |t|
+    t.string "product_imageable_type", null: false
+    t.bigint "product_imageable_id", null: false
+    t.bigint "user_id", null: false
+    t.bigint "brand_id", null: false
+    t.text "product_image_data", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["brand_id"], name: "index_product_images_on_brand_id"
+    t.index ["product_imageable_type", "product_imageable_id"], name: "index_for_product_imageable"
+    t.index ["user_id"], name: "index_product_images_on_user_id"
+  end
+
   create_table "reviews", force: :cascade do |t|
     t.string "reviewable_type", null: false
     t.bigint "reviewable_id", null: false
@@ -435,7 +442,6 @@ ActiveRecord::Schema.define(version: 2020_08_04_213737) do
     t.bigint "user_id", null: false
     t.bigint "brand_id", null: false
     t.string "name", limit: 100, null: false
-    t.text "product_image_data", null: false
     t.text "description", null: false
     t.decimal "retail_price", precision: 10, scale: 2, null: false
     t.string "type_of", limit: 80, null: false
@@ -490,7 +496,6 @@ ActiveRecord::Schema.define(version: 2020_08_04_213737) do
     t.bigint "user_id", null: false
     t.bigint "brand_id", null: false
     t.string "name", limit: 100, null: false
-    t.text "product_image_data", null: false
     t.text "description", null: false
     t.decimal "retail_price", precision: 10, scale: 2, null: false
     t.string "type_of", limit: 80, null: false
@@ -638,6 +643,8 @@ ActiveRecord::Schema.define(version: 2020_08_04_213737) do
   add_foreign_key "fragrances", "users"
   add_foreign_key "jewelries", "brands"
   add_foreign_key "jewelries", "users"
+  add_foreign_key "product_images", "brands"
+  add_foreign_key "product_images", "users"
   add_foreign_key "reviews", "users"
   add_foreign_key "shoes", "brands"
   add_foreign_key "shoes", "users"

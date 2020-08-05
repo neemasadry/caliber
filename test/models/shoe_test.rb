@@ -15,7 +15,6 @@
 #  materials               :text
 #  name                    :string(100)      not null
 #  primary_color           :string(30)       not null
-#  product_image_data      :text             not null
 #  product_url             :text
 #  retail_price            :decimal(10, 2)   not null
 #  secondary_color         :string(30)

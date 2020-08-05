@@ -5,10 +5,13 @@ module Products
 
     extend FriendlyId
 
-    include ProductImageUploader::Attachment(:product_image)
-
     belongs_to :user
     belongs_to :brand
+
+    has_many :product_images, as: :product_imageable, dependent: :destroy
+    has_many :reviews, as: :reviewable, dependent: :destroy
+
+    accepts_nested_attributes_for :product_images, allow_destroy: true
 
     friendly_id :name, use: :slugged
 
