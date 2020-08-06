@@ -1,4 +1,5 @@
 class CosmeticsController < ApplicationController
+  before_action :authenticate_user!, except: [:index, :show]
   before_action :set_cosmetic, only: [:show, :edit, :update, :destroy]
 
   # GET /cosmetics
@@ -53,7 +54,7 @@ class CosmeticsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_cosmetic
-    @cosmetic = Cosmetic.find(params[:id])
+    @cosmetic = Cosmetic.friendly.find(params[:id])
   end
 
   # Only allow a trusted parameter "white list" through.

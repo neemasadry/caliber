@@ -1,4 +1,4 @@
-<%= form_with(model: accessory) do |form| %>
+<%= form_with(model: accessory, html: { enctype: "multipart/form-data" }) do |form| %>
   <%= render "shared/error_messages", resource: form.object %>
 
   <div class="form-group">
@@ -7,9 +7,23 @@
   </div>
 
   <div class="form-group">
-    <%= form.label :product_image %>
-    <%= form.file_field :product_image, class: "form-control" %>
+    <%= form.label :brand_id, "Brand" %>
+    <div class="relative">
+      <%= form.select :brand_id, options_for_select(brands_owned_by_user(current_user)), { include_blank: true, disabled: current_user.accounts.where(personal: true).first.id }, { class: "form-control" } %>
+      <div class="caret"><svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg></div>
+    </div>
+    <p class="text-sm text-gray-600">You must use an account aside from your default personal account.</p>
   </div>
+
+  <div class="form-group">
+    <%= form.fields_for :product_images do |pi| %>
+      <%= pi.hidden_field :product_image, value: pi.object.cached_image_data %>
+      <%= pi.file_field :product_image, class: "form-control" %>
+      <%= pi.checkbox :_destroy unless pi.object.new_record? %>
+    <% end %>
+    <%= form.file_field :product_images, multiple: true, class: "form-control" %>
+  </div>
+
 
   <div class="form-group">
     <%= form.label :description %>

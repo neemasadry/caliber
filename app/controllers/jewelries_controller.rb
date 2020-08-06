@@ -1,4 +1,5 @@
 class JewelriesController < ApplicationController
+  before_action :authenticate_user!, except: [:index, :show]
   before_action :set_jewelry, only: [:show, :edit, :update, :destroy]
 
   # GET /jewelries
@@ -53,7 +54,7 @@ class JewelriesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_jewelry
-    @jewelry = Jewelry.find(params[:id])
+    @jewelry = Jewelry.friendly.find(params[:id])
   end
 
   # Only allow a trusted parameter "white list" through.

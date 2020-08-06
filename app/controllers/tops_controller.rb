@@ -1,4 +1,5 @@
 class TopsController < ApplicationController
+  before_action :authenticate_user!, except: [:index, :show]
   before_action :set_top, only: [:show, :edit, :update, :destroy]
 
   # GET /tops
@@ -53,7 +54,7 @@ class TopsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_top
-    @top = Top.find(params[:id])
+    @top = Top.friendly.find(params[:id])
   end
 
   # Only allow a trusted parameter "white list" through.

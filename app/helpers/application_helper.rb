@@ -67,4 +67,17 @@ module ApplicationHelper
   def title(page_title)
     content_for(:title) { page_title }
   end
+
+  ### PRODUCTS ###
+  def brands_owned_by_user(user)
+    @array_of_brands = []
+
+    user.brands.each do |brand|
+      option = [brand["name"], brand["id"]]
+      @array_of_brands << option
+    end
+
+    return @array_of_brands
+  end
+
 end

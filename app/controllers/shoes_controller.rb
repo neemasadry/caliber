@@ -1,4 +1,5 @@
 class ShoesController < ApplicationController
+  before_action :authenticate_user!, except: [:index, :show]
   before_action :set_shoe, only: [:show, :edit, :update, :destroy]
 
   # GET /shoes
@@ -53,7 +54,7 @@ class ShoesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_shoe
-    @shoe = Shoe.find(params[:id])
+    @shoe = Shoe.friendly.find(params[:id])
   end
 
   # Only allow a trusted parameter "white list" through.

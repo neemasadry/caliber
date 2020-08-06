@@ -20,6 +20,9 @@ module Products
 
     searchkick word_start: [:name], word_middle: [:name], text_middle: [:type_of, :primary_color]
 
+    #validates_presence_of :product_images
+    validates_associated :product_images
+
     validates :name, presence: true, length: { maximum: 100 }
     validates :description, presence: true, length: { maximum: 3000 }
     validates :retail_price, presence: true, numericality: { greater_than: 0, less_than: 1000000 }

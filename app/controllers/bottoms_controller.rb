@@ -1,4 +1,5 @@
 class BottomsController < ApplicationController
+  before_action :authenticate_user!, except: [:index, :show]
   before_action :set_bottom, only: [:show, :edit, :update, :destroy]
 
   # GET /bottoms
@@ -53,7 +54,7 @@ class BottomsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_bottom
-    @bottom = Bottom.find(params[:id])
+    @bottom = Bottom.friendly.find(params[:id])
   end
 
   # Only allow a trusted parameter "white list" through.

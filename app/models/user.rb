@@ -89,6 +89,7 @@ class User < ApplicationRecord
   has_many :connected_accounts, dependent: :destroy
   has_many :notifications, as: :recipient, dependent: :destroy
 
+  has_many :brands
   has_many :reviews, dependent: :destroy
 
   # We don't need users to confirm their email address on create,

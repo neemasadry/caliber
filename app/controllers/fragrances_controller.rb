@@ -1,4 +1,5 @@
 class FragrancesController < ApplicationController
+  before_action :authenticate_user!, except: [:index, :show]
   before_action :set_fragrance, only: [:show, :edit, :update, :destroy]
 
   # GET /fragrances
@@ -53,7 +54,7 @@ class FragrancesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_fragrance
-    @fragrance = Fragrance.find(params[:id])
+    @fragrance = Fragrance.friendly.find(params[:id])
   end
 
   # Only allow a trusted parameter "white list" through.

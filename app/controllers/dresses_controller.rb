@@ -1,4 +1,5 @@
 class DressesController < ApplicationController
+  before_action :authenticate_user!, except: [:index, :show]
   before_action :set_dress, only: [:show, :edit, :update, :destroy]
 
   # GET /dresses
@@ -53,7 +54,7 @@ class DressesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_dress
-    @dress = Dress.find(params[:id])
+    @dress = Dress.friendly.find(params[:id])
   end
 
   # Only allow a trusted parameter "white list" through.

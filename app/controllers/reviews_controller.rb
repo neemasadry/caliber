@@ -20,7 +20,7 @@ class ReviewsController < ApplicationController
 
   # GET /reviews/new
   def new
-    if @user_already_reviewed
+    if @user_already_reviewed || @user_is_brand_owner
       redirect_to polymorphic_path([@reviewable, Review]), alert: "You already reviewed this product."
     else
       @review = Review.new(reviewable: @reviewable)
@@ -33,9 +33,10 @@ class ReviewsController < ApplicationController
 
   # POST /reviews
   def create
-    if @user_already_reviewed
+    if @user_already_reviewed || @user_is_brand_owner
       redirect_to polymorphic_path([@reviewable, Review]), alert: "You already reviewed this product."
     else
+
       @review = Review.new(review_params.merge(user_id: current_user.id, reviewable: @reviewable))
 
       if @review.save
@@ -43,8 +44,9 @@ class ReviewsController < ApplicationController
       else
         render :new
       end
-    end
-  end
+
+    end # did user already review OR is the user an owner of the Brand?
+  end # create
 
   # PATCH/PUT /reviews/1
   def update
