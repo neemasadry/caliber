@@ -28,6 +28,12 @@
     <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:500,700&display=swap" rel="stylesheet">
 
+    <% if user_signed_in? %>
+      <% if (params[:controller] == "accessories" || params[:controller] == "bottoms" || params[:controller] == "cosmetics" || params[:controller] == "dresses" || params[:controller] == "fragrances" || params[:controller] == "jewelries" || params[:controller] == "shoes" || params[:controller] == "tops") %>
+        <script type="text/javascript" src="https://product-gallery.cloudinary.com/all.js"></script>
+      <% end %>
+    <% end %>
+
     <%= yield :head %>
   </head>
 
