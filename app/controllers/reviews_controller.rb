@@ -1,7 +1,9 @@
 class ReviewsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
+  before_action :user_already_reviewed?, only: [:index, :new, :create]
   before_action :set_review, only: [:show, :edit, :update, :destroy]
   before_action :set_reviewable
+  before_action :user_is_brand_owner?
 
   # GET /reviews
   def index
@@ -18,7 +20,11 @@ class ReviewsController < ApplicationController
 
   # GET /reviews/new
   def new
-    @review = Review.new(reviewable: @reviewable)
+    if @user_already_reviewed
+      redirect_to polymorphic_path([@reviewable, Review]), alert: "You already reviewed this product."
+    else
+      @review = Review.new(reviewable: @reviewable)
+    end
   end
 
   # GET /reviews/1/edit
@@ -27,12 +33,16 @@ class ReviewsController < ApplicationController
 
   # POST /reviews
   def create
-    @review = Review.new(review_params.merge(user_id: current_user.id, reviewable: @reviewable))
-
-    if @review.save
-      redirect_to [@reviewable, @review], notice: "Review was successfully created."
+    if @user_already_reviewed
+      redirect_to polymorphic_path([@reviewable, Review]), alert: "You already reviewed this product."
     else
-      render :new
+      @review = Review.new(review_params.merge(user_id: current_user.id, reviewable: @reviewable))
+
+      if @review.save
+        redirect_to [@reviewable, @review], notice: "Review was successfully created."
+      else
+        render :new
+      end
     end
   end
 
@@ -53,9 +63,34 @@ class ReviewsController < ApplicationController
 
   private
 
+    def user_is_brand_owner?
+      # Returns a CollectionProxy, like #<ActiveRecord::Associations::CollectionProxy [#<AccountUser id: 13, account_id: 13, user_id: 7, roles: {"admin"=>true}, created_at: "2020-08-06 14:29:29", updated_at: "2020-08-06 14:29:29">]>
+      brand_owners = @reviewable.brand.account.account_users
+      account_owner = @reviewable.brand.account.owner_id
+
+      brand_owners.each do |brand_owner|
+        if current_user.id == brand_owner.user_id || current_user.id == account_owner
+          return @user_is_brand_owner = true
+        end
+      end
+
+      @user_is_brand_owner = false
+
+    end
+
+    def user_already_reviewed?
+      reviewed = Review.find_by(user: current_user.id)
+      if reviewed.present?
+        @user_already_reviewed = true
+        @review = reviewed
+      else
+        @user_already_reviewed = false
+      end
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_review
-      @review = Review.find(params[:id])
+      @review = Review.friendly.find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.

@@ -19,6 +19,17 @@ module Products
     acts_as_votable
 
     searchkick word_start: [:name], word_middle: [:name], text_middle: [:type_of, :primary_color]
+
+    validates :name, presence: true, length: { maximum: 100 }
+    validates :description, presence: true, length: { maximum: 3000 }
+    validates :retail_price, presence: true, numericality: { greater_than: 0, less_than: 1000000 }
+    validates :type_of, presence: true, if: :has_type_of?
+    validates :gender, presence: true, length: { maximum: 6 }, unless: :has_gender?
+    validates :materials, presence: true, length: { minimum: 3, maximum: 150 }, if: :has_material_or_colors?
+    validates :ingredients, presence: true, length: { minimum: 3, maximum: 3000 }, if: :has_ingredients?
+    validates :primary_color, presence: true, length: { minimum: 2, maximum: 30 }, if: :has_material_or_colors?
+    validates :secondary_color, presence: false, length: { minimum: 2, maximum: 30 }, if: :has_material_or_colors?
+
   end # included
 
   def search_data

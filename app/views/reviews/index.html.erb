@@ -3,7 +3,8 @@
     <h1 class="h3">Reviews</h1>
 
     <% if @reviews.any? %>
-      <%= link_to 'New Review', polymorphic_path([@reviewable, Review.new]), class: "btn btn-primary" %>
+      <%= link_to('New Review', polymorphic_path([@reviewable, Review], action: "new"), class: "btn btn-secondary outline") unless @user_already_reviewed || @user_is_brand_owner %>
+      <%= link_to('Your Review', polymorphic_path([@reviewable, @review]), class: "btn btn-primary") if @user_already_reviewed && !@user_is_brand_owner %>
     <% end %>
   </div>
 
@@ -13,10 +14,8 @@
         <thead>
           <tr>
             <th class="p-3 uppercase text-left text-xs"><%= sortable @reviews, :title, 'Title', class: 'text-gray-700' %></th>
-            <th class="p-3 uppercase text-left text-xs"><%= sortable @reviews, :quality, 'Quality', class: 'text-gray-700' %></th>
-            <th class="p-3 uppercase text-left text-xs"><%= sortable @reviews, :value, 'Value', class: 'text-gray-700' %></th>
-            <th class="p-3 uppercase text-left text-xs"><%= sortable @reviews, :compliment, 'Compliment', class: 'text-gray-700' %></th>
-            <th class="p-3 uppercase text-left text-xs"><%= sortable @reviews, :ratings, 'Ratings', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @reviews, :body, 'Review', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @reviews, :user, 'User', class: 'text-gray-700' %></th>
             <th class="p-3 uppercase text-left text-xs text-gray-700 w-20">Actions</th>
           </tr>
         </thead>
@@ -24,11 +23,9 @@
         <tbody>
         <% @reviews.each do |review| %>
           <tr class="group border-t border-gray-400 hover:bg-gray-100">
-            <td class="p-3"><%= review.title %></td>
-            <td class="p-3"><%= review.quality %></td>
-            <td class="p-3"><%= review.value %></td>
-            <td class="p-3"><%= review.compliment %></td>
-            <td class="p-3"><%= review.ratings %></td>
+            <td class="p-3"><%= link_to review.title, polymorphic_path([review.reviewable, review]) %></td>
+            <td class="p-3"><%= truncate(review.body.to_plain_text, length: 50) %></td>
+            <td class="p-3"><%= review.user.username %></td>
 
             <td>
               <%= link_to "View", polymorphic_path([@reviewable, review]), class: "btn btn-link no-underline" %>

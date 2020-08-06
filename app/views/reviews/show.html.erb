@@ -1,44 +1,49 @@
 <div class="container mx-auto my-8 px-4">
   <div class="max-w-3xl mx-auto">
     <div class="flex justify-between items-center mb-4">
-      <h1 class="h3"><%= link_to 'Reviews', polymorphic_path([@reviewable, @review]) %> > Review #<%= @review.id %></h1>
+      <h4>
+        <%= link_to "#{@reviewable.model_name.to_s}", polymorphic_path(@reviewable.class) %> > <%= link_to @reviewable.name, polymorphic_path([@reviewable]) %> > <%= link_to 'Reviews', polymorphic_path([@reviewable, Review]) %>
+
+      </h4>
       <%= link_to 'Edit', edit_polymorphic_path([@reviewable, @review]), class: "btn btn-link" %>
     </div>
 
     <div class="bg-white rounded shadow p-8">
-            <div class="mb-4">
-        <h5>Reviewable</h5>
-        <%= @review.reviewable %>
+
+      <div class="mb-4">
+        <h3><%= @review.title %></h3>
+        <p class="text-gray-600 text-md ml-4">Written by: <%= link_to @review.user.username, "#" %> on <%= @review.created_at.strftime("%A, %d %b %Y at %l:%M %p") %></p>
       </div>
-            <div class="mb-4">
-        <h5>User</h5>
-        <%= @review.user %>
-      </div>
-            <div class="mb-4">
-        <h5>Title</h5>
-        <%= @review.title %>
-      </div>
-            <div class="mb-4">
-        <h5>Body</h5>
+
+      <div class="mb-4">
         <%= @review.body %>
       </div>
-            <div class="mb-4">
+
+      <div class="mb-4">
         <h5>Quality</h5>
         <%= @review.quality %>
       </div>
-            <div class="mb-4">
+
+      <div class="mb-4">
         <h5>Value</h5>
         <%= @review.value %>
       </div>
-            <div class="mb-4">
+
+      <div class="mb-4">
         <h5>Compliment</h5>
         <%= @review.compliment %>
       </div>
-            <div class="mb-4">
+
+      <div class="mb-4">
         <h5>Ratings</h5>
-        <%= @review.ratings %>
+        <% @review.ratings.each do |key, value| %>
+          <% if value != nil %>
+            <%= "#{key}: #{value}" %><br>
+          <% end %>
+        <% end %>
       </div>
-          </div>
+
+    </div>
   </div>
 </div>
 <% console %>

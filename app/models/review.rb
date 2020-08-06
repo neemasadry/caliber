@@ -88,34 +88,42 @@ class Review < ApplicationRecord
 
   def is_accessory?
     return true if self.reviewable_type == "Accessory"
+    false
   end
 
   def is_fragrance?
     return true if self.reviewable_type == "Fragrance"
+    false
   end
 
   def is_shoe?
     return true if self.reviewable_type == "Shoe"
+    false
   end
 
   def is_cosmetic?
     return true if self.reviewable_type == "Cosmetic"
+    false
   end
 
   def is_top?
     return true if self.reviewable_type == "Top"
+    false
   end
 
   def is_bottom?
     return true if self.reviewable_type == "Bottom"
+    false
   end
 
   def is_dress?
     return true if self.reviewable_type == "Dress"
+    false
   end
 
   def is_jewelry?
     return true if self.reviewable_type == "Jewelry"
+    false
   end
 
 end
