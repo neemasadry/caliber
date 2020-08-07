@@ -1,5 +1,6 @@
 class FragrancesController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
+  before_action :set_user_on_personal_account
   before_action :set_fragrance, only: [:show, :edit, :update, :destroy]
 
   after_action :verify_authorized
@@ -57,10 +58,15 @@ class FragrancesController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_fragrance
     @fragrance = Fragrance.friendly.find(params[:id])
+    authorize @fragrance
   end
 
   # Only allow a trusted parameter "white list" through.
   def fragrance_params
     params.require(:fragrance).permit(:user_id, :brand_id, :name, { product_images_attributes: [] }, :description, :retail_price, :release_date, :gender, :ingredients, :top_notes, :middle_notes, :base_notes, :accords, :product_url)
+  end
+
+  def set_user_on_personal_account
+    @user_on_personal_account = current_account.personal?
   end
 end

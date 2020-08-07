@@ -1,5 +1,6 @@
 class BottomsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
+  before_action :set_user_on_personal_account
   before_action :set_bottom, only: [:show, :edit, :update, :destroy]
 
   after_action :verify_authorized
@@ -57,10 +58,15 @@ class BottomsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_bottom
     @bottom = Bottom.friendly.find(params[:id])
+    authorize @bottom
   end
 
   # Only allow a trusted parameter "white list" through.
   def bottom_params
     params.require(:bottom).permit(:user_id, :brand_id, :name, { product_images_attributes: [] }, :description, :retail_price, :retail_price, :type_of, :gender, :materials, :primary_color, :secondary_color, :product_url)
+  end
+
+  def set_user_on_personal_account
+    @user_on_personal_account = current_account.personal?
   end
 end
