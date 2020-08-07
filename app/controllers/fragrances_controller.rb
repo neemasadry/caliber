@@ -2,6 +2,8 @@ class FragrancesController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :set_fragrance, only: [:show, :edit, :update, :destroy]
 
+  after_action :verify_authorized
+
   # GET /fragrances
   def index
     @pagy, @fragrances = pagy(Fragrance.sort_by_params(params[:sort], sort_direction))
@@ -26,7 +28,7 @@ class FragrancesController < ApplicationController
 
   # POST /fragrances
   def create
-    @fragrance = Fragrance.new(fragrance_params)
+    @fragrance = Fragrance.new(fragrance_params.merge(user_id: current_user.id))
 
     if @fragrance.save
       redirect_to @fragrance, notice: "Fragrance was successfully created."
@@ -59,6 +61,6 @@ class FragrancesController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def fragrance_params
-    params.require(:fragrance).permit(:user_id, :brand_id, :name, :product_image_data, :description, :retail_price, :release_date, :gender, :ingredients, :top_notes, :middle_notes, :base_notes, :accords, :product_url)
+    params.require(:fragrance).permit(:user_id, :brand_id, :name, { product_images_attributes: [] }, :description, :retail_price, :release_date, :gender, :ingredients, :top_notes, :middle_notes, :base_notes, :accords, :product_url)
   end
 end

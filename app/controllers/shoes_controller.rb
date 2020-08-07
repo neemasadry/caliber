@@ -2,6 +2,8 @@ class ShoesController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :set_shoe, only: [:show, :edit, :update, :destroy]
 
+  after_action :verify_authorized
+
   # GET /shoes
   def index
     @pagy, @shoes = pagy(Shoe.sort_by_params(params[:sort], sort_direction))
@@ -26,7 +28,7 @@ class ShoesController < ApplicationController
 
   # POST /shoes
   def create
-    @shoe = Shoe.new(shoe_params)
+    @shoe = Shoe.new(shoe_params.merge(user_id: current_user.id))
 
     if @shoe.save
       redirect_to @shoe, notice: "Shoe was successfully created."
@@ -59,6 +61,6 @@ class ShoesController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def shoe_params
-    params.require(:shoe).permit(:user_id, :brand_id, :name, :product_image_data, :description, :retail_price, :type_of, :gender, :materials, :primary_color, :secondary_color, :product_url)
+    params.require(:shoe).permit(:user_id, :brand_id, :name, { product_images_attributes: [] }, :description, :retail_price, :type_of, :gender, :materials, :primary_color, :secondary_color, :product_url)
   end
 end

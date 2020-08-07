@@ -2,6 +2,8 @@ class DressesController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :set_dress, only: [:show, :edit, :update, :destroy]
 
+  after_action :verify_authorized
+
   # GET /dresses
   def index
     @pagy, @dresses = pagy(Dress.sort_by_params(params[:sort], sort_direction))
@@ -26,7 +28,7 @@ class DressesController < ApplicationController
 
   # POST /dresses
   def create
-    @dress = Dress.new(dress_params)
+    @dress = Dress.new(dress_params.merge(user_id: current_user.id))
 
     if @dress.save
       redirect_to @dress, notice: "Dress was successfully created."
@@ -59,6 +61,6 @@ class DressesController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def dress_params
-    params.require(:dress).permit(:user_id, :brand_id, :name, :product_image_data, :description, :retail_price, :type_of, :gender, :materials, :primary_color, :secondary_color, :product_url)
+    params.require(:dress).permit(:user_id, :brand_id, :name, { product_images_attributes: [] }, :description, :retail_price, :type_of, :gender, :materials, :primary_color, :secondary_color, :product_url)
   end
 end

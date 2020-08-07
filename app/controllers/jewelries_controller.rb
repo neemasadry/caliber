@@ -2,6 +2,8 @@ class JewelriesController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :set_jewelry, only: [:show, :edit, :update, :destroy]
 
+  after_action :verify_authorized
+
   # GET /jewelries
   def index
     @pagy, @jewelries = pagy(Jewelry.sort_by_params(params[:sort], sort_direction))
@@ -26,7 +28,7 @@ class JewelriesController < ApplicationController
 
   # POST /jewelries
   def create
-    @jewelry = Jewelry.new(jewelry_params)
+    @jewelry = Jewelry.new(jewelry_params.merge(user_id: current_user.id))
 
     if @jewelry.save
       redirect_to @jewelry, notice: "Jewelry was successfully created."
@@ -59,6 +61,6 @@ class JewelriesController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def jewelry_params
-    params.require(:jewelry).permit(:user_id, :brand_id, :name, :product_image_data, :description, :retail_price, :type_of, :gender, :materials, :primary_color, :secondary_color, :product_url)
+    params.require(:jewelry).permit(:user_id, :brand_id, :name, { product_images_attributes: [] }, :description, :retail_price, :type_of, :gender, :materials, :primary_color, :secondary_color, :product_url)
   end
 end

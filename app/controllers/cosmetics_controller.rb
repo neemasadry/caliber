@@ -2,6 +2,8 @@ class CosmeticsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :set_cosmetic, only: [:show, :edit, :update, :destroy]
 
+  after_action :verify_authorized
+
   # GET /cosmetics
   def index
     @pagy, @cosmetics = pagy(Cosmetic.sort_by_params(params[:sort], sort_direction))
@@ -26,7 +28,7 @@ class CosmeticsController < ApplicationController
 
   # POST /cosmetics
   def create
-    @cosmetic = Cosmetic.new(cosmetic_params)
+    @cosmetic = Cosmetic.new(cosmetic_params.merge(user_id: current_user.id))
 
     if @cosmetic.save
       redirect_to @cosmetic, notice: "Cosmetic was successfully created."
@@ -59,6 +61,6 @@ class CosmeticsController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def cosmetic_params
-    params.require(:cosmetic).permit(:user_id, :brand_id, :name, :product_image_data, :description, :retail_price, :type_of, :gender, :ingredients, :product_url)
+    params.require(:cosmetic).permit(:user_id, :brand_id, :name, { product_images_attributes: [] }, :description, :retail_price, :type_of, :gender, :ingredients, :product_url)
   end
 end

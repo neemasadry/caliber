@@ -2,6 +2,8 @@ class TopsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :set_top, only: [:show, :edit, :update, :destroy]
 
+  after_action :verify_authorized
+
   # GET /tops
   def index
     @pagy, @tops = pagy(Top.sort_by_params(params[:sort], sort_direction))
@@ -26,7 +28,7 @@ class TopsController < ApplicationController
 
   # POST /tops
   def create
-    @top = Top.new(top_params)
+    @top = Top.new(top_params.merge(user_id: current_user.id))
 
     if @top.save
       redirect_to @top, notice: "Top was successfully created."
@@ -59,6 +61,6 @@ class TopsController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def top_params
-    params.require(:top).permit(:user_id, :brand_id, :name, :product_image_data, :description, :retail_price, :type_of, :gender, :materials, :primary_color, :secondary_color, :product_url)
+    params.require(:top).permit(:user_id, :brand_id, :name, { product_images_attributes: [] }, :description, :retail_price, :type_of, :gender, :materials, :primary_color, :secondary_color, :product_url)
   end
 end

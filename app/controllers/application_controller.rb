@@ -10,9 +10,12 @@ class ApplicationController < ActionController::Base
   include Pagy::Backend
   include CurrentHelper
   include Sortable
+  include Pundit # Added
 
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :masquerade_user!
+
+  #after_action :verify_authorized, unless: :devise_controller?
 
   protected
 
