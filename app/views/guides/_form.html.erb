@@ -1,0 +1,42 @@
+<%= form_with(model: guide, html: { enctype: "multipart/form-data" }) do |form| %>
+  <%= render "shared/error_messages", resource: form.object %>
+
+  <div class="form-group">
+    <%= form.label :guide_image, "Cover Image" %>
+    <%= form.hidden_field :guide_image, value: @guide.cached_guide_image_data %>
+    <%= form.file_field :guide_image, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :title %>
+    <%= form.text_field :title, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :body %>
+    <%= form.rich_text_area :body, data: { controller: "mentions", target: "mentions.field" }, class: "rich-textarea" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :category %>
+    <%= form.text_field :category, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :subcategory_one %>
+    <%= form.text_field :subcategory_one, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :subcategory_two %>
+    <%= form.text_field :subcategory_two, class: "form-control" %>
+  </div>
+
+  <div class="form-group flex justify-between">
+    <%= form.button class: "btn btn-primary" %>
+
+    <% if form.object.persisted? %>
+      <%= link_to 'Delete', form.object, class: "btn btn-danger outline", method: :delete, data: { remote: true, confirm: "Are you sure?" } %>
+    <% end %>
+  </div>
+<% end %>
