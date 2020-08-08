@@ -55,7 +55,8 @@ tag_list_options = ["fashion", "entrepreneurship", "business", "productivity", "
 			subcategory_one: rand_one,
 			subcategory_two: rand_two,
 			user_id: get_user.id,
-			account_id: rand_user_account.id
+			account_id: rand_user_account.id,
+			brand_id: nil
 		)
 	elsif user_has_multiple_accounts && personal_or_brand == 2
 		Guide.create!(
@@ -66,7 +67,8 @@ tag_list_options = ["fashion", "entrepreneurship", "business", "productivity", "
 			subcategory_one: rand_one,
 			subcategory_two: rand_two,
 			user_id: get_user.id,
-			account_id: rand_user_account.id
+			account_id: rand_user_account.id,
+			brand_id: rand_user_account_brand.id
 		)
 	else
 		Guide.create!(
