@@ -5,7 +5,7 @@
   </div>
 <% end %>
 
-<nav class="flex items-center justify-between flex-wrap bg-white border-b px-4 py-2" data-controller="toggle">
+<nav class="flex items-center justify-between flex-wrap bg-white border-b px-4 py-2 mb-8" data-controller="toggle">
   <div class="flex items-center flex-shrink-0 mr-6">
     <%= link_to root_path do %>
       <%#= render_svg "logo", styles: "fill-current text-gray-700 hover:text-gray-800" %>
@@ -42,7 +42,9 @@
             <div data-target="dropdown.menu" class="lg:absolute lg:right-0 mt-2 hidden z-20">
               <div class="bg-white shadow rounded border overflow-hidden">
                 <%= link_to t(".signed_in_as_html", user: current_account.name), current_account, class: 'border-b text-sm no-underline block px-6 py-3 text-gray-800 bg-white hover:bg-gray-300 whitespace-no-wrap' %>
-                <%= link_to t(".profile"), edit_user_registration_path, class: 'no-underline block px-6 py-3 text-sm text-gray-800 bg-white hover:bg-gray-300 whitespace-no-wrap' %>
+                <div class="border-t px-6 py-3 text-gray-800 bg-white font-bold text-xs uppercase">Personal</div>
+                <%= link_to t(".view_profile"), user_profile_path(current_user), class: 'no-underline block px-6 py-3 text-sm text-gray-800 bg-white hover:bg-gray-300 whitespace-no-wrap' %>
+                <%= link_to t(".edit_profile"), edit_user_registration_path, class: 'no-underline block px-6 py-3 text-sm text-gray-800 bg-white hover:bg-gray-300 whitespace-no-wrap' %>
                 <%= link_to t(".password"), account_password_path, class: 'no-underline block px-6 py-3 text-sm text-gray-800 bg-white  hover:bg-gray-300 whitespace-no-wrap' %>
                 <%= link_to t(".connected_accounts"), user_connected_accounts_path, class: 'no-underline block px-6 py-3 text-sm text-gray-800 bg-white  hover:bg-gray-300 whitespace-no-wrap' if Devise.omniauth_configs.any? %>
                 <%= link_to t(".billing"),  subscription_path, class: 'no-underline block px-6 py-3 text-sm text-gray-800 bg-white  hover:bg-gray-300 whitespace-no-wrap' if Jumpstart.config.payments_enabled? %>

@@ -8,10 +8,10 @@
 
         <div class="w-full overflow-hidden md:w-1/2 lg:w-1/2 xl:w-1/">
 
-          <%= link_to user_profiles_path(comment.user) do %>
+          <%= link_to user_profile_path(comment.user) do %>
             <div class="flex items-center">
               <div>
-                <%= image_tag comment.user.avatar, class: "inline-block h-9 w-9 rounded-full" %>
+                <%= image_tag comment.user.avatar_image_url(width: 40, height: 40, crop: :fit, gravity: :center), class: "inline-block h-9 w-9 rounded-full" %>
               </div>
               <div class="ml-3">
                 <p class="text-sm leading-5 font-medium text-gray-700 group-hover:text-gray-900">

@@ -105,6 +105,21 @@ Rails.application.routes.draw do
       registrations: "users/registrations"
     }
 
+  # scope module: 'user_profiles', path: 'users'
+  resources :user_profiles, :only => [:index, :show]
+    # member do
+    #   put "follow", to: "user_profiles#follow"
+    #   put "watch", to: "user_profiles#watch"
+    # end
+
+    # resources :notifications do
+    #   collection do
+    #     post :mark_as_read
+    #     post :mark_all_as_read
+    #   end
+    # end
+  # end
+
   resources :announcements, only: [:index]
   resources :api_tokens
   resources :accounts do

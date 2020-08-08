@@ -1,4 +1,31 @@
 .tab-active {
+  /*background: linear-gradient(116deg, #3957F4 22%, #2F87EE 90%);*/
+  /*background: rgba(180, 180, 180, 0.6);*/
+  border-radius: 4px 4px 0px 0px;
+
+  a {
+    /*@apply text-white;*/
+
+    &:hover,
+    &:focus,
+    &:active {
+      /*background: linear-gradient(308deg, #3957F4 24%, #2F87EE 80%);*/
+      /*background: rgba(0, 128, 0, 0.3);*/
+      border-radius: 4px 4px 0px 0px;
+
+      /*@apply text-gray-400;*/
+    }
+  }
+}
+
+/*
+tabs_active_tab: "border-indigo-500 text-indigo-600 focus:outline-none focus:text-indigo-800 focus:border-indigo-700",
+ */
+
+
+
+/*
+.tab-active {
   background: linear-gradient(116deg, #3957F4 22%, #2F87EE 90%);
   border-radius: 4px 4px 0px 0px;
 
@@ -14,3 +41,4 @@
     }
   }
 }
+*/

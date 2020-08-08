@@ -80,4 +80,36 @@ module ApplicationHelper
     return @array_of_brands
   end
 
+  def display_price_range(range)
+    if range == 1
+      "Mass Market ($)"
+    elsif range == 2
+      "Reasonable ($$)"
+    elsif range == 3
+      "Premium ($$$)"
+    elsif range == 4
+      "Luxury ($$$$)"
+    else
+      "Reasonable ($$)"
+    end # if..elsif..else
+  end
+
+  def user_profile_nav_tab_options(select_arr)
+    #["products_&_brands", "guides", "profile", "notifications", "social", "settings", "subscription", "chat", "sponsor", "analytics"]
+    if select_arr == "nav_only"
+      #return ["products_&_brands", "guides", "profile", "notifications", "social", "settings"]
+      return {
+        "profile" => "fa-user-circle",
+        "products_&_brands" => "fa-tshirt",
+        "photos_&_videos" => "fa-camera-alt",
+        "social" => "fa-chart-network",
+        "settings" => "fa-cogs"
+      }
+    elsif select_arr == "render_page_names"
+      return ["profile", "products_and_brands", "photos_and_videos", "social", "settings"]
+    elsif select_arr == "render_page_names_for_select"
+      return ["Profile", "Products & Guides", "Photos & Videos", "Social", "Settings"]
+    end
+  end
+
 end

@@ -192,6 +192,8 @@ en:
     navbar:
       signed_in_as_html: "Signed in as <strong>%{user}</strong>"
       profile: "Profile"
+      view_profile: "View Profile"
+      edit_profile: "Edit Profile"
       password: "Password"
       connected_accounts: "Connected Accounts"
       billing: "Billing"
