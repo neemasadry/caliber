@@ -65,11 +65,11 @@ class StatusesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_status
-    @status = Status.friendly.find(params[:id])
+    @status = Status.find(params[:id])
   end
 
   # Only allow a trusted parameter "white list" through.
   def status_params
-    params.require(:status).permit(:user_id, :account_id, :brand_id, :title, :description, :status_image, :status_video, :status_tag_list)
+    params.require(:status).permit(:content, :status_image, :status_video, :status_tag_list)
   end
 end

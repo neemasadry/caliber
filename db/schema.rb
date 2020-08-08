@@ -514,11 +514,9 @@ ActiveRecord::Schema.define(version: 2020_08_08_184920) do
     t.bigint "user_id", null: false
     t.bigint "account_id", null: false
     t.bigint "brand_id"
-    t.string "title", limit: 150, null: false
-    t.text "description", null: false
+    t.string "content", limit: 240, null: false
     t.text "status_image_data"
     t.text "status_video_data"
-    t.string "slug"
     t.datetime "discarded_at"
     t.integer "cached_votes_total", default: 0
     t.integer "cached_votes_score", default: 0
@@ -532,7 +530,6 @@ ActiveRecord::Schema.define(version: 2020_08_08_184920) do
     t.index ["account_id"], name: "index_statuses_on_account_id"
     t.index ["brand_id"], name: "index_statuses_on_brand_id"
     t.index ["discarded_at"], name: "index_statuses_on_discarded_at"
-    t.index ["slug"], name: "index_statuses_on_slug", unique: true
     t.index ["user_id"], name: "index_statuses_on_user_id"
   end
 

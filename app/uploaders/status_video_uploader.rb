@@ -2,8 +2,8 @@ class StatusVideoUploader < Shrine
 
   plugin :upload_options, store: ->(io, context) do
     {
-      folder: "#{Rails.env}/store/brands/avatars/",
-      tags: ["users", "brand", "statuses", "user status", "brand status"]
+      folder: "#{Rails.env}/store/users/statuses/videos",
+      tags: ["users", "brand", "statuses", "video for status", "user status", "brand status", "videos"]
     }
   end
 

@@ -5,15 +5,14 @@ class CreateStatuses < ActiveRecord::Migration[6.0]
       t.references :account, null: false, foreign_key: true
       t.references :brand, null: true, foreign_key: true
 
-      t.string :title, null: false, limit: 150
-      t.text :description, null: false, limit: 5000
+      t.string :content, null: false, limit: 240
 
       # Shrine (either photo XOR video)
       t.text :status_image_data, null: true
       t.text :status_video_data, null: true
 
       # FriendlyID slug
-      t.string :slug, index: { unique: true }
+      # t.string :slug, index: { unique: true }
 
       # Discard gem
       t.datetime :discarded_at, index: true
