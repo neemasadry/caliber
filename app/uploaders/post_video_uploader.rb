@@ -1,4 +1,4 @@
-class StatusVideoUploader < Shrine
+class PostVideoUploader < Shrine
 
   plugin :upload_options, store: ->(io, context) do
     {

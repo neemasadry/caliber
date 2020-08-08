@@ -1,4 +1,4 @@
-<%= form_with(model: status, html: { enctype: "multipart/form-data" }) do |form| %>
+<%= form_with(model: post, html: { enctype: "multipart/form-data" }) do |form| %>
   <%= render "shared/error_messages", resource: form.object %>
 
   <div class="form-group">
@@ -9,24 +9,24 @@
   <div class="flex flex-wrap overflow-hidden md:-mx-1 lg:-mx-1 xl:-mx-1">
     <div class="w-full overflow-hidden md:my-1 md:px-1 md:w-1/2 lg:my-1 lg:px-1 lg:w-1/2 xl:my-1 xl:px-1 xl:w-1/2">
       <div class="form-group">
-        <%= form.label :status_image, "Photo" %>
-        <%= form.hidden_field :status_image, value: @status.cached_status_image_data %>
-        <%= form.file_field :status_image, accept: "image/png,image/jpeg,image/webp" %>
+        <%= form.label :post_image, "Photo" %>
+        <%= form.hidden_field :post_image, value: @post.cached_post_image_data %>
+        <%= form.file_field :post_image, accept: "image/png,image/jpeg,image/webp" %>
       </div>
     </div>
 
     <div class="w-full overflow-hidden md:my-1 md:px-1 md:w-1/2 lg:my-1 lg:px-1 lg:w-1/2 xl:my-1 xl:px-1 xl:w-1/2">
       <div class="form-group">
-        <%= form.label :status_video, "Video" %>
-        <%= form.hidden_field :status_video, value: @status.cached_status_video_data %>
-        <%= form.file_field :status_video, accept: "video/mp4" %>
+        <%= form.label :post_video, "Video" %>
+        <%= form.hidden_field :post_video, value: @post.cached_post_video_data %>
+        <%= form.file_field :post_video, accept: "video/mp4" %>
       </div>
     </div>
   </div>
 
   <div class="form-group">
-    <%= form.label :status_tags, "Tags" %>
-    <%= form.text_field :status_tag_list, value: form.object.status_tag_list.to_s, class: "form-control" %>
+    <%= form.label :post_tags, "Tags" %>
+    <%= form.text_field :post_tag_list, value: form.object.post_tag_list.to_s, class: "form-control" %>
   </div>
 
   <div class="form-group flex justify-between">

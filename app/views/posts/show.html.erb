@@ -1,8 +1,8 @@
 <div class="container mx-auto my-8 px-4">
   <div class="max-w-3xl mx-auto">
     <div class="flex justify-between items-center mb-4">
-      <h1 class="h3"><%= link_to 'Statuses', statuses_path %> > Status #<%= @status.id %></h1>
-      <%= link_to 'Edit', edit_status_path(@status), class: "btn btn-link" %>
+      <h1 class="h3"><%= link_to 'Posts', statuses_path %> > Status #<%= @post.id %></h1>
+      <%= link_to 'Edit', edit_status_path(@post), class: "btn btn-link" %>
     </div>
 
 
@@ -11,24 +11,24 @@
       <div class="px-4 py-5 sm:p-6">
 
         <div class="mb-4">
-          <h3><%= @status.content %></h3>
+          <h3><%= @post.content %></h3>
         </div>
 
-        <% if @status.status_image_data.present? && !@status.status_video_data.present? %>
+        <% if @post.status_image_data.present? && !@post.status_video_data.present? %>
           <div class="mb-4">
-            <%= image_tag @status.status_image_url %>
+            <%= image_tag @post.status_image_url %>
           </div>
         <% end %>
 
-        <% if @status.status_video_data.present? && !@status.status_image_data.present? %>
+        <% if @post.status_video_data.present? && !@post.status_image_data.present? %>
           <div class="mb-4">
-            <%= @status.status_video_url %>
+            <%= @post.status_video_url %>
           </div>
         <% end %>
 
         <div class="mb-4">
           <h5>Tags</h5>
-          <%= raw @status.status_tag_list.map { |t| link_to(t, "#", class: "inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium leading-5 bg-gray-100 text-gray-800") }.join(" ") %>
+          <%= raw @post.status_tag_list.map { |t| link_to(t, "#", class: "inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium leading-5 bg-gray-100 text-gray-800") }.join(" ") %>
         </div>
       </div>
       <div class="border-t border-gray-200 px-4 py-4 sm:px-6">
@@ -40,7 +40,7 @@
           </div>
 
           <div class="w-full overflow-hidden md:my-1 md:px-1 md:w-1/2 lg:my-1 lg:px-1 lg:w-1/2 xl:my-1 xl:px-1 xl:w-1/2 text-right text-gray-600 text-sm">
-            Posted by <%= @status.user.username %> <%= "from #{@status.brand.name}" if @status.brand.present? %> on <%= @status.created_at.strftime("%B %e, %Y @ %l:%M %p") %>
+            Posted by <%= @post.user.username %> <%= "from #{@post.brand.name}" if @post.brand.present? %> on <%= @post.created_at.strftime("%B %e, %Y @ %l:%M %p") %>
           </div>
 
         </div>

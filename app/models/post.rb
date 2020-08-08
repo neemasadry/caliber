@@ -33,9 +33,9 @@
 #  fk_rails_...  (brand_id => brands.id)
 #  fk_rails_...  (user_id => users.id)
 #
-class Status < ApplicationRecord
-  include StatusImageUploader::Attachment(:status_image)
-  include StatusVideoUploader::Attachment(:status_video)
+class Post < ApplicationRecord
+  include PostImageUploader::Attachment(:post_image)
+  include PostVideoUploader::Attachment(:post_video)
   include Discard::Model
 
   belongs_to :user
@@ -44,7 +44,7 @@ class Status < ApplicationRecord
 
   acts_as_votable
   #acts_as_favoritable
-  acts_as_taggable_on :status_tags
+  acts_as_taggable_on :post_tags
 
   validates :content, presence: true, length: { minimum: 2, maximum: 240 }
 

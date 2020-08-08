@@ -42,7 +42,7 @@ class Account < ApplicationRecord
   # Added
   has_one  :brand
   has_many :comments, as: :commentable
-  has_many :statuses, dependent: :destroy
+  has_many :posts, dependent: :destroy
 
   scope :personal, -> { where(personal: true) }
   scope :impersonal, -> { where(personal: false) }

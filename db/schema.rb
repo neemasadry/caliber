@@ -446,6 +446,29 @@ ActiveRecord::Schema.define(version: 2020_08_08_184920) do
     t.integer "trial_period_days", default: 0
   end
 
+  create_table "posts", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "account_id", null: false
+    t.bigint "brand_id"
+    t.string "content", limit: 240, null: false
+    t.text "post_image_data"
+    t.text "post_video_data"
+    t.datetime "discarded_at"
+    t.integer "cached_votes_total", default: 0
+    t.integer "cached_votes_score", default: 0
+    t.integer "cached_votes_up", default: 0
+    t.integer "cached_votes_down", default: 0
+    t.integer "cached_weighted_score", default: 0
+    t.integer "cached_weighted_total", default: 0
+    t.float "cached_weighted_average", default: 0.0
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["account_id"], name: "index_posts_on_account_id"
+    t.index ["brand_id"], name: "index_posts_on_brand_id"
+    t.index ["discarded_at"], name: "index_posts_on_discarded_at"
+    t.index ["user_id"], name: "index_posts_on_user_id"
+  end
+
   create_table "product_images", force: :cascade do |t|
     t.string "product_imageable_type", null: false
     t.bigint "product_imageable_id", null: false
@@ -508,29 +531,6 @@ ActiveRecord::Schema.define(version: 2020_08_08_184920) do
     t.index ["brand_id"], name: "index_shoes_on_brand_id"
     t.index ["slug"], name: "index_shoes_on_slug", unique: true
     t.index ["user_id"], name: "index_shoes_on_user_id"
-  end
-
-  create_table "statuses", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "account_id", null: false
-    t.bigint "brand_id"
-    t.string "content", limit: 240, null: false
-    t.text "status_image_data"
-    t.text "status_video_data"
-    t.datetime "discarded_at"
-    t.integer "cached_votes_total", default: 0
-    t.integer "cached_votes_score", default: 0
-    t.integer "cached_votes_up", default: 0
-    t.integer "cached_votes_down", default: 0
-    t.integer "cached_weighted_score", default: 0
-    t.integer "cached_weighted_total", default: 0
-    t.float "cached_weighted_average", default: 0.0
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["account_id"], name: "index_statuses_on_account_id"
-    t.index ["brand_id"], name: "index_statuses_on_brand_id"
-    t.index ["discarded_at"], name: "index_statuses_on_discarded_at"
-    t.index ["user_id"], name: "index_statuses_on_user_id"
   end
 
   create_table "taggings", id: :serial, force: :cascade do |t|
@@ -717,14 +717,14 @@ ActiveRecord::Schema.define(version: 2020_08_08_184920) do
   add_foreign_key "guides", "users"
   add_foreign_key "jewelries", "brands"
   add_foreign_key "jewelries", "users"
+  add_foreign_key "posts", "accounts"
+  add_foreign_key "posts", "brands"
+  add_foreign_key "posts", "users"
   add_foreign_key "product_images", "brands"
   add_foreign_key "product_images", "users"
   add_foreign_key "reviews", "users"
   add_foreign_key "shoes", "brands"
   add_foreign_key "shoes", "users"
-  add_foreign_key "statuses", "accounts"
-  add_foreign_key "statuses", "brands"
-  add_foreign_key "statuses", "users"
   add_foreign_key "taggings", "tags"
   add_foreign_key "tops", "brands"
   add_foreign_key "tops", "users"

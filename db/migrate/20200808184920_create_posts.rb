@@ -1,6 +1,6 @@
 class CreateStatuses < ActiveRecord::Migration[6.0]
   def change
-    create_table :statuses do |t|
+    create_table :posts do |t|
       t.references :user, null: false, foreign_key: true
       t.references :account, null: false, foreign_key: true
       t.references :brand, null: true, foreign_key: true
@@ -8,8 +8,8 @@ class CreateStatuses < ActiveRecord::Migration[6.0]
       t.string :content, null: false, limit: 240
 
       # Shrine (either photo XOR video)
-      t.text :status_image_data, null: true
-      t.text :status_video_data, null: true
+      t.text :post_image_data, null: true
+      t.text :post_video_data, null: true
 
       # FriendlyID slug
       # t.string :slug, index: { unique: true }
