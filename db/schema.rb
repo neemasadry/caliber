@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_04_213737) do
+ActiveRecord::Schema.define(version: 2020_08_07_012655) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -318,6 +318,33 @@ ActiveRecord::Schema.define(version: 2020_08_04_213737) do
     t.index ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true
     t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
     t.index ["sluggable_type", "sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_type_and_sluggable_id"
+  end
+
+  create_table "guides", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "account_id", null: false
+    t.bigint "brand_id"
+    t.string "title", limit: 80, null: false
+    t.string "category", limit: 30, null: false
+    t.string "subcategory_one", limit: 30
+    t.string "subcategory_two", limit: 30
+    t.text "guide_image_data"
+    t.string "slug"
+    t.datetime "discarded_at"
+    t.integer "cached_votes_total", default: 0
+    t.integer "cached_votes_score", default: 0
+    t.integer "cached_votes_up", default: 0
+    t.integer "cached_votes_down", default: 0
+    t.integer "cached_weighted_score", default: 0
+    t.integer "cached_weighted_total", default: 0
+    t.float "cached_weighted_average", default: 0.0
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["account_id"], name: "index_guides_on_account_id"
+    t.index ["brand_id"], name: "index_guides_on_brand_id"
+    t.index ["discarded_at"], name: "index_guides_on_discarded_at"
+    t.index ["slug"], name: "index_guides_on_slug", unique: true
+    t.index ["user_id"], name: "index_guides_on_user_id"
   end
 
   create_table "jewelries", force: :cascade do |t|
@@ -641,6 +668,9 @@ ActiveRecord::Schema.define(version: 2020_08_04_213737) do
   add_foreign_key "dresses", "users"
   add_foreign_key "fragrances", "brands"
   add_foreign_key "fragrances", "users"
+  add_foreign_key "guides", "accounts"
+  add_foreign_key "guides", "brands"
+  add_foreign_key "guides", "users"
   add_foreign_key "jewelries", "brands"
   add_foreign_key "jewelries", "users"
   add_foreign_key "product_images", "brands"

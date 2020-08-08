@@ -1,4 +1,5 @@
 class GuidesController < ApplicationController
+  before_action :authenticate_user!, except: [:index, :show]
   before_action :set_guide, only: [:show, :edit, :update, :destroy]
 
   # GET /guides
@@ -25,7 +26,11 @@ class GuidesController < ApplicationController
 
   # POST /guides
   def create
-    @guide = Guide.new(guide_params)
+    if current_account.personal?
+      @guide = Guide.new(guide_params.merge(user_id: current_user.id, account_id: current_account.id))
+    else
+      @guide = Guide.new(guide_params.merge(user_id: current_user.id, account_id: current_account.id, brand_id: current_account.brand.id))
+    end
 
     if @guide.save
       redirect_to @guide, notice: "Guide was successfully created."
@@ -53,11 +58,11 @@ class GuidesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_guide
-    @guide = Guide.find(params[:id])
+    @guide = Guide.friendly.find(params[:id])
   end
 
   # Only allow a trusted parameter "white list" through.
   def guide_params
-    params.require(:guide).permit(:user_id, :account_id, :brand_id, :title, :body, :category, :subcategory_one, :subcategory_two)
+    params.require(:guide).permit(:user_id, :account_id, :brand_id, :title, :body, :category, :subcategory_one, :subcategory_two, :tag_list)
   end
 end

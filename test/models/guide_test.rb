@@ -13,6 +13,7 @@
 #  category                :string(30)       not null
 #  discarded_at            :datetime
 #  guide_image_data        :text
+#  slug                    :string
 #  subcategory_one         :string(30)
 #  subcategory_two         :string(30)
 #  title                   :string(80)       not null
@@ -27,6 +28,7 @@
 #  index_guides_on_account_id    (account_id)
 #  index_guides_on_brand_id      (brand_id)
 #  index_guides_on_discarded_at  (discarded_at)
+#  index_guides_on_slug          (slug) UNIQUE
 #  index_guides_on_user_id       (user_id)
 #
 # Foreign Keys
