@@ -13,6 +13,11 @@ class GuidesController < ApplicationController
 
   # GET /guides/1
   def show
+    #@guide_versions = @guide.versions
+
+    #votable_on_show_action
+    @model_name = "Guide"
+    @pagy, @all_comments = pagy(@guide.comments.where(parent_id: 0), items: 7)
   end
 
   # GET /guides/new

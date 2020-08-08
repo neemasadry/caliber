@@ -1,0 +1,77 @@
+<% nesting = local_assigns.fetch(:nesting, 1) %>
+<% max_nesting = local_assigns[:max_nesting] %>
+
+<% all_comments.each do |comment| %>
+  <div class="my-6 <%= ('ml-7' if nesting == 2) || ('ml-14' if nesting == 3)  || '' %> bg-white overflow-hidden shadow rounded-lg">
+    <div class="border-b border-gray-200 px-4 py-5 sm:px-6">
+      <div class="flex flex-wrap overflow-hidden">
+
+        <div class="w-full overflow-hidden md:w-1/2 lg:w-1/2 xl:w-1/">
+
+          <%= link_to user_profiles_path(comment.user) do %>
+            <div class="flex items-center">
+              <div>
+                <%= image_tag comment.user.avatar, class: "inline-block h-9 w-9 rounded-full" %>
+              </div>
+              <div class="ml-3">
+                <p class="text-sm leading-5 font-medium text-gray-700 group-hover:text-gray-900">
+                  <%= comment.user.username %>
+                </p>
+                <p class="text-xs leading-4 font-medium text-gray-500 group-hover:text-gray-700 group-focus:underline transition ease-in-out duration-150">
+                  <%= comment.created_at.strftime("%B %e, %Y @ %l:%M %p") %>
+                </p>
+              </div>
+            </div>
+          <% end %>
+
+        </div>
+
+        <!-- <div class="w-full overflow-hidden md:w-1/2 lg:w-1/2 xl:w-1/">
+          <span class="text-sm text-gray-500 justify-right">
+            <%#= render partial: "votable/liking", locals: { likeable: comment } if user_signed_in? %>
+          </span>
+        </div> -->
+
+      </div> <!-- class="flex flex-wrap overflow-hidden" -->
+    </div> <!-- class="border-b border-gray-200 px-4 py-5 sm:px-6" -->
+
+
+    <div class="px-4 py-5 sm:p-6">
+      <% if comment.deleted == false %>
+        <%= comment.body %>
+      <% else %>
+        [deleted]
+      <% end %>
+    </div>
+
+    <% if user_signed_in? %>
+      <div class="border-t border-gray-200 px-4 py-4 sm:px-6">
+        <% if comment.user == current_user && comment.deleted == false %>
+          <span data-controller="toggle">
+            <%= link_to "#", { data: { action: "click->toggle#toggle touch->toggle#toggle" } } do %>
+              <%= fa_icon("fal fa-reply", class: "mr-1") %>
+              Reply
+            <% end %>
+            <%= render partial: "comments/form", locals: { reviewable: @reviewable, commentable: comment.commentable, parent_id: reply_to_comment_id(comment, nesting, max_nesting), target: "toggle.toggleable", class: "mt-3 hidden" } %>
+          </span>
+        <% end %>
+        <% if (comment.user == current_user && comment.deleted == false) %>
+          <%
+            if params[:controller] == "reviews"
+              comment_nested_path = [comment.commentable.reviewable, comment.commentable, comment]
+            else
+              comment_nested_path = [comment.commentable, comment]
+            end
+          %>
+          <%= link_to comment_nested_path, { method: :delete, data: { confirm: "Are you sure?" }, class: "text-red-600 ml-3" } do %>
+            <%= fa_icon("fal fa-trash-alt", class: "mr-1") %>
+            Delete
+          <% end %>
+        <% end %>
+      </div>
+    <% end %> <!-- if user_signed_in? -->
+
+  </div>
+
+  <%= render partial: "comments/comment", locals: { all_comments: comment.comments, nesting: nesting + 1, max_nesting: local_assigns[:max_nesting] } %>
+<% end %>

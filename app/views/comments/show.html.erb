@@ -1,0 +1,31 @@
+<div class="container mx-auto my-8 px-4">
+  <div class="max-w-3xl mx-auto">
+    <div class="flex justify-between items-center mb-4">
+      <h1 class="h3"><%= link_to 'Comments', comments_path %> > Comment #<%= @comment.id %></h1>
+      <%= link_to 'Edit', edit_comment_path(@comment), class: "btn btn-link" %>
+    </div>
+
+    <div class="bg-white rounded shadow p-8">
+            <div class="mb-4">
+        <h5>Commentable type</h5>
+        <%= @comment.commentable_type %>
+      </div>
+            <div class="mb-4">
+        <h5>Commentable</h5>
+        <%= @comment.commentable_id %>
+      </div>
+            <div class="mb-4">
+        <h5>User</h5>
+        <%= @comment.user %>
+      </div>
+            <div class="mb-4">
+        <h5>User</h5>
+        <%= @comment.brand if @comment.brand.present? %>
+      </div>
+            <div class="mb-4">
+        <h5>Body</h5>
+        <%= @comment.body %>
+      </div>
+          </div>
+  </div>
+</div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_07_012655) do
+ActiveRecord::Schema.define(version: 2020_08_08_160347) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -208,6 +208,24 @@ ActiveRecord::Schema.define(version: 2020_08_07_012655) do
     t.index ["name"], name: "index_brands_on_name"
     t.index ["slug"], name: "index_brands_on_slug", unique: true
     t.index ["user_id"], name: "index_brands_on_user_id"
+  end
+
+  create_table "comments", force: :cascade do |t|
+    t.string "commentable_type", null: false
+    t.integer "commentable_id", null: false
+    t.integer "parent_id", default: 0, null: false
+    t.bigint "user_id", null: false
+    t.bigint "account_id", null: false
+    t.bigint "brand_id"
+    t.text "body", null: false
+    t.boolean "deleted", default: false, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["account_id"], name: "index_comments_on_account_id"
+    t.index ["brand_id"], name: "index_comments_on_brand_id"
+    t.index ["commentable_id"], name: "index_comments_on_commentable_id"
+    t.index ["commentable_type"], name: "index_comments_on_commentable_type"
+    t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
   create_table "cosmetics", force: :cascade do |t|
@@ -662,6 +680,9 @@ ActiveRecord::Schema.define(version: 2020_08_07_012655) do
   add_foreign_key "bottoms", "users"
   add_foreign_key "brands", "accounts"
   add_foreign_key "brands", "users"
+  add_foreign_key "comments", "accounts"
+  add_foreign_key "comments", "brands"
+  add_foreign_key "comments", "users"
   add_foreign_key "cosmetics", "brands"
   add_foreign_key "cosmetics", "users"
   add_foreign_key "dresses", "brands"

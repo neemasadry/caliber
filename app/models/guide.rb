@@ -49,7 +49,7 @@ class Guide < ApplicationRecord
   has_rich_text :body
   # has_one_attached :cover_image
   #has_many :sources, inverse_of: :guide
-  #has_many :comments, as: :commentable, dependent: :destroy
+  has_many :comments, as: :commentable, dependent: :destroy
 
   #accepts_nested_attributes_for :sources, allow_destroy: true, reject_if: :all_blank
 

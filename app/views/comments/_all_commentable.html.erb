@@ -1,0 +1,23 @@
+<%# Include on all commentable objects %>
+
+<div class="mt-4 max-w-2xl mx-auto">
+  <div class="bg-white overflow-hidden shadow rounded-lg">
+    <div class="border-b border-gray-200 px-4 py-5 sm:px-6 font-bold">
+      <!-- We use less vertical padding on card headers on desktop than on body sections -->
+      New Comment
+    </div>
+    <div class="px-4 py-5 sm:p-6">
+      <%= render partial: "comments/form", locals: { reviewable: @reviewable, commentable: (params[:controller] == "reviews" ? @review : @guide) } %>
+    </div>
+  </div>
+</div>
+
+<% if @review.present? || @guide.present? %>
+  <div class="mt-4 max-w-2xl mx-auto">
+    <h3><%= pluralize(@all_comments.count, "Comment") if @all_comments.count >= 1 %></h3>
+    <div class="bg-gray-100 px-4 py-5 sm:p-6">
+      <%= render(partial: "comments/comment", locals: { all_comments: @all_comments, max_nesting: 3 }) %>
+    </div>
+    </div>
+  </div>
+<% end %>

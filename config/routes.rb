@@ -1,48 +1,60 @@
 # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 Rails.application.routes.draw do
 
-  resources :guides
-  resources :brands
-
-
+  ### PRODUCTS ###
   resources :accessories, model_name: "Accessory" do
-    resources :reviews
+    resources :reviews do
+      resources :comments, only: [:create, :destroy], module: :reviews
+    end
   end
-
 
   resources :bottoms, model_name: "Bottom" do
-    resources :reviews
+    resources :reviews do
+      resources :comments, only: [:create, :destroy], module: :reviews
+    end
   end
-
 
   resources :cosmetics, model_name: "Cosmetic" do
-    resources :reviews
+    resources :reviews do
+      resources :comments, only: [:create, :destroy], module: :reviews
+    end
   end
-
 
   resources :dresses, model_name: "Dress" do
-    resources :reviews
+    resources :reviews do
+      resources :comments, only: [:create, :destroy], module: :reviews
+    end
   end
-
 
   resources :fragrances, model_name: "Fragrance" do
-    resources :reviews
+    resources :reviews do
+      resources :comments, only: [:create, :destroy], module: :reviews
+    end
   end
-
 
   resources :jewelries, model_name: "Jewelry" do
-    resources :reviews
+    resources :reviews do
+      resources :comments, only: [:create, :destroy], module: :reviews
+    end
   end
-
 
   resources :shoes, model_name: "Shoe" do
-    resources :reviews
+    resources :reviews do
+      resources :comments, only: [:create, :destroy], module: :reviews
+    end
   end
-
 
   resources :tops, model_name: "Top" do
-    resources :reviews
+    resources :reviews do
+      resources :comments, only: [:create, :destroy], module: :reviews
+    end
   end
+
+  resources :guides do
+    resources :comments, only: [:create, :destroy], module: :guides
+  end
+
+  resources :brands
 
   # Jumpstart views
   if Rails.env.development? || Rails.env.test?
