@@ -38,8 +38,8 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class Guide < ApplicationRecord
-  include GuideImageUploader::Attachment(:guide_image)
   extend FriendlyId
+  include GuideImageUploader::Attachment(:guide_image)
   include Discard::Model
 
   belongs_to :user

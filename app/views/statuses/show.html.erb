@@ -1,0 +1,45 @@
+<div class="container mx-auto my-8 px-4">
+  <div class="max-w-3xl mx-auto">
+    <div class="flex justify-between items-center mb-4">
+      <h1 class="h3"><%= link_to 'Statuses', statuses_path %> > Status #<%= @status.id %></h1>
+      <%= link_to 'Edit', edit_status_path(@status), class: "btn btn-link" %>
+    </div>
+
+    <div class="bg-white rounded shadow p-8">
+            <div class="mb-4">
+        <h5>User</h5>
+        <%= @status.user.username %>
+      </div>
+            <div class="mb-4">
+        <h5>Account</h5>
+        <%= @status.account.name %>
+      </div>
+            <div class="mb-4">
+        <h5>Brand</h5>
+        <%= @status.brand.name if @status.brand.present? %>
+      </div>
+            <div class="mb-4">
+        <h5>Title</h5>
+        <%= @status.title %>
+      </div>
+            <div class="mb-4">
+        <h5>Description</h5>
+        <%= @status.description %>
+      </div>
+            <div class="mb-4">
+        <h5>Status image data</h5>
+        <%= @status.status_image_data %>
+      </div>
+            <div class="mb-4">
+        <h5>Status video data</h5>
+        <%= @status.status_video_data %>
+      </div>
+
+      <div class="mb-4">
+        <h5>Tags</h5>
+        <%= raw @status.status_tag_list.map { |t| link_to(t, "#", class: "inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium leading-5 bg-gray-100 text-gray-800") }.join(" ") %>
+      </div>
+    </div>
+
+  </div>
+</div>

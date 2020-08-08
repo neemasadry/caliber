@@ -1,6 +1,10 @@
 # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 Rails.application.routes.draw do
 
+  resources :statuses do
+    resources :comments, only: [:create, :destroy], module: :statuses
+  end
+
   ### PRODUCTS ###
   resources :accessories, model_name: "Accessory" do
     resources :reviews do

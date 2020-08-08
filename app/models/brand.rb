@@ -56,6 +56,9 @@ class Brand < ApplicationRecord
   belongs_to :account
   belongs_to :user
 
+  has_many :comments, as: :commentable
+  has_many :statuses, dependent: :destroy
+
   friendly_id :alias, use: :slugged
   acts_as_favoritor
   has_paper_trail

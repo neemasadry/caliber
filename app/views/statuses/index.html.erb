@@ -1,0 +1,63 @@
+<div class="container mx-auto my-8 px-4">
+  <div class="flex justify-between items-center mb-4">
+    <h1 class="h3">Statuses</h1>
+
+    <% if @statuses.any? %>
+      <%= link_to 'New Status', new_status_path, class: "btn btn-primary" %>
+    <% end %>
+  </div>
+
+  <% if @statuses.any? %>
+    <div class="bg-white rounded shadow table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @statuses, :user_id, 'User', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @statuses, :account_id, 'Account', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @statuses, :brand_id, 'Brand', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @statuses, :title, 'Title', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @statuses, :description, 'Description', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @statuses, :status_image_data, 'Status image data', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @statuses, :status_video_data, 'Status video data', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @statuses, :discarded_at, 'Discarded at', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs text-gray-700 w-20">Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+        <% @statuses.each do |status| %>
+          <tr class="group border-t border-gray-400 hover:bg-gray-100">
+                      <td class="p-3"><%= status.user_id %></td>
+                      <td class="p-3"><%= status.account_id %></td>
+                      <td class="p-3"><%= status.brand_id %></td>
+                      <td class="p-3"><%= status.title %></td>
+                      <td class="p-3"><%= status.description %></td>
+                      <td class="p-3"><%= status.status_image_data %></td>
+                      <td class="p-3"><%= status.status_video_data %></td>
+                      <td class="p-3"><%= status.discarded_at %></td>
+          
+            <td>
+              <%= link_to "View", status, class: "btn btn-link no-underline" %>
+            </td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <% if @pagy.pages > 1 %>
+      <div class="text-center my-6">
+        <%== pagy_nav(@pagy) %>
+      </div>
+    <% end %>
+
+  <% else %>
+    <div class="bg-white rounded shadow flex flex-col items-center justify-between p-8 lg:flex-row">
+      <%= image_tag "empty.svg", class: "mb-4 lg:w-1/2" %>
+      <div class="flex-1 text-center">
+        <p class="h3 mb-4">Create your first Status</p>
+        <%= link_to 'New Status', new_status_path, class: "btn btn-primary" %>
+      </div>
+    </div>
+  <% end %>
+</div>
