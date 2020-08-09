@@ -2,7 +2,7 @@ class CreateReviews < ActiveRecord::Migration[6.0]
   def change
     create_table :reviews do |t|
 
-      t.references :reviewable, polymorphic: true, null: false
+      t.references :reviewable, polymorphic: true, null: false, index: true
       t.references :user, null: false, foreign_key: true
 
       t.string  :title, null: false, limit: 100
@@ -13,6 +13,9 @@ class CreateReviews < ActiveRecord::Migration[6.0]
 
       # Slug for FriendlyID
       t.string :slug, index: { unique: true }
+
+      # Discarded gem
+      t.datetime :discarded_at, index: true
 
       # caching for acts_as_votable
       t.integer :cached_votes_total, default: 0
