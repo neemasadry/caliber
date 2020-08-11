@@ -1,12 +1,12 @@
 <div class="container mx-auto my-8 px-4">
   <div class="max-w-3xl mx-auto">
     <div class="flex justify-between items-center mb-4">
-      <h1 class="h3">New Accessory</h1>
-      <%= link_to 'Cancel', accessories_path, class: "btn btn-link" %>
+      <h1 class="h3">New Collection for <%= current_user.name %></h1>
+      <%= link_to 'Cancel', collections_path, class: "btn btn-link" %>
     </div>
 
     <div class="bg-white rounded shadow p-8">
-      <%= render 'form', accessory: @accessory %>
+      <%= render 'form', collection: @collection %>
     </div>
   </div>
 </div>

@@ -1,0 +1,32 @@
+# == Schema Information
+#
+# Table name: collections
+#
+#  id              :bigint           not null, primary key
+#  collection_type :string(30)       not null
+#  total_items     :integer          default(0), not null
+#  total_price     :decimal(10, 2)   default(0.0), not null
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  user_id         :bigint           not null
+#
+# Indexes
+#
+#  index_collections_on_user_id  (user_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (user_id => users.id)
+#
+
+one:
+  user: one
+  collection_type: MyString
+  total_items: 1
+  total_price: 9.99
+
+two:
+  user: two
+  collection_type: MyString
+  total_items: 1
+  total_price: 9.99

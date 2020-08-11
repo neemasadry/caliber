@@ -1,6 +1,7 @@
 # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 Rails.application.routes.draw do
 
+  resources :collections
   # resources :collections do
   #   resources :comments, only: [:create, :destroy], module: :collections
   # end
@@ -11,6 +12,13 @@ Rails.application.routes.draw do
 
   ### PRODUCTS ###
   resources :accessories, model_name: "Accessory" do
+
+    member do
+      # put "like", to: "accessories#like"
+      # put "favorite", to: "accessories#favorite"
+      put "collection", to: "accessories#collection"
+    end
+
     resources :reviews do
       resources :comments, only: [:create, :destroy], module: :reviews
     end

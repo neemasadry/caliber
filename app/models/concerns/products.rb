@@ -10,6 +10,8 @@ module Products
 
     has_many :product_images, as: :product_imageable, dependent: :destroy
     has_many :reviews, as: :reviewable, dependent: :destroy
+    has_many :collectable_items
+    has_many :collections, through: :collectable_items
 
     accepts_nested_attributes_for :product_images, allow_destroy: true
 

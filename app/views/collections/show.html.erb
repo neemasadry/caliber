@@ -1,0 +1,42 @@
+<div class="container mx-auto my-8 px-4">
+  <div class="max-w-3xl mx-auto">
+    <div class="flex justify-between items-center mb-4">
+      <h1 class="h3"><%= link_to @collection.user.username, user_profile_path(@collection.user) %> > <%= link_to 'Collections', collections_path %> > Collection #<%= @collection.id %></h1>
+      <%= link_to 'Edit', edit_collection_path(@collection), class: "btn btn-link" %>
+    </div>
+
+    <div class="bg-white rounded shadow p-8">
+
+      <div class="mb-4">
+        <h3>Collection of <%= @collection.collection_type.pluralize %></h3>
+      </div>
+
+      <div class="my-4">
+        <% @collection_items.each do |item| %>
+          <%= item.collectable_item.name %> by <%= item.collectable_item.brand.name %> - <%= number_to_currency(item.collectable_item.retail_price) %> <br>
+        <% end %>
+      </div>
+
+      <hr class="my-4">
+
+      <div class="flex flex-wrap overflow-hidden md:-mx-1 lg:-mx-1 xl:-mx-1">
+        <div class="w-full overflow-hidden md:my-1 md:px-1 md:w-1/3 lg:my-1 lg:px-1 lg:w-1/3 xl:my-1 xl:px-1 xl:w-1/3">
+          <h5>Collection type</h5>
+          <%= @collection.collection_type %>
+        </div>
+
+        <div class="w-full overflow-hidden md:my-1 md:px-1 md:w-1/3 lg:my-1 lg:px-1 lg:w-1/3 xl:my-1 xl:px-1 xl:w-1/3">
+          <h5>Total items</h5>
+          <%= @collection.total_items %>
+        </div>
+
+        <div class="w-full overflow-hidden md:my-1 md:px-1 md:w-1/3 lg:my-1 lg:px-1 lg:w-1/3 xl:my-1 xl:px-1 xl:w-1/3">
+          <h5>Total price</h5>
+          <%= number_to_currency(@collection.total_price) %>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<% console %>

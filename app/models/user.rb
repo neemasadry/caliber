@@ -93,6 +93,7 @@ class User < ApplicationRecord
   has_many :reviews, as: :reviewable, dependent: :destroy
   has_many :posts, dependent: :destroy
   has_many :comments, as: :commentable
+  has_many :collections, dependent: :destroy
 
 
   # We don't need users to confirm their email address on create,

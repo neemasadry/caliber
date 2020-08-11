@@ -73,20 +73,57 @@ class AccessoriesController < ApplicationController
     end
   end
 
+  def collection # acts_as_favoritor
+    if current_account.personal?
+      if current_user.favorited?(@accessory)
+        current_user.unfavorite(@accessory, scope: :favorite)
+        redirect_to(accessory_path(@accessory), flash: { warning: "You removed the product #{@accessory.name} from your favorites." })
+      else
+        current_user.favorite(@accessory, scope: :collection)
+        redirect_to(accessory_path(@accessory), flash: { success: "You added the product #{@accessory.name} to your favorites!" })
+      end
+    else
+      redirect_to accessory_path(@accessory), alert: "You can only add an item to your collection on your personal account."
+    end
+  end
+
+  def favorite # acts_as_favoritor
+    if current_user.favorited? @accessory
+      current_user.unfavorite(@accessory, scope: :favorite)
+      redirect_to(accessory_path(@accessory), flash: { warning: "You removed the product #{@accessory.name} from your favorites." })
+    else
+      current_user.favorite(@accessory, scope: :favorite)
+      redirect_to(accessory_path(@accessory), flash: { success: "You added the product #{@accessory.name} to your favorites!" })
+    end
+  end
+
+  def like # acts_as_votable
+    if current_user.liked? @accessory
+      @accessory.unliked_by(current_user)
+      redirect_to(accessory_path(@accessory), flash: { warning: "You unliked the product: #{@accessory.name}." })
+    elsif current_user.id != @accessory.user_id
+      @accessory.liked_by(current_user)
+      redirect_to(accessory_path(@accessory), flash: { success: "You like the product: #{@accessory.name}!" })
+    else
+      redirect_to(root_path, flash: { danger: "An error occurred. Redirected to homepage." })
+    end
+  end
+
   private
 
-  # Use callbacks to share common setup or constraints between actions.
-  def set_accessory
-    @accessory = Accessory.friendly.find(params[:id])
-    authorize @accessory
-  end
+    # Use callbacks to share common setup or constraints between actions.
+    def set_accessory
+      @accessory = Accessory.friendly.find(params[:id])
+      authorize @accessory
+    end
 
-  # Only allow a trusted parameter "white list" through.
-  def accessory_params
-    params.require(:accessory).permit(:user_id, :brand_id, :name, { product_images_attributes: [] }, :description, :retail_price, :retail_price, :type_of, :gender, :materials, :primary_color, :secondary_color, :product_url)
-  end
+    # Only allow a trusted parameter "white list" through.
+    def accessory_params
+      params.require(:accessory).permit(:user_id, :brand_id, :name, { product_images_attributes: [] }, :description, :retail_price, :retail_price, :type_of, :gender, :materials, :primary_color, :secondary_color, :product_url)
+    end
 
-  def set_user_on_personal_account
-    @user_on_personal_account = current_account.personal?
-  end
+    def set_user_on_personal_account
+      @user_on_personal_account = current_account.personal?
+    end
+
 end

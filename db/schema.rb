@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_08_184920) do
+ActiveRecord::Schema.define(version: 2020_08_10_170921) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -208,6 +208,26 @@ ActiveRecord::Schema.define(version: 2020_08_08_184920) do
     t.index ["name"], name: "index_brands_on_name"
     t.index ["slug"], name: "index_brands_on_slug", unique: true
     t.index ["user_id"], name: "index_brands_on_user_id"
+  end
+
+  create_table "collection_items", force: :cascade do |t|
+    t.string "collectable_item_type", null: false
+    t.bigint "collectable_item_id", null: false
+    t.bigint "collection_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["collectable_item_type", "collectable_item_id"], name: "index_collection_items_on_collectable_type_and_id"
+    t.index ["collection_id"], name: "index_collection_items_on_collection_id"
+  end
+
+  create_table "collections", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "collection_type", limit: 30, null: false
+    t.integer "total_items", default: 0, null: false
+    t.decimal "total_price", precision: 10, scale: 2, default: "0.0", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_collections_on_user_id"
   end
 
   create_table "comments", force: :cascade do |t|
@@ -703,6 +723,8 @@ ActiveRecord::Schema.define(version: 2020_08_08_184920) do
   add_foreign_key "bottoms", "users"
   add_foreign_key "brands", "accounts"
   add_foreign_key "brands", "users"
+  add_foreign_key "collection_items", "collections"
+  add_foreign_key "collections", "users"
   add_foreign_key "comments", "accounts"
   add_foreign_key "comments", "brands"
   add_foreign_key "comments", "users"
