@@ -69,6 +69,8 @@ class User < ApplicationRecord
   include ActionText::Attachable
   include AvatarImageUploader::Attachment(:avatar_image)
 
+  after_create :create_collection_groups
+
   # Include default devise modules. Others available are:
   # :lockable, :timeoutable, andle :trackable
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable, :confirmable, :masqueradable, :omniauthable
@@ -119,4 +121,28 @@ class User < ApplicationRecord
   #validates :country_code, presence: true
   validates :time_zone, presence: true
   validates :terms_of_service, acceptance: true
+
+  # Scopes and Methods
+  def collected?(product_controller, collectable)
+    self.collections.find_by(collection_type: product_controller.singularize.capitalize).collection_items.find_by(collectable_item: collectable)
+  end
+
+  def add_to_collection(product_type, collectable)
+    c_id = self.collections.find_by(collection_type: product_type)
+    c_id.collection_items.create(collectable_item: collectable, collection_id: c_id.id)
+  end
+
+  def remove_from_collection(product_type, collectable)
+    c_id = self.collections.find_by(collection_type: product_type)
+    c_id.collection_items.destroy(collectable_item: collectable, collection_id: c_id.id)
+  end
+
+  def create_collection_groups
+    collection_groups = [ "Accessory", "Bottom", "Cosmetic", "Dress", "Fragrance", "Jewelry", "Shoe", "Top" ]
+    collection_groups.each do |collection_group|
+      next if self.gender == "male" && collection_group == "Dress"
+      self.collections.find_or_create_by(collection_type: collection_group)
+    end
+  end
+
 end

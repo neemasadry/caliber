@@ -1,13 +1,17 @@
 class CollectionsController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
-  before_action :set_collection, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!, only: [:destroy]
+  before_action :set_user, only: [:index, :show, :destroy]
+  before_action :set_collection, only: [:show, :destroy]
   before_action :set_collection_items, only: [:show]
 
   #after_action :verify_authorized
 
   # GET /collections
   def index
-    @pagy, @collections = pagy(Collection.sort_by_params(params[:sort], sort_direction))
+    user = User.find_by(username: params[:user_profile_id])
+    users_collections = user.collections.all
+
+    @pagy, @collections = pagy(users_collections.sort_by_params(params[:sort], sort_direction))
 
     # We explicitly load the records to avoid triggering multiple DB calls in the views when checking if records exist and iterating over them.
     # Calling @collections.any? in the view will use the loaded records to check existence instead of making an extra DB call.
@@ -18,51 +22,55 @@ class CollectionsController < ApplicationController
   def show
   end
 
-  # GET /collections/new
-  def new
-    @collection = Collection.new
-  end
+  # # GET /collections/new
+  # def new
+  #   @collection = Collection.new
+  # end
 
-  # GET /collections/1/edit
-  def edit
-  end
+  # # GET /collections/1/edit
+  # def edit
+  # end
 
-  # POST /collections
-  def create
-    if current_account.personal?
-      @collection = Collection.new(collection_params)
-      @collection.user = current_user
+  # # POST /collections
+  # def create
+  #   if current_account.personal?
+  #     @collection = Collection.new(collection_params)
+  #     @collection.user = current_user
 
-      if @collection.save
-        redirect_to @collection, notice: "Collection was successfully created."
-      else
-        render :new
-      end
-    else
-      redirect_to collections_path, alert: "You can only create a Collection through your personal account."
-    end
-  end
+  #     if @collection.save
+  #       redirect_to @collection, notice: "Collection was successfully created."
+  #     else
+  #       render :new
+  #     end
+  #   else
+  #     redirect_to collections_path, alert: "You can only create a Collection through your personal account."
+  #   end
+  # end
 
-  # PATCH/PUT /collections/1
-  def update
-    if current_account.personal?
-      if @collection.update(collection_params)
-        redirect_to @collection, notice: "Collection was successfully updated."
-      else
-        render :edit
-      end
-    else
-      redirect_to collections_path, alert: "You can only update a Collection through your personal account."
-    end
-  end
+  # # PATCH/PUT /collections/1
+  # def update
+  #   if current_account.personal?
+  #     if @collection.update(collection_params)
+  #       redirect_to @collection, notice: "Collection was successfully updated."
+  #     else
+  #       render :edit
+  #     end
+  #   else
+  #     redirect_to collections_path, alert: "You can only update a Collection through your personal account."
+  #   end
+  # end
 
   # DELETE /collections/1
   def destroy
-    @collection.destroy
+    @collection.collection_items.destroy_all
     redirect_to collections_url, notice: "Collection was successfully destroyed."
   end
 
   private
+
+    def set_user
+      @collection_owner = User.find_by(username: params[:user_profile_id])
+    end
 
     # Use callbacks to share common setup or constraints between actions.
     def set_collection

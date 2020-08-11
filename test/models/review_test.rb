@@ -11,6 +11,9 @@
 #  cached_weighted_score   :integer          default(0)
 #  cached_weighted_total   :integer          default(0)
 #  compliment              :integer          default(0), not null
+#  discarded_at            :datetime
+#  favoritable_score       :text
+#  favoritable_total       :text
 #  quality                 :integer          default(0), not null
 #  ratings                 :jsonb            not null
 #  reviewable_type         :string           not null
@@ -24,6 +27,7 @@
 #
 # Indexes
 #
+#  index_reviews_on_discarded_at                       (discarded_at)
 #  index_reviews_on_reviewable_type_and_reviewable_id  (reviewable_type,reviewable_id)
 #  index_reviews_on_slug                               (slug) UNIQUE
 #  index_reviews_on_user_id                            (user_id)

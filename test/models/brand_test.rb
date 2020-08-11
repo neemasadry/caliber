@@ -2,45 +2,56 @@
 #
 # Table name: brands
 #
-#  id              :bigint           not null, primary key
-#  about           :text             not null
-#  address1        :string(100)      not null
-#  address2        :string(100)
-#  alias           :string(50)       not null
-#  brand_logo_data :jsonb
-#  category        :string(100)      not null
-#  city            :string(100)      not null
-#  country_code    :string(5)        not null
-#  email           :string(100)      not null
-#  facebook_link   :text
-#  founding_date   :date             not null
-#  homepage_link   :text
-#  instagram_link  :text
-#  mission         :string(125)      not null
-#  name            :string(150)      not null
-#  phone           :string(20)
-#  pinterest_link  :text
-#  price_range     :integer          not null
-#  slug            :string
-#  snapchat_link   :text
-#  state_code      :string(5)        not null
-#  story           :text             not null
-#  tiktok_link     :text
-#  twitter_link    :text
-#  youtube_link    :text
-#  zipcode         :string(15)       not null
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
-#  account_id      :bigint           not null
-#  user_id         :bigint           not null
+#  id                      :bigint           not null, primary key
+#  about                   :text             not null
+#  address1                :string(100)      not null
+#  address2                :string(100)
+#  alias                   :string(50)       not null
+#  brand_logo_data         :jsonb
+#  cached_votes_down       :integer          default(0)
+#  cached_votes_score      :integer          default(0)
+#  cached_votes_total      :integer          default(0)
+#  cached_votes_up         :integer          default(0)
+#  cached_weighted_average :float            default(0.0)
+#  cached_weighted_score   :integer          default(0)
+#  cached_weighted_total   :integer          default(0)
+#  category                :string(100)      not null
+#  city                    :string(100)      not null
+#  country_code            :string(5)        not null
+#  discarded_at            :datetime
+#  email                   :string(100)      not null
+#  facebook_link           :text
+#  favoritable_score       :text
+#  favoritable_total       :text
+#  founding_date           :date             not null
+#  homepage_link           :text
+#  instagram_link          :text
+#  mission                 :string(125)      not null
+#  name                    :string(150)      not null
+#  phone                   :string(20)
+#  pinterest_link          :text
+#  price_range             :integer          not null
+#  slug                    :string
+#  snapchat_link           :text
+#  state_code              :string(5)        not null
+#  story                   :text             not null
+#  tiktok_link             :text
+#  twitter_link            :text
+#  youtube_link            :text
+#  zipcode                 :string(15)       not null
+#  created_at              :datetime         not null
+#  updated_at              :datetime         not null
+#  account_id              :bigint           not null
+#  user_id                 :bigint           not null
 #
 # Indexes
 #
-#  index_brands_on_account_id  (account_id)
-#  index_brands_on_alias       (alias) UNIQUE
-#  index_brands_on_name        (name)
-#  index_brands_on_slug        (slug) UNIQUE
-#  index_brands_on_user_id     (user_id)
+#  index_brands_on_account_id    (account_id)
+#  index_brands_on_alias         (alias) UNIQUE
+#  index_brands_on_discarded_at  (discarded_at)
+#  index_brands_on_name          (name)
+#  index_brands_on_slug          (slug) UNIQUE
+#  index_brands_on_user_id       (user_id)
 #
 # Foreign Keys
 #

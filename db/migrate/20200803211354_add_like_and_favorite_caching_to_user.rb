@@ -2,8 +2,10 @@ class AddLikeAndFavoriteCachingToUser < ActiveRecord::Migration[6.0]
   def change
 
     # caching for acts_as_favoritor
+    # acts_as_favoritor
     add_column :users, :favoritor_score, :text
     add_column :users, :favoritor_total, :text
+    # acts_as_favoritable
     add_column :users, :favoritable_score, :text
     add_column :users, :favoritable_total, :text
 

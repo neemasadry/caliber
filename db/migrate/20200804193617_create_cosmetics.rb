@@ -26,6 +26,10 @@ class CreateCosmetics < ActiveRecord::Migration[6.0]
       t.integer :cached_weighted_total, default: 0
       t.float   :cached_weighted_average, default: 0.0
 
+      # acts_as_favoritable (acts_as_favoritor gem)
+      t.text :favoritable_score
+      t.text :favoritable_total
+
       t.timestamps
     end
   end

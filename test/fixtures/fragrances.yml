@@ -13,6 +13,8 @@
 #  cached_weighted_score   :integer          default(0)
 #  cached_weighted_total   :integer          default(0)
 #  description             :text             not null
+#  favoritable_score       :text
+#  favoritable_total       :text
 #  gender                  :string(6)        not null
 #  ingredients             :text
 #  middle_notes            :string(150)

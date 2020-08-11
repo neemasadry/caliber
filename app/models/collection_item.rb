@@ -40,5 +40,11 @@ class CollectionItem < ApplicationRecord
     collection_item.collection.save!
   end
 
-  scope :product_in_collection?, ->(user, item) { where(collectable_item: item, collection_id: user.group_object.id) }
+  after_destroy do |collection_item|
+    collection_item.collection.total_items = 0
+    collection_item.collection.total_price = 0.0
+    collection_item.collection.save!
+  end
+
+  scope :product_in_collection?, ->(user, item) { where(collectable_item: item, collection_id: user.collections.find_by(collection_type: params[:controller].singularize.capitalize).id) }
 end

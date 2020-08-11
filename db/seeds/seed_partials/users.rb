@@ -7,7 +7,7 @@ avatar_uploader = AvatarImageUploader.new(:store)
 
 avatar_path = "db/seeds/avatar_images/"
 
-puts "---------------- Begin: User ----------------"
+puts "---------------- Begin: User ----------------\n\n"
 
 # NO LONGER TRUE avatar_data intentionally left empty to use Gravatar by default
 
@@ -31,8 +31,6 @@ user_ninja3487 = User.create!(
   moderator: false,
   terms_of_service: true)
 puts "#{user_ninja3487.username} created!\n"
-
-
 
 
 # NO LONGER TRUE Neither avatar_data set or Gravatar being used
@@ -255,3 +253,21 @@ User.reindex
 puts "Reindexed: User"
 
 puts "---------------- End: User ----------------"
+
+
+puts "---------------- Begin: Collections ----------------\n\n"
+
+users = [user_ninja3487, user_snake117, user_acosta, user_sgomez, user_amarino, user_tswift, user_jzuniga, user_kjenner]
+collection_groups = [ "Accessory", "Bottom", "Cosmetic", "Dress", "Fragrance", "Jewelry", "Shoe", "Top" ]
+
+users.each do |user|
+  collection_groups.each do |collection_group|
+    next  if user.gender == "male" && collection_group == "Dress"
+
+    user.collections.find_or_create_by(collection_type: collection_group)
+    puts "#{collection_group} has been created for #{user.username}"
+  end
+  puts "#{user.username} now has #{user.collections.count} Collection groups.\n\n"
+end
+
+puts "---------------- End: Collections ----------------"

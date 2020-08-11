@@ -7,7 +7,9 @@
 
     <div class="bg-white rounded shadow p-8">
 
-      <%= render partial: "votable/collection" %>
+      <div class="mb-3">
+        <%= render partial: "votable/collecting", locals: { collectable: @accessory, collected_status: @collected_status } if (user_signed_in? && current_account.personal?) %>
+      </div>
 
       <div id="product_image_gallery" style="max-width:80%;margin:auto">
       </div>

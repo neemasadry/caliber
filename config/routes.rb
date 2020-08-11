@@ -1,11 +1,6 @@
 # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 Rails.application.routes.draw do
 
-  resources :collections
-  # resources :collections do
-  #   resources :comments, only: [:create, :destroy], module: :collections
-  # end
-
   resources :posts do
     resources :comments, only: [:create, :destroy], module: :posts
   end
@@ -16,7 +11,7 @@ Rails.application.routes.draw do
     member do
       # put "like", to: "accessories#like"
       # put "favorite", to: "accessories#favorite"
-      put "collection", to: "accessories#collection"
+      put "collect", to: "accessories#collect"
     end
 
     resources :reviews do
@@ -122,7 +117,12 @@ Rails.application.routes.draw do
     }
 
   # scope module: 'user_profiles', path: 'users'
-  resources :user_profiles, :only => [:index, :show]
+  resources :user_profiles, :only => [:index, :show] do
+    resources :collections, :only => [:index, :show, :destroy]
+    # resources :collections do
+    #   resources :comments, only: [:create, :destroy], module: :collections
+    # end
+  end
     # member do
     #   put "follow", to: "user_profiles#follow"
     #   put "watch", to: "user_profiles#watch"

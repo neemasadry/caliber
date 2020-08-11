@@ -12,6 +12,8 @@
 #  cached_weighted_total   :integer          default(0)
 #  content                 :string(240)      not null
 #  discarded_at            :datetime
+#  favoritable_score       :text
+#  favoritable_total       :text
 #  post_image_data         :text
 #  post_video_data         :text
 #  created_at              :datetime         not null

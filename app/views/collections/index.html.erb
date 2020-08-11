@@ -1,10 +1,6 @@
 <div class="container mx-auto my-8 px-4">
   <div class="flex justify-between items-center mb-4">
-    <h1 class="h3">Collections</h1>
-
-    <% if @collections.any? %>
-      <%= link_to 'New Collection', new_collection_path, class: "btn btn-primary" %>
-    <% end %>
+    <h1 class="h3"><%= @collection_owner.name.possessive %> Collections</h1>
   </div>
 
   <% if @collections.any? %>
@@ -12,27 +8,20 @@
       <table class="table">
         <thead>
           <tr>
-            <th class="p-3 uppercase text-left text-xs"><%= sortable @collections, :user_id, 'User', class: 'text-gray-700' %></th>
             <th class="p-3 uppercase text-left text-xs"><%= sortable @collections, :collection_type, 'Collection type', class: 'text-gray-700' %></th>
             <th class="p-3 uppercase text-left text-xs"><%= sortable @collections, :total_items, 'Total items', class: 'text-gray-700' %></th>
             <th class="p-3 uppercase text-left text-xs"><%= sortable @collections, :total_price, 'Total price', class: 'text-gray-700' %></th>
-            <th class="p-3 uppercase text-left text-xs text-gray-700 w-20">Actions</th>
           </tr>
         </thead>
 
         <tbody>
-        <% @collections.each do |collection| %>
-          <tr class="group border-t border-gray-400 hover:bg-gray-100">
-                      <td class="p-3"><%= collection.user_id %></td>
-                      <td class="p-3"><%= collection.collection_type %></td>
-                      <td class="p-3"><%= collection.total_items %></td>
-                      <td class="p-3"><%= collection.total_price %></td>
-          
-            <td>
-              <%= link_to "View", collection, class: "btn btn-link no-underline" %>
-            </td>
-          </tr>
-        <% end %>
+          <% @collections.each do |collection| %>
+            <tr class="group border-t border-gray-400 hover:bg-gray-100">
+                <td class="p-3"><%= link_to collection.collection_type.pluralize, user_profile_collection_path(params[:user_profile_id], collection) %></td>
+                <td class="p-3"><%= collection.total_items %></td>
+                <td class="p-3"><%= number_to_currency(collection.total_price) %></td>
+            </tr>
+          <% end %>
         </tbody>
       </table>
     </div>
@@ -44,12 +33,9 @@
     <% end %>
 
   <% else %>
-    <div class="bg-white rounded shadow flex flex-col items-center justify-between p-8 lg:flex-row">
-      <%= image_tag "empty.svg", class: "mb-4 lg:w-1/2" %>
-      <div class="flex-1 text-center">
-        <p class="h3 mb-4">Create your first Collection</p>
-        <%= link_to 'New Collection', new_collection_path, class: "btn btn-primary" %>
-      </div>
+    <div class="text-center">
+      <h3>An error occurred. Please try again later.</h3>
+      <h4><%= link_to "Home", root_path %></h4>
     </div>
   <% end %>
 </div>
