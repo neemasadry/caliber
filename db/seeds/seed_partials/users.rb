@@ -252,7 +252,7 @@ puts "There are now #{User.count} rows in the users table."
 User.reindex
 puts "Reindexed: User"
 
-puts "---------------- End: User ----------------"
+puts "---------------- End: User ----------------\n\n"
 
 
 puts "---------------- Begin: Collections ----------------\n\n"

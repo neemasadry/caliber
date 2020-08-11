@@ -1,6 +1,6 @@
 class ShoesController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :set_user_on_personal_account
+  before_action :set_user_on_personal_account, if: :user_signed_in?
   before_action :set_shoe, only: [:show, :edit, :update, :destroy]
 
   after_action :verify_authorized
@@ -16,20 +16,28 @@ class ShoesController < ApplicationController
 
   # GET /shoes/1
   def show
+    votable_on_show_action
   end
 
   # GET /shoes/new
   def new
     @shoe = Shoe.new
+    authorize @shoe
   end
 
   # GET /shoes/1/edit
   def edit
+    if @user_on_personal_account
+      redirect_to shoes_path, alert: "You cannot edit product listings with your personal account."
+    end
   end
 
   # POST /shoes
   def create
-    @shoe = Shoe.new(shoe_params.merge(user_id: current_user.id))
+    @shoe = Shoe.new(shoe_params)
+    @shoe.user = current_user
+
+    authorize @shoe
 
     if @shoe.save
       redirect_to @shoe, notice: "Shoe was successfully created."
@@ -40,17 +48,61 @@ class ShoesController < ApplicationController
 
   # PATCH/PUT /shoes/1
   def update
-    if @shoe.update(shoe_params)
-      redirect_to @shoe, notice: "Shoe was successfully updated."
+    if @user_on_personal_account
+      redirect_to accessories_path, alert: "You cannot edit product listings with your personal account."
     else
-      render :edit
+      if @shoe.update(shoe_params)
+        redirect_to @shoe, notice: "Shoe was successfully updated."
+      else
+        render :edit
+      end
     end
   end
 
   # DELETE /shoes/1
   def destroy
-    @shoe.destroy
-    redirect_to shoes_url, notice: "Shoe was successfully destroyed."
+    if @user_on_personal_account
+      redirect_to shoes_path, alert: "You cannot delete product listings with your personal account."
+    else
+      @shoe.destroy
+      redirect_to shoes_url, notice: "Product was successfully destroyed."
+    end
+  end
+
+  def collect # acts_as_favoritor
+    if current_account.personal?
+      if current_user.collected?(params[:controller], @shoe)
+        current_user.remove_from_collection("Shoe", @shoe)
+        redirect_to(shoe_path(@shoe), alert: "You removed the product #{@shoe.name} from your Accessories Collection." )
+      else
+        current_user.add_to_collection("Shoe", @shoe)
+        redirect_to(shoe_path(@shoe), flash: { success: "You added the product #{@shoe.name} to your Accessories Collection!" })
+      end
+    else
+      redirect_to shoe_path(@shoe), flash: { danger: "You can only add an item to your Collection on your personal account." }
+    end
+  end
+
+  def favorite # acts_as_favoritor
+    if current_user.favorited? @shoe
+      current_user.unfavorite(@shoe, scope: :favorite)
+      redirect_to(shoe_path(@shoe), flash: { warning: "You removed the product #{@shoe.name} from your favorites." })
+    else
+      current_user.favorite(@shoe, scope: :favorite)
+      redirect_to(shoe_path(@shoe), flash: { success: "You added the product #{@shoe.name} to your favorites!" })
+    end
+  end
+
+  def like # acts_as_votable
+    if current_user.liked? @shoe
+      @shoe.unliked_by(current_user)
+      redirect_to(shoe_path(@shoe), flash: { warning: "You unliked the product: #{@shoe.name}." })
+    elsif current_user.id != @shoe.user_id
+      @shoe.liked_by(current_user)
+      redirect_to(shoe_path(@shoe), flash: { success: "You like the product: #{@shoe.name}!" })
+    else
+      redirect_to(root_path, flash: { danger: "An error occurred. Redirected to homepage." })
+    end
   end
 
   private

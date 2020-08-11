@@ -129,7 +129,7 @@ class ApplicationController < ActionController::Base
               @favorite_status = false
             end
 
-            if current_user.favorited?(product_instance_var, scope: :accessories_collection) #current_user.collected?(product_controller, product_instance_var) #.collections.find_by(collection_type: product_controller.singularize.capitalize).collection_items.find_by(collectable_item: product_instance_var)
+            if current_user.collected?(product_controller, product_instance_var)
               @collected_status = true
             else
               @collected_status = false

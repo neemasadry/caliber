@@ -134,7 +134,7 @@ class User < ApplicationRecord
 
   def remove_from_collection(product_type, collectable)
     c_id = self.collections.find_by(collection_type: product_type)
-    c_id.collection_items.destroy(collectable_item: collectable, collection_id: c_id.id)
+    c_id.collection_items.find_by(collectable_item: collectable, collection_id: c_id.id).destroy
   end
 
   def create_collection_groups

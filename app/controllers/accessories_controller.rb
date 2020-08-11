@@ -17,7 +17,6 @@ class AccessoriesController < ApplicationController
   # GET /accessories/1
   def show
     votable_on_show_action
-    @everything = current_user.favorites_by_type('Accessory')
   end
 
   # GET /accessories/new
@@ -42,8 +41,11 @@ class AccessoriesController < ApplicationController
     # if @user_on_personal_account
     #   redirect_to accessories_path, alert: "You cannot create product listings with your personal account."
     # else
-      @accessory = Accessory.new(accessory_params.merge(user_id: current_user.id))
+      @accessory = Accessory.new(accessory_params)
+      @accessory.user = current_user
+
       authorize @accessory
+
       if @accessory.save
         redirect_to @accessory, notice: "Accessory was successfully created."
       else
@@ -71,18 +73,16 @@ class AccessoriesController < ApplicationController
       redirect_to accessories_path, alert: "You cannot delete product listings with your personal account."
     else
       @accessory.destroy
-      redirect_to accessories_url, notice: "Accessory was successfully destroyed."
+      redirect_to accessories_url, notice: "Product was successfully destroyed."
     end
   end
 
   def collect # acts_as_favoritor
     if current_account.personal?
-      if current_user.favorited?(@accessory, scope: :accessories_collection)
-        current_user.unfavorite(@accessory, scope: :accessories_collection)
+      if current_user.collected?(params[:controller], @accessory)
         current_user.remove_from_collection("Accessory", @accessory)
         redirect_to(accessory_path(@accessory), alert: "You removed the product #{@accessory.name} from your Accessories Collection." )
       else
-        current_user.favorite(@accessory, scope: :accessories_collection)
         current_user.add_to_collection("Accessory", @accessory)
         redirect_to(accessory_path(@accessory), flash: { success: "You added the product #{@accessory.name} to your Accessories Collection!" })
       end
@@ -90,22 +90,6 @@ class AccessoriesController < ApplicationController
       redirect_to accessory_path(@accessory), flash: { danger: "You can only add an item to your Collection on your personal account." }
     end
   end
-
-  # def collect # Collection and CollectionItem
-  #   if current_account.personal?
-  #     if current_user.collected?(@accessory.model_name, @accessory)
-  #       current_user.add_to_collection("Accessory", @accessory)
-  #       #current_user.unfavorite(@accessory, scope: :favorite)
-  #       redirect_to(accessory_path(@accessory), flash: { warning: "You removed the product #{@accessory.name} from your favorites." })
-  #     else
-
-  #       #current_user.favorite(@accessory, scope: :collection)
-  #       redirect_to(accessory_path(@accessory), flash: { success: "You added the product #{@accessory.name} to your favorites!" })
-  #     end
-  #   else
-  #     redirect_to accessory_path(@accessory), alert: "You can only add an item to your collection on your personal account."
-  #   end
-  # end
 
   def favorite # acts_as_favoritor
     if current_user.favorited? @accessory

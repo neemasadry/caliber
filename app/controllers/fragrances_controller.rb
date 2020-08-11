@@ -1,6 +1,6 @@
 class FragrancesController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :set_user_on_personal_account
+  before_action :set_user_on_personal_account, if: :user_signed_in?
   before_action :set_fragrance, only: [:show, :edit, :update, :destroy]
 
   after_action :verify_authorized
@@ -16,20 +16,28 @@ class FragrancesController < ApplicationController
 
   # GET /fragrances/1
   def show
+    votable_on_show_action
   end
 
   # GET /fragrances/new
   def new
     @fragrance = Fragrance.new
+    authorize @fragrance
   end
 
   # GET /fragrances/1/edit
   def edit
+    if @user_on_personal_account
+      redirect_to fragrances_path, alert: "You cannot edit product listings with your personal account."
+    end
   end
 
   # POST /fragrances
   def create
-    @fragrance = Fragrance.new(fragrance_params.merge(user_id: current_user.id))
+    @fragrance = Fragrance.new(fragrance_params)
+    @fragrance.user = current_user
+
+    authorize @fragrance
 
     if @fragrance.save
       redirect_to @fragrance, notice: "Fragrance was successfully created."
@@ -40,17 +48,61 @@ class FragrancesController < ApplicationController
 
   # PATCH/PUT /fragrances/1
   def update
-    if @fragrance.update(fragrance_params)
-      redirect_to @fragrance, notice: "Fragrance was successfully updated."
+    if @user_on_personal_account
+      redirect_to accessories_path, alert: "You cannot edit product listings with your personal account."
     else
-      render :edit
+      if @fragrance.update(fragrance_params)
+        redirect_to @fragrance, notice: "Fragrance was successfully updated."
+      else
+        render :edit
+      end
     end
   end
 
   # DELETE /fragrances/1
   def destroy
-    @fragrance.destroy
-    redirect_to fragrances_url, notice: "Fragrance was successfully destroyed."
+    if @user_on_personal_account
+      redirect_to fragrances_path, alert: "You cannot delete product listings with your personal account."
+    else
+      @fragrance.destroy
+      redirect_to fragrances_url, notice: "Product was successfully destroyed."
+    end
+  end
+
+  def collect # acts_as_favoritor
+    if current_account.personal?
+      if current_user.collected?(params[:controller], @fragrance)
+        current_user.remove_from_collection("Fragrance", @fragrance)
+        redirect_to(fragrance_path(@fragrance), alert: "You removed the product #{@fragrance.name} from your Accessories Collection." )
+      else
+        current_user.add_to_collection("Fragrance", @fragrance)
+        redirect_to(fragrance_path(@fragrance), flash: { success: "You added the product #{@fragrance.name} to your Accessories Collection!" })
+      end
+    else
+      redirect_to fragrance_path(@fragrance), flash: { danger: "You can only add an item to your Collection on your personal account." }
+    end
+  end
+
+  def favorite # acts_as_favoritor
+    if current_user.favorited? @fragrance
+      current_user.unfavorite(@fragrance, scope: :favorite)
+      redirect_to(fragrance_path(@fragrance), flash: { warning: "You removed the product #{@fragrance.name} from your favorites." })
+    else
+      current_user.favorite(@fragrance, scope: :favorite)
+      redirect_to(fragrance_path(@fragrance), flash: { success: "You added the product #{@fragrance.name} to your favorites!" })
+    end
+  end
+
+  def like # acts_as_votable
+    if current_user.liked? @fragrance
+      @fragrance.unliked_by(current_user)
+      redirect_to(fragrance_path(@fragrance), flash: { warning: "You unliked the product: #{@fragrance.name}." })
+    elsif current_user.id != @fragrance.user_id
+      @fragrance.liked_by(current_user)
+      redirect_to(fragrance_path(@fragrance), flash: { success: "You like the product: #{@fragrance.name}!" })
+    else
+      redirect_to(root_path, flash: { danger: "An error occurred. Redirected to homepage." })
+    end
   end
 
   private

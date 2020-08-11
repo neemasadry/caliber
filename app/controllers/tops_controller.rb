@@ -1,6 +1,6 @@
 class TopsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :set_user_on_personal_account
+  before_action :set_user_on_personal_account, if: :user_signed_in?
   before_action :set_top, only: [:show, :edit, :update, :destroy]
 
   after_action :verify_authorized
@@ -16,20 +16,28 @@ class TopsController < ApplicationController
 
   # GET /tops/1
   def show
+    votable_on_show_action
   end
 
   # GET /tops/new
   def new
     @top = Top.new
+    authorize @top
   end
 
   # GET /tops/1/edit
   def edit
+    if @user_on_personal_account
+      redirect_to tops_path, alert: "You cannot edit product listings with your personal account."
+    end
   end
 
   # POST /tops
   def create
-    @top = Top.new(top_params.merge(user_id: current_user.id))
+    @top = Top.new(top_params)
+    @top.user = current_user
+
+    authorize @top
 
     if @top.save
       redirect_to @top, notice: "Top was successfully created."
@@ -40,17 +48,61 @@ class TopsController < ApplicationController
 
   # PATCH/PUT /tops/1
   def update
-    if @top.update(top_params)
-      redirect_to @top, notice: "Top was successfully updated."
+    if @user_on_personal_account
+      redirect_to accessories_path, alert: "You cannot edit product listings with your personal account."
     else
-      render :edit
+      if @top.update(top_params)
+        redirect_to @top, notice: "Top was successfully updated."
+      else
+        render :edit
+      end
     end
   end
 
   # DELETE /tops/1
   def destroy
-    @top.destroy
-    redirect_to tops_url, notice: "Top was successfully destroyed."
+    if @user_on_personal_account
+      redirect_to tops_path, alert: "You cannot delete product listings with your personal account."
+    else
+      @top.destroy
+      redirect_to tops_url, notice: "Product was successfully destroyed."
+    end
+  end
+
+  def collect # acts_as_favoritor
+    if current_account.personal?
+      if current_user.collected?(params[:controller], @top)
+        current_user.remove_from_collection("Top", @top)
+        redirect_to(top_path(@top), alert: "You removed the product #{@top.name} from your Accessories Collection." )
+      else
+        current_user.add_to_collection("Top", @top)
+        redirect_to(top_path(@top), flash: { success: "You added the product #{@top.name} to your Accessories Collection!" })
+      end
+    else
+      redirect_to top_path(@top), flash: { danger: "You can only add an item to your Collection on your personal account." }
+    end
+  end
+
+  def favorite # acts_as_favoritor
+    if current_user.favorited? @top
+      current_user.unfavorite(@top, scope: :favorite)
+      redirect_to(top_path(@top), flash: { warning: "You removed the product #{@top.name} from your favorites." })
+    else
+      current_user.favorite(@top, scope: :favorite)
+      redirect_to(top_path(@top), flash: { success: "You added the product #{@top.name} to your favorites!" })
+    end
+  end
+
+  def like # acts_as_votable
+    if current_user.liked? @top
+      @top.unliked_by(current_user)
+      redirect_to(top_path(@top), flash: { warning: "You unliked the product: #{@top.name}." })
+    elsif current_user.id != @top.user_id
+      @top.liked_by(current_user)
+      redirect_to(top_path(@top), flash: { success: "You like the product: #{@top.name}!" })
+    else
+      redirect_to(root_path, flash: { danger: "An error occurred. Redirected to homepage." })
+    end
   end
 
   private

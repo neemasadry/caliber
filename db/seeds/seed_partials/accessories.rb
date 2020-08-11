@@ -11,6 +11,9 @@ jade_black_csv_text = File.read(Rails.root.join('db', 'seeds', 'Jade_Black', 'Me
 csv = CSV.parse(jade_black_csv_text, headers: true, encoding: "utf-8")
 puts "---------------- Begin: Accessory ----------------"
 csv.each do |row|
+
+  puts "-- Accessory No. #{counter} -- \n\n"
+
   t = Accessory.new
   t.name = row['name']
   t.brand_id = brand_entry.id
@@ -43,8 +46,6 @@ csv.each do |row|
   puts "\n\n"
 
 	t.save!
-
-	puts "#{counter} - #{t.name} by Jade Black saved.\n\n"
 
   counter += 1 # Keep track of how many products added and/or left to create (25 objects total)
 end
