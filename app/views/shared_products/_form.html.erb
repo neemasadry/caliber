@@ -1,0 +1,115 @@
+<%= form_with(model: product, html: { enctype: "multipart/form-data" }) do |form| %>
+  <%= render "shared/error_messages", resource: form.object %>
+
+  <div class="form-group">
+    <%= form.label :name, class: "block text-sm font-medium leading-5 text-gray-700" %>
+    <%= form.text_field :name, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :brand_id, "Brand", class: "block text-sm font-medium leading-5 text-gray-700" %>
+    <div class="relative">
+      <%= form.select :brand_id, options_for_select(brands_owned_by_user(current_user)), { include_blank: true, disabled: current_user.accounts.where(personal: true).first.id }, { class: "form-control" } %>
+      <div class="caret"><svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg></div>
+    </div>
+    <p class="text-sm text-gray-600">You must use an account aside from your default personal account.</p>
+  </div>
+
+  <div class="form-group">
+    <%= form.fields_for :product_images do |pi| %>
+      <%= image_tag pi.object.product_image_url if pi.object.product_image_url.present? %>
+      <%= pi.hidden_field :product_image, value: pi.object.cached_product_image_data %>
+      <div class="flex flex-wrap overflow-hidden md:-mx-1 lg:-mx-1 xl:-mx-1">
+        <div class="w-full overflow-hidden md:my-1 md:px-1 md:w-1/2 lg:my-1 lg:px-1 lg:w-1/2 xl:my-1 xl:px-1 xl:w-1/2">
+          <%= pi.file_field :product_image, class: "form-control" %>
+        </div>
+        <div class="text-center w-full overflow-hidden md:my-1 md:px-1 md:w-1/2 lg:my-1 lg:px-1 lg:w-1/2 xl:my-1 xl:px-1 xl:w-1/2">
+          <%= label_tag do %>
+            <%= pi.check_box :_destroy, class: "mr-2" unless pi.object.new_record? %>
+            Remove Image
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+    <div class="my-3">
+      <%= form.label :product_images, class: "block text-sm font-medium leading-5 text-gray-700" %>
+      <%= form.file_field :product_images, multiple: true, class: "form-control" %>
+    </div>
+  </div>
+
+
+  <div class="form-group">
+    <%= form.label :description, class: "block text-sm font-medium leading-5 text-gray-700" %>
+    <%= form.text_area :description, size: "6x12", class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+
+    <%= form.label :retail_price, class: "block text-sm font-medium leading-5 text-gray-700" %>
+    <div class="mt-1 relative rounded-md shadow-sm">
+      <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+        <span class="text-gray-500 sm:text-sm sm:leading-5">
+          $
+        </span>
+      </div>
+      <%= form.number_field :retail_price, step: 0.01, placeholder: "0.00", aria: { describedby: "price-currency" }, class: "form-control form-input block w-full pl-6 pr-12 sm:text-sm sm:leading-5" %>
+      <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+        <span class="text-gray-500 sm:text-sm sm:leading-5" id="price-currency">
+          USD
+        </span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="form-group">
+    <%= form.label :type_of, class: "block text-sm font-medium leading-5 text-gray-700" %>
+    <%= form.text_field :type_of, class: "form-control" %>
+  </div>
+
+  <% unless params[:controller] == "dresses" %>
+    <div class="form-group">
+      <%= form.label :gender, class: "block text-sm font-medium leading-5 text-gray-700" %>
+
+      <div class="relative">
+        <%= form.select :gender, options_for_select(["Male", "Female", "Neutral"]), {prompt: "Select gender..."}, class: "form-control" %>
+        <div class="caret"><svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg></div>
+      </div>
+    </div>
+  <% end %>
+
+  <% unless params[:controller] == "cosmetics" || params[:controller] == "fragrances" %>
+    <div class="form-group">
+      <%= form.label :materials, class: "block text-sm font-medium leading-5 text-gray-700" %>
+      <%= form.text_area :materials, size: "6x12", class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :primary_color, class: "block text-sm font-medium leading-5 text-gray-700" %>
+      <%= form.text_field :primary_color, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :secondary_color, class: "block text-sm font-medium leading-5 text-gray-700" %>
+      <%= form.text_field :secondary_color, class: "form-control" %>
+    </div>
+  <% else %>
+    <div class="form-group">
+      <%= form.label :ingredients, class: "block text-sm font-medium leading-5 text-gray-700" %>
+      <%= form.text_area :ingredients, size: "6x12", class: "form-control" %>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :product_url, class: "block text-sm font-medium leading-5 text-gray-700" %>
+    <%= form.text_area :product_url, class: "form-control" %>
+  </div>
+
+  <div class="form-group flex justify-between">
+    <%= form.button class: "btn btn-primary" %>
+
+    <% if form.object.persisted? %>
+      <%= link_to 'Delete', form.object, class: "btn btn-danger outline", method: :delete, data: { remote: true, confirm: "Are you sure?" } %>
+    <% end %>
+  </div>
+<% end %>

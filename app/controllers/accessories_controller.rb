@@ -31,7 +31,7 @@ class AccessoriesController < ApplicationController
 
   # GET /accessories/1/edit
   def edit
-    if @user_on_personal_account
+    if !@user_on_personal_account
       redirect_to accessories_path, alert: "You cannot edit product listings with your personal account."
     end
   end

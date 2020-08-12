@@ -69,6 +69,17 @@ module ApplicationHelper
   end
 
   ### PRODUCTS ###
+
+  def determine_gender_sign(model_instance)
+    if model_instance.gender == "male" || model_instance.gender == "Male"
+      fa_icon("fal fa-mars")
+    elsif model_instance.gender == "female" || model_instance.gender == "Female"
+      fa_icon("fal fa-venus")
+    elsif model_instance.gender == "unisex" || model_instance.gender == "Unisex"
+      fa_icon("fal fa-venus-mars")
+    end
+  end
+
   def brands_owned_by_user(user)
     @array_of_brands = []
 

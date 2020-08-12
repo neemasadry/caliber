@@ -1,62 +1,63 @@
-<div class="container mx-auto my-8 px-4">
+<%= render partial: "shared_products/index", locals: { products: @accessories, product_model: "Accessory", product_model_plural: "Accessories" } %>
+<!-- <div class="container mx-auto my-8 px-4">
   <div class="flex justify-between items-center mb-4">
     <h1 class="h3">Accessories</h1>
 
-    <% if @accessories.any? %>
-      <%= link_to 'New Accessory', new_accessory_path, class: "btn btn-primary" %>
-    <% end %>
+    <%# if @accessories.any? %>
+      <%#= link_to 'New Accessory', new_accessory_path, class: "btn btn-primary" %>
+    <%# end %>
   </div>
 
-  <% if @accessories.any? %>
+  <%# if @accessories.any? %>
     <div class="bg-white rounded shadow table-responsive">
       <table class="table">
         <thead>
           <tr>
             <th class="p-3 uppercase text-left text-xs"></th>
-            <th class="p-3 uppercase text-left text-xs"><%= sortable @accessories, :name, 'Name', class: 'text-gray-700' %></th>
-            <th class="p-3 uppercase text-left text-xs"><%= sortable @accessories, :brand, 'Brand', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%#= sortable @accessories, :name, 'Name', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%#= sortable @accessories, :brand, 'Brand', class: 'text-gray-700' %></th>
 
-            <th class="p-3 uppercase text-left text-xs"><%= sortable @accessories, :description, 'Description', class: 'text-gray-700' %></th>
-            <th class="p-3 uppercase text-left text-xs"><%= sortable @accessories, :retail_price, 'Retail price', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%#= sortable @accessories, :description, 'Description', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%#= sortable @accessories, :retail_price, 'Retail price', class: 'text-gray-700' %></th>
 
-            <th class="p-3 uppercase text-left text-xs"><%= sortable @accessories, :username, 'User', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%#= sortable @accessories, :username, 'User', class: 'text-gray-700' %></th>
             <th class="p-3 uppercase text-left text-xs text-gray-700 w-20">Actions</th>
           </tr>
         </thead>
 
         <tbody>
-        <% @accessories.each do |accessory| %>
+        <%# @accessories.each do |accessory| %>
           <tr class="group border-t border-gray-400 hover:bg-gray-100">
 
-            <td class="p-3"><%= accessory.gender %></td>
-            <td class="p-3"><%= accessory.name %></td>
-            <td class="p-3"><%= accessory.brand.name %></td>
-            <td class="p-3"><%= truncate(accessory.description, length: 60) %></td>
-            <td class="p-3"><%= number_to_currency(accessory.retail_price) %></td>
-            <td class="p-3"><%= accessory.user.username %></td>
+            <td class="p-3"><%#= accessory.gender %></td>
+            <td class="p-3"><%#= accessory.name %></td>
+            <td class="p-3"><%#= accessory.brand.name %></td>
+            <td class="p-3"><%#= truncate(accessory.description, length: 60) %></td>
+            <td class="p-3"><%#= number_to_currency(accessory.retail_price) %></td>
+            <td class="p-3"><%#= accessory.user.username %></td>
 
             <td>
-              <%= link_to "View", accessory, class: "btn btn-link no-underline" %>
+              <%#= link_to "View", accessory, class: "btn btn-link no-underline" %>
             </td>
           </tr>
-        <% end %>
+        <%# end %>
         </tbody>
       </table>
     </div>
 
-    <% if @pagy.pages > 1 %>
+    <%# if @pagy.pages > 1 %>
       <div class="text-center my-6">
-        <%== pagy_nav(@pagy) %>
+        <%#== pagy_nav(@pagy) %>
       </div>
-    <% end %>
+    <%# end %>
 
-  <% else %>
+  <%# else %>
     <div class="bg-white rounded shadow flex flex-col items-center justify-between p-8 lg:flex-row">
-      <%= image_tag "empty.svg", class: "mb-4 lg:w-1/2" %>
+      <%#= image_tag "empty.svg", class: "mb-4 lg:w-1/2" %>
       <div class="flex-1 text-center">
         <p class="h3 mb-4">Create your first Accessory</p>
-        <%= link_to 'New Accessory', new_accessory_path, class: "btn btn-primary" %>
+        <%#= link_to 'New Accessory', new_accessory_path, class: "btn btn-primary" %>
       </div>
     </div>
-  <% end %>
-</div>
+  <%# end %>
+</div> -->
