@@ -9,8 +9,8 @@
     </div>
 
     <div class="flex justify-between items-center mb-4">
-      <% if (user_signed_in? && current_account.personal?) %>
-        <%= render partial: "votable/liking", locals: { likeable: @review }  %>
+      <% if (user_signed_in? && current_account.personal? && @review.user != current_user) %>
+        <%= render partial: "votable/liking", locals: { likeable: @review } %>
       <% end %>
     </div>
 

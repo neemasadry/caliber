@@ -76,16 +76,38 @@ class GuidesController < ApplicationController
     end
   end
 
+  def favorite # acts_as_favoritor
+    if current_user.favorited? @accessory
+      current_user.unfavorite(@accessory, scopes: [:favorite, :guides])
+      redirect_to(accessory_path(@accessory), flash: { warning: "You removed the product #{@accessory.name} from your favorites." })
+    else
+      current_user.favorite(@accessory, scopes: [:favorite, :guides])
+      redirect_to(accessory_path(@accessory), flash: { success: "You added the product #{@accessory.name} to your favorites!" })
+    end
+  end
+
+  def like # acts_as_votable
+    if current_user.liked? @guide
+      @guide.unliked_by(current_user)
+      redirect_to(polymorphic_path(@guide), flash: { warning: "You unliked the guide: #{@guide.title}." })
+    elsif current_user.id != @guide.user_id
+      @guide.liked_by(current_user)
+      redirect_to(polymorphic_path(@guide), flash: { success: "You like the guide: #{@guide.title}!" })
+    else
+      redirect_to(root_path, flash: { danger: "An error occurred. Redirected to homepage." })
+    end
+  end
+
   private
 
-  # Use callbacks to share common setup or constraints between actions.
-  def set_guide
-    @guide = Guide.friendly.find(params[:id])
-    authorize @guide
-  end
+    # Use callbacks to share common setup or constraints between actions.
+    def set_guide
+      @guide = Guide.friendly.find(params[:id])
+      authorize @guide
+    end
 
-  # Only allow a trusted parameter "white list" through.
-  def guide_params
-    params.require(:guide).permit(:user_id, :account_id, :brand_id, :title, :body, :category, :subcategory_one, :subcategory_two, :tag_list)
-  end
+    # Only allow a trusted parameter "white list" through.
+    def guide_params
+      params.require(:guide).permit(:user_id, :account_id, :brand_id, :title, :body, :category, :subcategory_one, :subcategory_two, :tag_list)
+    end
 end
