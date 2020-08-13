@@ -1,7 +1,7 @@
 class ReviewsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :user_already_reviewed?, only: [:index, :new, :create]
-  before_action :set_review, only: [:show, :edit, :update, :destroy]
+  before_action :set_review, only: [:show, :edit, :update, :destroy, :like]
   before_action :set_reviewable
   before_action :user_is_brand_owner?
 
@@ -61,6 +61,22 @@ class ReviewsController < ApplicationController
   def destroy
     @review.destroy
     redirect_to reviews_url, notice: "Review was successfully destroyed."
+  end
+
+  def like # acts_as_votable
+    if current_account.personal? && user_signed_in?
+      if current_user.liked? @review
+        @review.unliked_by(current_user)
+        redirect_to(polymorphic_path([@reviewable, @review]), flash: { warning: "You unliked the review: #{@review.title}." })
+      elsif current_user.id != @review.user_id
+        @review.liked_by(current_user)
+        redirect_to(polymorphic_path([@reviewable, @review]), flash: { success: "You like the review: #{@review.title}!" })
+      else
+        redirect_to(root_path, flash: { danger: "An error occurred. Redirected to homepage." })
+      end
+    else
+      redirect_to review_path(@review), flash: { danger: "You can only Like a review using your personal account." }
+    end
   end
 
   private
