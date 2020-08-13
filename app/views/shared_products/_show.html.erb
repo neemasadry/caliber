@@ -9,6 +9,10 @@
     </div>
 
     <div class="flex justify-between items-center mb-4">
+      <%= link_to polymorphic_path([product, Review]), class: "btn btn-tertiary" do %>
+        <%= fa_icon("fal fa-border-all", class: "mr-2") %>
+        All Reviews
+      <% end %>
       <% if (user_signed_in? && current_account.personal? && product.user != current_user) %>
         <%= render partial: "votable/liking", locals: { likeable: product }  %>
         <%= render partial: "votable/favoriting", locals: { favoritable: product } %>
