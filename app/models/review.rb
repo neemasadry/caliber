@@ -42,6 +42,8 @@ class Review < ApplicationRecord
   belongs_to :user
   belongs_to :reviewable, polymorphic: true
 
+  has_many :comments, as: :commentable, dependent: :destroy
+
   has_rich_text :body
 
   jsonb_accessor(:ratings,

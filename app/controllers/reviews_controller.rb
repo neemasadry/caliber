@@ -16,6 +16,9 @@ class ReviewsController < ApplicationController
 
   # GET /reviews/1
   def show
+    votable_on_show_action
+    @model_name = "Review"
+    @pagy, @all_comments = pagy(@review.comments.where(parent_id: 0), items: 7)
   end
 
   # GET /reviews/new
@@ -109,6 +112,7 @@ class ReviewsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_review
       @review = Review.friendly.find(params[:id])
+      authorize @review
     end
 
     # Only allow a trusted parameter "white list" through.

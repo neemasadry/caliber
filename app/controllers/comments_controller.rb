@@ -37,17 +37,21 @@ class CommentsController < ApplicationController
     end
   end
 
-  # def like # acts_as_votable
-  #   if current_user.liked? @comment
-  #     @comment.unliked_by(current_user)
-  #     redirect_to(polymorphic_path([@commentable, @comment]), flash: { warning: "You unliked this comment." })
-  #   elsif current_user.id != @comment.user_id
-  #     @comment.liked_by(current_user)
-  #     redirect_to(polymorphic_path([@commentable, @comment]), flash: { success: "You like #{@comment.user.username}'s comment!" })
-  #   else
-  #     redirect_to(root_path, flash: { danger: "An error occurred. Redirected to homepage." })
-  #   end
-  # end
+  def like # acts_as_votable
+    if current_account.personal? && user_signed_in?
+      if current_user.liked? @comment
+        @comment.unliked_by(current_user)
+        redirect_to(polymorphic_path([@commentable, @comment]), flash: { warning: "You unliked this comment." })
+      elsif current_user.id != @comment.user_id
+        @comment.liked_by(current_user)
+        redirect_to(polymorphic_path([@commentable, @comment]), flash: { success: "You like #{@comment.user.username}'s comment." })
+      else
+        redirect_to(root_path, flash: { danger: "An error occurred. Redirected to homepage." })
+      end
+    else
+      redirect_to review_path(@review), flash: { danger: "You can only Like a comment using your personal account." }
+    end
+  end
 
   private
 
