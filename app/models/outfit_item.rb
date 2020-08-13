@@ -28,4 +28,25 @@ class OutfitItem < ApplicationRecord
   validates :productable_type, presence: true
   validates :productable_id, presence: true, uniqueness: { scope: :productable_type }
   validates :body_part, presence: true
+
+  after_create do |outfit_item|
+    # Update total number of items in associated Outfit object
+    outfit_item.outfit.total_number_of_products = outfit_item.outfit.outfit_items.where(outfit_id: outfit_item.outfit.id).count
+
+    # Update total price of all the items in associated Outfit object
+    updated_price = 0.00
+    outfit_item.outfit.outfit_items.where(outfit_id: outfit_item.outfit.id).find_each do |item_price_to_update|
+      updated_price = updated_price + item_price_to_update.productable.retail_price
+    end
+
+    outfit_item.outfit.total_price = updated_price
+    outfit_item.outfit.save!
+  end
+
+  after_destroy do |outfit_item|
+    outfit_item.outfit.total_number_of_products = 0
+    outfit_item.outfit.total_price = 0.0
+    outfit_item.outfit.save!
+  end
+
 end

@@ -1,6 +1,6 @@
 <div class="container mx-auto my-8 px-4">
   <div class="flex justify-between items-center mb-4">
-    <h1 class="h3">Outfits</h1>
+    <h3>Outfits</h3>
 
     <% if @outfits.any? %>
       <%= link_to 'New Outfit', new_outfit_path, class: "btn btn-primary" %>
@@ -12,35 +12,25 @@
       <table class="table">
         <thead>
           <tr>
-            <th class="p-3 uppercase text-left text-xs"><%= sortable @outfits, :user_id, 'User', class: 'text-gray-700' %></th>
-            <th class="p-3 uppercase text-left text-xs"><%= sortable @outfits, :account_id, 'Account', class: 'text-gray-700' %></th>
-            <th class="p-3 uppercase text-left text-xs"><%= sortable @outfits, :brand_id, 'Brand', class: 'text-gray-700' %></th>
             <th class="p-3 uppercase text-left text-xs"><%= sortable @outfits, :name, 'Name', class: 'text-gray-700' %></th>
-            <th class="p-3 uppercase text-left text-xs"><%= sortable @outfits, :description, 'Description', class: 'text-gray-700' %></th>
             <th class="p-3 uppercase text-left text-xs"><%= sortable @outfits, :occasion, 'Occasion', class: 'text-gray-700' %></th>
             <th class="p-3 uppercase text-left text-xs"><%= sortable @outfits, :dress_code, 'Dress code', class: 'text-gray-700' %></th>
-            <th class="p-3 uppercase text-left text-xs"><%= sortable @outfits, :total_number_of_products, 'Total number of products', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @outfits, :total_number_of_products, 'No. of products', class: 'text-gray-700' %></th>
             <th class="p-3 uppercase text-left text-xs"><%= sortable @outfits, :total_price, 'Total price', class: 'text-gray-700' %></th>
-            <th class="p-3 uppercase text-left text-xs text-gray-700 w-20">Actions</th>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @outfits, :user_id, 'Created By', class: 'text-gray-700' %></th>
           </tr>
         </thead>
 
         <tbody>
         <% @outfits.each do |outfit| %>
           <tr class="group border-t border-gray-400 hover:bg-gray-100">
-                      <td class="p-3"><%= outfit.user_id %></td>
-                      <td class="p-3"><%= outfit.account_id %></td>
-                      <td class="p-3"><%= outfit.brand_id %></td>
-                      <td class="p-3"><%= outfit.name %></td>
-                      <td class="p-3"><%= outfit.description %></td>
-                      <td class="p-3"><%= outfit.occasion %></td>
-                      <td class="p-3"><%= outfit.dress_code %></td>
-                      <td class="p-3"><%= outfit.total_number_of_products %></td>
-                      <td class="p-3"><%= outfit.total_price %></td>
-          
-            <td>
-              <%= link_to "View", outfit, class: "btn btn-link no-underline" %>
-            </td>
+            <td class="p-3"><%= link_to outfit.name, outfit_path(outfit) %></td>
+            <td class="p-3"><%= outfit.occasion %></td>
+            <td class="p-3"><%= outfit.dress_code %></td>
+            <td class="p-3"><%= outfit.total_number_of_products %></td>
+            <td class="p-3"><%= number_to_currency(outfit.total_price) %></td>
+            <td class="p-3"><%= link_to outfit.user.username, user_profile_path(outfit.user) %></td>
+
           </tr>
         <% end %>
         </tbody>
