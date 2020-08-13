@@ -1,0 +1,24 @@
+<%= content_tag :div, data: { new_record: form.object.new_record? }, class: "nested-fields" do %>
+  <div class="form-group">
+
+    <div class="flex flex-wrap overflow-hidden md:-mx-1 lg:-mx-1 xl:-mx-1">
+      <div class="w-full overflow-hidden md:my-1 md:px-1 md:w-1/4 lg:my-1 lg:px-1 lg:w-1/4 xl:my-1 xl:px-1 xl:w-1/4">
+        <%= form.text_field :productable_type, placeholder: "Type", class: "form-control" %>
+      </div>
+
+      <div class="w-full overflow-hidden md:my-1 md:px-1 md:w-1/4 lg:my-1 lg:px-1 lg:w-1/4 xl:my-1 xl:px-1 xl:w-1/4">
+        <%= form.text_field :productable_id, placeholder: "ID", class: "form-control" %>
+      </div>
+
+      <div class="w-full overflow-hidden md:my-1 md:px-1 md:w-1/4 lg:my-1 lg:px-1 lg:w-1/4 xl:my-1 xl:px-1 xl:w-1/4">
+        <%= form.text_field :body_part, placeholder: "Body Part", class: "form-control" %>
+      </div>
+
+      <div class="text-center w-full overflow-hidden md:my-1 md:px-1 md:w-1/4 lg:my-1 lg:px-1 lg:w-1/4 xl:my-1 xl:px-1 xl:w-1/4">
+        <%= link_to "Remove", "#", data: { action: "click->nested-form#remove_association" }, class: "btn btn-danger" %>
+        <%= form.hidden_field :_destroy %>
+      </div>
+    </div>
+
+  </div>
+<% end %>

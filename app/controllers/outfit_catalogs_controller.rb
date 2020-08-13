@@ -1,5 +1,8 @@
 class OutfitCatalogsController < ApplicationController
-  before_action :set_outfit_catalog, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!, except: [:index, :show]
+  before_action :set_outfit_catalog, only: [:show, :edit, :update, :destroy, :like, :favorite]
+
+  # after_action :verify_authorized
 
   # GET /outfit_catalogs
   def index
@@ -26,6 +29,9 @@ class OutfitCatalogsController < ApplicationController
   # POST /outfit_catalogs
   def create
     @outfit_catalog = OutfitCatalog.new(outfit_catalog_params)
+    @outfit_catalog.user = current_user
+    @outfit_catalog.account = current_account
+    @outfit_catalog.brand = current_account.brand if !current_account.personal?
 
     if @outfit_catalog.save
       redirect_to @outfit_catalog, notice: "Outfit catalog was successfully created."
@@ -51,13 +57,13 @@ class OutfitCatalogsController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
-  def set_outfit_catalog
-    @outfit_catalog = OutfitCatalog.find(params[:id])
-  end
+    # Use callbacks to share common setup or constraints between actions.
+    def set_outfit_catalog
+      @outfit_catalog = OutfitCatalog.find(params[:id])
+    end
 
-  # Only allow a trusted parameter "white list" through.
-  def outfit_catalog_params
-    params.require(:outfit_catalog).permit(:user_id, :account_id, :brand_id, :title, :description, :category, :total_number_of_outfits, :total_price)
-  end
+    # Only allow a trusted parameter "white list" through.
+    def outfit_catalog_params
+      params.require(:outfit_catalog).permit(:user_id, :account_id, :brand_id, :title, :description, :category, :total_number_of_outfits, :total_price)
+    end
 end

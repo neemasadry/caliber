@@ -16,13 +16,14 @@
 #  favoritable_score       :text
 #  favoritable_total       :text
 #  slug                    :string
+#  subcategory             :string(150)      not null
 #  title                   :string(150)      not null
 #  total_number_of_outfits :integer          default(0), not null
 #  total_price             :decimal(10, 2)   default(0.0), not null
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null
 #  account_id              :bigint           not null
-#  brand_id                :bigint           not null
+#  brand_id                :bigint
 #  user_id                 :bigint           not null
 #
 # Indexes
@@ -41,7 +42,31 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class OutfitCatalog < ApplicationRecord
+  extend FriendlyId
+
   belongs_to :user
   belongs_to :account
-  belongs_to :brand
+  belongs_to :brand, optional: true
+
+  friendly_id :title, use: :slugged
+
+  acts_as_favoritable
+  acts_as_votable
+
+  searchkick word_start: [:title], word_middle: [:title], text_middle: [:category]
+
+  validates :title, presence: true, length: { minimum: 4, maximum: 150 }
+  validates :description, presence: true, length: { minimum: 10, maximum: 3000 }
+  validates :occasion, presence: true, length: { minimum: 1, maximum: 50 }
+  validates :category, presence: true, length: { minimum: 1, maximum: 150 }
+  validates :subcategory, presence: true, length: { minimum: 1, maximum: 150 }
+  validates :total_number_of_outfits, allow_blank: true, numericality: { integer_only: true, greater_than_or_equal_to: 0 }
+  validates :total_price, allow_blank: true, numericality: { greater_than_or_equal_to: 0.0 }
+
+  def search_data
+    {
+      title: title,
+      category: category
+    }
+  end
 end

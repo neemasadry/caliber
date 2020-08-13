@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   resources :outfit_catalogs
   resources :outfits
+
   resources :brands, model_name: "Brand" do
     member do
       put "like", to: "accessories#like"
@@ -206,22 +207,15 @@ Rails.application.routes.draw do
 
   # scope module: 'user_profiles', path: 'users'
   resources :user_profiles, :only => [:index, :show] do
+    member do
+      put "follow", to: "user_profiles#follow"
+      # put "watch", to: "user_profiles#watch"
+    end
     resources :collections, :only => [:index, :show, :destroy]
     # resources :collections do
     #   resources :comments, only: [:create, :destroy], module: :collections
     # end
   end
-    # member do
-    #   put "follow", to: "user_profiles#follow"
-    #   put "watch", to: "user_profiles#watch"
-    # end
-
-    # resources :notifications do
-    #   collection do
-    #     post :mark_as_read
-    #     post :mark_all_as_read
-    #   end
-    # end
   # end
 
   resources :announcements, only: [:index]

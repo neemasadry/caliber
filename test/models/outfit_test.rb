@@ -17,13 +17,14 @@
 #  favoritable_total        :text
 #  name                     :string(150)      not null
 #  occasion                 :string(50)       not null
+#  season                   :string(10)       not null
 #  slug                     :string
 #  total_number_of_products :integer          default(0), not null
 #  total_price              :decimal(10, 2)   default(0.0), not null
 #  created_at               :datetime         not null
 #  updated_at               :datetime         not null
 #  account_id               :bigint           not null
-#  brand_id                 :bigint           not null
+#  brand_id                 :bigint
 #  user_id                  :bigint           not null
 #
 # Indexes

@@ -2,52 +2,71 @@
   <%= render "shared/error_messages", resource: form.object %>
 
   <div class="form-group">
-    <%= form.label :user_id %>
-    <%= form.text_field :user_id, class: "form-control" %>
-  </div>
-
-  <div class="form-group">
-    <%= form.label :account_id %>
-    <%= form.text_field :account_id, class: "form-control" %>
-  </div>
-
-  <div class="form-group">
-    <%= form.label :brand_id %>
-    <%= form.text_field :brand_id, class: "form-control" %>
-  </div>
-
-  <div class="form-group">
-    <%= form.label :name %>
+    <%= form.label :name, class: "block text-sm font-medium leading-5 text-gray-700" %>
     <%= form.text_field :name, class: "form-control" %>
   </div>
 
   <div class="form-group">
-    <%= form.label :description %>
-    <%= form.text_area :description, class: "form-control" %>
+    <%= form.label :description, class: "block text-sm font-medium leading-5 text-gray-700" %>
+    <%= form.text_area :description, rows: 12, class: "form-control" %>
   </div>
 
-  <div class="form-group">
-    <%= form.label :occasion %>
-    <%= form.text_field :occasion, class: "form-control" %>
+  <div class="flex flex-wrap overflow-hidden md:-mx-1 lg:-mx-1 xl:-mx-1">
+
+    <div class="w-full overflow-hidden md:my-1 md:px-1 md:w-1/3 lg:my-1 lg:px-1 lg:w-1/3 xl:my-1 xl:px-1 xl:w-1/3">
+      <div class="form-group">
+        <%= form.label :season, class: "block text-sm font-medium leading-5 text-gray-700" %>
+
+        <div class="relative">
+          <%= form.select :season, options_for_select(["Fall", "Spring", "Summer", "Winter"]), { prompt: "Select season..." }, class: "form-control" %>
+          <div class="caret"><svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="w-full overflow-hidden md:my-1 md:px-1 md:w-1/3 lg:my-1 lg:px-1 lg:w-1/3 xl:my-1 xl:px-1 xl:w-1/3">
+      <div class="form-group">
+        <%= form.label :occasion, class: "block text-sm font-medium leading-5 text-gray-700" %>
+
+        <div class="relative">
+          <%= form.select :occasion, options_for_select(["Wedding", "Everyday", "Informal Office", "Formal Office", "Professional", "Informal Date Night", "Formal Date Night", "Funeral", "Beach"]), { prompt: "Select occasion..." }, class: "form-control" %>
+          <div class="caret"><svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="w-full overflow-hidden md:my-1 md:px-1 md:w-1/3 lg:my-1 lg:px-1 lg:w-1/3 xl:my-1 xl:px-1 xl:w-1/3">
+      <div class="form-group">
+        <%= form.label :dress_code, class: "block text-sm font-medium leading-5 text-gray-700" %>
+
+        <div class="relative">
+          <%= form.select :dress_code, options_for_select(["Casual", "Business Casual", "Smart Casual", "Business/Informal", "Semi-Formal", "Formal"]), { prompt: "Select occasion..." }, class: "form-control" %>
+          <div class="caret"><svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg></div>
+        </div>
+      </div>
+    </div>
+
   </div>
 
-  <div class="form-group">
-    <%= form.label :dress_code %>
-    <%= form.text_field :dress_code, class: "form-control" %>
-  </div>
+  <h3>Outfit Items</h3>
+  <div data-controller="nested-form">
+    <template data-target="nested-form.template">
+      <%= form.fields_for :outfit_items, OutfitItem.new, child_index: "NEW_RECORD" do |item| %>
+        <%= render "outfit_item_fields", form: item %>
+      <% end %>
+    </template>
 
-  <div class="form-group">
-    <%= form.label :total_number_of_products %>
-    <%= form.number_field :total_number_of_products, class: "form-control" %>
-  </div>
+    <%= form.fields_for :outfit_items do |item| %>
+      <%= render "outfit_item_fields", form: item %>
+    <% end %>
 
-  <div class="form-group">
-    <%= form.label :total_price %>
-    <%= form.text_field :total_price, class: "form-control" %>
+    <div data-target="nested-form.add_link">
+      <%= link_to "Add Item", "#", data: { action: "click->nested-form#add_association" } %>
+    </div>
   </div>
 
   <div class="form-group flex justify-between">
-    <%= form.button class: "btn btn-primary" %>
+    <%= form.button class: "btn btn-secondary" %>
 
     <% if form.object.persisted? %>
       <%= link_to 'Delete', form.object, class: "btn btn-danger outline", method: :delete, data: { remote: true, confirm: "Are you sure?" } %>

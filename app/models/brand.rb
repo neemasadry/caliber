@@ -69,6 +69,7 @@ class Brand < ApplicationRecord
 
   has_many :comments, as: :commentable
   has_many :posts, dependent: :destroy
+  has_many :outfits
 
   friendly_id :alias, use: :slugged
   acts_as_favoritor

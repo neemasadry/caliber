@@ -1,6 +1,6 @@
 class CollectionsController < ApplicationController
   before_action :authenticate_user!, only: [:destroy]
-  before_action :set_user, only: [:index, :show, :destroy]
+  before_action :set_collection_owner, only: [:index, :show, :destroy]
   before_action :set_collection, only: [:show, :destroy]
   before_action :set_collection_items, only: [:show]
 
@@ -68,7 +68,7 @@ class CollectionsController < ApplicationController
 
   private
 
-    def set_user
+    def set_collection_owner
       @collection_owner = User.find_by(username: params[:user_profile_id])
     end
 

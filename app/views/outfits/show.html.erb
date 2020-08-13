@@ -6,42 +6,53 @@
     </div>
 
     <div class="bg-white rounded shadow p-8">
-            <div class="mb-4">
-        <h5>User</h5>
-        <%= @outfit.user %>
+      <div class="mb-4">
+        <h3><%= @outfit.name %></h3>
+        <p class="text-gray-600 text-md ml-4">
+          <% unless @outfit.brand.present? %>
+            <%=  link_to @outfit.user.username, user_profile_path(@outfit.user) %> on <%= @outfit.created_at.strftime("%A, %d %b %Y at %l:%M %p") %>
+          <% else %>
+            <%= @outfit.user %> from <%= link_to @outfit.brand.name, brand_path(@outfit.brand) %> on <%= @outfit.created_at.strftime("%A, %d %b %Y at %l:%M %p") %>
+          <% end %>
+        </p>
       </div>
             <div class="mb-4">
-        <h5>Account</h5>
-        <%= @outfit.account %>
-      </div>
-            <div class="mb-4">
-        <h5>Brand</h5>
-        <%= @outfit.brand %>
-      </div>
-            <div class="mb-4">
-        <h5>Name</h5>
-        <%= @outfit.name %>
-      </div>
-            <div class="mb-4">
-        <h5>Description</h5>
+        <div class="mb-2 block text-lg font-medium leading-5 text-gray-700">Description</div>
         <%= @outfit.description %>
       </div>
-            <div class="mb-4">
-        <h5>Occasion</h5>
-        <%= @outfit.occasion %>
+
+      <div class="text-center flex flex-wrap overflow-hidden md:-mx-1 lg:-mx-1 xl:-mx-1">
+        <div class="w-full overflow-hidden md:my-1 md:px-1 md:w-1/2 lg:my-1 lg:px-1 lg:w-1/2 xl:my-1 xl:px-1 xl:w-1/2">
+          <div class="block text-lg font-medium leading-5 text-gray-700">Occasion</div>
+          <%= @outfit.occasion %>
+        </div>
+
+        <div class="w-full overflow-hidden md:my-1 md:px-1 md:w-1/2 lg:my-1 lg:px-1 lg:w-1/2 xl:my-1 xl:px-1 xl:w-1/2">
+          <div class="block text-lg font-medium leading-5 text-gray-700">Dress Code</div>
+          <%= @outfit.dress_code %>
+        </div>
       </div>
-            <div class="mb-4">
-        <h5>Dress code</h5>
-        <%= @outfit.dress_code %>
+
+      <div class="text-center flex flex-wrap overflow-hidden md:-mx-1 lg:-mx-1 xl:-mx-1">
+        <div class="w-full overflow-hidden md:my-1 md:px-1 md:w-1/2 lg:my-1 lg:px-1 lg:w-1/2 xl:my-1 xl:px-1 xl:w-1/2">
+          <div class="block text-lg font-medium leading-5 text-gray-700">No. of Products</div>
+          <%= @outfit.total_number_of_products %>
+        </div>
+
+        <div class="w-full overflow-hidden md:my-1 md:px-1 md:w-1/2 lg:my-1 lg:px-1 lg:w-1/2 xl:my-1 xl:px-1 xl:w-1/2">
+          <div class="block text-lg font-medium leading-5 text-gray-700">Total Price</div>
+          <%= number_to_currency(@outfit.total_price) %>
+        </div>
       </div>
-            <div class="mb-4">
-        <h5>Total number of products</h5>
-        <%= @outfit.total_number_of_products %>
-      </div>
-            <div class="mb-4">
-        <h5>Total price</h5>
-        <%= @outfit.total_price %>
-      </div>
-          </div>
+
+      <hr class="my-3">
+
+      <h3 class="mt-3 mb-1">Outfit Items</h3>
+
+      <% @outfit_items.each do |item| %>
+        <%= item.productable.name %> by <%= item.productable.brand.name %> (<%= number_to_currency(item.productable.retail_price) %>) <br>
+      <% end %>
+
+    </div>
   </div>
 </div>

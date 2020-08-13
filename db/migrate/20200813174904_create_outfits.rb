@@ -3,10 +3,11 @@ class CreateOutfits < ActiveRecord::Migration[6.0]
     create_table :outfits do |t|
       t.references :user, null: false, foreign_key: true
       t.references :account, null: false, foreign_key: true
-      t.references :brand, null: false, foreign_key: true
+      t.references :brand, null: true, foreign_key: true
 
       t.string :name, null: false, limit: 150, index: true
       t.text :description, null: false, limit: 3000
+      t.string :season, null: false, limit: 10
       t.string :occasion, null: false, limit: 50
       t.string :dress_code, null: false, limit: 50
       t.integer :total_number_of_products, null: false, default: 0

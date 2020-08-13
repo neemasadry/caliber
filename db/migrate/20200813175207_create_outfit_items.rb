@@ -4,6 +4,8 @@ class CreateOutfitItems < ActiveRecord::Migration[6.0]
       t.references :outfit, null: false, foreign_key: true
       t.references :productable, polymorphic: true, null: false
 
+      t.string :body_part, null: false, limit: 50
+
       t.timestamps
     end
   end

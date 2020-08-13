@@ -16,13 +16,14 @@
 #  favoritable_score       :text
 #  favoritable_total       :text
 #  slug                    :string
+#  subcategory             :string(150)      not null
 #  title                   :string(150)      not null
 #  total_number_of_outfits :integer          default(0), not null
 #  total_price             :decimal(10, 2)   default(0.0), not null
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null
 #  account_id              :bigint           not null
-#  brand_id                :bigint           not null
+#  brand_id                :bigint
 #  user_id                 :bigint           not null
 #
 # Indexes

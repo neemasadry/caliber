@@ -43,6 +43,7 @@ class Account < ApplicationRecord
   has_one  :brand
   has_many :comments, as: :commentable
   has_many :posts, dependent: :destroy
+  has_many :outfits, dependent: :destroy
 
   scope :personal, -> { where(personal: true) }
   scope :impersonal, -> { where(personal: false) }

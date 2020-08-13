@@ -482,10 +482,11 @@ ActiveRecord::Schema.define(version: 2020_08_13_181235) do
   create_table "outfit_catalogs", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "account_id", null: false
-    t.bigint "brand_id", null: false
+    t.bigint "brand_id"
     t.string "title", limit: 150, null: false
     t.text "description", null: false
     t.string "category", limit: 150, null: false
+    t.string "subcategory", limit: 150, null: false
     t.integer "total_number_of_outfits", default: 0, null: false
     t.decimal "total_price", precision: 10, scale: 2, default: "0.0", null: false
     t.string "slug"
@@ -513,6 +514,7 @@ ActiveRecord::Schema.define(version: 2020_08_13_181235) do
     t.bigint "outfit_id", null: false
     t.string "productable_type", null: false
     t.bigint "productable_id", null: false
+    t.string "body_part", limit: 50, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["outfit_id"], name: "index_outfit_items_on_outfit_id"
@@ -522,9 +524,10 @@ ActiveRecord::Schema.define(version: 2020_08_13_181235) do
   create_table "outfits", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "account_id", null: false
-    t.bigint "brand_id", null: false
+    t.bigint "brand_id"
     t.string "name", limit: 150, null: false
     t.text "description", null: false
+    t.string "season", limit: 10, null: false
     t.string "occasion", limit: 50, null: false
     t.string "dress_code", limit: 50, null: false
     t.integer "total_number_of_products", default: 0, null: false
