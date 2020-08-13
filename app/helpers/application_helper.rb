@@ -68,7 +68,19 @@ module ApplicationHelper
     content_for(:title) { page_title }
   end
 
-  ### PRODUCTS ###
+  ### App Specifi ###
+
+  # To be used in _liking.html.erb and _favoriting.html.erb
+  # localable refers to either 'likeable' or 'favoritable'
+  def determine_nested_path(localable)
+    if params[:controller] == "reviews"
+      if @reviewable.present?
+        return [@reviewable, localable]
+      end
+    else
+      return localable
+    end
+  end
 
   def determine_gender_sign(model_instance)
     if model_instance.gender == "male" || model_instance.gender == "Male"

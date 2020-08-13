@@ -1,0 +1,15 @@
+<% if @following_status == true %>
+  <span class="relative z-0 inline-flex shadow-sm rounded-md">
+    <%= button_to(followable, { method: :put, class: "inline btn btn-small btn-secondary" }) do %>
+      <%= fa_icon("fal fa-user-times", class: "mr-2") %>
+      Unfollow
+    <% end %>
+
+    <%= render partial: "votable/watching", locals: { watchable: watch_user_profile_path(@user_profile) } %>
+  </span>
+<% else %>
+    <%= button_to(followable, { method: :put, class: "btn btn-small btn-secondary outline" }) do %>
+      <%= fa_icon("fas fa-user-plus", class: "mr-2") %>
+      Follow
+    <% end %>
+<% end %>

@@ -1,94 +1,142 @@
 # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 Rails.application.routes.draw do
 
+  resources :brands, model_name: "Brand" do
+    member do
+      put "like", to: "accessories#like"
+      put "favorite", to: "accessories#favorite"
+    end
+  end # Brand
+
   ### Begin: Products ###
   resources :accessories, model_name: "Accessory" do
     member do
-      # put "like", to: "accessories#like"
-      # put "favorite", to: "accessories#favorite"
+      put "like", to: "accessories#like"
+      put "favorite", to: "accessories#favorite"
       put "collect", to: "accessories#collect"
     end
+
     resources :reviews do
+      member do
+        put "like", to: "reviews#like"
+      end
+
       resources :comments, only: [:create, :destroy], module: :reviews
     end
-  end
+  end # Accessory
 
   resources :bottoms, model_name: "Bottom" do
     member do
-      # put "like", to: "accessories#like"
-      # put "favorite", to: "accessories#favorite"
+      put "like", to: "accessories#like"
+      put "favorite", to: "accessories#favorite"
       put "collect", to: "bottoms#collect"
     end
+
     resources :reviews do
+      member do
+        put "like", to: "reviews#like"
+      end
+
       resources :comments, only: [:create, :destroy], module: :reviews
     end
-  end
+  end # Bottom
 
   resources :cosmetics, model_name: "Cosmetic" do
     member do
-      # put "like", to: "accessories#like"
-      # put "favorite", to: "accessories#favorite"
+      put "like", to: "accessories#like"
+      put "favorite", to: "accessories#favorite"
       put "collect", to: "cosmetics#collect"
     end
+
     resources :reviews do
+      member do
+        put "like", to: "reviews#like"
+      end
+
       resources :comments, only: [:create, :destroy], module: :reviews
     end
-  end
+  end # Cosmetic
 
   resources :dresses, model_name: "Dress" do
     member do
-      # put "like", to: "accessories#like"
-      # put "favorite", to: "accessories#favorite"
+      put "like", to: "accessories#like"
+      put "favorite", to: "accessories#favorite"
       put "collect", to: "dresses#collect"
     end
+
     resources :reviews do
+      member do
+        put "like", to: "reviews#like"
+      end
+
       resources :comments, only: [:create, :destroy], module: :reviews
     end
-  end
+  end # Dress
 
   resources :fragrances, model_name: "Fragrance" do
     member do
-      # put "like", to: "accessories#like"
-      # put "favorite", to: "accessories#favorite"
+      put "like", to: "accessories#like"
+      put "favorite", to: "accessories#favorite"
       put "collect", to: "fragrances#collect"
     end
+
     resources :reviews do
+      member do
+        put "like", to: "reviews#like"
+      end
+
       resources :comments, only: [:create, :destroy], module: :reviews
     end
-  end
+  end # Fragrance
 
   resources :jewelries, model_name: "Jewelry" do
     member do
-      # put "like", to: "accessories#like"
-      # put "favorite", to: "accessories#favorite"
+      put "like", to: "accessories#like"
+      put "favorite", to: "accessories#favorite"
       put "collect", to: "jewelries#collect"
     end
+
     resources :reviews do
+      member do
+        put "like", to: "reviews#like"
+      end
+
       resources :comments, only: [:create, :destroy], module: :reviews
     end
-  end
+  end # Jewelry
 
   resources :shoes, model_name: "Shoe" do
     member do
-      # put "like", to: "accessories#like"
-      # put "favorite", to: "accessories#favorite"
+      put "like", to: "accessories#like"
+      put "favorite", to: "accessories#favorite"
       put "collect", to: "shoes#collect"
     end
+
     resources :reviews do
+      member do
+        put "like", to: "reviews#like"
+      end
+
       resources :comments, only: [:create, :destroy], module: :reviews
     end
-  end
+  end # Shoe
 
   resources :tops, model_name: "Top" do
     member do
-      # put "like", to: "accessories#like"
-      # put "favorite", to: "accessories#favorite"
+      put "like", to: "accessories#like"
+      put "favorite", to: "accessories#favorite"
       put "collect", to: "tops#collect"
     end
+
     resources :reviews do
+      member do
+        put "like", to: "reviews#like"
+      end
+
       resources :comments, only: [:create, :destroy], module: :reviews
     end
-  end
+  end # Top
+
   ### End: Products ###
 
   resources :guides do
@@ -99,7 +147,11 @@ Rails.application.routes.draw do
     resources :comments, only: [:create, :destroy], module: :posts
   end
 
-  resources :brands
+  resources :comments, only: [:create, :destroy] do
+    member do
+      put "like", to: "comments#like"
+    end
+  end
 
   # Jumpstart views
   if Rails.env.development? || Rails.env.test?

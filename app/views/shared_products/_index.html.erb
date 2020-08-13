@@ -50,7 +50,7 @@
       <%= image_tag "empty.svg", class: "mb-4 lg:w-1/2" %>
       <div class="flex-1 text-center">
         <p class="h3 mb-4">Create your first <%= product_model %></p>
-        <%= link_to "New #{product_model}", new_polymorphic_path(product_model), class: "btn btn-primary" %>
+        <%= link_to "New #{product_model}", new_polymorphic_path(product_model.constantize), class: "btn btn-primary" %>
       </div>
     </div>
   <% end %>

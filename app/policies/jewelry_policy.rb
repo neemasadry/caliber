@@ -1,5 +1,15 @@
 class JewelryPolicy < ApplicationPolicy
 
+  def like?
+    return true if user.present? && !@user_on_personal_account
+    false
+  end
+
+  def favorite?
+    return true if user.present? && !@user_on_personal_account
+    false
+  end
+
   def collect?
     return true if user.present? && !@user_on_personal_account
     false

@@ -1,0 +1,11 @@
+<% if @favorite_status == true %>
+  <%= button_to(polymorphic_path(determine_nested_path(favoritable), action: "favorite"), method: :put, class: "btn  btn-warning") do %>
+    <%= fa_icon("fal fa-heart", class: "mr-2") %>
+    Unfavorite
+  <% end %>
+<% else %>
+  <%= button_to(polymorphic_path(determine_nested_path(favoritable), action: "favorite"), method: :put, class: "btn  btn-warning outline") do %>
+    <%= fa_icon("fal fa-heart", class: "mr-2") %>
+    Favorite
+  <% end %>
+<% end %>

@@ -1,7 +1,7 @@
 class AccessoriesController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :set_user_on_personal_account, if: :user_signed_in?
-  before_action :set_accessory, only: [:show, :edit, :update, :destroy, :collect]
+  before_action :set_accessory, only: [:show, :edit, :update, :destroy, :like, :favorite, :collect]
 
   after_action :verify_authorized
 
@@ -78,7 +78,7 @@ class AccessoriesController < ApplicationController
   end
 
   def collect # acts_as_favoritor
-    if current_account.personal?
+    if current_account.personal? && user_signed_in?
       if current_user.collected?(params[:controller], @accessory)
         current_user.remove_from_collection("Accessory", @accessory)
         redirect_to(accessory_path(@accessory), alert: "You removed the product #{@accessory.name} from your Accessories Collection." )
@@ -92,24 +92,32 @@ class AccessoriesController < ApplicationController
   end
 
   def favorite # acts_as_favoritor
-    if current_user.favorited? @accessory
-      current_user.unfavorite(@accessory, scope: :favorite)
-      redirect_to(accessory_path(@accessory), flash: { warning: "You removed the product #{@accessory.name} from your favorites." })
+    if current_account.personal? && user_signed_in?
+      if current_user.favorited? @accessory
+        current_user.unfavorite(@accessory, scope: :favorite)
+        redirect_to(accessory_path(@accessory), flash: { warning: "You removed the product #{@accessory.name} from your favorites." })
+      else
+        current_user.favorite(@accessory, scope: :favorite)
+        redirect_to(accessory_path(@accessory), flash: { success: "You added the product #{@accessory.name} to your favorites!" })
+      end
     else
-      current_user.favorite(@accessory, scope: :favorite)
-      redirect_to(accessory_path(@accessory), flash: { success: "You added the product #{@accessory.name} to your favorites!" })
+      redirect_to accessory_path(@accessory), flash: { danger: "You can only Favorite an item using your personal account." }
     end
   end
 
   def like # acts_as_votable
-    if current_user.liked? @accessory
-      @accessory.unliked_by(current_user)
-      redirect_to(accessory_path(@accessory), flash: { warning: "You unliked the product: #{@accessory.name}." })
-    elsif current_user.id != @accessory.user_id
-      @accessory.liked_by(current_user)
-      redirect_to(accessory_path(@accessory), flash: { success: "You like the product: #{@accessory.name}!" })
+    if current_account.personal? && user_signed_in?
+      if current_user.liked? @accessory
+        @accessory.unliked_by(current_user)
+        redirect_to(accessory_path(@accessory), flash: { warning: "You unliked the product: #{@accessory.name}." })
+      elsif current_user.id != @accessory.user_id
+        @accessory.liked_by(current_user)
+        redirect_to(accessory_path(@accessory), flash: { success: "You like the product: #{@accessory.name}!" })
+      else
+        redirect_to(root_path, flash: { danger: "An error occurred. Redirected to homepage." })
+      end
     else
-      redirect_to(root_path, flash: { danger: "An error occurred. Redirected to homepage." })
+      redirect_to accessory_path(@accessory), flash: { danger: "You can only Like an item using your personal account." }
     end
   end
 

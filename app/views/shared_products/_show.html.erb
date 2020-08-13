@@ -2,15 +2,21 @@
   <div class="max-w-3xl mx-auto">
 
     <div class="flex justify-between items-center mb-4">
-      <h1 class="h3"><%= link_to product_model_plural, polymorphic_path(product_model.constantize) %> > <%= product_model %> #<%= product.id %></h1>
+      <h4>
+        <%= link_to product_model_plural, polymorphic_path(product_model.constantize) %> > <%= product.name %>
+      </h4>
       <%= link_to 'Edit', edit_polymorphic_path(product), class: "btn btn-link" %>
     </div>
 
-    <div class="bg-white rounded shadow p-8">
+    <div class="flex justify-between items-center mb-4">
+      <% if (user_signed_in? && current_account.personal? && product.user != current_user) %>
+        <%= render partial: "votable/liking", locals: { likeable: product }  %>
+        <%= render partial: "votable/favoriting", locals: { favoritable: product } %>
+        <%= render partial: "votable/collecting", locals: { collectable: product, collected_status: @collected_status } %>
+      <% end %>
+    </div>
 
-      <div class="mb-3">
-        <%= render partial: "votable/collecting", locals: { collectable: product, collected_status: @collected_status } if (user_signed_in? && current_account.personal?) %>
-      </div>
+    <div class="bg-white rounded shadow p-8">
 
       <div id="product_image_gallery" style="max-width:80%;margin:auto">
       </div>
