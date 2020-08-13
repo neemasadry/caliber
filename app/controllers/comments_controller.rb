@@ -38,7 +38,7 @@ class CommentsController < ApplicationController
   end
 
   def like # acts_as_votable
-    if current_account.personal? && user_signed_in?
+    if current_account.personal? && @comment.deleted == false
       if current_user.liked? @comment
         @comment.unliked_by(current_user)
         redirect_to(polymorphic_path([@commentable, @comment]), flash: { warning: "You unliked this comment." })
@@ -49,7 +49,7 @@ class CommentsController < ApplicationController
         redirect_to(root_path, flash: { danger: "An error occurred. Redirected to homepage." })
       end
     else
-      redirect_to review_path(@review), flash: { danger: "You can only Like a comment using your personal account." }
+      redirect_to review_path(@review), flash: { danger: "You can only Like an existing comment using your personal account." }
     end
   end
 
