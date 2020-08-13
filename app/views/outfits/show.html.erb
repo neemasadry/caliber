@@ -1,0 +1,47 @@
+<div class="container mx-auto my-8 px-4">
+  <div class="max-w-3xl mx-auto">
+    <div class="flex justify-between items-center mb-4">
+      <h1 class="h3"><%= link_to 'Outfits', outfits_path %> > Outfit #<%= @outfit.id %></h1>
+      <%= link_to 'Edit', edit_outfit_path(@outfit), class: "btn btn-link" %>
+    </div>
+
+    <div class="bg-white rounded shadow p-8">
+            <div class="mb-4">
+        <h5>User</h5>
+        <%= @outfit.user %>
+      </div>
+            <div class="mb-4">
+        <h5>Account</h5>
+        <%= @outfit.account %>
+      </div>
+            <div class="mb-4">
+        <h5>Brand</h5>
+        <%= @outfit.brand %>
+      </div>
+            <div class="mb-4">
+        <h5>Name</h5>
+        <%= @outfit.name %>
+      </div>
+            <div class="mb-4">
+        <h5>Description</h5>
+        <%= @outfit.description %>
+      </div>
+            <div class="mb-4">
+        <h5>Occasion</h5>
+        <%= @outfit.occasion %>
+      </div>
+            <div class="mb-4">
+        <h5>Dress code</h5>
+        <%= @outfit.dress_code %>
+      </div>
+            <div class="mb-4">
+        <h5>Total number of products</h5>
+        <%= @outfit.total_number_of_products %>
+      </div>
+            <div class="mb-4">
+        <h5>Total price</h5>
+        <%= @outfit.total_price %>
+      </div>
+          </div>
+  </div>
+</div>

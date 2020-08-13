@@ -1,0 +1,2 @@
+module OutfitCatalogsHelper
+end

@@ -1,0 +1,63 @@
+<div class="container mx-auto my-8 px-4">
+  <div class="flex justify-between items-center mb-4">
+    <h1 class="h3">Outfit Catalogs</h1>
+
+    <% if @outfit_catalogs.any? %>
+      <%= link_to 'New Outfit Catalog', new_outfit_catalog_path, class: "btn btn-primary" %>
+    <% end %>
+  </div>
+
+  <% if @outfit_catalogs.any? %>
+    <div class="bg-white rounded shadow table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @outfit_catalogs, :user_id, 'User', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @outfit_catalogs, :account_id, 'Account', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @outfit_catalogs, :brand_id, 'Brand', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @outfit_catalogs, :title, 'Title', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @outfit_catalogs, :description, 'Description', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @outfit_catalogs, :category, 'Category', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @outfit_catalogs, :total_number_of_outfits, 'Total number of outfits', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @outfit_catalogs, :total_price, 'Total price', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs text-gray-700 w-20">Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+        <% @outfit_catalogs.each do |outfit_catalog| %>
+          <tr class="group border-t border-gray-400 hover:bg-gray-100">
+                      <td class="p-3"><%= outfit_catalog.user_id %></td>
+                      <td class="p-3"><%= outfit_catalog.account_id %></td>
+                      <td class="p-3"><%= outfit_catalog.brand_id %></td>
+                      <td class="p-3"><%= outfit_catalog.title %></td>
+                      <td class="p-3"><%= outfit_catalog.description %></td>
+                      <td class="p-3"><%= outfit_catalog.category %></td>
+                      <td class="p-3"><%= outfit_catalog.total_number_of_outfits %></td>
+                      <td class="p-3"><%= outfit_catalog.total_price %></td>
+          
+            <td>
+              <%= link_to "View", outfit_catalog, class: "btn btn-link no-underline" %>
+            </td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <% if @pagy.pages > 1 %>
+      <div class="text-center my-6">
+        <%== pagy_nav(@pagy) %>
+      </div>
+    <% end %>
+
+  <% else %>
+    <div class="bg-white rounded shadow flex flex-col items-center justify-between p-8 lg:flex-row">
+      <%= image_tag "empty.svg", class: "mb-4 lg:w-1/2" %>
+      <div class="flex-1 text-center">
+        <p class="h3 mb-4">Create your first Outfit Catalog</p>
+        <%= link_to 'New Outfit Catalog', new_outfit_catalog_path, class: "btn btn-primary" %>
+      </div>
+    </div>
+  <% end %>
+</div>
