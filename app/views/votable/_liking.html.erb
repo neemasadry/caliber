@@ -16,7 +16,7 @@
 <% else %>
   <div class="mr-2">
     <span class="relative z-0 inline-flex shadow-sm rounded-md">
-      <%= button_to(polymorphic_path(determine_nested_path(likeable), action: "like"), method: :put, class: "btn btn-secondary outline") do %>
+      <%= button_to(polymorphic_path(determine_nested_path(likeable), action: "like"), method: :put, class: "relative inline-flex items-center px-4 py-2 rounded-l-md border border-green-400 bg-white text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150") do %>
         <!-- <%#= likeable.get_upvotes.size %>&nbsp; -->
         <%= fa_icon("fal fa-thumbs-up", class: "ml-2.5 mr-1") %>
         Like
