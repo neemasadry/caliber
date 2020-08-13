@@ -3,7 +3,7 @@ class JewelriesController < ApplicationController
   before_action :set_user_on_personal_account, if: :user_signed_in?
   before_action :set_jewelry, only: [:show, :edit, :update, :destroy]
 
-  after_action :verify_authorized
+  # after_action :verify_authorized
 
   # GET /jewelries
   def index
