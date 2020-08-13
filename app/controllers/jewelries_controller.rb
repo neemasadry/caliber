@@ -110,7 +110,7 @@ class JewelriesController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_jewelry
     @jewelry = Jewelry.friendly.find(params[:id])
-    @authorize @jewelry
+    authorize @jewelry
   end
 
   # Only allow a trusted parameter "white list" through.
