@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: outfit_catalogs
+# Table name: posts
 #
 #  id                      :bigint           not null, primary key
 #  cached_votes_down       :integer          default(0)
@@ -10,16 +10,12 @@
 #  cached_weighted_average :float            default(0.0)
 #  cached_weighted_score   :integer          default(0)
 #  cached_weighted_total   :integer          default(0)
-#  category                :string(150)      not null
-#  description             :text             not null
+#  content                 :string(240)      not null
 #  discarded_at            :datetime
 #  favoritable_score       :text
 #  favoritable_total       :text
-#  slug                    :string
-#  subcategory             :string(150)      not null
-#  title                   :string(150)      not null
-#  total_number_of_outfits :integer          default(0), not null
-#  total_price             :decimal(10, 2)   default(0.0), not null
+#  post_image_data         :text
+#  post_video_data         :text
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null
 #  account_id              :bigint           not null
@@ -28,12 +24,10 @@
 #
 # Indexes
 #
-#  index_outfit_catalogs_on_account_id    (account_id)
-#  index_outfit_catalogs_on_brand_id      (brand_id)
-#  index_outfit_catalogs_on_discarded_at  (discarded_at)
-#  index_outfit_catalogs_on_slug          (slug) UNIQUE
-#  index_outfit_catalogs_on_title         (title)
-#  index_outfit_catalogs_on_user_id       (user_id)
+#  index_posts_on_account_id    (account_id)
+#  index_posts_on_brand_id      (brand_id)
+#  index_posts_on_discarded_at  (discarded_at)
+#  index_posts_on_user_id       (user_id)
 #
 # Foreign Keys
 #
@@ -48,9 +42,9 @@ one:
   brand: one
   title: MyString
   description: MyText
-  category: MyString
-  total_number_of_outfits: 1
-  total_price: 9.99
+  status_image_data: MyText
+  status_video_data: MyText
+  discarded_at: 2020-08-08 14:49:21
 
 two:
   user: two
@@ -58,6 +52,6 @@ two:
   brand: two
   title: MyString
   description: MyText
-  category: MyString
-  total_number_of_outfits: 1
-  total_price: 9.99
+  status_image_data: MyText
+  status_video_data: MyText
+  discarded_at: 2020-08-08 14:49:21

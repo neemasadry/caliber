@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class OutfitCatalogPolicyTest < ActiveSupport::TestCase
+class CatalogPolicyTest < ActiveSupport::TestCase
   def test_scope
   end
 

@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: statuses
+# Table name: posts
 #
 #  id                      :bigint           not null, primary key
 #  cached_votes_down       :integer          default(0)
@@ -12,8 +12,10 @@
 #  cached_weighted_total   :integer          default(0)
 #  content                 :string(240)      not null
 #  discarded_at            :datetime
-#  status_image_data       :text
-#  status_video_data       :text
+#  favoritable_score       :text
+#  favoritable_total       :text
+#  post_image_data         :text
+#  post_video_data         :text
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null
 #  account_id              :bigint           not null
@@ -22,10 +24,10 @@
 #
 # Indexes
 #
-#  index_statuses_on_account_id    (account_id)
-#  index_statuses_on_brand_id      (brand_id)
-#  index_statuses_on_discarded_at  (discarded_at)
-#  index_statuses_on_user_id       (user_id)
+#  index_posts_on_account_id    (account_id)
+#  index_posts_on_brand_id      (brand_id)
+#  index_posts_on_discarded_at  (discarded_at)
+#  index_posts_on_user_id       (user_id)
 #
 # Foreign Keys
 #
@@ -35,7 +37,7 @@
 #
 require 'test_helper'
 
-class StatusTest < ActiveSupport::TestCase
+class PostTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

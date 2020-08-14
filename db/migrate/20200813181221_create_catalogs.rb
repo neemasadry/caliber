@@ -1,6 +1,6 @@
-class CreateOutfitCatalogs < ActiveRecord::Migration[6.0]
+class CreateCatalogs < ActiveRecord::Migration[6.0]
   def change
-    create_table :outfit_catalogs do |t|
+    create_table :catalogs do |t|
       t.references :user, null: false, foreign_key: true
       t.references :account, null: false, foreign_key: true
       t.references :brand, null: true, foreign_key: true
@@ -9,7 +9,7 @@ class CreateOutfitCatalogs < ActiveRecord::Migration[6.0]
       t.text :description, null: false, limit: 3000
       t.string :category, null: false, limit: 150
       t.string :subcategory, null: false, limit: 150
-      t.integer :total_number_of_outfits, null: false, default: 0
+      t.integer :total_items, null: false, default: 0
       t.decimal :total_price, precision: 10, scale: 2, null: false, default: 0.00
 
       # FriendlyID slug

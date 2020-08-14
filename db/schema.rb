@@ -225,6 +225,47 @@ ActiveRecord::Schema.define(version: 2020_08_13_181235) do
     t.index ["user_id"], name: "index_brands_on_user_id"
   end
 
+  create_table "catalog_items", force: :cascade do |t|
+    t.string "catalogable_item_type", null: false
+    t.bigint "catalogable_item_id", null: false
+    t.bigint "catalog_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["catalog_id"], name: "index_catalog_items_on_catalog_id"
+    t.index ["catalogable_item_type", "catalogable_item_id"], name: "index_catalogable_items_on_ccatalogable_type_and_id"
+  end
+
+  create_table "catalogs", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "account_id", null: false
+    t.bigint "brand_id"
+    t.string "title", limit: 150, null: false
+    t.text "description", null: false
+    t.string "category", limit: 150, null: false
+    t.string "subcategory", limit: 150, null: false
+    t.integer "total_items", default: 0, null: false
+    t.decimal "total_price", precision: 10, scale: 2, default: "0.0", null: false
+    t.string "slug"
+    t.datetime "discarded_at"
+    t.integer "cached_votes_total", default: 0
+    t.integer "cached_votes_score", default: 0
+    t.integer "cached_votes_up", default: 0
+    t.integer "cached_votes_down", default: 0
+    t.integer "cached_weighted_score", default: 0
+    t.integer "cached_weighted_total", default: 0
+    t.float "cached_weighted_average", default: 0.0
+    t.text "favoritable_score"
+    t.text "favoritable_total"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["account_id"], name: "index_catalogs_on_account_id"
+    t.index ["brand_id"], name: "index_catalogs_on_brand_id"
+    t.index ["discarded_at"], name: "index_catalogs_on_discarded_at"
+    t.index ["slug"], name: "index_catalogs_on_slug", unique: true
+    t.index ["title"], name: "index_catalogs_on_title"
+    t.index ["user_id"], name: "index_catalogs_on_user_id"
+  end
+
   create_table "collection_items", force: :cascade do |t|
     t.string "collectable_item_type", null: false
     t.bigint "collectable_item_id", null: false
@@ -468,46 +509,6 @@ ActiveRecord::Schema.define(version: 2020_08_13_181235) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["account_id"], name: "index_notifications_on_account_id"
     t.index ["recipient_type", "recipient_id"], name: "index_notifications_on_recipient_type_and_recipient_id"
-  end
-
-  create_table "outfit_catalog_items", force: :cascade do |t|
-    t.bigint "outfit_catalog_id", null: false
-    t.bigint "outfit_catalog_item_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["outfit_catalog_id"], name: "index_outfit_catalog_items_on_outfit_catalog_id"
-    t.index ["outfit_catalog_item_id"], name: "index_outfit_catalog_items_on_outfit_catalog_item_id"
-  end
-
-  create_table "outfit_catalogs", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "account_id", null: false
-    t.bigint "brand_id"
-    t.string "title", limit: 150, null: false
-    t.text "description", null: false
-    t.string "category", limit: 150, null: false
-    t.string "subcategory", limit: 150, null: false
-    t.integer "total_number_of_outfits", default: 0, null: false
-    t.decimal "total_price", precision: 10, scale: 2, default: "0.0", null: false
-    t.string "slug"
-    t.datetime "discarded_at"
-    t.integer "cached_votes_total", default: 0
-    t.integer "cached_votes_score", default: 0
-    t.integer "cached_votes_up", default: 0
-    t.integer "cached_votes_down", default: 0
-    t.integer "cached_weighted_score", default: 0
-    t.integer "cached_weighted_total", default: 0
-    t.float "cached_weighted_average", default: 0.0
-    t.text "favoritable_score"
-    t.text "favoritable_total"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["account_id"], name: "index_outfit_catalogs_on_account_id"
-    t.index ["brand_id"], name: "index_outfit_catalogs_on_brand_id"
-    t.index ["discarded_at"], name: "index_outfit_catalogs_on_discarded_at"
-    t.index ["slug"], name: "index_outfit_catalogs_on_slug", unique: true
-    t.index ["title"], name: "index_outfit_catalogs_on_title"
-    t.index ["user_id"], name: "index_outfit_catalogs_on_user_id"
   end
 
   create_table "outfit_items", force: :cascade do |t|
@@ -861,6 +862,10 @@ ActiveRecord::Schema.define(version: 2020_08_13_181235) do
   add_foreign_key "bottoms", "users"
   add_foreign_key "brands", "accounts"
   add_foreign_key "brands", "users"
+  add_foreign_key "catalog_items", "catalogs"
+  add_foreign_key "catalogs", "accounts"
+  add_foreign_key "catalogs", "brands"
+  add_foreign_key "catalogs", "users"
   add_foreign_key "collection_items", "collections"
   add_foreign_key "collections", "users"
   add_foreign_key "comments", "accounts"
@@ -877,11 +882,6 @@ ActiveRecord::Schema.define(version: 2020_08_13_181235) do
   add_foreign_key "guides", "users"
   add_foreign_key "jewelries", "brands"
   add_foreign_key "jewelries", "users"
-  add_foreign_key "outfit_catalog_items", "outfit_catalog_items"
-  add_foreign_key "outfit_catalog_items", "outfit_catalogs"
-  add_foreign_key "outfit_catalogs", "accounts"
-  add_foreign_key "outfit_catalogs", "brands"
-  add_foreign_key "outfit_catalogs", "users"
   add_foreign_key "outfit_items", "outfits"
   add_foreign_key "outfits", "accounts"
   add_foreign_key "outfits", "brands"

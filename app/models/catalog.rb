@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: outfit_catalogs
+# Table name: catalogs
 #
 #  id                      :bigint           not null, primary key
 #  cached_votes_down       :integer          default(0)
@@ -18,7 +18,7 @@
 #  slug                    :string
 #  subcategory             :string(150)      not null
 #  title                   :string(150)      not null
-#  total_number_of_outfits :integer          default(0), not null
+#  total_items             :integer          default(0), not null
 #  total_price             :decimal(10, 2)   default(0.0), not null
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null
@@ -28,12 +28,12 @@
 #
 # Indexes
 #
-#  index_outfit_catalogs_on_account_id    (account_id)
-#  index_outfit_catalogs_on_brand_id      (brand_id)
-#  index_outfit_catalogs_on_discarded_at  (discarded_at)
-#  index_outfit_catalogs_on_slug          (slug) UNIQUE
-#  index_outfit_catalogs_on_title         (title)
-#  index_outfit_catalogs_on_user_id       (user_id)
+#  index_catalogs_on_account_id    (account_id)
+#  index_catalogs_on_brand_id      (brand_id)
+#  index_catalogs_on_discarded_at  (discarded_at)
+#  index_catalogs_on_slug          (slug) UNIQUE
+#  index_catalogs_on_title         (title)
+#  index_catalogs_on_user_id       (user_id)
 #
 # Foreign Keys
 #
@@ -41,12 +41,19 @@
 #  fk_rails_...  (brand_id => brands.id)
 #  fk_rails_...  (user_id => users.id)
 #
-class OutfitCatalog < ApplicationRecord
+class Catalog < ApplicationRecord
   extend FriendlyId
 
   belongs_to :user
   belongs_to :account
   belongs_to :brand, optional: true
+
+  has_many :catalog_items, as: :catalogable_items, dependent: :destroy
+
+  has_many :outfits, through: :catalogable_items
+  has_many :guides, through: :catalogable_items
+  has_many :reviews, through: :catalogable_items
+  # has_many :recipes, through: :catalogable_items
 
   friendly_id :title, use: :slugged
 
@@ -60,7 +67,7 @@ class OutfitCatalog < ApplicationRecord
   validates :occasion, presence: true, length: { minimum: 1, maximum: 50 }
   validates :category, presence: true, length: { minimum: 1, maximum: 150 }
   validates :subcategory, presence: true, length: { minimum: 1, maximum: 150 }
-  validates :total_number_of_outfits, allow_blank: true, numericality: { integer_only: true, greater_than_or_equal_to: 0 }
+  validates :total_items, allow_blank: true, numericality: { integer_only: true, greater_than_or_equal_to: 0 }
   validates :total_price, allow_blank: true, numericality: { greater_than_or_equal_to: 0.0 }
 
   def search_data

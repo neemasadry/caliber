@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: statuses
+# Table name: catalogs
 #
 #  id                      :bigint           not null, primary key
 #  cached_votes_down       :integer          default(0)
@@ -10,10 +10,16 @@
 #  cached_weighted_average :float            default(0.0)
 #  cached_weighted_score   :integer          default(0)
 #  cached_weighted_total   :integer          default(0)
-#  content                 :string(240)      not null
+#  category                :string(150)      not null
+#  description             :text             not null
 #  discarded_at            :datetime
-#  status_image_data       :text
-#  status_video_data       :text
+#  favoritable_score       :text
+#  favoritable_total       :text
+#  slug                    :string
+#  subcategory             :string(150)      not null
+#  title                   :string(150)      not null
+#  total_items             :integer          default(0), not null
+#  total_price             :decimal(10, 2)   default(0.0), not null
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null
 #  account_id              :bigint           not null
@@ -22,10 +28,12 @@
 #
 # Indexes
 #
-#  index_statuses_on_account_id    (account_id)
-#  index_statuses_on_brand_id      (brand_id)
-#  index_statuses_on_discarded_at  (discarded_at)
-#  index_statuses_on_user_id       (user_id)
+#  index_catalogs_on_account_id    (account_id)
+#  index_catalogs_on_brand_id      (brand_id)
+#  index_catalogs_on_discarded_at  (discarded_at)
+#  index_catalogs_on_slug          (slug) UNIQUE
+#  index_catalogs_on_title         (title)
+#  index_catalogs_on_user_id       (user_id)
 #
 # Foreign Keys
 #
@@ -33,23 +41,10 @@
 #  fk_rails_...  (brand_id => brands.id)
 #  fk_rails_...  (user_id => users.id)
 #
+require 'test_helper'
 
-one:
-  user: one
-  account: one
-  brand: one
-  title: MyString
-  description: MyText
-  status_image_data: MyText
-  status_video_data: MyText
-  discarded_at: 2020-08-08 14:49:21
-
-two:
-  user: two
-  account: two
-  brand: two
-  title: MyString
-  description: MyText
-  status_image_data: MyText
-  status_video_data: MyText
-  discarded_at: 2020-08-08 14:49:21
+class CatalogTest < ActiveSupport::TestCase
+  # test "the truth" do
+  #   assert true
+  # end
+end
