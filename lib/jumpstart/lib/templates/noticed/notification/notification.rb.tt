@@ -5,7 +5,7 @@
 
 class <%= class_name %> < ApplicationNotification
   # Database delivery is already added in ApplicationNotification
-  deliver_by :action_cable, to: :to_websocket
+  deliver_by :action_cable, format: :to_websocket, channel: "NotificationChannel"
 
   # Add your delivery methods
   #
@@ -27,13 +27,15 @@ class <%= class_name %> < ApplicationNotification
 
   def url
     # You can use any URL helpers here such as:
-    # posts_path(params[:post])
+    # post_path(params[:post])
     root_path
   end
 
+  # Include account_id to make sure notification only triggers if user is signed in to that account
   def to_websocket
     {
-      html: ApplicationController.render(partial: "notifications/notification", locals: {notification: self})
+      account_id: record.account_id,
+      html: ApplicationController.render(partial: "notifications/notification", locals: {notification: record})
     }
   end
 end

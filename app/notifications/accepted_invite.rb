@@ -1,9 +1,10 @@
 class AcceptedInvite < ApplicationNotification
-  deliver_by :action_cable, format: :to_websocket
+  deliver_by :action_cable, format: :to_websocket, channel: "NotificationChannel"
 
   def to_websocket
     {
-      html: ApplicationController.render(partial: "notifications/notification", locals: {notification: self})
+      account_id: record.account_id,
+      html: ApplicationController.render(partial: "notifications/notification", locals: {notification: record})
     }
   end
 
