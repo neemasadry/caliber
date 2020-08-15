@@ -1,8 +1,9 @@
 # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 Rails.application.routes.draw do
 
-  resources :catalogs
-  resources :outfits
+  # Search
+  get :autocomplete, controller: :search
+  get :search, controller: :search
 
   resources :brands, model_name: "Brand" do
     member do
@@ -10,6 +11,23 @@ Rails.application.routes.draw do
       put "favorite", to: "accessories#favorite"
     end
   end # Brand
+
+  resources :guides do
+    resources :comments, only: [:create, :destroy], module: :guides
+  end
+
+  resources :posts do
+    resources :comments, only: [:create, :destroy], module: :posts
+  end
+
+  resources :comments, only: [:create, :destroy] do
+    member do
+      put "like", to: "comments#like"
+    end
+  end
+
+  resources :catalogs
+  resources :outfits
 
   ### Begin: Products ###
   resources :accessories, model_name: "Accessory" do
@@ -142,19 +160,6 @@ Rails.application.routes.draw do
 
   ### End: Products ###
 
-  resources :guides do
-    resources :comments, only: [:create, :destroy], module: :guides
-  end
-
-  resources :posts do
-    resources :comments, only: [:create, :destroy], module: :posts
-  end
-
-  resources :comments, only: [:create, :destroy] do
-    member do
-      put "like", to: "comments#like"
-    end
-  end
 
   # Jumpstart views
   if Rails.env.development? || Rails.env.test?

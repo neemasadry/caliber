@@ -3,6 +3,7 @@
 
 import { Application } from "stimulus"
 import { definitionsFromContext } from "stimulus/webpack-helpers"
+import { Autocomplete } from 'stimulus-autocomplete'
 
 const application = Application.start()
 const context = require.context("controllers", true, /_controller\.js$/)
@@ -15,3 +16,5 @@ application.register('tabs', Tabs)
 
 import Flatpickr from 'stimulus-flatpickr'
 application.register('flatpickr', Flatpickr)
+
+application.register('autocomplete', Autocomplete)
