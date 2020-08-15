@@ -32,7 +32,7 @@
 class Collection < ApplicationRecord
   # extend FriendlyId
   belongs_to :user
-  has_many :collection_items, as: :collectable_items, dependent: :destroy
+  has_many :collection_items, dependent: :destroy
 
   acts_as_votable
   acts_as_favoritable

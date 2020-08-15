@@ -48,7 +48,7 @@ class Catalog < ApplicationRecord
   belongs_to :account
   belongs_to :brand, optional: true
 
-  has_many :catalog_items, as: :catalogable_items, dependent: :destroy
+  has_many :catalog_items, dependent: :destroy
 
   has_many :outfits, through: :catalogable_items
   has_many :guides, through: :catalogable_items
