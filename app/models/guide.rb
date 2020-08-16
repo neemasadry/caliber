@@ -41,6 +41,7 @@
 #
 class Guide < ApplicationRecord
   extend FriendlyId
+  extend Pagy::Search
   include GuideImageUploader::Attachment(:guide_image)
   include Discard::Model
 

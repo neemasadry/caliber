@@ -60,6 +60,7 @@
 #
 class Brand < ApplicationRecord
   extend FriendlyId
+  extend Pagy::Search
   include BrandLogoUploader::Attachment(:brand_logo)
   # include ActiveModel::Validations
   # include Discard::Model
@@ -74,6 +75,8 @@ class Brand < ApplicationRecord
   friendly_id :alias, use: :slugged
   acts_as_favoritor
   has_paper_trail
+
+  searchkick word_start: [:name], word_middle: [:name], text_middle: [:name]
 
   ### VALIDATIONS ###
   # Basic Info
@@ -108,4 +111,12 @@ class Brand < ApplicationRecord
   validates :snapchat_link,  allow_blank: true, length: { minimum: 4, maximum: 150 }
   validates :tiktok_link,    allow_blank: true, length: { minimum: 4, maximum: 150 }
   validates :pinterest_link, allow_blank: true, length: { minimum: 4, maximum: 150 }
+
+
+  def search_data
+    {
+      name: name
+    }
+  end
+
 end

@@ -66,6 +66,7 @@
 
 class User < ApplicationRecord
   extend FriendlyId
+  extend Pagy::Search
   include ActionText::Attachable
   include AvatarImageUploader::Attachment(:avatar_image)
 

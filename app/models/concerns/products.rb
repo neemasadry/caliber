@@ -4,6 +4,7 @@ module Products
   included do
 
     extend FriendlyId
+    extend Pagy::Search
 
     belongs_to :user
     belongs_to :brand
@@ -22,7 +23,7 @@ module Products
     acts_as_favoritable
     acts_as_votable
 
-    searchkick word_start: [:name], word_middle: [:name], text_middle: [:type_of, :primary_color]
+    searchkick word_start: [:name, :brand], word_middle: [:name, :brand], text_middle: [:type_of, :primary_color]
 
     #validates_presence_of :product_images
     validates_associated :product_images
@@ -37,11 +38,14 @@ module Products
     validates :primary_color, presence: true, length: { minimum: 2, maximum: 30 }, if: :has_material_or_colors?
     validates :secondary_color, presence: false, length: { minimum: 2, maximum: 30 }, if: :has_material_or_colors?
 
+    scope :search_import, -> { includes(:brand) }
+
   end # included
 
   def search_data
     {
       name: name,
+      brand: brand.name,
       type_of: type_of,
       primary_color: primary_color
     }
