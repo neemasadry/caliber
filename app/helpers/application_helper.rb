@@ -68,10 +68,23 @@ module ApplicationHelper
     content_for(:title) { page_title }
   end
 
-  ### App Specifi ###
+  ### App Specific ###
 
   # To be used in _liking.html.erb and _favoriting.html.erb
   # localable refers to either 'likeable' or 'favoritable'
+
+  def check_for_owner(model, auth_user)
+    owners = model.account.users
+
+    owners.each do |owner|
+      if auth_user == owner
+        return true
+      else
+        return false
+      end
+    end
+  end
+
   def determine_nested_path(localable)
     if params[:controller] == "reviews"
       if @reviewable.present?

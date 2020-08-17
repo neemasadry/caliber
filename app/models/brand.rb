@@ -74,6 +74,8 @@ class Brand < ApplicationRecord
 
   friendly_id :alias, use: :slugged
   acts_as_favoritor
+  acts_as_favoritable
+  acts_as_votable
   has_paper_trail
 
   searchkick word_start: [:name], word_middle: [:name], text_middle: [:name]

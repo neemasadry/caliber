@@ -5,11 +5,22 @@
       <%= link_to 'Edit', edit_brand_path(@brand), class: "btn btn-link" %>
     </div>
 
+    <div class="text-center">
+
+    </div>
+
+    <div class="flex justify-between items-center mb-4">
+      <% if (user_signed_in? && current_account.personal? && !check_for_owner(@brand, current_user)) %>
+        <%= render partial: "votable/liking", locals: { likeable: @brand } %>
+        <%= render(partial: "/votable/following", locals: { followable: follow_brand_path(@brand) }) %>
+      <% end %>
+    </div>
+
     <div class="bg-white rounded shadow p-8">
 
             <div class="mb-4">
         <h5>Brand image data</h5>
-        <%= image_tag(@brand.brand_logo_url) %>
+        <%= image_tag(@brand.brand_logo_url) if @brand.brand_logo_url.present? %>
       </div>
 
             <div class="mb-4">

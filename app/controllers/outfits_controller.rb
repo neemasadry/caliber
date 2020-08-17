@@ -15,6 +15,7 @@ class OutfitsController < ApplicationController
 
   # GET /outfits/1
   def show
+    votable_on_show_action
     @outfit_items = @outfit.outfit_items.all
   end
 

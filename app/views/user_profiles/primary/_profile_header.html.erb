@@ -12,7 +12,7 @@
 </div>
 
 <div class="text-center">
-  <%#= render(partial: "/votable/following", locals: { followable: follow_user_profile_path(@user_profile) }) if user_signed_in? && (@user_profile.id != current_user.id) %>
+  <%= render(partial: "/votable/following", locals: { followable: follow_user_profile_path(@user_profile) }) if user_signed_in? && (@user_profile.id != current_user.id) %>
 </div>
 
 <br>

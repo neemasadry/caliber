@@ -62,7 +62,7 @@ class ApplicationController < ActionController::Base
   def votable_on_show_action
     if user_signed_in?
       if request.filtered_parameters["controller"] == 'user_profiles'
-        if current_user.favorited?(@user_profile, scope: :follow)
+        if current_user.favorited?(@user_profile, scope: :user_follow)
           @following_status = true
         else
           @following_status = false
@@ -72,6 +72,18 @@ class ApplicationController < ActionController::Base
           @watching_status = true
         else
           @watching_status = false
+        end
+      elsif request.filtered_parameters["controller"] == 'brands'
+        if current_user.liked? @brand
+          @like_status = true
+        else
+          @like_status = false
+        end
+
+        if current_user.favorited?(@brand, scope: :brand_follow)
+          @following_status = true
+        else
+          @following_status = false
         end
       elsif request.filtered_parameters["controller"] == 'recipes'
         if current_user.liked? @recipe

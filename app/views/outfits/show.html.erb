@@ -5,6 +5,13 @@
       <%= link_to 'Edit', edit_outfit_path(@outfit), class: "btn btn-link" %>
     </div>
 
+    <div class="flex justify-between items-center mb-4">
+      <% if (user_signed_in? && current_account.personal? && @outfit.user != current_user) %>
+        <%= render partial: "votable/liking", locals: { likeable: @outfit }  %>
+        <%= render partial: "votable/favoriting", locals: { favoritable: @outfit } %>
+      <% end %>
+    </div>
+
     <div class="bg-white rounded shadow p-8">
       <div class="mb-4">
         <h3><%= @outfit.name %></h3>

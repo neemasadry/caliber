@@ -1,6 +1,6 @@
 class BrandsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :set_brand, only: [:show, :edit, :update, :destroy, :like]
+  before_action :set_brand, only: [:show, :edit, :update, :destroy, :like, :favorite, :follow]
 
   # GET /brands
   def index
@@ -13,6 +13,7 @@ class BrandsController < ApplicationController
 
   # GET /brands/1
   def show
+    votable_on_show_action
   end
 
   # GET /brands/new
@@ -50,28 +51,29 @@ class BrandsController < ApplicationController
     redirect_to brands_url, notice: "Brand was successfully destroyed."
   end
 
-  def favorite # acts_as_favoritor
+  def follow # acts_as_favoritor
     if current_account.personal? && user_signed_in?
-      if current_user.favorited? @accessory
-        current_user.unfavorite(@accessory, scopes: [:favorite, :brand])
-        redirect_to(accessory_path(@accessory), flash: { warning: "You removed the brand #{@brand.name} from your favorites." })
+      if current_user.favorited?(@brand, scope: :brand_follow)
+        current_user.unfavorite(@brand, scope: :brand_follow)
+        redirect_to(brand_path(@brand), flash: { warning: "You are no longer following the #{@brand.name}." })
       else
-        current_user.favorite(@accessory, scopes: [:favorite, :brand])
-        redirect_to(accessory_path(@accessory), flash: { success: "You added the brand #{@brand.name} to your favorites!" })
+        current_user.favorite(@brand, scope: :brand_follow)
+        redirect_to(brand_path(@brand), flash: { success: "You are following the brand #{@brand.name}!" })
       end
     else
-      redirect_to accessory_path(@accessory), flash: { danger: "You can only Favorite an item using your personal account." }
+      redirect_to brand_path(@brand), flash: { danger: "You can only Favorite an item using your personal account." }
     end
   end
+
 
   def like # acts_as_votable
     if current_account.personal? && user_signed_in?
       if current_user.liked? @brand
         @brand.unliked_by(current_user)
-        redirect_to(polymorphic_path([@brandable, @brand]), flash: { warning: "You unliked the brand: #{@brand.name}." })
+        redirect_to(polymorphic_path(@brand), flash: { warning: "You unliked the brand: #{@brand.name}." })
       elsif current_user.id != @brand.user_id
         @brand.liked_by(current_user)
-        redirect_to(polymorphic_path([@brandable, @brand]), flash: { success: "You like the brand: #{@brand.name}!" })
+        redirect_to(polymorphic_path(@brand), flash: { success: "You like the brand: #{@brand.name}!" })
       else
         redirect_to(root_path, flash: { danger: "An error occurred. Redirected to homepage." })
       end

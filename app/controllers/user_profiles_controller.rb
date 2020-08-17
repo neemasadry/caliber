@@ -10,7 +10,7 @@ class UserProfilesController < ApplicationController
   end
 
   def show
-    #votable_on_show_action
+    votable_on_show_action
     # Output title of page with users first and last name
     @title = "#{@user_profile.first_name} #{@user_profile.last_name}'s Profile"
 
@@ -24,18 +24,18 @@ class UserProfilesController < ApplicationController
 
   def follow
     if current_user != @user_profile
-      if current_user.favorited?(@user_profile, scope: :follow)
-        current_user.unfavorite(@user_profile, scope: :follow)
-        redirect_to(user_profile_path(@user_profile), flash: { warning: "You are no longer following #{@user_profile.name.full}." })
+      if current_user.favorited?(@user_profile, scope: :user_follow)
+        current_user.unfavorite(@user_profile, scope: :user_follow)
+        redirect_to(user_profile_path(@user_profile), flash: { warning: "You are no longer following #{@user_profile.username}." })
       else
 
-        current_user.favorite(@user_profile, scope: :follow)
+        current_user.favorite(@user_profile, scope: :user_follow)
 
         # from custom Notification solution
         # Create notification for recipient
         #Notification.create(recipient: @user_profile, actor: current_user, action: "following", notifiable: @user_profile)
 
-        redirect_to(user_profile_path(@user_profile), flash: { success: "You are now following #{@user_profile.name.full}!" })
+        redirect_to(user_profile_path(@user_profile), flash: { success: "You are now following #{@user_profile.username}!" })
       end
     else
       redirect_to(user_profile_path(@user_profile), flash: { error: "You cannot follow the same account you are logged in as!" })

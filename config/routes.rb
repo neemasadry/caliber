@@ -7,8 +7,8 @@ Rails.application.routes.draw do
 
   resources :brands, model_name: "Brand" do
     member do
-      put "like", to: "accessories#like"
-      put "favorite", to: "accessories#favorite"
+      put "like", to: "brands#like"
+      put "follow", to: "brands#follow"
     end
   end # Brand
 
