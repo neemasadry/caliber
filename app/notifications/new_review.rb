@@ -5,30 +5,13 @@
 
 class NewReview < ApplicationNotification
   # Database delivery is already added in ApplicationNotification
-  #deliver_by :action_cable, format: :to_websocket, channel: "NotificationChannel"
+  deliver_by :action_cable, format: :to_websocket, channel: "NotificationChannel"
 
   # Add your delivery methods
   #
   # deliver_by :email, mailer: "UserMailer"
   # deliver_by :slack
   # deliver_by :custom, class: "MyDeliveryMethod"
-
-  # Format
-  def to_database
-    {
-      type: self.class.name,
-      params: params,
-      account: Current.account
-    }
-  end
-
-  # def to_action_cable
-  #   {
-  #     type: self.class.name,
-  #     params: params,
-  #     account: Current.account
-  #   }
-  # end
 
   # Add required params
   #
@@ -39,7 +22,7 @@ class NewReview < ApplicationNotification
   # `message` and `url` are used for rendering in the navbar
 
   def message
-    t(".message")
+    t(".message", review: params[:review].title, reviewable: params[:review].reviewable.name, user: params[:review].user.username)
   end
 
   def url

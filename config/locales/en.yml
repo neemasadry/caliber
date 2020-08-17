@@ -310,7 +310,7 @@ en:
     empty: "Nothing to see here — yet."
     empty_description: "We'll let you know when you have new notifications."
     new_review:
-      message: "%{review.user.username} reviewed %{review.title}"
+      message: "%{user} reviewed %{reviewable}, titled: %{review}."
 
   activerecord:
     attributes:

@@ -44,7 +44,7 @@ class ReviewsController < ApplicationController
       @review.reviewable = @reviewable
 
       if @review.save
-        NewReview.with(review: @review).deliver(@review.reviewable.brand.user)
+        NewReview.with(account: @review.reviewable.brand.account, review: @review).deliver_later(@review.reviewable.brand.user)
         redirect_to [@reviewable, @review], notice: "Review was successfully created."
       else
         render :new
