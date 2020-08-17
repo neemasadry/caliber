@@ -48,6 +48,8 @@
 
   </div>
 
+  <hr class="mb-3">
+
   <h3>Outfit Items</h3>
   <div data-controller="nested-form">
     <template data-target="nested-form.template">
@@ -61,11 +63,16 @@
     <% end %>
 
     <div data-target="nested-form.add_link">
-      <%= link_to "Add Item", "#", data: { action: "click->nested-form#add_association" } %>
+      <%= link_to "#", data: { action: "click->nested-form#add_association" }, class: "btn btn-small btn-secondary outline" do %>
+        <%= fa_icon("fal fa-plus-circle", class: "mr-2") %>
+        Add Item
+      <% end %>
     </div>
   </div>
 
-  <div class="form-group flex justify-between">
+  <hr class="mt-6 mb-3">
+
+  <div class="form-group flex justify-end">
     <%= form.button class: "btn btn-secondary" %>
 
     <% if form.object.persisted? %>
