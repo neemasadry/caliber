@@ -85,10 +85,10 @@ class TopsController < ApplicationController
 
   def favorite # acts_as_favoritor
     if current_user.favorited? @top
-      current_user.unfavorite(@top, scope: :favorite)
+      current_user.unfavorite(@top, scopes: [:favorite, :product, :top])
       redirect_to(top_path(@top), flash: { warning: "You removed the product #{@top.name} from your favorites." })
     else
-      current_user.favorite(@top, scope: :favorite)
+      current_user.favorite(@top, scopes: [:favorite, :product, :top])
       redirect_to(top_path(@top), flash: { success: "You added the product #{@top.name} to your favorites!" })
     end
   end

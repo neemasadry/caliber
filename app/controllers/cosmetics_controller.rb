@@ -85,10 +85,10 @@ class CosmeticsController < ApplicationController
 
   def favorite # acts_as_favoritor
     if current_user.favorited? @cosmetic
-      current_user.unfavorite(@cosmetic, scope: :favorite)
+      current_user.unfavorite(@cosmetic, scopes: [:favorite, :product, :cosmetic])
       redirect_to(cosmetic_path(@cosmetic), flash: { warning: "You removed the product #{@cosmetic.name} from your favorites." })
     else
-      current_user.favorite(@cosmetic, scope: :favorite)
+      current_user.favorite(@cosmetic, scopes: [:favorite, :product, :cosmetic])
       redirect_to(cosmetic_path(@cosmetic), flash: { success: "You added the product #{@cosmetic.name} to your favorites!" })
     end
   end

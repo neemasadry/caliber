@@ -26,8 +26,19 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :catalogs
-  resources :outfits
+  resources :catalogs, model_name: "Catalog" do
+    member do
+      put "like", to: "catalogs#like"
+      put "favorite", to: "catalogs#favorite"
+    end
+  end
+
+  resources :outfits, model_name: "Outfit" do
+    member do
+      put "like", to: "outfits#like"
+      put "favorite", to: "outfits#favorite"
+    end
+  end
 
   ### Begin: Products ###
   resources :accessories, model_name: "Accessory" do
