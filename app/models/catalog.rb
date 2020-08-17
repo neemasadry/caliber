@@ -42,8 +42,9 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class Catalog < ApplicationRecord
-  extend Pagy::Search
   extend FriendlyId
+  extend Pagy::Search
+
 
   belongs_to :user
   belongs_to :account
@@ -65,7 +66,6 @@ class Catalog < ApplicationRecord
 
   validates :title, presence: true, length: { minimum: 4, maximum: 150 }
   validates :description, presence: true, length: { minimum: 10, maximum: 3000 }
-  validates :occasion, presence: true, length: { minimum: 1, maximum: 50 }
   validates :category, presence: true, length: { minimum: 1, maximum: 150 }
   validates :subcategory, presence: true, length: { minimum: 1, maximum: 150 }
   validates :total_items, allow_blank: true, numericality: { integer_only: true, greater_than_or_equal_to: 0 }

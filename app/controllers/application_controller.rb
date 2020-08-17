@@ -109,6 +109,30 @@ class ApplicationController < ActionController::Base
         else
           @favorite_status = false
         end
+      elsif request.filtered_parameters["controller"] == 'catalogs'
+        if current_user.liked? @catalog
+          @like_status = true
+        else
+          @like_status = false
+        end
+
+        if current_user.favorited?(@catalog, scope: :favorite)
+          @favorite_status = true
+        else
+          @favorite_status = false
+        end
+      elsif request.filtered_parameters["controller"] == 'outfits'
+        if current_user.liked? @outfit
+          @like_status = true
+        else
+          @like_status = false
+        end
+
+        if current_user.favorited?(@outfit, scope: :favorite)
+          @favorite_status = true
+        else
+          @favorite_status = false
+        end
       else
         # Check liked? and favorited? for all product models
         product_controller_categories = ["accessories", "bottoms", "cosmetics", "dresses", "fragrances", "jewelries", "shoes", "tops"]
