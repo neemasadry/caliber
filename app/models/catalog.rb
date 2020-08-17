@@ -42,6 +42,7 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class Catalog < ApplicationRecord
+  extend Pagy::Search
   extend FriendlyId
 
   belongs_to :user

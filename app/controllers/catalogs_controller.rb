@@ -55,6 +55,36 @@ class CatalogsController < ApplicationController
     redirect_to catalogs_url, notice: "Catalog was successfully destroyed."
   end
 
+  def favorite # acts_as_favoritor
+    if current_account.personal? && user_signed_in?
+      if current_user.favorited? @catalog
+        current_user.unfavorite(@catalog, scopes: [:favorite, :catalog])
+        redirect_to(catalog_path(@catalog), flash: { warning: "You removed the product #{@catalog.title} from your favorites." })
+      else
+        current_user.favorite(@catalog, scopes: [:favorite, :catalog])
+        redirect_to(catalog_path(@catalog), flash: { success: "You added the product #{@catalog.title} to your favorites!" })
+      end
+    else
+      redirect_to catalog_path(@catalog), flash: { danger: "You can only Favorite an item using your personal account." }
+    end
+  end
+
+  def like # acts_as_votable
+    if current_account.personal? && user_signed_in?
+      if current_user.liked? @catalog
+        @catalog.unliked_by(current_user)
+        redirect_to(catalog_path(@catalog), flash: { warning: "You unliked the product: #{@catalog.title}." })
+      elsif current_user.id != @catalog.user_id
+        @catalog.liked_by(current_user)
+        redirect_to(catalog_path(@catalog), flash: { success: "You like the product: #{@catalog.title}!" })
+      else
+        redirect_to(root_path, flash: { danger: "An error occurred. Redirected to homepage." })
+      end
+    else
+      redirect_to catalog_path(@catalog), flash: { danger: "You can only Like an item using your personal account." }
+    end
+  end
+
   private
 
     # Use callbacks to share common setup or constraints between actions.

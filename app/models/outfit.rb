@@ -44,6 +44,7 @@
 #
 class Outfit < ApplicationRecord
   extend FriendlyId
+  extend Pagy::Search
 
   belongs_to :user
   belongs_to :account
