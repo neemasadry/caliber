@@ -107,7 +107,7 @@ class User < ApplicationRecord
 
   ### Begin: APP SPECIFIC ###
   friendly_id :username, use: :slugged
-  searchkick word_start: [:first_name, :last_name, :username], word_middle: [:first_name, :last_name, :username]
+  searchkick word_start: [:username, :first_name, :last_name], word_middle: [:username, :first_name, :last_name]
 
   acts_as_favoritor
   acts_as_favoritable
