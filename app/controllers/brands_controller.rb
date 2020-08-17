@@ -50,6 +50,20 @@ class BrandsController < ApplicationController
     redirect_to brands_url, notice: "Brand was successfully destroyed."
   end
 
+  def favorite # acts_as_favoritor
+    if current_account.personal? && user_signed_in?
+      if current_user.favorited? @accessory
+        current_user.unfavorite(@accessory, scopes: [:favorite, :brand])
+        redirect_to(accessory_path(@accessory), flash: { warning: "You removed the brand #{@brand.name} from your favorites." })
+      else
+        current_user.favorite(@accessory, scopes: [:favorite, :brand])
+        redirect_to(accessory_path(@accessory), flash: { success: "You added the brand #{@brand.name} to your favorites!" })
+      end
+    else
+      redirect_to accessory_path(@accessory), flash: { danger: "You can only Favorite an item using your personal account." }
+    end
+  end
+
   def like # acts_as_votable
     if current_account.personal? && user_signed_in?
       if current_user.liked? @brand

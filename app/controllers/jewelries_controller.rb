@@ -85,10 +85,10 @@ class JewelriesController < ApplicationController
 
   def favorite # acts_as_favoritor
     if current_user.favorited? @jewelry
-      current_user.unfavorite(@jewelry, scope: :favorite)
+      current_user.unfavorite(@jewelry, scopes: [:favorite, :product, :jewelry])
       redirect_to(jewelry_path(@jewelry), flash: { warning: "You removed the product #{@jewelry.name} from your favorites." })
     else
-      current_user.favorite(@jewelry, scope: :favorite)
+      current_user.favorite(@jewelry, scopes: [:favorite, :product, :jewelry])
       redirect_to(jewelry_path(@jewelry), flash: { success: "You added the product #{@jewelry.name} to your favorites!" })
     end
   end

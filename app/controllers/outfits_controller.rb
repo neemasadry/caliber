@@ -56,6 +56,50 @@ class OutfitsController < ApplicationController
     redirect_to outfits_url, notice: "Outfit was successfully destroyed."
   end
 
+  # def catalog # acts_as_favoritor
+  #   if current_account.personal? && user_signed_in?
+  #     if current_user.collected?(params[:controller], @accessory)
+  #       current_user.remove_from_collection("Accessory", @accessory)
+  #       redirect_to(accessory_path(@accessory), alert: "You removed the product #{@accessory.name} from your Accessories Collection." )
+  #     else
+  #       current_user.add_to_collection("Accessory", @accessory)
+  #       redirect_to(accessory_path(@accessory), flash: { success: "You added the product #{@accessory.name} to your Accessories Collection!" })
+  #     end
+  #   else
+  #     redirect_to accessory_path(@accessory), flash: { danger: "You can only add an item to your Collection on your personal account." }
+  #   end
+  # end
+
+  def favorite # acts_as_favoritor
+    if current_account.personal? && user_signed_in?
+      if current_user.favorited? @outfit
+        current_user.unfavorite(@outfit, scopes: [:favorite, :outfit])
+        redirect_to(outfit_path(@outfit), flash: { warning: "You removed the product #{@outfit.name} from your favorites." })
+      else
+        current_user.favorite(@outfit, scopes: [:favorite, :outfit])
+        redirect_to(outfit_path(@outfit), flash: { success: "You added the product #{@outfit.name} to your favorites!" })
+      end
+    else
+      redirect_to outfit_path(@outfit), flash: { danger: "You can only Favorite an item using your personal account." }
+    end
+  end
+
+  def like # acts_as_votable
+    if current_account.personal? && user_signed_in?
+      if current_user.liked? @outfit
+        @outfit.unliked_by(current_user)
+        redirect_to(outfit_path(@outfit), flash: { warning: "You unliked the product: #{@outfit.name}." })
+      elsif current_user.id != @outfit.user_id
+        @outfit.liked_by(current_user)
+        redirect_to(outfit_path(@outfit), flash: { success: "You like the product: #{@outfit.name}!" })
+      else
+        redirect_to(root_path, flash: { danger: "An error occurred. Redirected to homepage." })
+      end
+    else
+      redirect_to outfit_path(@outfit), flash: { danger: "You can only Like an item using your personal account." }
+    end
+  end
+
   private
 
     # Use callbacks to share common setup or constraints between actions.

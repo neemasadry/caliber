@@ -15,6 +15,7 @@ class CatalogsController < ApplicationController
 
   # GET /catalogs/1
   def show
+    votable_on_show_action
   end
 
   # GET /catalogs/new
@@ -55,15 +56,45 @@ class CatalogsController < ApplicationController
     redirect_to catalogs_url, notice: "Catalog was successfully destroyed."
   end
 
+  def favorite # acts_as_favoritor
+    if current_account.personal? && user_signed_in?
+      if current_user.favorited? @catalog
+        current_user.unfavorite(@catalog, scopes: [:favorite, :catalog])
+        redirect_to(catalog_path(@catalog), flash: { warning: "You removed the catalog #{@catalog.title} from your favorites." })
+      else
+        current_user.favorite(@catalog, scopes: [:favorite, :catalog])
+        redirect_to(catalog_path(@catalog), flash: { success: "You added the catalog #{@catalog.title} to your favorites!" })
+      end
+    else
+      redirect_to catalog_path(@catalog), flash: { danger: "You can only Favorite an item using your personal account." }
+    end
+  end
+
+  def like # acts_as_votable
+    if current_account.personal? && user_signed_in?
+      if current_user.liked? @catalog
+        @catalog.unliked_by(current_user)
+        redirect_to(catalog_path(@catalog), flash: { warning: "You unliked the catalog: #{@catalog.title}." })
+      elsif current_user.id != @catalog.user_id
+        @catalog.liked_by(current_user)
+        redirect_to(catalog_path(@catalog), flash: { success: "You like the catalog: #{@catalog.title}!" })
+      else
+        redirect_to(root_path, flash: { danger: "An error occurred. Redirected to homepage." })
+      end
+    else
+      redirect_to catalog_path(@catalog), flash: { danger: "You can only Like an item using your personal account." }
+    end
+  end
+
   private
 
     # Use callbacks to share common setup or constraints between actions.
     def set_catalog
-      @catalog = Catalog.find(params[:id])
+      @catalog = Catalog.friendly.find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.
     def catalog_params
-      params.require(:catalog).permit(:user_id, :account_id, :brand_id, :title, :description, :category, :total_items, :total_price)
+      params.require(:catalog).permit(:user_id, :account_id, :brand_id, :title, :description, :category, :subcategory, :total_items, :total_price)
     end
 end

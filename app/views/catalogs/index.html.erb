@@ -34,7 +34,7 @@
             <td class="p-3"><%= catalog.description %></td>
             <td class="p-3"><%= catalog.category %></td>
             <td class="p-3"><%= catalog.total_items %></td>
-            <td class="p-3"><%= catalog.total_price %></td>
+            <td class="p-3"><%= number_to_currency(catalog.total_price) %></td>
 
             <td>
               <%= link_to "View", catalog, class: "btn btn-link no-underline" %>
