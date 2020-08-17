@@ -10,7 +10,7 @@
     </div>
 
     <div class="flex justify-between items-center mb-4">
-      <% if (user_signed_in? && current_account.personal? && !check_for_owner(@brand, current_user)) %>
+      <% if (user_signed_in? && current_account.personal? && !check_for_owner(@brand, current_user)).present? %>
         <%= render partial: "votable/liking", locals: { likeable: @brand } %>
         <%= render(partial: "/votable/following", locals: { followable: follow_brand_path(@brand) }) %>
       <% end %>

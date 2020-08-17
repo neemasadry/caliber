@@ -74,6 +74,8 @@ class Review < ApplicationRecord
   acts_as_favoritable
   acts_as_votable
 
+  before_destroy :destroy_notifications
+
   # Review validations
   validates :title, presence: true, length: { minimum: 5, maximum: 80 }
   validates :body, presence: true, length: { minimum: 50, maximum: 5000 }
@@ -85,6 +87,18 @@ class Review < ApplicationRecord
   #validates :fragrance_scent, :fragrance_longevity, :fragrance_sillage, :fragrance_presentation, :fragrance_versatility, :fragrance_uniqueness, presence: true, numericality: { in: 1..10 }, if: :is_fragrance?
   #validates :shoe_adjustability, :shoe_durability, :shoe_comfort, :shoe_support, :shoe_design, :shoe_uniqueness, presence: true, numericality: { in: 1..10 }, if: :is_shoe?
   validates :accessory_durability, :accessory_comfort, :accessory_design, :accessory_uniqueness, presence: true, numericality: { in: 1..10 }, if: :is_accessory?
+
+  def notifications
+    # Exact match
+    @notifications ||= Notification.where(params: { review: self })
+
+    # Or Postgres syntax to query the post key in the JSON column
+    # @notifications ||= Notification.where("params->'post' = ?", Noticed::Coder.dump(self).to_json)
+  end
+
+  def destroy_notifications
+    notifications.destroy_all
+  end
 
   def search_data
     {

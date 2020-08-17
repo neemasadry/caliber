@@ -74,15 +74,7 @@ module ApplicationHelper
   # localable refers to either 'likeable' or 'favoritable'
 
   def check_for_owner(model, auth_user)
-    owners = model.account.users
-
-    owners.each do |owner|
-      if auth_user == owner
-        return true
-      else
-        return false
-      end
-    end
+    model.account.account_users.find_by(user_id: auth_user.id)
   end
 
   def determine_nested_path(localable)

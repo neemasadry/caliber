@@ -39,10 +39,12 @@ class ReviewsController < ApplicationController
     if @user_already_reviewed || @user_is_brand_owner
       redirect_to polymorphic_path([@reviewable, Review]), alert: "You already reviewed this product."
     else
-
-      @review = Review.new(review_params.merge(user_id: current_user.id, reviewable: @reviewable))
+      @review = Review.new(review_params)
+      @review.user = current_user
+      @review.reviewable = @reviewable
 
       if @review.save
+        NewReview.with(review: @review).deliver(@review.reviewable.brand.user)
         redirect_to [@reviewable, @review], notice: "Review was successfully created."
       else
         render :new
@@ -63,7 +65,7 @@ class ReviewsController < ApplicationController
   # DELETE /reviews/1
   def destroy
     @review.destroy
-    redirect_to reviews_url, notice: "Review was successfully destroyed."
+    redirect_to polymorphic_path([@reviewable, @review]), notice: "Review was successfully destroyed."
   end
 
   def like # acts_as_votable
@@ -94,13 +96,17 @@ class ReviewsController < ApplicationController
           return @user_is_brand_owner = true
         end
       end
-
       @user_is_brand_owner = false
-
     end
 
+    # def all_brand_owners
+    #   @review.reviewable.brand.account.users.each do |account_user|
+    #     account_user.user
+    #   end
+    # end
+
     def user_already_reviewed?
-      reviewed = Review.find_by(user: current_user.id)
+      reviewed = Review.find_by(reviewable: @reviewable, user: current_user.id)
       if reviewed.present?
         @user_already_reviewed = true
         @review = reviewed
@@ -117,7 +123,7 @@ class ReviewsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def review_params
-      params.require(:review).permit(:reviewable_id, :reviewable_type, :user_id, :title, :body, :quality, :value, :compliment, :ratings)
+      params.require(:review).permit(:reviewable_id, :reviewable_type, :user_id, :title, :body, :quality, :value, :compliment, :accessory_durability, :accessory_comfort, :accessory_design, :accessory_uniqueness)
     end
 
     # Search for parent model to build new_XXX_review_path
