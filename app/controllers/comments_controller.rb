@@ -21,6 +21,13 @@ class CommentsController < ApplicationController
     authorize @comment
 
     if @comment.save
+
+      NewComment.with(commentable: @commentable, comment: @comment).deliver_later(@commentable.user)
+
+      if @comment.parent.present?
+        NewComment.with(commentable: @commentable, comment: @comment).deliver_later(@comment.parent)
+      end
+
       redirect_to @commentable, success: "Your comment was successfully posted!"
     else
       redirect_to @commentable, alert: "There was an error in posting your comment."

@@ -3,7 +3,6 @@
 <div class="mt-4 max-w-2xl mx-auto">
   <div class="bg-white overflow-hidden shadow rounded-lg">
     <div class="border-b border-gray-200 px-4 py-5 sm:px-6 font-bold">
-      <!-- We use less vertical padding on card headers on desktop than on body sections -->
       New Comment
     </div>
     <div class="px-4 py-5 sm:p-6">
@@ -14,10 +13,18 @@
 
 <% if @review.present? || @guide.present? %>
   <div class="mt-4 max-w-2xl mx-auto">
-    <h3><%= pluralize(@all_comments.count, "Comment") if @all_comments.count >= 1 %></h3>
+    <h3><%= pluralize(@review.comments.count, "Comment") if @review.comments.count >= 1 %> <%= "(#{@pagy.from} - #{@pagy.to})" if @pagy.pages > 1 && @pagy.from.present? && @pagy.to.present? %></h3>
     <div class="bg-gray-100 px-4 py-5 sm:p-6">
       <%= render(partial: "comments/comment", locals: { all_comments: @all_comments, max_nesting: 3 }) %>
     </div>
+
+  <% if @pagy.pages.present? && @pagy.pages > 1 %>
+    <div class="text-center my-6">
+      <%== pagy_nav(@pagy) %>
     </div>
+  <% end %>
+
   </div>
 <% end %>
+
+

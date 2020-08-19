@@ -47,9 +47,7 @@ class GuidesController < ApplicationController
     authorize @guide
 
     if @guide.save
-      following_personal_accounts = @guide.user.favoritors(scope: :user_follow).map(&:personal_account)
-      notification = NewGuide.with(guide: @guide)
-      notification.deliver_later(@guide.user.favoritors(scope: :user_follow))
+      NewGuide.with(guide: @guide).deliver_later(@guide.user.favoritors(scope: :user_follow))
       redirect_to @guide, notice: "Guide was successfully created."
     else
       render :new

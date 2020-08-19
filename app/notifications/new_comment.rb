@@ -1,9 +1,9 @@
 # To deliver this notification:
 #
-# NewReview.with(post: @post).deliver_later(current_user)
-# NewReview.with(post: @post).deliver(current_user)
+# NewComment.with(post: @post).deliver_later(current_user)
+# NewComment.with(post: @post).deliver(current_user)
 
-class NewReview < ApplicationNotification
+class NewComment < ApplicationNotification
   # Database delivery is already added in ApplicationNotification
   deliver_by :action_cable, format: :to_websocket, channel: "NotificationChannel"
 
@@ -14,22 +14,27 @@ class NewReview < ApplicationNotification
   # deliver_by :custom, class: "MyDeliveryMethod"
 
   # Add required params
-  #
-  param :review
-  param :reviewable
+  param :comment
+  param :commentable
 
   # Define helper methods to make rendering easier.
   #
   # `message` and `url` are used for rendering in the navbar
 
   def message
-    t(".message", review: params[:review].title, reviewable: params[:reviewable].name, user: params[:review].user.username)
+    if params[:reviewable].present?
+      t(".with_reviewable", user: params[:comment].user.username, reviewable_name: params[:reviewable].name, brand: params[:reviewable].brand.name)
+    else
+      t(".without_reviewable", title: params[:commentable].title, commentable_type: params[:comment].commentable_type.downcase, user: params[:comment].user.username)
+    end
   end
 
   def url
-    # You can use any URL helpers here such as:
-    # post_path(params[:post])
-    polymorphic_path([params[:reviewable], params[:review]])
+    if params[:reviewable].present?
+      polymorphic_path([params[:reviewable], params[:commentable]])
+    else
+      polymorphic_path(params[:commentable])
+    end
   end
 
   # Include account_id to make sure notification only triggers if user is signed in to that account

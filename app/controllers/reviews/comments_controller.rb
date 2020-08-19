@@ -1,6 +1,9 @@
 class Reviews::CommentsController < CommentsController
   # include ReviewsHelper
   before_action :set_commentable
+  # around_action only: :create do
+  #   set_brand_owners_for_notifications(false)
+  # end
 
   def create
     @comment = @commentable.comments.new(comment_params)
@@ -18,8 +21,14 @@ class Reviews::CommentsController < CommentsController
       @comment.parent_id = 0
     end
 
-    @comment.save!
-    redirect_to polymorphic_path([@reviewable, @commentable]), info: "Your comment was successfully posted!"
+    if @comment.save!
+      NewComment.with(reviewable: @reviewable, commentable: @commentable, comment: @comment).deliver_later(@commentable.user)
+      NewComment.with(reviewable: @reviewable, commentable: @commentable, comment: @comment).deliver_later(@brand_owners)
+
+      redirect_to polymorphic_path([@reviewable, @commentable]), flash: { success: "Your comment was successfully posted!" }
+    else
+      redirect_to polymorphic_path([@reviewable, @commentable]), flash: { danger: "Error: Comment could not be posted. Please try again later." }
+    end
   end
 
   def destroy
@@ -50,4 +59,20 @@ class Reviews::CommentsController < CommentsController
         # @commentable = Review.find(params[:id])
       end
     end
+
+  def set_brand_owners_for_notifications(with_current_user = false, comment)
+    if with_current_user
+      # Includes all brand owners EXCEPT the current_user
+      brand_account_users = @reviewable.brand.account.account_users.map do |account_user|
+        next if account_user.user == current_user
+      end
+    else
+      # Includes all brand owners INCLUDING the current_user
+      brand_account_users = @reviewable.brand.account.account_users
+    end
+
+    @brand_owners = brand_account_users.map(&:user)
+
+    return @brand_owners
+  end
 end

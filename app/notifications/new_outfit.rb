@@ -1,26 +1,34 @@
 # To deliver this notification:
 #
-# NewGuide.with(post: @post).deliver_later(current_user)
-# NewGuide.with(post: @post).deliver(current_user)
+# NewOutfit.with(post: @post).deliver_later(current_user)
+# NewOutfit.with(post: @post).deliver(current_user)
 
-class NewGuide < ApplicationNotification
+class NewOutfit < ApplicationNotification
   # Database delivery is already added in ApplicationNotification
   deliver_by :action_cable, format: :to_websocket, channel: "NotificationChannel"
 
+  # Add your delivery methods
+  #
+  # deliver_by :email, mailer: "UserMailer"
+  # deliver_by :slack
+  # deliver_by :custom, class: "MyDeliveryMethod"
+
   # Add required params
-  param :guide
+  #
+  # param :post
 
   # Define helper methods to make rendering easier.
+  #
   # `message` and `url` are used for rendering in the navbar
 
   def message
-    t(".message", user: params[:guide].user.username, guide: params[:guide].title)
+    t("hello")
   end
 
   def url
     # You can use any URL helpers here such as:
     # post_path(params[:post])
-    guide_path(params[:guide])
+    root_path
   end
 
   # Include account_id to make sure notification only triggers if user is signed in to that account

@@ -35,6 +35,12 @@ class CatalogsController < ApplicationController
     @catalog.brand = current_account.brand if !current_account.personal?
 
     if @catalog.save
+      if @catalog.brand.present?
+        NewCatalog.with(catalog: @catalog).deliver_later(@catalog.brand.favoritors(scope: :brand_follow))
+      else
+        NewCatalog.with(catalog: @catalog).deliver_later(@catalog.user.favoritors(scope: :user_follow))
+      end
+
       redirect_to @catalog, notice: "Catalog was successfully created."
     else
       render :new
