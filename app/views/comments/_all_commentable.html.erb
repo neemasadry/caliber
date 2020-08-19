@@ -13,7 +13,7 @@
 
 <% if @review.present? || @guide.present? %>
   <div class="mt-4 max-w-2xl mx-auto">
-    <h3><%= pluralize(@review.comments.count, "Comment") if @review.comments.count >= 1 %> <%= "(#{@pagy.from} - #{@pagy.to})" if @pagy.pages > 1 && @pagy.from.present? && @pagy.to.present? %></h3>
+    <h3><%= pluralize(@all_comments.count, "Comment") if @all_comments.count >= 1 %> <%= "(#{@pagy.from} - #{@pagy.to})" if @pagy.pages > 1 && @pagy.from.present? && @pagy.to.present? %></h3>
     <div class="bg-gray-100 px-4 py-5 sm:p-6">
       <%= render(partial: "comments/comment", locals: { all_comments: @all_comments, max_nesting: 3 }) %>
     </div>

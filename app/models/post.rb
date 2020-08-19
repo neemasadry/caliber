@@ -45,7 +45,7 @@ class Post < ApplicationRecord
   belongs_to :brand, optional: true
 
   acts_as_votable
-  #acts_as_favoritable
+  acts_as_favoritable
   acts_as_taggable_on :post_tags
 
   validates :content, presence: true, length: { minimum: 2, maximum: 240 }

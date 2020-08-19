@@ -22,13 +22,13 @@ class NewPost < ApplicationNotification
   # `message` and `url` are used for rendering in the navbar
 
   def message
-    t("hello")
+    t(".message", user: params[:post].user.username, post_type: params[:post].type)
   end
 
   def url
     # You can use any URL helpers here such as:
     # post_path(params[:post])
-    root_path
+    post_path(params[:post])
   end
 
   # Include account_id to make sure notification only triggers if user is signed in to that account

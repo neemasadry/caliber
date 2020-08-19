@@ -9,7 +9,7 @@ class UserProfilesController < ApplicationController
       @user_profiles = User.all
       @user_profiles.load
     else
-      redirect_to root_path, flash: { danger: "Authorization failed." }
+      redirect_to root_path, flash: { danger: "Authorization failed. Restricted access." }
     end
   end
 
