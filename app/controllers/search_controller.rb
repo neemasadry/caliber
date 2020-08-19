@@ -16,7 +16,7 @@ class SearchController < ApplicationController
       @catalogs    = Catalog.search(query, fields: [:title, :category], match: :word_start, limit: 3)
       @outfits     = Outfit.search(query, fields: [:name, :occasion, :dress_code], match: :word_start, limit: 3)
       @guides      = Guide.search(query, fields: [:title], match: :word_start, limit: 3)
-      @users       = User.search(query, fields: [:username], match: :word_start, limit: 3)
+      @users       = User.search(query, fields: [:username, :first_name, :last_name], match: :word_start, limit: 3)
 
       @autocomplete_array = [@accessories, @bottoms, @cosmetics, @dresses, @fragrances, @shoes, @tops, @guides, @users]
 
@@ -69,7 +69,7 @@ class SearchController < ApplicationController
       @pagy_catalogs, @catalogs       = pagy_searchkick(catalogs, fields: [:title, :category], match: :word_start, per_page: 10, page_param: :guides_page, page: params[:page])
       @pagy_outfits, @outfits         = pagy_searchkick(outfits, fields: [:name, :occasion, :dress_code], match: :word_start, per_page: 10, page_param: :guides_page, page: params[:page])
       @pagy_guides, @guides           = pagy_searchkick(guides, fields: [:title], match: :word_start, per_page: 10, page_param: :guides_page, page: params[:page])
-      @pagy_users, @users             = pagy_searchkick(users, fields: [:username], match: :word_start, per_page: 10, page_param: :users_page, page: params[:page])
+      @pagy_users, @users             = pagy_searchkick(users, fields: [:username, :first_name, :last_name], match: :word_start, per_page: 10, page_param: :users_page, page: params[:page])
 
       @result_categories_array = [@accessories, @bottoms, @cosmetics, @dresses, @fragrances, @shoes, @tops, @guides, @users]
 

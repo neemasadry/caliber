@@ -69,7 +69,7 @@ export default class extends Controller {
     this.subscription.perform("mark_as_read", {ids: [id]})
 
     // Uncomment to visual mark notification read
-    // event.currentTarget.dataset.readAt= new Date()
+    event.currentTarget.dataset.readAt= new Date()
   }
 
   markAsInteracted(event) {
@@ -78,7 +78,7 @@ export default class extends Controller {
     this.subscription.perform("mark_as_interacted", {ids: [id]})
 
     // Uncomment to visually mark notification as interacted
-    // event.currentTarget.dataset.interactedAt = new Date()
+    event.currentTarget.dataset.interactedAt = new Date()
   }
 
   empty() {

@@ -311,6 +311,7 @@ en:
     empty_description: "We'll let you know when you have new notifications."
     new_review:
       message: "%{user} reviewed %{reviewable}, titled: %{review}."
+    new_guide: "%{user} wrote a new guide, titled: %{guide}."
 
   activerecord:
     attributes:

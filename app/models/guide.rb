@@ -65,8 +65,7 @@ class Guide < ApplicationRecord
 
   searchkick word_start: [:title], word_middle: [:title]
 
-  #has_many :likes, as: :likeable, dependent: :destroy
-  #has_many :comments, as: :commentable, dependent: :destroy
+  before_destroy :destroy_notifications
 
   validates :title, presence: true, length: { minimum: 10, maximum: 80 }
   validates :body, presence: true, length: { minimum: 300, maximum: 12000 }
@@ -74,6 +73,17 @@ class Guide < ApplicationRecord
   validates :subcategory_one, presence: true, length: { minimum: 1, maximum: 20 }
   validates :subcategory_two, presence: false, length: { maximum: 25 }
 
+  def notifications
+    # Exact match
+    @notifications ||= Notification.where(params: { review: self })
+
+    # Or Postgres syntax to query the post key in the JSON column
+    # @notifications ||= Notification.where("params->'post' = ?", Noticed::Coder.dump(self).to_json)
+  end
+
+  def destroy_notifications
+    notifications.destroy_all
+  end
 
   def search_data
     {

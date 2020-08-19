@@ -2,7 +2,7 @@ class GuidesController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :set_guide, only: [:show, :edit, :update, :destroy]
 
-  before_action :verify_authorized
+  #before_action :verify_authorized
 
   # GET /guides
   def index
@@ -47,6 +47,9 @@ class GuidesController < ApplicationController
     authorize @guide
 
     if @guide.save
+      following_personal_accounts = @guide.user.favoritors(scope: :user_follow).map(&:personal_account)
+      notification = NewGuide.with(guide: @guide)
+      notification.deliver_later(@guide.user.favoritors(scope: :user_follow))
       redirect_to @guide, notice: "Guide was successfully created."
     else
       render :new
