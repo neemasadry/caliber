@@ -3,14 +3,13 @@ class CosmeticsController < ApplicationController
   before_action :set_user_on_personal_account, if: :user_signed_in?
   before_action :set_cosmetic, only: [:show, :edit, :update, :destroy]
 
-  after_action :verify_authorized
-
   # GET /cosmetics
   def index
     @pagy, @cosmetics = pagy(Cosmetic.sort_by_params(params[:sort], sort_direction))
 
     # We explicitly load the records to avoid triggering multiple DB calls in the views when checking if records exist and iterating over them.
     # Calling @cosmetics.any? in the view will use the loaded records to check existence instead of making an extra DB call.
+    authorize @cosmetics
     @cosmetics.load
   end
 
@@ -107,18 +106,18 @@ class CosmeticsController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
-  def set_cosmetic
-    @cosmetic = Cosmetic.friendly.find(params[:id])
-    authorize @cosmetic
-  end
+    # Use callbacks to share common setup or constraints between actions.
+    def set_cosmetic
+      @cosmetic = Cosmetic.friendly.find(params[:id])
+      authorize @cosmetic
+    end
 
-  # Only allow a trusted parameter "white list" through.
-  def cosmetic_params
-    params.require(:cosmetic).permit(:user_id, :brand_id, :name, { product_images_attributes: [] }, :description, :retail_price, :type_of, :gender, :ingredients, :product_url)
-  end
+    # Only allow a trusted parameter "white list" through.
+    def cosmetic_params
+      params.require(:cosmetic).permit(:user_id, :brand_id, :name, { product_images_attributes: [] }, :description, :retail_price, :type_of, :gender, :ingredients, :product_url)
+    end
 
-  def set_user_on_personal_account
-    @user_on_personal_account = current_account.personal?
-  end
+    def set_user_on_personal_account
+      @user_on_personal_account = current_account.personal?
+    end
 end

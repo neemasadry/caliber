@@ -1,10 +1,11 @@
 class BrandsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :set_brand, only: [:show, :edit, :update, :destroy, :like, :favorite, :follow]
+  before_action :set_brand, only: [:show, :edit, :update, :destroy, :like, :follow]
 
   # GET /brands
   def index
     @pagy, @brands = pagy(Brand.sort_by_params(params[:sort], sort_direction))
+    authorize @brands
 
     # We explicitly load the records to avoid triggering multiple DB calls in the views when checking if records exist and iterating over them.
     # Calling @brands.any? in the view will use the loaded records to check existence instead of making an extra DB call.
@@ -19,6 +20,7 @@ class BrandsController < ApplicationController
   # GET /brands/new
   def new
     @brand = Brand.new
+    authorize @brand
   end
 
   # GET /brands/1/edit
@@ -27,7 +29,10 @@ class BrandsController < ApplicationController
 
   # POST /brands
   def create
-    @brand = Brand.new(brand_params.merge(user_id: current_user.id))
+    @brand = Brand.new(brand_params)
+    @brand.user = current_user
+
+    authorize @brand
 
     if @brand.save
       redirect_to @brand, notice: "Brand was successfully created."
@@ -87,6 +92,7 @@ class BrandsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_brand
       @brand = Brand.friendly.find(params[:id])
+      authorize @brand
     end
 
     # Only allow a trusted parameter "white list" through.

@@ -356,3 +356,8 @@ en:
         name: "Steve Jobs"
         email: "you@example.com"
         password: "password"
+
+  pundit:
+    accessory_policy:
+      like?: "You are not authorized to Like this product."
+      favorite?: "You are not authorized to Favorite this product."

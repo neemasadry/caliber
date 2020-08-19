@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
   before_action :masquerade_user!
   before_action :set_paper_trail_whodunnit # 'paper_trail' gem
 
-  #rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   #after_action :verify_authorized, unless: :devise_controller?
 

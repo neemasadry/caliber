@@ -18,6 +18,8 @@ class CommentsController < ApplicationController
       @comment.parent_id = 0
     end
 
+    authorize @comment
+
     if @comment.save
       redirect_to @commentable, success: "Your comment was successfully posted!"
     else
@@ -28,6 +30,8 @@ class CommentsController < ApplicationController
   # DELETE /comments/1
   def destroy
     @comment = @commentable.comments.find(params[:id])
+
+    authorize @comment
 
     if @comment.user == current_user && @comment.account == current_account
       @comment.destroy

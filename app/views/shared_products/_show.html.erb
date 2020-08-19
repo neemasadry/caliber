@@ -13,11 +13,11 @@
         <%= fa_icon("fal fa-border-all", class: "mr-2") %>
         All Reviews
       <% end %>
-      <% if (user_signed_in? && current_account.personal? && product.user != current_user) %>
+      <%# if (user_signed_in? && current_account.personal? && product.user != current_user) %>
         <%= render partial: "votable/liking", locals: { likeable: product }  %>
         <%= render partial: "votable/favoriting", locals: { favoritable: product } %>
         <%= render partial: "votable/collecting", locals: { collectable: product, collected_status: @collected_status } %>
-      <% end %>
+      <%# end %>
     </div>
 
     <div class="bg-white rounded shadow p-8">
@@ -112,3 +112,4 @@
 
   myGallery.render();
 </script>
+<% console %>

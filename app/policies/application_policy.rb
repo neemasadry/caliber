@@ -15,7 +15,7 @@ class ApplicationPolicy
   end
 
   def create?
-    return true if user.present? && !@user_on_personal_account
+    return true if user.present?
     false
   end
 
@@ -24,7 +24,7 @@ class ApplicationPolicy
   end
 
   def update?
-    return true if user.present? && !@user_on_personal_account
+    return true if user.present? && record.user == user
     false
   end
 
@@ -33,7 +33,7 @@ class ApplicationPolicy
   end
 
   def destroy?
-    return true if user.present? && !@user_on_personal_account
+    return true if user.present? && record.user == user
     false
   end
 

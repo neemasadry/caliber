@@ -4,8 +4,6 @@ class CollectionsController < ApplicationController
   before_action :set_collection, only: [:show, :destroy]
   before_action :set_collection_items, only: [:show]
 
-  #after_action :verify_authorized
-
   # GET /collections
   def index
     user = User.find_by(username: params[:user_profile_id])
@@ -75,6 +73,7 @@ class CollectionsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_collection
       @collection = Collection.find(params[:id])
+      authorize @collection
     end
 
     # Find all collection_items associated with this Collection object

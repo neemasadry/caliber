@@ -1,15 +1,20 @@
 class UserProfilesController < ApplicationController
   prepend_view_path(File.join(Rails.root, 'app/views/user_profiles/'))
   layout 'application'
-  before_action :authenticate_user! #, only: [:index, :show, :follow, :watch]
-  before_action :set_user_profile #, only: [:show, :follow, :watch]
-
+  before_action :authenticate_user!
+  before_action :set_user_profile, except: [:index]
 
   def index
-    @user_profiles = User.all
+    if current_user.admin?
+      @user_profiles = User.all
+      @user_profiles.load
+    else
+      redirect_to root_path, flash: { danger: "Authorization failed." }
+    end
   end
 
   def show
+    skip_authorization
     votable_on_show_action
     # Output title of page with users first and last name
     @title = "#{@user_profile.first_name} #{@user_profile.last_name}'s Profile"
@@ -23,6 +28,8 @@ class UserProfilesController < ApplicationController
   end # show
 
   def follow
+    skip_authorization
+
     if current_user != @user_profile
       if current_user.favorited?(@user_profile, scope: :user_follow)
         current_user.unfavorite(@user_profile, scope: :user_follow)
@@ -44,6 +51,7 @@ class UserProfilesController < ApplicationController
   end
 
   def watch
+    skip_authorization
 
     if current_user != @user_profile
       if current_user.favorited?(@user_profile, scope: :follow)

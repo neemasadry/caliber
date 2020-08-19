@@ -3,8 +3,6 @@ class AccessoriesController < ApplicationController
   before_action :set_user_on_personal_account, if: :user_signed_in?
   before_action :set_accessory, only: [:show, :edit, :update, :destroy, :like, :favorite, :collect]
 
-  after_action :verify_authorized
-
   # GET /accessories
   def index
     @pagy, @accessories = pagy(Accessory.sort_by_params(params[:sort], sort_direction))
