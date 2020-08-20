@@ -31,8 +31,8 @@ class PostsController < ApplicationController
   end
 
   # GET /posts/1/edit
-  def edit
-  end
+  # def edit
+  # end
 
   # POST /posts
   def create
@@ -56,13 +56,13 @@ class PostsController < ApplicationController
   end
 
   # PATCH/PUT /posts/1
-  def update
-    if @post.update(post_params)
-      redirect_to @post, notice: "Post was successfully updated."
-    else
-      render :edit
-    end
-  end
+  # def update
+  #   if @post.update(post_params)
+  #     redirect_to @post, notice: "Post was successfully updated."
+  #   else
+  #     render :edit
+  #   end
+  # end
 
   # DELETE /posts/1
   def destroy

@@ -36,6 +36,13 @@ class OutfitsController < ApplicationController
     @outfit.brand = current_account.brand if !current_account.personal?
 
     if @outfit.save
+
+      NewOutfit.with(outfit: @outfit).deliver_later(@outfit.user.favoritors(scope: :user_follow))
+
+      if @outfit.brand.present?
+        NewOutfit.with(outfit: @outfit).deliver_later(@outfit.brand.favoritors(scope: :brand_follow))
+      end
+
       redirect_to @outfit, notice: "Outfit was successfully created."
     else
       render :new

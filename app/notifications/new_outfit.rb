@@ -16,19 +16,24 @@ class NewOutfit < ApplicationNotification
   # Add required params
   #
   # param :post
+  param :outfit
 
   # Define helper methods to make rendering easier.
   #
   # `message` and `url` are used for rendering in the navbar
 
   def message
-    t("hello")
+    if params[:outfit].brand.present?
+      t(".with_brand", user: params[:outfit].user.username, outfit: params[:outfit].name, brand: params[:outfit].brand.name)
+    else
+      t(".without_brand", user: params[:outfit].user.username, outfit: params[:outfit].name)
+    end
   end
 
   def url
     # You can use any URL helpers here such as:
     # post_path(params[:post])
-    root_path
+    outfit_path(params[:outfit])
   end
 
   # Include account_id to make sure notification only triggers if user is signed in to that account
