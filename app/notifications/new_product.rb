@@ -21,7 +21,7 @@ class NewProduct < ApplicationNotification
   # `message` and `url` are used for rendering in the navbar
 
   def message
-    t(".message", brand: params[:product].brand.name)
+    t(".message", brand: params[:product].brand.name, product: params[:product].name)
   end
 
   def url

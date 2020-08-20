@@ -39,6 +39,7 @@ class CosmeticsController < ApplicationController
     authorize @cosmetic
 
     if @cosmetic.save
+      NewProduct.with(product: @cosmetic).deliver_later(@cosmetic.brand.favoritors(scope: :brand_follow))
       redirect_to @cosmetic, notice: "Cosmetic was successfully created."
     else
       render :new

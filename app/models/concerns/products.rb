@@ -16,7 +16,9 @@ module Products
     has_many :outfit_items
     has_many :outfits, through: :outfit_items, as: :productable
 
-    accepts_nested_attributes_for :product_images, allow_destroy: true
+    accepts_nested_attributes_for :product_images, allow_destroy: true #, reject_if: proc {
+    #   |attributes| attributes['image'].blank? && attributes['id'].blank?
+    # }
 
     friendly_id :name, use: :slugged
 

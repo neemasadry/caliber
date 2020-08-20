@@ -40,6 +40,7 @@ class TopsController < ApplicationController
     authorize @top
 
     if @top.save
+      NewProduct.with(product: @top).deliver_later(@top.brand.favoritors(scope: :brand_follow))
       redirect_to @top, notice: "Top was successfully created."
     else
       render :new

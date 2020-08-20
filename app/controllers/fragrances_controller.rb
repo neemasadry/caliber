@@ -40,6 +40,7 @@ class FragrancesController < ApplicationController
     authorize @fragrance
 
     if @fragrance.save
+      NewProduct.with(product: @fragrance).deliver_later(@fragrance.brand.favoritors(scope: :brand_follow))
       redirect_to @fragrance, notice: "Fragrance was successfully created."
     else
       render :new

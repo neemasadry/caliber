@@ -33,10 +33,11 @@
     <% end %>
     <div class="my-3">
       <%= form.label :product_images, class: "block text-sm font-medium leading-5 text-gray-700" %>
-      <%= form.file_field :product_images, multiple: true, class: "form-control" %>
+      <%= form.file_field :product_images, multiple: true, name: "files[]", class: "form-control" %>
+      <%#= file_field_tag "files[]", multiple: true, class: "form-control" %>
     </div>
   </div>
-
+  <% console %>
 
   <div class="form-group">
     <%= form.label :description, class: "block text-sm font-medium leading-5 text-gray-700" %>

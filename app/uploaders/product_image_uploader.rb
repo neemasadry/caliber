@@ -1,6 +1,7 @@
 class ProductImageUploader < Shrine
   plugin :validation_helpers
   plugin :determine_mime_type
+  plugin :remove_attachment
 
   Attacher.validate do
     validate_max_size 10*1024*1024

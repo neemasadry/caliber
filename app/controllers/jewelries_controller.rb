@@ -40,6 +40,7 @@ class JewelriesController < ApplicationController
     authorize @jewelry
 
     if @jewelry.save
+      NewProduct.with(product: @jewelry).deliver_later(@jewelry.brand.favoritors(scope: :brand_follow))
       redirect_to @jewelry, notice: "Jewelry was successfully created."
     else
       render :new

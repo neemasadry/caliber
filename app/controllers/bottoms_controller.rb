@@ -40,6 +40,7 @@ class BottomsController < ApplicationController
     authorize @bottom
 
     if @bottom.save
+      NewProduct.with(product: @bottom).deliver_later(@bottom.brand.favoritors(scope: :brand_follow))
       redirect_to @bottom, notice: "Bottom was successfully created."
     else
       render :new

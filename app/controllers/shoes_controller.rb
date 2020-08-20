@@ -40,6 +40,7 @@ class ShoesController < ApplicationController
     authorize @shoe
 
     if @shoe.save
+      NewProduct.with(product: @shoe).deliver_later(@shoe.brand.favoritors(scope: :brand_follow))
       redirect_to @shoe, notice: "Shoe was successfully created."
     else
       render :new
