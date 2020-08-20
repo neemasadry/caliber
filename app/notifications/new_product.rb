@@ -14,21 +14,20 @@ class NewProduct < ApplicationNotification
   # deliver_by :custom, class: "MyDeliveryMethod"
 
   # Add required params
-  #
-  # param :post
+  param :product
 
   # Define helper methods to make rendering easier.
   #
   # `message` and `url` are used for rendering in the navbar
 
   def message
-    t("hello")
+    t(".message", brand: params[:product].brand.name)
   end
 
   def url
     # You can use any URL helpers here such as:
     # post_path(params[:post])
-    root_path
+    polymorphic_path(params[:product])
   end
 
   # Include account_id to make sure notification only triggers if user is signed in to that account

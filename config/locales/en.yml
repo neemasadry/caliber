@@ -319,6 +319,8 @@ en:
     new_comment:
       with_reviewable: "%{user} posted a comment on the review for %{reviewable_name} by %{brand}."
       without_reviewable: "%{user} posted a comment on the %{commentable_type}, %{title}."
+    new_product:
+      message: "%{brand} has a new product!"
 
   activerecord:
     attributes:
