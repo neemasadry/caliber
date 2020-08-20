@@ -15,20 +15,20 @@ class NewPost < ApplicationNotification
 
   # Add required params
   #
-  # param :post
+  param :post
 
   # Define helper methods to make rendering easier.
   #
   # `message` and `url` are used for rendering in the navbar
 
   def message
-    t(".message", user: params[:post].user.username, post_type: params[:post].type)
+    t(".message", user: params[:post].user.username)
   end
 
   def url
     # You can use any URL helpers here such as:
     # post_path(params[:post])
-    post_path(params[:post])
+    post_path(params[:post].user, params[:post])
   end
 
   # Include account_id to make sure notification only triggers if user is signed in to that account

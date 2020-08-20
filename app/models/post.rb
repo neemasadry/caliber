@@ -44,10 +44,12 @@ class Post < ApplicationRecord
   belongs_to :account
   belongs_to :brand, optional: true
 
+  has_many :comments, as: :commentable, dependent: :destroy
+
   acts_as_votable
   acts_as_favoritable
   acts_as_taggable_on :post_tags
 
-  validates :content, presence: true, length: { minimum: 2, maximum: 240 }
+  validates :content, presence: true, length: { minimum: 2, maximum: 240 } # 3000
 
 end

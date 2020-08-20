@@ -12,12 +12,15 @@ Rails.application.routes.draw do
     end
   end # Brand
 
-  resources :guides do
-    resources :comments, only: [:create, :destroy], module: :guides
+  resources :posts, except: [:edit, :update] do
+    member do
+      put "like", to: "posts#like"
+    end
+    resources :comments, only: [:create, :destroy], module: :posts
   end
 
-  resources :posts do
-    resources :comments, only: [:create, :destroy], module: :posts
+  resources :guides do
+    resources :comments, only: [:create, :destroy], module: :guides
   end
 
   resources :comments, only: [:create, :destroy] do

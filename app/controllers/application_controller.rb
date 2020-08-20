@@ -109,6 +109,18 @@ class ApplicationController < ActionController::Base
         else
           @favorite_status = false
         end
+      elsif request.filtered_parameters["controller"] == 'posts'
+        if current_user.liked? @post
+          @like_status = true
+        else
+          @like_status = false
+        end
+
+        if current_user.favorited?(@post, scope: :favorite)
+          @favorite_status = true
+        else
+          @favorite_status = false
+        end
       elsif request.filtered_parameters["controller"] == 'guides'
         if current_user.liked? @guide
           @like_status = true
