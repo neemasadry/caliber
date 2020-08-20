@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :set_post, only: [:show, :edit, :update, :destroy, :like]
+  before_action :set_post, only: [:show, :edit, :destroy, :like]
 
   #after_action :verify_authorized
 
@@ -31,8 +31,9 @@ class PostsController < ApplicationController
   end
 
   # GET /posts/1/edit
-  # def edit
-  # end
+  def edit
+    redirect_to post_path(@post), flash: { danger: "You cannot edit a post once it has been published. Please delete this post and create a new one." }
+  end
 
   # POST /posts
   def create

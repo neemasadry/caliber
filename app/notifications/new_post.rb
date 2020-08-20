@@ -22,7 +22,11 @@ class NewPost < ApplicationNotification
   # `message` and `url` are used for rendering in the navbar
 
   def message
-    t(".message", user: params[:post].user.username)
+    if params[:post].brand.present?
+      t(".with_brand", user: params[:post].user.username, brand: params[:post].brand.name)
+    else
+      t(".without_brand", user: params[:post].user.username)
+    end
   end
 
   def url

@@ -12,7 +12,7 @@ Rails.application.routes.draw do
     end
   end # Brand
 
-  resources :posts, except: [:edit, :update] do
+  resources :posts, except: [:update] do
     member do
       put "like", to: "posts#like"
     end

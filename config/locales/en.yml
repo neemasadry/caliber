@@ -322,7 +322,8 @@ en:
     new_product:
       message: "%{brand} has a new product! Checkout: %{product}"
     new_post:
-      message: "New post by %{user}"
+      with_brand: "New post by %{user} from %{brand}"
+      without_brand: "New post by %{user}"
     new_outfit:
       with_brand: "%{user} from %{brand} created a new outfit: %{outfit}"
       without_brand: "%{user} created a new outfit: %{outfit}"
