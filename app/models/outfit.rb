@@ -59,7 +59,9 @@ class Outfit < ApplicationRecord
 
   searchkick word_start: [:name], word_middle: [:name], text_middle: [:occasion, :dress_code]
 
-  accepts_nested_attributes_for :outfit_items, allow_destroy: true, reject_if: proc { |attr| attr['productable_type'].blank? || attr['productable_id'].blank? || attr['body_part'].blank?  }
+  accepts_nested_attributes_for :outfit_items, allow_destroy: true, reject_if: :all_blank
+
+  validate :require_one_item
 
   validates :name, presence: true, length: { minimum: 4, maximum: 150 }
   validates :description, presence: true, length: { minimum: 10, maximum: 3000 }
@@ -76,4 +78,19 @@ class Outfit < ApplicationRecord
       dress_code: dress_code
     }
   end
+
+  def require_one_item
+    errors.add(:base, "You must add at least one item to your outfit") if outfit_items.size < 1
+  end
+
+  def reject_conditions
+    #proc { |attr| attr['productable_type'].blank? || attr['productable_id'].blank? || attr['body_part'].blank?  }
+    if (self.productable_type.blank? || self.productable_id.blank?)
+      errors.add(:product, "cannot be blank")
+    elsif (self.body_part.blank?)
+      errors.add(:body_part, "cannot be blank")
+    end
+
+  end
+
 end

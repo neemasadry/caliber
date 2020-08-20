@@ -27,7 +27,8 @@ class OutfitItem < ApplicationRecord
 
   validates :productable_type, presence: true
   validates :productable_id, presence: true, uniqueness: { scope: :productable_type }
-  validates :body_part, presence: true
+  validates :body_part, presence: true, inclusion: { in: ["Crown", "Eyes", "Ears", "Neck", "Chest", "Arms", "Hands", "Finger", "Waist", "Legs", "Feet", "Other"] }
+  validates :outfit_id, presence: true
 
   after_create do |outfit_item|
     # Update total number of items in associated Outfit object
