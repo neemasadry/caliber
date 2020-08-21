@@ -1,8 +1,7 @@
 <div class="mt-14 text-center">
   <div class="">
-    <% if @user_profile.avatar_image %>
-      <%= image_tag(@user_profile.avatar_image_url, class: "inline-block h-24 w-24 rounded-md") %>
-    <% end %>
+    <!-- ADD USER AVATAR -->
+    <%= image_tag(avatar_url_for(@user_profile), class: "inline-block h-24 w-24") %>
   </div>
   <div class="">
     <h2 class="my-4 text-2xl font-bold leading-7 text-gray-800 sm:text-3xl sm:leading-9 sm:truncate">
