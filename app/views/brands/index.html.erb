@@ -15,8 +15,7 @@
             <th class="p-3 uppercase text-left text-xs"><%= sortable @brands, :user_id, 'User', class: 'text-gray-700' %></th>
             <th class="p-3 uppercase text-left text-xs"><%= sortable @brands, :account_id, 'Account', class: 'text-gray-700' %></th>
             <th class="p-3 uppercase text-left text-xs"><%= sortable @brands, :name, 'Name', class: 'text-gray-700' %></th>
-            <th class="p-3 uppercase text-left text-xs"><%= sortable @brands, :alias, 'Alias', class: 'text-gray-700' %></th>
-            <th class="p-3 uppercase text-left text-xs"><%= sortable @brands, :brand_logo_data, 'Brand image data', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @brands, :brand_identifier, 'Identifier', class: 'text-gray-700' %></th>
             <th class="p-3 uppercase text-left text-xs"><%= sortable @brands, :category, 'Category', class: 'text-gray-700' %></th>
             <th class="p-3 uppercase text-left text-xs"><%= sortable @brands, :price_range, 'Price range', class: 'text-gray-700' %></th>
             <th class="p-3 uppercase text-left text-xs"><%= sortable @brands, :founding_date, 'Founding date', class: 'text-gray-700' %></th>
@@ -47,34 +46,33 @@
         <tbody>
         <% @brands.each do |brand| %>
           <tr class="group border-t border-gray-400 hover:bg-gray-100">
-                      <td class="p-3"><%= brand.user_id %></td>
-                      <td class="p-3"><%= brand.account_id %></td>
-                      <td class="p-3"><%= brand.name %></td>
-                      <td class="p-3"><%= brand.alias %></td>
-                      <td class="p-3"><%= brand.brand_logo_data %></td>
-                      <td class="p-3"><%= brand.category %></td>
-                      <td class="p-3"><%= brand.price_range %></td>
-                      <td class="p-3"><%= brand.founding_date %></td>
-                      <td class="p-3"><%= brand.about %></td>
-                      <td class="p-3"><%= brand.story %></td>
-                      <td class="p-3"><%= brand.mission %></td>
-                      <td class="p-3"><%= brand.email %></td>
-                      <td class="p-3"><%= brand.phone %></td>
-                      <td class="p-3"><%= brand.address1 %></td>
-                      <td class="p-3"><%= brand.address2 %></td>
-                      <td class="p-3"><%= brand.city %></td>
-                      <td class="p-3"><%= brand.state_code %></td>
-                      <td class="p-3"><%= brand.country_code %></td>
-                      <td class="p-3"><%= brand.zipcode %></td>
-                      <td class="p-3"><%= brand.homepage_link %></td>
-                      <td class="p-3"><%= brand.instagram_link %></td>
-                      <td class="p-3"><%= brand.youtube_link %></td>
-                      <td class="p-3"><%= brand.facebook_link %></td>
-                      <td class="p-3"><%= brand.twitter_link %></td>
-                      <td class="p-3"><%= brand.snapchat_link %></td>
-                      <td class="p-3"><%= brand.tiktok_link %></td>
-                      <td class="p-3"><%= brand.pinterest_link %></td>
-                      <td class="p-3"><%= brand.slug %></td>
+            <td class="p-3"><%= brand.user_id %></td>
+            <td class="p-3"><%= brand.account_id %></td>
+            <td class="p-3"><%= brand.name %></td>
+            <td class="p-3"><%= brand.brand_identifier %></td>
+            <td class="p-3"><%= brand.category %></td>
+            <td class="p-3"><%= brand.price_range %></td>
+            <td class="p-3"><%= brand.founding_date %></td>
+            <td class="p-3"><%= brand.about %></td>
+            <td class="p-3"><%= brand.story %></td>
+            <td class="p-3"><%= brand.mission %></td>
+            <td class="p-3"><%= brand.email %></td>
+            <td class="p-3"><%= brand.phone %></td>
+            <td class="p-3"><%= brand.address1 %></td>
+            <td class="p-3"><%= brand.address2 %></td>
+            <td class="p-3"><%= brand.city %></td>
+            <td class="p-3"><%= brand.state_code %></td>
+            <td class="p-3"><%= brand.country_code %></td>
+            <td class="p-3"><%= brand.zipcode %></td>
+            <td class="p-3"><%= brand.homepage_link %></td>
+            <td class="p-3"><%= brand.instagram_link %></td>
+            <td class="p-3"><%= brand.youtube_link %></td>
+            <td class="p-3"><%= brand.facebook_link %></td>
+            <td class="p-3"><%= brand.twitter_link %></td>
+            <td class="p-3"><%= brand.snapchat_link %></td>
+            <td class="p-3"><%= brand.tiktok_link %></td>
+            <td class="p-3"><%= brand.pinterest_link %></td>
+            <td class="p-3"><%= brand.slug %></td>
 
             <td>
               <%= link_to "View", brand, class: "btn btn-link no-underline" %>

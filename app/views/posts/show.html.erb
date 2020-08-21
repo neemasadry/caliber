@@ -2,7 +2,6 @@
   <div class="max-w-3xl mx-auto">
     <div class="flex justify-between items-center mb-4">
       <h1 class="h3"><%= link_to @post.user.username, user_profile_path(@post.user) %> > <%= link_to 'Posts', posts_path %> > Post #<%= @post.id %></h1>
-      <%#= link_to 'Edit', edit_user_profile_post_path(@post), class: "btn btn-link" %>
     </div>
 
 
@@ -10,21 +9,11 @@
     <div class="bg-white overflow-hidden overflow-hidden shadow rounded-lg">
       <div class="px-4 py-5 sm:p-6">
 
+        <!-- ADD PHOTO/VIDEO -->
+
         <div class="mb-4">
-          <h3><%= @post.content %></h3>
+          <hp><%= @post.content %></hp>
         </div>
-
-        <% if @post.post_image_data.present? && !@post.post_video_data.present? %>
-          <div class="mb-4">
-            <%= image_tag @post.post_image_url %>
-          </div>
-        <% end %>
-
-        <% if @post.post_video_data.present? && !@post.post_image_data.present? %>
-          <div class="mb-4">
-            <%= @post.post_video_url %>
-          </div>
-        <% end %>
 
         <div class="mb-4">
           <h5>Tags</h5>
@@ -36,7 +25,7 @@
         <div class="flex flex-wrap overflow-hidden md:-mx-1 lg:-mx-1 xl:-mx-1">
 
           <div class="w-full overflow-hidden md:my-1 md:px-1 md:w-1/2 lg:my-1 lg:px-1 lg:w-1/2 xl:my-1 xl:px-1 xl:w-1/2">
-            <%= render partial: "votable/liking", locals: { likeable: @post } if @post.user != current_user %>
+            <%= render partial: "votable/liking", locals: { likeable: @post } if @post.account != current_account %>
           </div>
 
           <div class="w-full overflow-hidden md:my-1 md:px-1 md:w-1/2 lg:my-1 lg:px-1 lg:w-1/2 xl:my-1 xl:px-1 xl:w-1/2 text-right text-gray-600 text-sm">

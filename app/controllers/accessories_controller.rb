@@ -19,12 +19,12 @@ class AccessoriesController < ApplicationController
 
   # GET /accessories/new
   def new
-    # if @user_on_personal_account
-    #   redirect_to accessories_path, alert: "You cannot make a new product listings with your personal account."
-    # else
+    if @user_on_personal_account
+      redirect_to accessories_path, alert: "You cannot make a new product listings with your personal account."
+    else
       @accessory = Accessory.new
       authorize @accessory
-    # end
+    end
   end
 
   # GET /accessories/1/edit
@@ -36,16 +36,7 @@ class AccessoriesController < ApplicationController
 
   # POST /accessories
   def create
-    # transform the list of uploaded files into a product_images_attributes hash
-    new_product_images_attributes = params[:files].inject({}) do |hash, file|
-      hash.merge!(SecureRandom.hex => { product_image: file, user: current_user, brand_id: params[:accessory][:brand_id] })
-    end
-
-    # merge new photos attributes with existing (`accessory_params` is whitelisted `params[:accessory]`)
-    product_images_attributes = accessory_params[:product_images_attributes].to_h.merge(new_product_images_attributes)
-    accessory_params_with_attributes  = accessory_params.merge(product_images_attributes: product_images_attributes)
-
-    @accessory = Accessory.new(accessory_params_with_attributes)
+    @accessory = Accessory.new(accessory_params)
     @accessory.user = current_user
 
     authorize @accessory
@@ -60,23 +51,8 @@ class AccessoriesController < ApplicationController
 
   # PATCH/PUT /accessories/1
   def update
-    #byebug
-    # if @user_on_personal_account
-    #   redirect_to accessories_path, alert: "You cannot edit product listings with your personal account."
-    # else
-
-    # transform the list of uploaded files into a product_images_attributes hash
-    if params[:accessory][:files].present?
-      update_product_images_attributes = params[:files].inject({}) do |hash, file|
-        hash.merge!(SecureRandom.hex => { product_image: file, user: current_user, brand_id: params[:accessory][:brand_id] })
-      end
-
-      # merge new photos attributes with existing (`accessory_params` is whitelisted `params[:accessory]`)
-      product_images_attributes = accessory_params[:product_images_attributes].to_h.merge(update_product_images_attributes)
-      accessory_params = accessory_params.merge(product_images_attributes: product_images_attributes)
-      @accessory.product_images_attributes.update(product_images_attributes)
-    else
-
+    if @user_on_personal_account
+      redirect_to accessories_path, alert: "You cannot edit product listings with your personal account."
     end
 
     authorize @accessory
@@ -86,7 +62,6 @@ class AccessoriesController < ApplicationController
     else
       render :edit
     end
-  # end
   end
 
   # DELETE /accessories/1
@@ -153,7 +128,7 @@ class AccessoriesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def accessory_params
-      params.require(:accessory).permit(:user_id, :brand_id, :name, { product_images_attributes: [:user_id, :brand_id, :product_image, :_destroy, :id] }, :description, :retail_price, :retail_price, :type_of, :gender, :materials, :primary_color, :secondary_color, :product_url)
+      params.require(:accessory).permit(:user_id, :brand_id, :name, :description, :retail_price, :type, :gender, :materials, :primary_color, :secondary_color, :product_url)
     end
 
     def set_user_on_personal_account

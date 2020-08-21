@@ -13,8 +13,8 @@ amazon:
   region: <%= Rails.application.credentials.dig(:aws, :region) %>
   bucket: <%= Rails.application.credentials.dig(:aws, :bucket) %>
 
-cloudinary:
-  service: Cloudinary
+# cloudinary:
+#   service: Cloudinary
 
 # Use rails credentials:edit to set the AWS secrets (as aws:access_key_id|secret_access_key)
 # amazon:

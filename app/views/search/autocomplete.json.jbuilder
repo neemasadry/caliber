@@ -3,7 +3,7 @@ json.products do
     json.array!(@accessories) do |accessory|
       json.name accessory.name
       json.brand accessory.brand
-      json.type_of accessory.type_of
+      json.type accessory.type
       json.primary_color accessory.primary_color
       json.url accessory_path(accessory)
     end
@@ -13,7 +13,7 @@ json.products do
     json.array!(@bottoms) do |bottom|
       json.name bottom.name
       json.brand bottom.brand
-      json.type_of bottom.type_of
+      json.type bottom.type
       json.primary_color bottom.primary_color
       json.url bottom_path(bottom)
     end
@@ -23,7 +23,7 @@ json.products do
     json.array!(@cosmetics) do |cosmetic|
       json.name cosmetic.name
       json.brand cosmetic.brand
-      json.type_of cosmetic.type_of
+      json.type cosmetic.type
       json.url cosmetic_path(cosmetic)
     end
   end
@@ -32,7 +32,7 @@ json.products do
     json.array!(@dresses) do |dress|
       json.name dress.name
       json.brand dress.brand
-      json.type_of dress.type_of
+      json.type dress.type
       json.primary_color dress.primary_color
       json.url dress_path(dress)
     end
@@ -50,7 +50,7 @@ json.products do
     json.array!(@shoes) do |shoe|
       json.name shoe.name
       json.brand shoe.brand
-      json.type_of shoe.type_of
+      json.type shoe.type
       json.primary_color shoe.primary_color
       json.url shoe_path(shoe)
     end
@@ -60,7 +60,7 @@ json.products do
     json.array!(@tops) do |top|
       json.name top.name
       json.brand top.brand
-      json.type_of top.type_of
+      json.type top.type
       json.primary_color top.primary_color
       json.url top_path(top)
     end

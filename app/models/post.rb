@@ -36,8 +36,6 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class Post < ApplicationRecord
-  include PostImageUploader::Attachment(:post_image)
-  include PostVideoUploader::Attachment(:post_video)
   include Discard::Model
 
   belongs_to :user

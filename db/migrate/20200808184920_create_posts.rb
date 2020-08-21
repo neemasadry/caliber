@@ -5,14 +5,7 @@ class CreatePosts < ActiveRecord::Migration[6.0]
       t.references :account, null: false, foreign_key: true
       t.references :brand, null: true, foreign_key: true
 
-      t.string :content, null: false, limit: 240
-
-      # Shrine (either photo XOR video)
-      t.text :post_image_data, null: true
-      t.text :post_video_data, null: true
-
-      # FriendlyID slug
-      # t.string :slug, index: { unique: true }
+      t.text :content, null: false, limit: 4000
 
       # Discard gem
       t.datetime :discarded_at, index: true

@@ -96,7 +96,6 @@ if File.exist?("config/jumpstart/Gemfile")
 end
 
 
-
 # App specific gems
 gem 'simple_discussion', '~> 1.2'
 
@@ -111,16 +110,6 @@ gem 'faker', '~> 1.6', '>= 1.6.6'
 gem 'searchkick', '~> 4.3'
 gem 'friendly_id', '~> 5.2.4'
 gem 'jsonb_accessor', '~> 1.1'
-
-# File Management and Cloud Storage
-gem 'cloudinary', '~> 1.16', '>= 1.16.1'
-gem 'shrine', '~> 3.2', '>= 3.2.1'
-gem 'fastimage' # Used for Shrine
-gem 'marcel' # Used for Shrine
-gem 'shrine-cloudinary', '~> 1.1', '>= 1.1.1'
-
-# Integrations
-# gem 'honeybadger', '~> 4.0'
 
 gem 'discard', '~> 1.2'
 gem 'paper_trail'

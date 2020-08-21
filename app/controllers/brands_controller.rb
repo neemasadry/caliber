@@ -97,6 +97,6 @@ class BrandsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def brand_params
-      params.require(:brand).permit(:user_id, :account_id, :name, :alias, :brand_logo, :category, :price_range, :founding_date, :about, :story, :mission, :email, :phone, :address1, :address2, :city, :state_code, :country_code, :zipcode, :homepage_link, :instagram_link, :youtube_link, :facebook_link, :twitter_link, :snapchat_link, :tiktok_link, :pinterest_link)
+      params.require(:brand).permit(:user_id, :account_id, :name, :brand_identifier, :category, :price_range, :founding_date, :about, :story, :mission, :email, :phone, :address1, :address2, :city, :state_code, :country_code, :zipcode, :homepage_link, :instagram_link, :youtube_link, :facebook_link, :twitter_link, :snapchat_link, :tiktok_link, :pinterest_link)
     end
 end

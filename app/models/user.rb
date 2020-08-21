@@ -68,7 +68,6 @@ class User < ApplicationRecord
   extend FriendlyId
   extend Pagy::Search
   include ActionText::Attachable
-  include AvatarImageUploader::Attachment(:avatar_image)
 
   after_create :create_collection_groups
 
@@ -121,7 +120,7 @@ class User < ApplicationRecord
   validates :username, presence: true, uniqueness: true, length: { in: 3..20 }
   validates :gender, presence: true #, inclusion: { in: %w(Male Female) }
   validates :date_of_birth, presence: true
-  #validates :country_code, presence: true
+  validates :country_code, presence: true
   validates :time_zone, presence: true
   validates :terms_of_service, acceptance: true
 

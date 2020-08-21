@@ -1,22 +1,18 @@
 class CreateBrands < ActiveRecord::Migration[6.0]
   def change
-
     create_table :brands do |t|
       t.references :user, null: false, foreign_key: true
       t.references :account, null: false, foreign_key: true
 
       # Company info
       t.string :name, null: false, limit: 150, index: true
-      t.string :alias, null: false, limit: 50, index: { unique: true }
+      t.string :brand_identifier, null: false, limit: 60, index: { unique: true }
       t.string :category, null: false, limit: 100
       t.integer :price_range, null: false, inclusion: 1..4
       t.date :founding_date, null: false
       t.string :mission, null: false, limit: 125
       t.text :about, null: false, limit: 6000
       t.text :story, null: false, limit: 6000
-
-      ### SET TO null: false IN PRODUCTION ###
-      t.jsonb :brand_logo_data
 
       # Contact info
       t.string :email, null: false, limit: 100
@@ -59,6 +55,5 @@ class CreateBrands < ActiveRecord::Migration[6.0]
 
       t.timestamps
     end
-
   end
 end

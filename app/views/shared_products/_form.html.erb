@@ -15,29 +15,7 @@
     <p class="text-sm text-gray-600">You must use an account aside from your default personal account.</p>
   </div>
 
-  <div class="form-group">
-    <%= form.fields_for :product_images do |pi| %>
-      <%= image_tag pi.object.product_image_url if pi.object.product_image_url.present? %>
-      <%= pi.hidden_field :product_image, value: pi.object.cached_product_image_data %>
-      <div class="flex flex-wrap overflow-hidden md:-mx-1 lg:-mx-1 xl:-mx-1">
-        <div class="w-full overflow-hidden md:my-1 md:px-1 md:w-1/2 lg:my-1 lg:px-1 lg:w-1/2 xl:my-1 xl:px-1 xl:w-1/2">
-          <%= pi.file_field :product_image, class: "form-control" %>
-        </div>
-        <div class="text-center w-full overflow-hidden md:my-1 md:px-1 md:w-1/2 lg:my-1 lg:px-1 lg:w-1/2 xl:my-1 xl:px-1 xl:w-1/2">
-          <%= label_tag do %>
-            <%= pi.check_box :_destroy, class: "mr-2" unless pi.object.new_record? %>
-            Remove Image
-          <% end %>
-        </div>
-      </div>
-    <% end %>
-    <div class="my-3">
-      <%= form.label :product_images, class: "block text-sm font-medium leading-5 text-gray-700" %>
-      <%= form.file_field :product_images, multiple: true, name: "files[]", class: "form-control" %>
-      <%#= file_field_tag "files[]", multiple: true, class: "form-control" %>
-    </div>
-  </div>
-  <% console %>
+  <!-- ADD PICTURES/VIDEOS -->
 
   <div class="form-group">
     <%= form.label :description, class: "block text-sm font-medium leading-5 text-gray-700" %>
@@ -64,8 +42,8 @@
   </div>
 
   <div class="form-group">
-    <%= form.label :type_of, class: "block text-sm font-medium leading-5 text-gray-700" %>
-    <%= form.text_field :type_of, class: "form-control" %>
+    <%= form.label :type, class: "block text-sm font-medium leading-5 text-gray-700" %>
+    <%= form.text_field :type, class: "form-control" %>
   </div>
 
   <% unless params[:controller] == "dresses" %>

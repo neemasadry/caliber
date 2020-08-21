@@ -12,7 +12,7 @@ class CreateGuides < ActiveRecord::Migration[6.0]
       t.string :subcategory_two, null: true, limit: 30
 
       # Shrine uploader
-      t.text :guide_image_data, null: true
+      # t.text :guide_image_data, null: true
 
       # FriendlyID slug
       t.string :slug, index: { unique: true }

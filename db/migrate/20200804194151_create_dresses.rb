@@ -5,10 +5,9 @@ class CreateDresses < ActiveRecord::Migration[6.0]
       t.references :brand, null: false, foreign_key: true
 
       t.string  :name, null: false, limit: 100
-      #t.text    :product_image_data, null: false
       t.text    :description, null: false, limit: 3000
       t.decimal :retail_price, null: false, precision: 10, scale: 2
-      t.string  :type_of, null: false, limit: 80
+      t.string  :type, null: false, limit: 80
       t.string  :gender, null: false, limit: 6
       t.text    :materials, null: true, limit: 5000
       t.string  :primary_color, null: false, limit: 30

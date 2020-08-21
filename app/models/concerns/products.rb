@@ -9,16 +9,12 @@ module Products
     belongs_to :user
     belongs_to :brand
 
-    has_many :product_images, as: :product_imageable, dependent: :destroy
+
     has_many :reviews, as: :reviewable, dependent: :destroy
     has_many :collectable_items
     has_many :collections, through: :collectable_items
     has_many :outfit_items
     has_many :outfits, through: :outfit_items, as: :productable
-
-    accepts_nested_attributes_for :product_images, allow_destroy: true #, reject_if: proc {
-    #   |attributes| attributes['image'].blank? && attributes['id'].blank?
-    # }
 
     friendly_id :name, use: :slugged
 
@@ -26,9 +22,6 @@ module Products
     acts_as_votable
 
     searchkick word_start: [:name, :brand], word_middle: [:name, :brand], text_middle: [:type_of, :primary_color]
-
-    #validates_presence_of :product_images
-    validates_associated :product_images
 
     validates :name, presence: true, length: { maximum: 100 }
     validates :description, presence: true, length: { maximum: 3000 }
@@ -48,7 +41,7 @@ module Products
     {
       name: name,
       brand: brand.name,
-      type_of: type_of,
+      type: type,
       primary_color: primary_color
     }
   end

@@ -42,7 +42,6 @@
 class Guide < ApplicationRecord
   extend FriendlyId
   extend Pagy::Search
-  include GuideImageUploader::Attachment(:guide_image)
   include Discard::Model
 
   belongs_to :user
@@ -50,7 +49,7 @@ class Guide < ApplicationRecord
   belongs_to :brand, optional: true
 
   has_rich_text :body
-  # has_one_attached :cover_image
+  has_one_attached :cover_image
   #has_many :sources, inverse_of: :guide
   has_many :comments, as: :commentable, dependent: :destroy
 

@@ -1,17 +1,8 @@
 
-
 acosta = User.find_by(email: "alex@costa.com")
 amarino = User.find_by(email: "amarino@alpham.com")
 jzuniga = User.find_by(email: "jzuniga@gmail.com")
 kjenner = User.find_by(email: "kylie@jenner.com")
-
-# all_users = [acosta, amarino, jzuniga, kjenner]
-
-# all_users.each do |user|
-#   user_account = user.accounts.where.not(name: user.name)
-#   puts user_account
-#   #user_account.destroy
-# end
 
 puts "---------------- Begin: Account ----------------"
 

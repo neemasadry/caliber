@@ -15,11 +15,6 @@
     <div class="bg-white rounded shadow p-8">
 
             <div class="mb-4">
-        <h5>Brand image data</h5>
-        <%= image_tag(@brand.brand_logo_url) if @brand.brand_logo_url.present? %>
-      </div>
-
-            <div class="mb-4">
         <h5>User</h5>
         <%= @brand.user.username %>
       </div>
@@ -34,7 +29,7 @@
       </div>
             <div class="mb-4">
         <h5>Alias</h5>
-        <%= @brand.alias %>
+        <%= @brand.brand_identifier %>
       </div>
 
             <div class="mb-4">
@@ -80,10 +75,6 @@
             <div class="mb-4">
         <h5>City</h5>
         <%= @brand.city %>
-      </div>
-            <div class="mb-4">
-        <h5>State code</h5>
-        <%= @brand.state_code %>
       </div>
             <div class="mb-4">
         <h5>Country code</h5>

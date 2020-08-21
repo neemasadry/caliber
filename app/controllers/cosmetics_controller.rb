@@ -115,7 +115,7 @@ class CosmeticsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def cosmetic_params
-      params.require(:cosmetic).permit(:user_id, :brand_id, :name, { product_images_attributes: [] }, :description, :retail_price, :type_of, :gender, :ingredients, :product_url)
+      params.require(:cosmetic).permit(:user_id, :brand_id, :name, :description, :retail_price, :type, :gender, :ingredients, :product_url)
     end
 
     def set_user_on_personal_account

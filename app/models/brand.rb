@@ -61,9 +61,8 @@
 class Brand < ApplicationRecord
   extend FriendlyId
   extend Pagy::Search
-  include BrandLogoUploader::Attachment(:brand_logo)
   # include ActiveModel::Validations
-  # include Discard::Model
+  include Discard::Model
 
   belongs_to :account
   belongs_to :user
@@ -72,18 +71,18 @@ class Brand < ApplicationRecord
   has_many :posts, dependent: :destroy
   has_many :outfits
 
-  friendly_id :alias, use: :slugged
+  friendly_id :brand_identifier, use: :slugged
   acts_as_favoritor
   acts_as_favoritable
   acts_as_votable
   has_paper_trail
 
-  searchkick word_start: [:name], word_middle: [:name], text_middle: [:name]
+  searchkick word_start: [:name, :brand_identifier], word_middle: [:name, :brand_identifier], text_middle: [:name, :brand_identifier]
 
   ### VALIDATIONS ###
   # Basic Info
   validates :name, presence: true, length: { minimum: 2, maximum: 80 }
-  validates :alias, presence: true, uniqueness: true, length: { minimum: 2, maximum: 50 }
+  validates :brand_identifier, presence: true, uniqueness: true, length: { minimum: 2, maximum: 50 }
   validates :founding_date, presence: true
   validates :mission, presence: true, length: { minimum: 7, maximum: 125 }
   validates :category, presence: true
@@ -117,7 +116,8 @@ class Brand < ApplicationRecord
 
   def search_data
     {
-      name: name
+      name: name,
+      brand_identifier: brand_identifier
     }
   end
 
