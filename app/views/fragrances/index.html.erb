@@ -15,7 +15,6 @@
             <th class="p-3 uppercase text-left text-xs"><%= sortable @fragrances, :user_id, 'User', class: 'text-gray-700' %></th>
             <th class="p-3 uppercase text-left text-xs"><%= sortable @fragrances, :brand_id, 'Brand', class: 'text-gray-700' %></th>
             <th class="p-3 uppercase text-left text-xs"><%= sortable @fragrances, :name, 'Name', class: 'text-gray-700' %></th>
-            <th class="p-3 uppercase text-left text-xs"><%= sortable @fragrances, :product_image_data, 'Product image data', class: 'text-gray-700' %></th>
             <th class="p-3 uppercase text-left text-xs"><%= sortable @fragrances, :description, 'Description', class: 'text-gray-700' %></th>
             <th class="p-3 uppercase text-left text-xs"><%= sortable @fragrances, :retail_price, 'Retail price', class: 'text-gray-700' %></th>
             <th class="p-3 uppercase text-left text-xs"><%= sortable @fragrances, :release_date, 'Release date', class: 'text-gray-700' %></th>
@@ -47,7 +46,7 @@
                       <td class="p-3"><%= fragrance.base_notes %></td>
                       <td class="p-3"><%= fragrance.accords %></td>
                       <td class="p-3"><%= fragrance.product_url %></td>
-          
+
             <td>
               <%= link_to "View", fragrance, class: "btn btn-link no-underline" %>
             </td>

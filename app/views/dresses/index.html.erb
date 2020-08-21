@@ -15,7 +15,6 @@
             <th class="p-3 uppercase text-left text-xs"><%= sortable @dresses, :user_id, 'User', class: 'text-gray-700' %></th>
             <th class="p-3 uppercase text-left text-xs"><%= sortable @dresses, :brand_id, 'Brand', class: 'text-gray-700' %></th>
             <th class="p-3 uppercase text-left text-xs"><%= sortable @dresses, :name, 'Name', class: 'text-gray-700' %></th>
-            <th class="p-3 uppercase text-left text-xs"><%= sortable @dresses, :product_image_data, 'Product image data', class: 'text-gray-700' %></th>
             <th class="p-3 uppercase text-left text-xs"><%= sortable @dresses, :description, 'Description', class: 'text-gray-700' %></th>
             <th class="p-3 uppercase text-left text-xs"><%= sortable @dresses, :retail_price, 'Retail price', class: 'text-gray-700' %></th>
             <th class="p-3 uppercase text-left text-xs"><%= sortable @dresses, :type_of, 'Type of', class: 'text-gray-700' %></th>
@@ -34,7 +33,6 @@
                       <td class="p-3"><%= dress.user_id %></td>
                       <td class="p-3"><%= dress.brand_id %></td>
                       <td class="p-3"><%= dress.name %></td>
-                      <td class="p-3"><%= dress.product_image_data %></td>
                       <td class="p-3"><%= dress.description %></td>
                       <td class="p-3"><%= dress.retail_price %></td>
                       <td class="p-3"><%= dress.type_of %></td>
@@ -43,7 +41,7 @@
                       <td class="p-3"><%= dress.primary_color %></td>
                       <td class="p-3"><%= dress.secondary_color %></td>
                       <td class="p-3"><%= dress.product_url %></td>
-          
+
             <td>
               <%= link_to "View", dress, class: "btn btn-link no-underline" %>
             </td>

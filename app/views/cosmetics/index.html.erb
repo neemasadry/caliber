@@ -15,7 +15,6 @@
             <th class="p-3 uppercase text-left text-xs"><%= sortable @cosmetics, :user_id, 'User', class: 'text-gray-700' %></th>
             <th class="p-3 uppercase text-left text-xs"><%= sortable @cosmetics, :brand_id, 'Brand', class: 'text-gray-700' %></th>
             <th class="p-3 uppercase text-left text-xs"><%= sortable @cosmetics, :name, 'Name', class: 'text-gray-700' %></th>
-            <th class="p-3 uppercase text-left text-xs"><%= sortable @cosmetics, :product_image_data, 'Product image data', class: 'text-gray-700' %></th>
             <th class="p-3 uppercase text-left text-xs"><%= sortable @cosmetics, :description, 'Description', class: 'text-gray-700' %></th>
             <th class="p-3 uppercase text-left text-xs"><%= sortable @cosmetics, :retail_price, 'Retail price', class: 'text-gray-700' %></th>
             <th class="p-3 uppercase text-left text-xs"><%= sortable @cosmetics, :type_of, 'Type of', class: 'text-gray-700' %></th>
@@ -32,14 +31,13 @@
                       <td class="p-3"><%= cosmetic.user_id %></td>
                       <td class="p-3"><%= cosmetic.brand_id %></td>
                       <td class="p-3"><%= cosmetic.name %></td>
-                      <td class="p-3"><%= cosmetic.product_image_data %></td>
                       <td class="p-3"><%= cosmetic.description %></td>
                       <td class="p-3"><%= cosmetic.retail_price %></td>
                       <td class="p-3"><%= cosmetic.type_of %></td>
                       <td class="p-3"><%= cosmetic.gender %></td>
                       <td class="p-3"><%= cosmetic.ingredients %></td>
                       <td class="p-3"><%= cosmetic.product_url %></td>
-          
+
             <td>
               <%= link_to "View", cosmetic, class: "btn btn-link no-underline" %>
             </td>
