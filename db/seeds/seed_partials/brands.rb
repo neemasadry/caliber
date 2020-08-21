@@ -8,6 +8,8 @@ amarino = User.find_by(email: "amarino@alpham.com")
 jzuniga = User.find_by(email: "jzuniga@gmail.com")
 kjenner = User.find_by(email: "kylie@jenner.com")
 
+users_with_brands = [acosta, amarino, jzuniga, kjenner]
+
 puts "---------------- Begin: Account ----------------"
 
 ### Alex Costa
@@ -75,25 +77,23 @@ puts "---------------- End: Account ----------------"
 # Clear all previous seeded Brands to avoid duplication errors
 Brand.destroy_all
 
-logo_uploader = BrandLogoUploader.new(:store)
-
 logo_path = "db/seeds/brand_images/logos/"
 
 puts "---------------- Begin: Brand ----------------"
 
 forte_logo = "forte-series.png"
-forte_logo_file_path = File.new(Rails.root.join(logo_path, forte_logo))
-uploaded_forte_logo = logo_uploader.upload(forte_logo_file_path)
+forte_logo_file_path = File.open(Rails.root.join(logo_path, forte_logo))
+forte_blob = {io: forte_logo_file_path, filename: forte_logo, content_type: "image/png"}
+# uploaded_forte_logo = logo_uploader.upload(forte_logo_file_path)
 
 ### Alex Costa
 acosta_forte = "Forte"
 acosta_forte_mission = Faker::Lorem.words(5..7).join(" ")
-Brand.create!(
+b_forte = Brand.create!(
   user_id: 3,
   account_id: Account.find_by(name: acosta_forte).id,
   name: acosta_forte,
-  brand_logo_data: uploaded_forte_logo,
-  alias: "forte",
+  brand_identifier: "forte",
   category: "Grooming & Hygiene",
   founding_date: "2020-02-24",
   about: Faker::Lorem.paragraphs(4..7).join(" "),
@@ -116,21 +116,25 @@ Brand.create!(
   snapchat_link: "https://www.snapchat.com/add/xmadeinbrazil",
   tiktok_link: "https://www.tiktok.com/@alexcosta"
 )
+
+b_forte.logo.attach(forte_blob)
+
 puts "Forte created!"
 
-pete_and_pedro_logo = "Pete_Pedro-with_donkey-horizontal.png"
-pete_and_pedro_logo_file_path = File.new(Rails.root.join(logo_path, pete_and_pedro_logo))
-uploaded_pete_and_pedro_logo = logo_uploader.upload(pete_and_pedro_logo_file_path)
+
 
 ### Aaron Marino
+pete_and_pedro_logo = "Pete_Pedro-with_donkey-horizontal.png"
+pete_and_pedro_logo_file_path = File.open(Rails.root.join(logo_path, pete_and_pedro_logo))
+pete_and_pedro_blob = {io: pete_and_pedro_logo_file_path, filename: pete_and_pedro_logo, content_type: "image/png"}
+# uploaded_pete_and_pedro_logo = logo_uploader.upload(pete_and_pedro_logo_file_path)
+
 amarino_pnp = "Pete & Pedro"
-#amarino_pnp_mission = Faker::Lorem.words(5..7).join(" ")
-Brand.create!(
+b_peteandpedro = Brand.create!(
   user_id: 5,
   account_id: Account.find_by(name: amarino_pnp).id,
   name: amarino_pnp,
-  brand_logo_data: uploaded_pete_and_pedro_logo,
-  alias: "peteandpedro",
+  brand_identifier: "peteandpedro",
   category: "Grooming & Hygiene",
   founding_date: "2013-04-01",
   about: Faker::Lorem.paragraphs(4..7).join(" "),
@@ -153,21 +157,24 @@ Brand.create!(
   snapchat_link: "",
   tiktok_link: ""
 )
+
+b_peteandpedro.logo.attach(pete_and_pedro_blob)
+
 puts "Pete & Pedro created!"
 
 
 
-teige_hanley_logo = "tiege_hanley_logo_square.png"
-teige_hanley_logo_file_path = File.new(Rails.root.join(logo_path, teige_hanley_logo))
-uploaded_teige_hanley_logo = logo_uploader.upload(teige_hanley_logo_file_path)
+tiege_hanley_logo = "tiege_hanley_logo_square.png"
+tiege_hanley_logo_file_path = File.open(Rails.root.join(logo_path, tiege_hanley_logo))
+tiege_hanley_blob = {io: tiege_hanley_logo_file_path, filename: tiege_hanley_logo, content_type: "image/png"}
+# uploaded_tiege_hanley_logo = logo_uploader.upload(tiege_hanley_logo_file_path)
 
 amarino_th = "Tiege Hanley"
-Brand.create!(
+b_tiege = Brand.create!(
     user_id: 5,
     account_id: Account.find_by(name: amarino_th).id,
     name: amarino_th,
-    brand_logo_data: uploaded_teige_hanley_logo,
-    alias: "tiegehanley",
+    brand_identifier: "tiegehanley",
     category: "Grooming & Hygiene",
     founding_date: "2016-05-21",
     about: Faker::Lorem.paragraphs(4..7).join(" "),
@@ -190,21 +197,24 @@ Brand.create!(
     snapchat_link: "",
     tiktok_link: ""
   )
+
+b_tiege.logo.attach(tiege_hanley_blob)
+
 puts "Tiege Hanley created!"
 
 
 # ### Jose Zuniga
 esntls_logo = "esntls_logo_bg_white.png"
-esntls_logo_file_path = File.new(Rails.root.join(logo_path, esntls_logo))
-uploaded_esntls_logo = logo_uploader.upload(esntls_logo_file_path)
+esntls_logo_file_path = File.open(Rails.root.join(logo_path, esntls_logo))
+esntls_blob = {io: esntls_logo_file_path, filename: esntls_logo, content_type: "image/png"}
+# uploaded_esntls_logo = logo_uploader.upload(esntls_logo_file_path)
 
 jzuniga_esntls = "ESNTLS"
-Brand.create!(
+b_esntls = Brand.create!(
     user_id: 7,
     account_id: Account.find_by(name: jzuniga_esntls).id,
     name: jzuniga_esntls,
-    brand_logo_data: uploaded_esntls_logo,
-    alias: "esntls",
+    brand_identifier: "esntls",
     category: "Clothing & Accessories",
     founding_date: "2017-05-21",
     about: Faker::Lorem.paragraphs(4..7).join(" "),
@@ -227,15 +237,23 @@ Brand.create!(
     snapchat_link: "",
     tiktok_link: ""
   )
+
+b_esntls.logo.attach(esntls_blob)
+
 puts "ESNTLS created!"
 
+
+
+jade_black_logo = "jade_black.png"
+jade_black_logo_file_path = File.open(Rails.root.join(logo_path, jade_black_logo))
+jade_black_blob = {io: jade_black_logo_file_path, filename: jade_black_logo, content_type: "image/png"}
+
 jzuniga_jb = "Jade Black"
-Brand.create!(
+b_jade_black = Brand.create!(
     user_id: 7,
     account_id: Account.find_by(name: jzuniga_jb).id,
     name: jzuniga_jb,
-    brand_logo_data: {},
-    alias: "jadeblack",
+    brand_identifier: "jadeblack",
     category: "Clothing & Accessories",
     founding_date: "2017-05-21",
     about: Faker::Lorem.paragraphs(4..7).join(" "),
@@ -258,22 +276,25 @@ Brand.create!(
     snapchat_link: "",
     tiktok_link: ""
   )
+
+b_jade_black.logo.attach(jade_black_blob)
+
 puts "Jade Black created!"
 
 
 
 # ### Kylie Jenner
 kylie_skin_logo = "kylie-skin-logo.jpg"
-kylie_skin_logo_file_path = File.new(Rails.root.join(logo_path, kylie_skin_logo))
-uploaded_kylie_skin_logo = logo_uploader.upload(kylie_skin_logo_file_path)
+kylie_skin_logo_file_path = File.open(Rails.root.join(logo_path, kylie_skin_logo))
+kylie_skin_blob = {io: kylie_skin_logo_file_path, filename: kylie_skin_logo, content_type: "image/jpg"}
+# uploaded_kylie_skin_logo = logo_uploader.upload(kylie_skin_logo_file_path)
 
 kjenner_ks = "Kylie Skin"
-Brand.create!(
+b_kylieskin = Brand.create!(
     user_id: 8,
     account_id: Account.find_by(name: kjenner_ks).id,
     name: kjenner_ks,
-    brand_logo_data: uploaded_kylie_skin_logo,
-    alias: "kylieskin",
+    brand_identifier: "kylieskin",
     category: "Beauty & Hygiene",
     founding_date: "2014-05-21",
     about: Faker::Lorem.paragraphs(4..7).join(" "),
@@ -296,6 +317,9 @@ Brand.create!(
     snapchat_link: "",
     tiktok_link: ""
   )
+
+b_kylieskin.logo.attach(kylie_skin_blob)
+
 puts "Kylie Skin created!"
 
 

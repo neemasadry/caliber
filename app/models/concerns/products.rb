@@ -9,6 +9,7 @@ module Products
     belongs_to :user
     belongs_to :brand
 
+    has_many_attached :images
 
     has_many :reviews, as: :reviewable, dependent: :destroy
     has_many :collectable_items
@@ -41,7 +42,7 @@ module Products
     {
       name: name,
       brand: brand.name,
-      type: type,
+      type_of: type_of,
       primary_color: primary_color
     }
   end

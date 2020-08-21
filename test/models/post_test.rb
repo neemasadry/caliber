@@ -10,12 +10,10 @@
 #  cached_weighted_average :float            default(0.0)
 #  cached_weighted_score   :integer          default(0)
 #  cached_weighted_total   :integer          default(0)
-#  content                 :string(240)      not null
+#  content                 :text             not null
 #  discarded_at            :datetime
 #  favoritable_score       :text
 #  favoritable_total       :text
-#  post_image_data         :text
-#  post_video_data         :text
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null
 #  account_id              :bigint           not null

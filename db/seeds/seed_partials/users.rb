@@ -15,14 +15,15 @@ user_ninja3487 = User.create!(
 	first_name: "Amin",
 	last_name: "Yrdas",
 	username: "Amin3487",
-	gender: "male",
-	state_code: "MI",
+	gender: "Male",
 	country_code: "US",
 	time_zone: "Eastern Time (US & Canada)",
 	date_of_birth: "1995-03-14",
 	admin: false,
 	moderator: false,
-	terms_of_service: true).avatar.attach(ninja3487_blob)
+	terms_of_service: true)
+
+	user_ninja3487.avatar.attach(ninja3487_blob)
 puts "ninja3487 created!\n"
 
 
@@ -34,14 +35,15 @@ user_snake117 = User.create!(
 	first_name: "Neema",
 	last_name: "Sadry",
 	username: "snake117",
-	gender: "male",
-	state_code: "MI",
+	gender: "Male",
 	country_code: "US",
 	time_zone: "Eastern Time (US & Canada)",
 	date_of_birth: "1991-07-01",
 	admin: true,
 	moderator: false,
-	terms_of_service: true).avatar.attach(snake117_blob)
+	terms_of_service: true)
+
+	user_snake117.avatar.attach(snake117_blob)
 
 puts "snake117 created!\n"
 
@@ -55,14 +57,15 @@ user_acosta = User.create!(
 	first_name: "Alex",
 	last_name: "Costa",
 	username: "AlexCosta",
-	gender: "male",
-	state_code: "CA",
+	gender: "Male",
 	country_code: "US",
 	time_zone: "Pacific Time (US & Canada)",
 	date_of_birth: "1987-10-15",
 	admin: false,
 	moderator: false,
-	terms_of_service: true).avatar.attach(acosta_blob)
+	terms_of_service: true)
+
+	user_acosta.avatar.attach(acosta_blob)
 
 puts "alexcosta created!\n"
 
@@ -76,14 +79,15 @@ user_sgomez = User.create!(
 	first_name: "Selena",
 	last_name: "Gomez",
 	username: "selenagomez",
-	gender: "female",
-	state_code: "CA",
+	gender: "Female",
 	country_code: "US",
 	time_zone: "Pacific Time (US & Canada)",
 	date_of_birth: "1994-07-26",
 	admin: false,
 	moderator: false,
-	terms_of_service: true).avatar.attach(sgomez_blob)
+	terms_of_service: true)
+
+	user_sgomez.avatar.attach(sgomez_blob)
 
 puts "selenagomez created!\n"
 
@@ -97,14 +101,15 @@ user_amarino = User.create!(
 	first_name: "Aaron",
 	last_name: "Marino",
 	username: "alpham",
-	gender: "male",
-	state_code: "NY",
+	gender: "Male",
 	country_code: "US",
 	time_zone: "Eastern Time (US & Canada)",
 	date_of_birth: "1977-12-23",
 	admin: false,
 	moderator: false,
-	terms_of_service: true).avatar.attach(amarino_blob)
+	terms_of_service: true)
+
+	user_amarino.avatar.attach(amarino_blob)
 
 puts "amarino created!\n"
 
@@ -118,18 +123,17 @@ user_tswift = User.create!(
 	first_name: "Taylor",
 	last_name: "Swift",
 	username: "taylorswift",
-	gender: "female",
-	state_code: "VA",
+	gender: "Female",
 	country_code: "US",
 	time_zone: "Pacific Time (US & Canada)",
 	date_of_birth: "1989-12-23",
 	admin: false,
 	moderator: false,
-	terms_of_service: true).avatar.attach(tswift_blob)
+	terms_of_service: true)
+
+	user_tswift.avatar.attach(tswift_blob)
 
 puts "taylorswift created!\n"
-
-
 
 
 
@@ -142,14 +146,15 @@ user_jzuniga = User.create!(
 	first_name: "Jose",
 	last_name: "Zuniga",
 	username: "josezuniga",
-	gender: "male",
-	state_code: "TX",
+	gender: "Male",
 	country_code: "US",
 	time_zone: "Pacific Time (US & Canada)",
 	date_of_birth: "1995-06-23",
 	admin: false,
 	moderator: false,
-	terms_of_service: true).avatar.attach(jzuniga_blob)
+	terms_of_service: true)
+
+	user_jzuniga.avatar.attach(jzuniga_blob)
 
 puts "josezuniga created!\n"
 
@@ -163,14 +168,15 @@ user_kjenner = User.create!(
 	first_name: "Kylie",
 	last_name: "Jenner",
 	username: "kyliejenner",
-	gender: "female",
-	state_code: "CA",
+	gender: "Female",
 	country_code: "US",
 	time_zone: "Eastern Time (US & Canada)",
 	date_of_birth: "1995-06-23",
 	admin: false,
 	moderator: false,
-	terms_of_service: true).avatar.attach(kjenner_blob)
+	terms_of_service: true)
+
+	user_kjenner.avatar.attach(kjenner_blob)
 
 puts "kyliejenner created!\n"
 ### USERS END ###
@@ -192,7 +198,7 @@ collection_groups = [ "Accessory", "Bottom", "Cosmetic", "Dress", "Fragrance", "
 
 users.each do |user|
   collection_groups.each do |collection_group|
-    next  if user.gender == "male" && collection_group == "Dress"
+    next if user.gender == "Male" && collection_group == "Dress"
 
     user.collections.find_or_create_by(collection_type: collection_group)
     puts "#{collection_group} has been created for #{user.username}"

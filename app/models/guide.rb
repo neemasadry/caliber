@@ -14,7 +14,6 @@
 #  discarded_at            :datetime
 #  favoritable_score       :text
 #  favoritable_total       :text
-#  guide_image_data        :text
 #  slug                    :string
 #  subcategory_one         :string(30)
 #  subcategory_two         :string(30)

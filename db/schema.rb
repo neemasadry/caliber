@@ -180,14 +180,13 @@ ActiveRecord::Schema.define(version: 2020_08_13_181235) do
     t.bigint "user_id", null: false
     t.bigint "account_id", null: false
     t.string "name", limit: 150, null: false
-    t.string "alias", limit: 50, null: false
+    t.string "brand_identifier", limit: 60, null: false
     t.string "category", limit: 100, null: false
     t.integer "price_range", null: false
     t.date "founding_date", null: false
     t.string "mission", limit: 125, null: false
     t.text "about", null: false
     t.text "story", null: false
-    t.jsonb "brand_logo_data"
     t.string "email", limit: 100, null: false
     t.string "phone", limit: 20
     t.string "address1", limit: 100, null: false
@@ -218,7 +217,7 @@ ActiveRecord::Schema.define(version: 2020_08_13_181235) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["account_id"], name: "index_brands_on_account_id"
-    t.index ["alias"], name: "index_brands_on_alias", unique: true
+    t.index ["brand_identifier"], name: "index_brands_on_brand_identifier", unique: true
     t.index ["discarded_at"], name: "index_brands_on_discarded_at"
     t.index ["name"], name: "index_brands_on_name"
     t.index ["slug"], name: "index_brands_on_slug", unique: true
@@ -448,7 +447,6 @@ ActiveRecord::Schema.define(version: 2020_08_13_181235) do
     t.string "category", limit: 30, null: false
     t.string "subcategory_one", limit: 30
     t.string "subcategory_two", limit: 30
-    t.text "guide_image_data"
     t.string "slug"
     t.datetime "discarded_at"
     t.integer "cached_votes_total", default: 0
@@ -600,9 +598,7 @@ ActiveRecord::Schema.define(version: 2020_08_13_181235) do
     t.bigint "user_id", null: false
     t.bigint "account_id", null: false
     t.bigint "brand_id"
-    t.string "content", limit: 240, null: false
-    t.text "post_image_data"
-    t.text "post_video_data"
+    t.text "content", null: false
     t.datetime "discarded_at"
     t.integer "cached_votes_total", default: 0
     t.integer "cached_votes_score", default: 0
@@ -619,19 +615,6 @@ ActiveRecord::Schema.define(version: 2020_08_13_181235) do
     t.index ["brand_id"], name: "index_posts_on_brand_id"
     t.index ["discarded_at"], name: "index_posts_on_discarded_at"
     t.index ["user_id"], name: "index_posts_on_user_id"
-  end
-
-  create_table "product_images", force: :cascade do |t|
-    t.string "product_imageable_type", null: false
-    t.bigint "product_imageable_id", null: false
-    t.bigint "user_id", null: false
-    t.bigint "brand_id", null: false
-    t.text "product_image_data", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["brand_id"], name: "index_product_images_on_brand_id"
-    t.index ["product_imageable_type", "product_imageable_id"], name: "index_for_product_imageable"
-    t.index ["user_id"], name: "index_product_images_on_user_id"
   end
 
   create_table "reviews", force: :cascade do |t|
@@ -799,7 +782,6 @@ ActiveRecord::Schema.define(version: 2020_08_13_181235) do
     t.integer "invitations_count", default: 0
     t.string "preferred_language"
     t.string "username", null: false
-    t.text "avatar_image_data"
     t.date "date_of_birth", null: false
     t.string "gender", null: false
     t.string "country_code", null: false
@@ -890,8 +872,6 @@ ActiveRecord::Schema.define(version: 2020_08_13_181235) do
   add_foreign_key "posts", "accounts"
   add_foreign_key "posts", "brands"
   add_foreign_key "posts", "users"
-  add_foreign_key "product_images", "brands"
-  add_foreign_key "product_images", "users"
   add_foreign_key "reviews", "users"
   add_foreign_key "shoes", "brands"
   add_foreign_key "shoes", "users"

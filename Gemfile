@@ -99,6 +99,7 @@ end
 # App specific gems
 gem 'simple_discussion', '~> 1.2'
 
+gem 'aws-sdk', '~> 3.0', '>= 3.0.1'
 gem 'pundit', '~> 2.1'
 gem 'faraday', '~> 1.0', '>= 1.0.1'
 gem 'measured-rails', '~> 2.5', '>= 2.5.2'

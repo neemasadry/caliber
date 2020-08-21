@@ -7,7 +7,6 @@
 #  accepted_terms_at       :datetime
 #  admin                   :boolean          default(FALSE)
 #  announcements_read_at   :datetime
-#  avatar_image_data       :text
 #  cached_votes_down       :integer          default(0)
 #  cached_votes_score      :integer          default(0)
 #  cached_votes_total      :integer          default(0)

@@ -8,7 +8,7 @@ class CreateCosmetics < ActiveRecord::Migration[6.0]
       t.string  :name, null: false, limit: 100
       t.text    :description, null: false, limit: 3000
       t.decimal :retail_price, null: false, precision: 10, scale: 2
-      t.string  :type, null: false, limit: 80
+      t.string  :type_of, null: false, limit: 80
       t.string  :gender, null: false, limit: 6
       t.text    :ingredients, null: true, limit: 5000
       t.text    :product_url, null: true

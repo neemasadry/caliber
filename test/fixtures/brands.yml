@@ -6,8 +6,7 @@
 #  about                   :text             not null
 #  address1                :string(100)      not null
 #  address2                :string(100)
-#  alias                   :string(50)       not null
-#  brand_logo_data         :jsonb
+#  brand_identifier        :string(60)       not null
 #  cached_votes_down       :integer          default(0)
 #  cached_votes_score      :integer          default(0)
 #  cached_votes_total      :integer          default(0)
@@ -46,12 +45,12 @@
 #
 # Indexes
 #
-#  index_brands_on_account_id    (account_id)
-#  index_brands_on_alias         (alias) UNIQUE
-#  index_brands_on_discarded_at  (discarded_at)
-#  index_brands_on_name          (name)
-#  index_brands_on_slug          (slug) UNIQUE
-#  index_brands_on_user_id       (user_id)
+#  index_brands_on_account_id        (account_id)
+#  index_brands_on_brand_identifier  (brand_identifier) UNIQUE
+#  index_brands_on_discarded_at      (discarded_at)
+#  index_brands_on_name              (name)
+#  index_brands_on_slug              (slug) UNIQUE
+#  index_brands_on_user_id           (user_id)
 #
 # Foreign Keys
 #

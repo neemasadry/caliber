@@ -116,7 +116,7 @@ class ShoesController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def shoe_params
-    params.require(:shoe).permit(:user_id, :brand_id, :name, :description, :retail_price, :type, :gender, :materials, :primary_color, :secondary_color, :product_url)
+    params.require(:shoe).permit(:user_id, :brand_id, :name, :description, :retail_price, :type_of, :gender, :materials, :primary_color, :secondary_color, :product_url)
   end
 
   def set_user_on_personal_account

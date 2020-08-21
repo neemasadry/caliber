@@ -116,7 +116,7 @@ class FragrancesController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def fragrance_params
-    params.require(:fragrance).permit(:user_id, :brand_id, :name, :description, :retail_price, :type, :release_date, :gender, :ingredients, :top_notes, :middle_notes, :base_notes, :accords, :product_url)
+    params.require(:fragrance).permit(:user_id, :brand_id, :name, :description, :retail_price, :type_of, :release_date, :gender, :ingredients, :top_notes, :middle_notes, :base_notes, :accords, :product_url)
   end
 
   def set_user_on_personal_account
