@@ -30,5 +30,8 @@ module CaliberRevised
 
     # Use default language as fallback if translation is missing
     config.i18n.fallbacks = true
+
+    # Set :image_processing to use either :mini_magick or :vips (for faster processing, user :vips)
+    config.active_storage.variant_processor = :mini_magick
   end
 end
