@@ -10,6 +10,12 @@ class AccessoriesController < ApplicationController
     # We explicitly load the records to avoid triggering multiple DB calls in the views when checking if records exist and iterating over them.
     # Calling @accessories.any? in the view will use the loaded records to check existence instead of making an extra DB call.
     authorize @accessories.load
+
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json { render json: @accessories.select_collection }
+    end
+
   end
 
   # GET /accessories/1
@@ -128,7 +134,7 @@ class AccessoriesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def accessory_params
-      params.require(:accessory).permit(:user_id, :brand_id, :name, :description, :retail_price, :type_of, :gender, :materials, :primary_color, :secondary_color, :product_url)
+      params.require(:accessory).permit(:user_id, :brand_id, :name, :description, :retail_price, :type_of, :body_part, :gender, :materials, :primary_color, :secondary_color, :product_url)
     end
 
     def set_user_on_personal_account

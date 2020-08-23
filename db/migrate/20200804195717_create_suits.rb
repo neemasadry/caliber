@@ -1,26 +1,37 @@
-class CreateFragrances < ActiveRecord::Migration[6.0]
+# Original timestamp: 20200823194527
+class CreateSuits < ActiveRecord::Migration[6.0]
   def change
-    create_table :fragrances do |t|
+    create_table :suits do |t|
       t.references :user, null: false, foreign_key: true
       t.references :account, null: false, foreign_key: true
       t.references :brand, null: false, foreign_key: true
+      t.references :top, null: false, foreign_key: true
+      t.references :bottom, null: false, foreign_key: true
 
+      # General product characteristics
       t.string  :name, null: false, limit: 100
       t.text    :description, null: false, limit: 3000
       t.decimal :retail_price, null: false, precision: 10, scale: 2
-      t.date    :release_date
-      # t.string  :type_of, null: false, limit: 80
       t.string  :gender, null: false, limit: 6
-      t.text    :ingredients, null: true, limit: 5000
-      t.string  :top_notes, limit: 150
-      t.string  :middle_notes, limit: 150
-      t.string  :base_notes, limit: 150
-      t.string  :accords, limit: 150
+      t.text    :materials, null: true, limit: 5000
+      t.string  :primary_color, null: false, limit: 30
+      t.string  :secondary_color, null: true, limit: 30
       t.text    :product_url, null: true
 
+      # Suit-specific characteristics
+      t.string :jacket_breasted_style
+      t.integer :jacket_number_of_buttons
+      t.string :jacket_lapel_style
+      t.string :jacket_pocket_style
+      t.boolean :jacket_ticket_pocket
+      t.string :jacket_vents_style
+      t.string :jacket_sleeve_buttons
+      t.string :trouser_waistband_style
+      t.string :trouser_pleats
+      t.string :trouser_cuff
+
       # Categorization
-      t.string  :seasons, null: false, limit: 75
-      t.string  :occassions, null: false, limit: 240
+      t.string  :body_part, null: false, limit: 50
       t.string  :category, null: false, limit: 75
       t.string  :subcategory, null: false, limit: 75
 

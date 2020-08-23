@@ -28,13 +28,19 @@ module Products
     validates :description, presence: true, length: { maximum: 3000 }
     validates :retail_price, presence: true, numericality: { greater_than: 0, less_than: 1000000 }
     validates :type_of, presence: true, if: :has_type_of?
+    validates :body_part, presence: true, inclusion: { in: ["Crown", "Eyes", "Ears", "Neck", "Arm", "Forearm", "Hands", "Finger", "Back", "Chest", "Abdomen", "Waist", "Legs", "Feet", "Not on Body" ] }
     validates :gender, presence: true, length: { maximum: 6 }, unless: :has_gender?
     validates :materials, presence: true, length: { minimum: 3, maximum: 150 }, if: :has_material_or_colors?
     validates :ingredients, presence: true, length: { minimum: 3, maximum: 3000 }, if: :has_ingredients?
     validates :primary_color, presence: true, length: { minimum: 2, maximum: 30 }, if: :has_material_or_colors?
     validates :secondary_color, presence: false, length: { minimum: 2, maximum: 30 }, if: :has_material_or_colors?
 
+    # Searchkick specific scope
     scope :search_import, -> { includes(:brand) }
+
+    # Custom scopes
+    scope :body_part_matches_type_of, -> { where(body_part: "Eyes") }
+    scope :select_collection, -> { body_part_matches_type_of.map { |product| [product.name, product.id, { url: Rails.application.routes.url_helpers.polymorphic_path(product) } ] } }
 
   end # included
 

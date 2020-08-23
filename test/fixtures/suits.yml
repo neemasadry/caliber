@@ -1,0 +1,51 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  account: one
+  brand: one
+  top: one
+  bottom: one
+  name: MyString
+  description: MyText
+  retail_price: 9.99
+  gender: MyString
+  materials: MyText
+  primary_color: MyString
+  secondary_color: MyString
+  product_url: MyText
+  jacket_breasted_style: MyString
+  jacket_number_of_buttons: 1
+  jacket_lapel_style: MyString
+  jacket_pocket_style: MyString
+  jacket_ticket_pocket: false
+  jacket_vents_style: MyString
+  jacket_sleeve_buttons: MyString
+  trouser_waistband_style: MyString
+  trouser_pleats: MyString
+  trouser_cuff: MyString
+
+two:
+  user: two
+  account: two
+  brand: two
+  top: two
+  bottom: two
+  name: MyString
+  description: MyText
+  retail_price: 9.99
+  gender: MyString
+  materials: MyText
+  primary_color: MyString
+  secondary_color: MyString
+  product_url: MyText
+  jacket_breasted_style: MyString
+  jacket_number_of_buttons: 1
+  jacket_lapel_style: MyString
+  jacket_pocket_style: MyString
+  jacket_ticket_pocket: false
+  jacket_vents_style: MyString
+  jacket_sleeve_buttons: MyString
+  trouser_waistband_style: MyString
+  trouser_pleats: MyString
+  trouser_cuff: MyString

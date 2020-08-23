@@ -20,6 +20,7 @@ csv.each do |row|
   t.description = row['description']
   t.retail_price = row['retail_price']
   t.type_of = row['type_of']
+  t.body_part = "Eyes"
   t.gender = "Male"
   t.materials = row['material']
   t.primary_color = "N/A"
@@ -27,9 +28,8 @@ csv.each do |row|
   t.product_url = row['url']
   t.user_id = user_entry.id
 
-  puts "\n\n"
-  puts "\t --- Begin: Upload associated product images ---"
-  puts "\n\n"
+  # puts "\n"
+  # puts "\t --- Begin: Upload associated product images ---\n"
 
   image1_path = File.open(Rails.root.join('db', 'seeds', 'Jade_Black', 'Mens', 'Jade-Black-(Images-and-Files)---2020-03-28T163728Z', row['image1_filename']))
   image2_path = File.open(Rails.root.join('db', 'seeds', 'Jade_Black', 'Mens', 'Jade-Black-(Images-and-Files)---2020-03-28T163728Z', row['image2_filename']))
@@ -47,14 +47,13 @@ csv.each do |row|
   # ### End: ActiveStorage ###
 
 
-  puts "\n\n"
-  puts "\t --- End: Upload associated product images ---"
-  puts "\n\n"
+  # puts "\n"
+  # puts "\t --- End: Upload associated product images ---\n"
 
   if t.save!
-    puts "#{counter} - #{t.name} created!"
+    puts "#{counter} - #{t.name} created!\n"
   else
-    puts "#{counter} - An error occured."
+    puts "#{counter} - An error occured.\n"
   end
 
   counter += 1 # Keep track of how many products added and/or left to create (25 objects total)

@@ -1,0 +1,93 @@
+<div class="container mx-auto my-8 px-4">
+  <div class="flex justify-between items-center mb-4">
+    <h1 class="h3">Suits</h1>
+
+    <% if @suits.any? %>
+      <%= link_to 'New Suit', new_suit_path, class: "btn btn-primary" %>
+    <% end %>
+  </div>
+
+  <% if @suits.any? %>
+    <div class="bg-white rounded shadow table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @suits, :user_id, 'User', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @suits, :account_id, 'Account', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @suits, :brand_id, 'Brand', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @suits, :top_id, 'Top', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @suits, :bottom_id, 'Bottom', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @suits, :name, 'Name', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @suits, :description, 'Description', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @suits, :retail_price, 'Retail price', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @suits, :gender, 'Gender', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @suits, :materials, 'Materials', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @suits, :primary_color, 'Primary color', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @suits, :secondary_color, 'Secondary color', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @suits, :product_url, 'Product url', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @suits, :jacket_breasted_style, 'Jacket breasted style', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @suits, :jacket_number_of_buttons, 'Jacket number of buttons', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @suits, :jacket_lapel_style, 'Jacket lapel style', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @suits, :jacket_pocket_style, 'Jacket pocket style', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @suits, :jacket_ticket_pocket, 'Jacket ticket pocket', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @suits, :jacket_vents_style, 'Jacket vents style', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @suits, :jacket_sleeve_buttons, 'Jacket sleeve buttons', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @suits, :trouser_waistband_style, 'Trouser waistband style', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @suits, :trouser_pleats, 'Trouser pleats', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @suits, :trouser_cuff, 'Trouser cuff', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs text-gray-700 w-20">Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+        <% @suits.each do |suit| %>
+          <tr class="group border-t border-gray-400 hover:bg-gray-100">
+                      <td class="p-3"><%= suit.user_id %></td>
+                      <td class="p-3"><%= suit.account_id %></td>
+                      <td class="p-3"><%= suit.brand_id %></td>
+                      <td class="p-3"><%= suit.top_id %></td>
+                      <td class="p-3"><%= suit.bottom_id %></td>
+                      <td class="p-3"><%= suit.name %></td>
+                      <td class="p-3"><%= suit.description %></td>
+                      <td class="p-3"><%= suit.retail_price %></td>
+                      <td class="p-3"><%= suit.gender %></td>
+                      <td class="p-3"><%= suit.materials %></td>
+                      <td class="p-3"><%= suit.primary_color %></td>
+                      <td class="p-3"><%= suit.secondary_color %></td>
+                      <td class="p-3"><%= suit.product_url %></td>
+                      <td class="p-3"><%= suit.jacket_breasted_style %></td>
+                      <td class="p-3"><%= suit.jacket_number_of_buttons %></td>
+                      <td class="p-3"><%= suit.jacket_lapel_style %></td>
+                      <td class="p-3"><%= suit.jacket_pocket_style %></td>
+                      <td class="p-3"><%= suit.jacket_ticket_pocket %></td>
+                      <td class="p-3"><%= suit.jacket_vents_style %></td>
+                      <td class="p-3"><%= suit.jacket_sleeve_buttons %></td>
+                      <td class="p-3"><%= suit.trouser_waistband_style %></td>
+                      <td class="p-3"><%= suit.trouser_pleats %></td>
+                      <td class="p-3"><%= suit.trouser_cuff %></td>
+          
+            <td>
+              <%= link_to "View", suit, class: "btn btn-link no-underline" %>
+            </td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <% if @pagy.pages > 1 %>
+      <div class="text-center my-6">
+        <%== pagy_nav(@pagy) %>
+      </div>
+    <% end %>
+
+  <% else %>
+    <div class="bg-white rounded shadow flex flex-col items-center justify-between p-8 lg:flex-row">
+      <%= image_tag "empty.svg", class: "mb-4 lg:w-1/2" %>
+      <div class="flex-1 text-center">
+        <p class="h3 mb-4">Create your first Suit</p>
+        <%= link_to 'New Suit', new_suit_path, class: "btn btn-primary" %>
+      </div>
+    </div>
+  <% end %>
+</div>

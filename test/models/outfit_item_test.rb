@@ -2,13 +2,14 @@
 #
 # Table name: outfit_items
 #
-#  id               :bigint           not null, primary key
-#  body_part        :string(50)       not null
-#  productable_type :string           not null
-#  created_at       :datetime         not null
-#  updated_at       :datetime         not null
-#  outfit_id        :bigint           not null
-#  productable_id   :bigint           not null
+#  id                 :bigint           not null, primary key
+#  body_part          :string(75)       not null
+#  body_part_location :string(75)       not null
+#  productable_type   :string           not null
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#  outfit_id          :bigint           not null
+#  productable_id     :bigint           not null
 #
 # Indexes
 #

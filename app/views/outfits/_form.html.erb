@@ -49,26 +49,9 @@
   </div>
 
   <hr class="mb-3">
-
   <h3>Outfit Items</h3>
-  <div data-controller="nested-form">
-    <template data-target="nested-form.template">
-      <%= form.fields_for :outfit_items, OutfitItem.new, child_index: "NEW_RECORD" do |item| %>
-        <%= render "outfit_item_fields", form: item %>
-      <% end %>
-    </template>
 
-    <%= form.fields_for :outfit_items do |item| %>
-      <%= render "outfit_item_fields", form: item %>
-    <% end %>
 
-    <div data-target="nested-form.add_link">
-      <%= link_to "#", data: { action: "click->nested-form#add_association" }, class: "btn btn-small btn-primary outline" do %>
-        <%= fa_icon("fal fa-plus-circle", class: "mr-2") %>
-        Add Item
-      <% end %>
-    </div>
-  </div>
 
   <hr class="mt-6 mb-3">
 

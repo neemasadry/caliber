@@ -3,6 +3,7 @@
 # Table name: bottoms
 #
 #  id                      :bigint           not null, primary key
+#  body_part               :string(50)
 #  cached_votes_down       :integer          default(0)
 #  cached_votes_score      :integer          default(0)
 #  cached_votes_total      :integer          default(0)

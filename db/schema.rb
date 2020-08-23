@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_13_181235) do
+ActiveRecord::Schema.define(version: 2020_08_23_164844) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(version: 2020_08_13_181235) do
     t.text "favoritable_total"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "body_part", limit: 50
     t.index ["brand_id"], name: "index_accessories_on_brand_id"
     t.index ["slug"], name: "index_accessories_on_slug", unique: true
     t.index ["user_id"], name: "index_accessories_on_user_id"
@@ -171,6 +172,7 @@ ActiveRecord::Schema.define(version: 2020_08_13_181235) do
     t.text "favoritable_total"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "body_part", limit: 50
     t.index ["brand_id"], name: "index_bottoms_on_brand_id"
     t.index ["slug"], name: "index_bottoms_on_slug", unique: true
     t.index ["user_id"], name: "index_bottoms_on_user_id"
@@ -345,6 +347,7 @@ ActiveRecord::Schema.define(version: 2020_08_13_181235) do
     t.text "favoritable_total"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "body_part", limit: 50
     t.index ["brand_id"], name: "index_cosmetics_on_brand_id"
     t.index ["slug"], name: "index_cosmetics_on_slug", unique: true
     t.index ["user_id"], name: "index_cosmetics_on_user_id"
@@ -374,6 +377,7 @@ ActiveRecord::Schema.define(version: 2020_08_13_181235) do
     t.text "favoritable_total"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "body_part", limit: 50
     t.index ["brand_id"], name: "index_dresses_on_brand_id"
     t.index ["slug"], name: "index_dresses_on_slug", unique: true
     t.index ["user_id"], name: "index_dresses_on_user_id"
@@ -423,6 +427,7 @@ ActiveRecord::Schema.define(version: 2020_08_13_181235) do
     t.text "favoritable_total"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "body_part", limit: 50
     t.index ["brand_id"], name: "index_fragrances_on_brand_id"
     t.index ["slug"], name: "index_fragrances_on_slug", unique: true
     t.index ["user_id"], name: "index_fragrances_on_user_id"
@@ -491,6 +496,7 @@ ActiveRecord::Schema.define(version: 2020_08_13_181235) do
     t.text "favoritable_total"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "body_part", limit: 50
     t.index ["brand_id"], name: "index_jewelries_on_brand_id"
     t.index ["slug"], name: "index_jewelries_on_slug", unique: true
     t.index ["user_id"], name: "index_jewelries_on_user_id"
@@ -514,7 +520,8 @@ ActiveRecord::Schema.define(version: 2020_08_13_181235) do
     t.bigint "outfit_id", null: false
     t.string "productable_type", null: false
     t.bigint "productable_id", null: false
-    t.string "body_part", limit: 50, null: false
+    t.string "body_part", limit: 75, null: false
+    t.string "body_part_location", limit: 75, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["outfit_id"], name: "index_outfit_items_on_outfit_id"
@@ -669,6 +676,7 @@ ActiveRecord::Schema.define(version: 2020_08_13_181235) do
     t.text "favoritable_total"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "body_part", limit: 50
     t.index ["brand_id"], name: "index_shoes_on_brand_id"
     t.index ["slug"], name: "index_shoes_on_slug", unique: true
     t.index ["user_id"], name: "index_shoes_on_user_id"
@@ -725,6 +733,7 @@ ActiveRecord::Schema.define(version: 2020_08_13_181235) do
     t.text "favoritable_total"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "body_part", limit: 50
     t.index ["brand_id"], name: "index_tops_on_brand_id"
     t.index ["slug"], name: "index_tops_on_slug", unique: true
     t.index ["user_id"], name: "index_tops_on_user_id"

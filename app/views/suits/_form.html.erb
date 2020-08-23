@@ -1,0 +1,126 @@
+<%= form_with(model: suit) do |form| %>
+  <%= render "shared/error_messages", resource: form.object %>
+
+  <div class="form-group">
+    <%= form.label :user_id %>
+    <%= form.text_field :user_id, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :account_id %>
+    <%= form.text_field :account_id, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :brand_id %>
+    <%= form.text_field :brand_id, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :top_id %>
+    <%= form.text_field :top_id, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :bottom_id %>
+    <%= form.text_field :bottom_id, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :name %>
+    <%= form.text_field :name, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :description %>
+    <%= form.text_area :description, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :retail_price %>
+    <%= form.text_field :retail_price, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :gender %>
+    <%= form.text_field :gender, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :materials %>
+    <%= form.text_area :materials, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :primary_color %>
+    <%= form.text_field :primary_color, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :secondary_color %>
+    <%= form.text_field :secondary_color, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :product_url %>
+    <%= form.text_area :product_url, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :jacket_breasted_style %>
+    <%= form.text_field :jacket_breasted_style, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :jacket_number_of_buttons %>
+    <%= form.number_field :jacket_number_of_buttons, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :jacket_lapel_style %>
+    <%= form.text_field :jacket_lapel_style, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :jacket_pocket_style %>
+    <%= form.text_field :jacket_pocket_style, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :jacket_ticket_pocket %>
+    <%= form.check_box :jacket_ticket_pocket, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :jacket_vents_style %>
+    <%= form.text_field :jacket_vents_style, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :jacket_sleeve_buttons %>
+    <%= form.text_field :jacket_sleeve_buttons, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :trouser_waistband_style %>
+    <%= form.text_field :trouser_waistband_style, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :trouser_pleats %>
+    <%= form.text_field :trouser_pleats, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :trouser_cuff %>
+    <%= form.text_field :trouser_cuff, class: "form-control" %>
+  </div>
+
+  <div class="form-group flex justify-between">
+    <%= form.button class: "btn btn-primary" %>
+
+    <% if form.object.persisted? %>
+      <%= link_to 'Delete', form.object, class: "btn btn-danger outline", method: :delete, data: { remote: true, confirm: "Are you sure?" } %>
+    <% end %>
+  </div>
+<% end %>

@@ -7,12 +7,16 @@ class CreateAccessories < ActiveRecord::Migration[6.0]
       t.string  :name, null: false, limit: 100
       t.text    :description, null: false, limit: 3000
       t.decimal :retail_price, null: false, precision: 10, scale: 2
-      t.string  :type_of, null: false, limit: 80
       t.string  :gender, null: false, limit: 6
       t.text    :materials, null: true, limit: 5000
       t.string  :primary_color, null: false, limit: 30
       t.string  :secondary_color, null: true, limit: 30
       t.text    :product_url, null: true
+
+      # Categorization
+      t.string  :body_part, null: false, limit: 50
+      t.string  :category, null: false, limit: 75
+      t.string  :subcategory, null: false, limit: 75
 
       # Slug for FriendlyID
       t.string :slug, index: { unique: true }

@@ -5,6 +5,7 @@
 #  id                      :bigint           not null, primary key
 #  accords                 :string(150)
 #  base_notes              :string(150)
+#  body_part               :string(50)
 #  cached_votes_down       :integer          default(0)
 #  cached_votes_score      :integer          default(0)
 #  cached_votes_total      :integer          default(0)
