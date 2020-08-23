@@ -253,7 +253,8 @@
                 <%= content_tag :li, role: :option do %>
                   <%= link_to user_profile_path(user), data: { "autocomplete-value": user.id }, class: "-m-3 p-3 flex items-start space-x-4 rounded-lg hover:bg-gray-100 transition ease-in-out duration-150" do %>
                     <%= fa_icon("fal fa-level-up fa-rotate-90", class: "my-auto mr-2 text-gray-600") %>
-                    <%= image_tag(user.avatar_image_url, width: 50, height: 50, crop: :fit) %>
+                    <%#= image_tag(user.avatar_image_url, width: 50, height: 50, crop: :fit) %>
+                    <%= image_tag(user.avatar, size: "50x50") %>
                     <div class="space-y-1">
                       <p class="text-base leading-6 font-medium text-gray-900">
                         <%= user.username %>
