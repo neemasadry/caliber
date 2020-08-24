@@ -5,7 +5,8 @@ class CreateOutfitItems < ActiveRecord::Migration[6.0]
       t.references :productable, polymorphic: true, null: false
 
       t.string :body_part, null: false, limit: 75
-      t.string :body_part_location, null: false, limit: 75
+      t.string :category, null: false, limit: 75
+      t.string :subcategory, null: false, limit: 75
 
       t.timestamps
     end

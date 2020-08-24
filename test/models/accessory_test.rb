@@ -3,7 +3,7 @@
 # Table name: accessories
 #
 #  id                      :bigint           not null, primary key
-#  body_part               :string(50)
+#  body_part               :string(50)       not null
 #  cached_votes_down       :integer          default(0)
 #  cached_votes_score      :integer          default(0)
 #  cached_votes_total      :integer          default(0)
@@ -11,6 +11,7 @@
 #  cached_weighted_average :float            default(0.0)
 #  cached_weighted_score   :integer          default(0)
 #  cached_weighted_total   :integer          default(0)
+#  category                :string(75)       not null
 #  description             :text             not null
 #  favoritable_score       :text
 #  favoritable_total       :text
@@ -22,7 +23,7 @@
 #  retail_price            :decimal(10, 2)   not null
 #  secondary_color         :string(30)
 #  slug                    :string
-#  type_of                 :string(80)       not null
+#  subcategory             :string(75)       not null
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null
 #  brand_id                :bigint           not null

@@ -34,5 +34,21 @@ LocalTime.start()
 
 // ADD YOUR JAVACSRIPT HERE
 
+// Add Choices Dropdown
+const ChoicesForOutfitItems = require('choices.js')
+document.addEventListener("turbolinks:load", function() {
+  var dropDownSelects = new ChoicesForOutfitItems('#outfit-item')
+
+  // Passing a function that returns Promise of choices
+  dropDownSelects.setChoices(async () => {
+    try {
+      const items = await fetch('/accessories');
+      return items.json();
+    } catch (err) {
+      console.error(err);
+    }
+  });
+})
+
 // Start Rails UJS
 Rails.start()

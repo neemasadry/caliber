@@ -19,16 +19,17 @@ class CreateSuits < ActiveRecord::Migration[6.0]
       t.text    :product_url, null: true
 
       # Suit-specific characteristics
-      t.string :jacket_breasted_style
-      t.integer :jacket_number_of_buttons
-      t.string :jacket_lapel_style
-      t.string :jacket_pocket_style
-      t.boolean :jacket_ticket_pocket
-      t.string :jacket_vents_style
-      t.string :jacket_sleeve_buttons
-      t.string :trouser_waistband_style
-      t.string :trouser_pleats
-      t.string :trouser_cuff
+      t.string :suit_type, null: false, limit: 75
+      t.string :jacket_breasted_style, null: false, limit: 75
+      t.integer :jacket_number_of_buttons, null: false, default: 1, inclusion: 0..30
+      t.string :jacket_lapel_style, null: false, limit: 75
+      t.string :jacket_pocket_style, null: false, limit: 75
+      t.boolean :jacket_ticket_pocket, null: false, default: false
+      t.string :jacket_vents_style, null: false, limit: 75
+      t.string :jacket_sleeve_buttons, null: false, limit: 75
+      t.string :trouser_waistband_style, null: false, limit: 75
+      t.string :trouser_pleats, null: false, limit: 75
+      t.string :trouser_cuff, null: false, limit: 75
 
       # Categorization
       t.string  :body_part, null: false, limit: 50
