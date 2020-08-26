@@ -42,6 +42,7 @@ Rails.application.routes.draw do
       put "like", to: "outfits#like"
       put "favorite", to: "outfits#favorite"
       put "add_item", to: "outfits#add_item"
+      delete "remove_item", to: "outfits#remove_item"
     end
   end
 

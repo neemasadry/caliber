@@ -1,6 +1,6 @@
 class OutfitsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :set_outfit, only: [:show, :edit, :update, :destroy, :like, :favorite, :add_item]
+  before_action :set_outfit, only: [:show, :edit, :update, :destroy, :like, :favorite, :add_item, :remove_item]
 
   # after_action :verify_authorized
 
@@ -122,14 +122,36 @@ class OutfitsController < ApplicationController
       else
         item_for_outfit = outfit_to_add_item.outfit_items.build(productable_type: params[:product_type], productable_id: params[:product_id], body_part: params[:body_part], category: params[:category], subcategory: params[:subcategory])
 
-        if item_for_outfit.save
-          redirect_to polymorphic_path(outfit_to_add_item, action: "show"), flash: { success: "#{product.name} by #{product.brand.name} has been added to this outfit." }
+        if item_for_outfit.save!
+          redirect_to polymorphic_path(outfit_to_add_item), flash: { success: "#{productable.name} by #{productable.brand.name} has been added to this outfit." }
         else
           redirect_to polymorphic_path(productable), flash: { danger: "An error occured. Please try again later." }
         end
       end
     else
       redirect_to polymorphic_path(product), flash: { danger: "You must sign in to your account before adding an item to an outfit." }
+    end
+  end
+
+  def remove_item
+    if user_signed_in?
+
+      productable_type = params[:product_type]
+      productable_id = params[:product_id]
+
+      #productable = productable_type.constantize.friendly.find(productable_id)
+      outfit_to_add_item = Outfit.friendly.find(params[:id])
+
+      find_outfit_item = outfit_to_add_item.outfit_items.find_by(productable_type: productable_type, productable_id: productable_id)
+
+      if find_outfit_item.present? && find_outfit_item.outfit.user == current_user && find_outfit_item.outfit.account == current_account
+        find_outfit_item.destroy
+        redirect_to polymorphic_path(outfit_to_add_item), flash: { warning: "#{find_outfit_item.productable.name} by #{find_outfit_item.productable.brand.name} has been removed from this outfit." }
+      else
+        redirect_to polymorphic_path(outfit_to_add_item), flash: { danger: "You are not permitted to do edit the outfit: #{find_outfit_item.outfit.name}" }
+      end
+    else
+      redirect_to polymorphic_path(outfit_to_add_item), flash: { danger: "You must sign in to your account before removing an item from an outfit." }
     end
   end
 

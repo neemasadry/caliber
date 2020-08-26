@@ -22,11 +22,11 @@
 #  fk_rails_...  (outfit_id => outfits.id)
 #
 class OutfitItem < ApplicationRecord
-  belongs_to :outfit
+  belongs_to :outfit, counter_cache: true
   belongs_to :productable, polymorphic: true
 
   validates :productable_type, presence: true
-  validates :productable_id, presence: true, uniqueness: { scope: :productable_type }
+  validates :productable_id, presence: true, uniqueness: { scope: [:outfit_id, :productable_type] }
   validates :body_part, presence: true, length: { minimum: 1, maximum: 50 }, inclusion: { in: ["Crown", "Eyes", "Ears", "Neck", "Arm", "Forearm", "Wrist", "Hands", "Finger", "Back", "Chest", "Abdomen", "Waist", "Legs", "Feet", "Not on Body" ] }
   validates :outfit_id, presence: true
 

@@ -17,7 +17,7 @@
     <div data-target="dropdown.menu" class="absolute right-0 mt-2 hidden">
       <div class="bg-white shadow rounded border overflow-hidden">
         <% users_outfits.each do |outfit| %>
-          <%= link_to outfit.name, polymorphic_path(outfit, action: "add_item", product_type: product.class.name, product_id: product.id, body_part: product.body_part, category: product.category, subcategory: product.subcategory), method: :put, class: "no-underline block p-3 text-gray-900 bg-white hover:bg-gray-300 whitespace-no-wrap" %>
+          <%= link_to outfit.name, add_item_outfit_path(outfit, product_type: product.class.name, product_id: product.id, body_part: product.body_part, category: product.category, subcategory: product.subcategory), method: :put, class: "no-underline block p-3 text-gray-900 bg-white hover:bg-gray-300 whitespace-no-wrap" %>
         <% end %>
       </div>
     </div>
