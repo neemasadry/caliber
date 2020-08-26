@@ -15,6 +15,11 @@ class FragrancePolicy < ApplicationPolicy
     false
   end
 
+  def outfit?
+    return true if user.present?
+    false
+  end
+
   class Scope < Scope
     def resolve
       scope.all

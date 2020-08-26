@@ -5,37 +5,36 @@ class SearchController < ApplicationController
   def autocomplete
     query = params[:q].presence || "*" # Check to see if params[:q] is present OR return default value "*" if not present
 
-      @accessories = Accessory.search(query, fields: [:name, :brand], match: :word_start, limit: 3)
-      @bottoms     = Bottom.search(query, fields: [:name, :brand], match: :word_start, limit: 3)
-      @cosmetics   = Cosmetic.search(query, fields: [:name, :brand], match: :word_start, limit: 3)
-      @dresses     = Dress.search(query, fields: [:name, :brand], match: :word_start, limit: 3)
-      @fragrances  = Fragrance.search(query, fields: [:name, :brand], match: :word_start, limit: 3)
-      @shoes       = Shoe.search(query, fields: [:name, :brand], match: :word_start, limit: 3)
-      @tops        = Top.search(query, fields: [:name, :brand], match: :word_start, limit: 3)
+    @accessories = Accessory.search(query, fields: [:name, :brand], match: :word_start, limit: 3)
+    @bottoms     = Bottom.search(query, fields: [:name, :brand], match: :word_start, limit: 3)
+    @cosmetics   = Cosmetic.search(query, fields: [:name, :brand], match: :word_start, limit: 3)
+    @dresses     = Dress.search(query, fields: [:name, :brand], match: :word_start, limit: 3)
+    @fragrances  = Fragrance.search(query, fields: [:name, :brand], match: :word_start, limit: 3)
+    @shoes       = Shoe.search(query, fields: [:name, :brand], match: :word_start, limit: 3)
+    @tops        = Top.search(query, fields: [:name, :brand], match: :word_start, limit: 3)
 
-      @catalogs    = Catalog.search(query, fields: [:title, :category], match: :word_start, limit: 3)
-      @outfits     = Outfit.search(query, fields: [:name, :occasion, :dress_code], match: :word_start, limit: 3)
-      @guides      = Guide.search(query, fields: [:title], match: :word_start, limit: 3)
-      @users       = User.search(query, fields: [:username, :first_name, :last_name], match: :word_start, limit: 3)
+    @catalogs    = Catalog.search(query, fields: [:title, :category], match: :word_start, limit: 3)
+    @outfits     = Outfit.search(query, fields: [:name, :occasion, :dress_code], match: :word_start, limit: 3)
+    @guides      = Guide.search(query, fields: [:title], match: :word_start, limit: 3)
+    @users       = User.search(query, fields: [:username, :first_name, :last_name], match: :word_start, limit: 3)
 
-      @autocomplete_array = [@accessories, @bottoms, @cosmetics, @dresses, @fragrances, @shoes, @tops, @guides, @users]
+    @autocomplete_array = [@accessories, @bottoms, @cosmetics, @dresses, @fragrances, @shoes, @tops, @guides, @users]
 
-      @autocomplete_hash = {
-        product: {
-          "accessories": @accessories,
-          "bottoms": @bottoms,
-          "cosmetics": @cosmetics,
-          "dresses": @dresses,
-          "fragrances": @fragrances,
-          "shoes": @shoes,
-          "tops": @tops
-        },
-        "guides": @guides,
-        "users": @users
-      }
+    @autocomplete_results = {
+      products: {
+        accessories: @accessories,
+        bottoms: @bottoms,
+        cosmetics: @cosmetics,
+        dresses: @dresses,
+        fragrances: @fragrances,
+        shoes: @shoes,
+        tops: @tops
+      },
+      guides: @guides,
+      users: @users
+    }
 
-      render template: "search/autocomplete.html.erb", layout: false
-
+    render template: "search/autocomplete.html.erb", layout: false, locals: { autocomplete_results: @autocomplete_results }
   end
 
   def search
@@ -81,7 +80,12 @@ class SearchController < ApplicationController
         fragrance: @fragrances,
         jewelries: @jewelries,
         shoes: @shoes,
-        tops: @tops }
+        tops: @tops,
+        catalogs: @catalogs,
+        outfits: @outfits,
+        guides: @guides,
+        users: @users
+      }
 
     else
       redirect_to root_path, flash: { warning: "Search field must contain a value." }

@@ -4,9 +4,17 @@
   <div class="form-group">
     <%= form.label :productable, "#{category}", class: "block text-sm font-medium leading-5 text-gray-700" %>
       <!-- <div class="relative"> -->
-        <%= form.collection_select(:productable, Accessory.all, :id, :name, {prompt: "Select a product"}, {class: "form-control dropdown-choice-select", id: "outfit-item"}) %>
+        <%= form.select(:productable, Accessory.all.collect { |a| [a.name, a.id] }, {prompt: "Select a product"}, {class: "form-control dropdown-choice-select", id: "outfit-item"}) %>
         <!-- <div class="caret"><svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg></div>
     </div> -->
   </div>
 <% end %>
 <%#= f.association :assoc_name, collection: Assoc.all(), input_html: {id: 'dropdown-choice-select'} %>
+
+<!--
+# From accessories_controller.rb
+respond_to do |format|
+  format.html # show.html.erb
+  format.json { render json: @accessories.select_collection }
+end
+ -->

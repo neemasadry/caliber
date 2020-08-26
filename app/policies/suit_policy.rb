@@ -1,4 +1,4 @@
-class TopPolicy < ApplicationPolicy
+class SuitPolicy < ApplicationPolicy
 
   def like?
     return true if user.present? && !@user_on_personal_account

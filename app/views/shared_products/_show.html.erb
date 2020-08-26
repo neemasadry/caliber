@@ -18,6 +18,9 @@
         <%= render partial: "votable/favoriting", locals: { favoritable: product } %>
         <%= render partial: "votable/collecting", locals: { collectable: product, collected_status: @collected_status } %>
       <% end %>
+      <% if (user_signed_in?) %>
+        <%= render partial: "outfits/products/add_to_outfit", locals: { users_outfits: @users_outfits, product: product } %>
+      <% end %>
     </div>
 
     <div class="bg-white rounded shadow p-8">
@@ -54,11 +57,25 @@
         <%= number_to_currency(product.retail_price) %>
       </div>
 
+      <div class="mb-4">
+        <h5>Body Part</h5>
+        <%= product.body_part %>
+      </div>
 
       <div class="mb-4">
-        <h5>Type of</h5>
-        <%= product.type_of %>
+        <h5>Category</h5>
+        <%= product.category %>
       </div>
+
+      <div class="mb-4">
+        <h5>Subcategory</h5>
+        <%= product.subcategory %>
+      </div>
+
+      <!-- <div class="mb-4">
+        <h5>Type of</h5>
+        <%#= product.type_of %>
+      </div> -->
 
       <% unless params[:controller] == "dresses" %>
         <div class="mb-4">

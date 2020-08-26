@@ -48,47 +48,13 @@
 
   </div>
 
-  <hr class="mb-3">
-  <h3>Outfit Items</h3>
-
-  <!-- <div data-controller="nested-form"> -->
-    <!-- <template data-target="nested-form.template"> -->
-      <%= form.fields_for :outfit_items, OutfitItem.new, child_index: "NEW_RECORD" do |item| %>
-        <% body_categorization.each do |body_part_key, categories_array| %>
-          <div class="my-3 bg-white overflow-hidden shadow rounded-lg">
-            <div class="px-4 py-5 sm:p-6">
-              <div class="mb-2 text-center text-2xl">
-                <%= "#{body_part_key}" %>
-              </div>
-
-              <% categories_array.each do |category| %>
-                <%= render partial: "items_on_body", locals: { form: item, body_part: body_part_key, category: category } %>
-              <% end %>
-            </div> <!-- div class="px-4 py-5 sm:p-6" -->
-          </div> <!-- div class="bg-white overflow-hidden shadow rounded-lg" -->
-        <% end %>
-      <% end %>
-    <!-- </template> -->
-
-    <%= form.fields_for :outfit_items do |item| %>
-      <%= render "items_on_body", form: item %>
-    <% end %>
-
-    <!-- <div data-target="nested-form.add_link">
-      <%#= link_to "#", data: { action: "click->nested-form#add_association" }, class: "btn btn-small btn-primary outline" do %>
-        <%#= fa_icon("fal fa-plus-circle", class: "mr-2") %>
-        Add Item
-      <%# end %>
-    </div> -->
-  <!-- </div> -->
-
-  <hr class="mt-6 mb-3">
+  <hr class="my-3">
 
   <div class="form-group flex justify-end">
     <%= form.button class: "btn btn-secondary" %>
 
     <% if form.object.persisted? %>
-      <%= link_to 'Delete', form.object, class: "btn btn-danger outline", method: :delete, data: { remote: true, confirm: "Are you sure?" } %>
+      <%= link_to 'Delete', form.object, class: "ml-2 btn btn-danger outline", method: :delete, data: { remote: true, confirm: "Are you sure?" } %>
     <% end %>
   </div>
 <% end %>

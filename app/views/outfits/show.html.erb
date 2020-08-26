@@ -55,8 +55,16 @@
 
   <h3 class="mt-3 mb-3 text-center">
     <%= pluralize(@outfit_items.count, "Outfit Item") %>
+  </h3>
 
-    </h3>
+  <% if @outfit_items.count == 0 %>
+    <div class="bg-white overflow-hidden shadow rounded-lg">
+      <div class="px-4 py-5 sm:p-6">
+        <h4 class="text-center">No items added yet.</h4>
+        <p class="text-center text-gray-700">Browse our selection of products. When you find the product you want, select the outfit "<%= @outfit.name %>" in the dropdown menu and click "Add to Outfit".</p>
+      </div>
+    </div>
+  <% end %>
 
   <ul class="list-none grid grid-cols-1 gap-3 sm:grid-cols-1 lg:grid-cols-1">
     <% @outfit_items.each_with_index do |item, index| %>
@@ -77,7 +85,8 @@
             </div>
             <p class="mt-1 text-gray-500 text-sm leading-5 truncate"><%= truncate(item.productable.description, length: 100) %> (<%= number_to_currency(item.productable.retail_price) %>)</p>
           </div>
-          <%= image_tag item.productable.product_images.first.product_image_url(width: 100, height: 100, crop: :fit) %>
+          <%= image_tag item.productable.images.first, size: "75x75" %>
+          <%#= image_tag item.productable.product_images.first.product_image_url(width: 100, height: 100, crop: :fit) %>
         </div>
       </li>
 

@@ -1,7 +1,8 @@
 class AccessoriesController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :set_user_on_personal_account, if: :user_signed_in?
-  before_action :set_accessory, only: [:show, :edit, :update, :destroy, :like, :favorite, :collect]
+  before_action :set_accessory, only: [:show, :edit, :update, :destroy, :like, :favorite, :collect, :outfit]
+  before_action :set_users_outfits, only: [:show, :outfit]
 
   # GET /accessories
   def index
@@ -10,12 +11,6 @@ class AccessoriesController < ApplicationController
     # We explicitly load the records to avoid triggering multiple DB calls in the views when checking if records exist and iterating over them.
     # Calling @accessories.any? in the view will use the loaded records to check existence instead of making an extra DB call.
     authorize @accessories.load
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @accessories.select_collection }
-    end
-
   end
 
   # GET /accessories/1
@@ -130,6 +125,10 @@ class AccessoriesController < ApplicationController
     def set_accessory
       @accessory = Accessory.friendly.find(params[:id])
       authorize @accessory
+    end
+
+    def set_users_outfits
+      @users_outfits = Outfit.all.where(user_id: current_user.id, account_id: current_account.id)
     end
 
     # Only allow a trusted parameter "white list" through.

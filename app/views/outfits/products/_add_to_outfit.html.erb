@@ -1,0 +1,25 @@
+<div class="inline-block text-sm px-4 py-2 leading-none rounded no-underline mt-4 lg:mt-0">
+  <div class="relative" data-controller="dropdown">
+    <div data-action="click->dropdown#toggle click@window->dropdown#hide" role="button" class="inline-block select-none">
+      <span class="appearance-none flex items-center inline-block text-gray-700">
+        <% if user_signed_in? %>
+          <button type="button" class="relative inline-flex items-center px-4 py-2 rounded-l-md border border-gray-300 bg-white text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150">
+            Add to Outfit
+          </button>
+        <% end %>
+        <button type="button" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm leading-5 font-medium text-gray-500 hover:text-gray-400 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-500 transition ease-in-out duration-150" aria-label="Expand">
+          <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+          </svg>
+        </button>
+      </span>
+    </div>
+    <div data-target="dropdown.menu" class="absolute right-0 mt-2 hidden">
+      <div class="bg-white shadow rounded border overflow-hidden">
+        <% users_outfits.each do |outfit| %>
+          <%= link_to outfit.name, polymorphic_path(outfit, action: "add_item", product_type: product.class.name, product_id: product.id, body_part: product.body_part, category: product.category, subcategory: product.subcategory), method: :put, class: "no-underline block p-3 text-gray-900 bg-white hover:bg-gray-300 whitespace-no-wrap" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,6 +1,6 @@
 class OutfitsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :set_outfit, only: [:show, :edit, :update, :destroy, :like, :favorite]
+  before_action :set_outfit, only: [:show, :edit, :update, :destroy, :like, :favorite, :add_item]
 
   # after_action :verify_authorized
 
@@ -105,6 +105,31 @@ class OutfitsController < ApplicationController
       end
     else
       redirect_to outfit_path(@outfit), flash: { danger: "You can only Like an item using your personal account." }
+    end
+  end
+
+  def add_item
+    if user_signed_in?
+
+      productable_type = params[:product_type]
+      productable_id = params[:product_id]
+
+      productable = productable_type.constantize.friendly.find(productable_id)
+      outfit_to_add_item = Outfit.friendly.find(params[:id])
+
+      if outfit_to_add_item.outfit_items.find_by(productable_type: productable_type, productable_id: productable_id).present?
+        redirect_to polymorphic_path(productable), flash: { warning: "This product is already included in the outfit: #{outfit_to_add_item.name}" }
+      else
+        item_for_outfit = outfit_to_add_item.outfit_items.build(productable_type: params[:product_type], productable_id: params[:product_id], body_part: params[:body_part], category: params[:category], subcategory: params[:subcategory])
+
+        if item_for_outfit.save
+          redirect_to polymorphic_path(outfit_to_add_item, action: "show"), flash: { success: "#{product.name} by #{product.brand.name} has been added to this outfit." }
+        else
+          redirect_to polymorphic_path(productable), flash: { danger: "An error occured. Please try again later." }
+        end
+      end
+    else
+      redirect_to polymorphic_path(product), flash: { danger: "You must sign in to your account before adding an item to an outfit." }
     end
   end
 

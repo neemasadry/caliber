@@ -41,6 +41,7 @@ Rails.application.routes.draw do
     member do
       put "like", to: "outfits#like"
       put "favorite", to: "outfits#favorite"
+      put "add_item", to: "outfits#add_item"
     end
   end
 
@@ -50,6 +51,7 @@ Rails.application.routes.draw do
       put "like", to: "accessories#like"
       put "favorite", to: "accessories#favorite"
       put "collect", to: "accessories#collect"
+      put "outfit", to: "accessories#outfit"
     end
 
     resources :reviews do
