@@ -3,6 +3,7 @@
 # Table name: outfits
 #
 #  id                       :bigint           not null, primary key
+#  ancestry                 :string
 #  cached_votes_down        :integer          default(0)
 #  cached_votes_score       :integer          default(0)
 #  cached_votes_total       :integer          default(0)
@@ -25,16 +26,21 @@
 #  updated_at               :datetime         not null
 #  account_id               :bigint           not null
 #  brand_id                 :bigint
+#  category_id              :bigint           not null
+#  subcategory_id           :bigint           not null
 #  user_id                  :bigint           not null
 #
 # Indexes
 #
-#  index_outfits_on_account_id    (account_id)
-#  index_outfits_on_brand_id      (brand_id)
-#  index_outfits_on_discarded_at  (discarded_at)
-#  index_outfits_on_name          (name)
-#  index_outfits_on_slug          (slug) UNIQUE
-#  index_outfits_on_user_id       (user_id)
+#  index_outfits_on_account_id      (account_id)
+#  index_outfits_on_ancestry        (ancestry)
+#  index_outfits_on_brand_id        (brand_id)
+#  index_outfits_on_category_id     (category_id)
+#  index_outfits_on_discarded_at    (discarded_at)
+#  index_outfits_on_name            (name)
+#  index_outfits_on_slug            (slug) UNIQUE
+#  index_outfits_on_subcategory_id  (subcategory_id)
+#  index_outfits_on_user_id         (user_id)
 #
 # Foreign Keys
 #
@@ -52,8 +58,15 @@ class Outfit < ApplicationRecord
 
   has_many :outfit_items, dependent: :destroy
 
+  # Categorization
+  has_many :outfit_categories
+  has_many :categories, through: :outfit_categories
+  has_many :outfit_subcategories
+  has_many :subcategories, through: :outfit_subcategories
+
   friendly_id :name, use: :slugged
 
+  has_ancestry
   acts_as_favoritable
   acts_as_votable
 
@@ -65,6 +78,7 @@ class Outfit < ApplicationRecord
 
   validates :name, presence: true, length: { minimum: 4, maximum: 150 }
   validates :description, presence: true, length: { minimum: 10, maximum: 3000 }
+  validates :gender, presence: true, length: { minimum: 1, maximum: 6 }
   validates :season, presence: true, length: { minimum: 1, maximum: 10 }
   validates :occasion, presence: true, length: { minimum: 1, maximum: 50 }
   validates :dress_code, presence: true, length: { minimum: 1, maximum: 50 }

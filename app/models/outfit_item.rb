@@ -3,10 +3,8 @@
 # Table name: outfit_items
 #
 #  id               :bigint           not null, primary key
-#  body_part        :string(75)       not null
-#  category         :string(75)       not null
+#  ancestry         :string
 #  productable_type :string           not null
-#  subcategory      :string(75)       not null
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
 #  outfit_id        :bigint           not null
@@ -14,6 +12,7 @@
 #
 # Indexes
 #
+#  index_outfit_items_on_ancestry                             (ancestry)
 #  index_outfit_items_on_outfit_id                            (outfit_id)
 #  index_outfit_items_on_productable_type_and_productable_id  (productable_type,productable_id)
 #
@@ -22,13 +21,26 @@
 #  fk_rails_...  (outfit_id => outfits.id)
 #
 class OutfitItem < ApplicationRecord
-  belongs_to :outfit, counter_cache: true
+  belongs_to :outfit
   belongs_to :productable, polymorphic: true
+  belongs_to :body_part
+  belongs_to :category
+  belongs_to :subcategory
+
+  has_ancestry
 
   validates :productable_type, presence: true
   validates :productable_id, presence: true, uniqueness: { scope: [:outfit_id, :productable_type] }
   validates :body_part, presence: true, length: { minimum: 1, maximum: 50 }, inclusion: { in: ["Crown", "Eyes", "Ears", "Neck", "Arm", "Forearm", "Wrist", "Hands", "Finger", "Back", "Chest", "Abdomen", "Waist", "Legs", "Feet", "Not on Body" ] }
   validates :outfit_id, presence: true
+
+  before_create do |outfit_item|
+    all_outfit_items = outfit_item.outfit.outfit_items
+
+    all_outfit_items.each do |present_item|
+
+    end
+  end
 
   after_create do |outfit_item|
     # Update total number of items in associated Outfit object

@@ -3,6 +3,7 @@
 # Table name: catalogs
 #
 #  id                      :bigint           not null, primary key
+#  ancestry                :string
 #  cached_votes_down       :integer          default(0)
 #  cached_votes_score      :integer          default(0)
 #  cached_votes_total      :integer          default(0)
@@ -10,13 +11,11 @@
 #  cached_weighted_average :float            default(0.0)
 #  cached_weighted_score   :integer          default(0)
 #  cached_weighted_total   :integer          default(0)
-#  category                :string(150)      not null
 #  description             :text             not null
 #  discarded_at            :datetime
 #  favoritable_score       :text
 #  favoritable_total       :text
 #  slug                    :string
-#  subcategory             :string(150)      not null
 #  title                   :string(150)      not null
 #  total_items             :integer          default(0), not null
 #  total_price             :decimal(10, 2)   default(0.0), not null
@@ -24,16 +23,21 @@
 #  updated_at              :datetime         not null
 #  account_id              :bigint           not null
 #  brand_id                :bigint
+#  category_id             :bigint           not null
+#  subcategory_id          :bigint           not null
 #  user_id                 :bigint           not null
 #
 # Indexes
 #
-#  index_catalogs_on_account_id    (account_id)
-#  index_catalogs_on_brand_id      (brand_id)
-#  index_catalogs_on_discarded_at  (discarded_at)
-#  index_catalogs_on_slug          (slug) UNIQUE
-#  index_catalogs_on_title         (title)
-#  index_catalogs_on_user_id       (user_id)
+#  index_catalogs_on_account_id      (account_id)
+#  index_catalogs_on_ancestry        (ancestry)
+#  index_catalogs_on_brand_id        (brand_id)
+#  index_catalogs_on_category_id     (category_id)
+#  index_catalogs_on_discarded_at    (discarded_at)
+#  index_catalogs_on_slug            (slug) UNIQUE
+#  index_catalogs_on_subcategory_id  (subcategory_id)
+#  index_catalogs_on_title           (title)
+#  index_catalogs_on_user_id         (user_id)
 #
 # Foreign Keys
 #
@@ -57,8 +61,15 @@ class Catalog < ApplicationRecord
   has_many :reviews, through: :catalogable_items
   # has_many :recipes, through: :catalogable_items
 
+  # Categorization
+  has_many :catalog_categories
+  has_many :categories, through: :catalog_categories
+  has_many :catalog_subcategories
+  has_many :subcategories, through: :catalog_subcategories
+
   friendly_id :title, use: :slugged
 
+  has_ancestry
   acts_as_favoritable
   acts_as_votable
 

@@ -7,6 +7,9 @@ class CreateSuits < ActiveRecord::Migration[6.0]
       t.references :brand, null: false, foreign_key: true
       t.references :top, null: false, foreign_key: true
       t.references :bottom, null: false, foreign_key: true
+      t.references :body_part, null: false, index: true
+      t.references :category, null: false, index: true
+      t.references :subcategory, null: false, index: true
 
       # General product characteristics
       t.string  :name, null: false, limit: 100
@@ -32,9 +35,9 @@ class CreateSuits < ActiveRecord::Migration[6.0]
       t.string :trouser_cuff, null: false, limit: 75
 
       # Categorization
-      t.string  :body_part, null: false, limit: 50
-      t.string  :category, null: false, limit: 75
-      t.string  :subcategory, null: false, limit: 75
+      # t.string  :body_part, null: false, limit: 50
+      # t.string  :category, null: false, limit: 75
+      # t.string  :subcategory, null: false, limit: 75
 
       # Slug for FriendlyID
       t.string :slug, index: { unique: true }

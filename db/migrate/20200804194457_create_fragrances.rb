@@ -4,6 +4,9 @@ class CreateFragrances < ActiveRecord::Migration[6.0]
       t.references :user, null: false, foreign_key: true
       t.references :account, null: false, foreign_key: true
       t.references :brand, null: false, foreign_key: true
+      t.references :body_part, null: false, index: true
+      t.references :category, null: false, index: true
+      t.references :subcategory, null: false, index: true
 
       t.string  :name, null: false, limit: 100
       t.text    :description, null: false, limit: 3000
@@ -19,10 +22,10 @@ class CreateFragrances < ActiveRecord::Migration[6.0]
       t.text    :product_url, null: true
 
       # Categorization
-      t.string  :seasons, null: false, limit: 75
-      t.string  :occassions, null: false, limit: 240
-      t.string  :category, null: false, limit: 75
-      t.string  :subcategory, null: false, limit: 75
+      # t.string  :seasons, null: false, limit: 75
+      # t.string  :occassions, null: false, limit: 240
+      # t.string  :category, null: false, limit: 75
+      # t.string  :subcategory, null: false, limit: 75
 
       # Slug for FriendlyID
       t.string :slug, index: { unique: true }

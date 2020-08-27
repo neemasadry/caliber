@@ -7,6 +7,7 @@ module Products
     extend Pagy::Search
 
     belongs_to :user
+    belongs_to :account
     belongs_to :brand
 
     has_many_attached :images
@@ -17,8 +18,15 @@ module Products
     has_many :outfit_items
     has_many :outfits, through: :outfit_items, as: :productable
 
+    # Categorization
+    has_many :product_categories
+    has_many :categories, through: :product_categories, as: :productable
+    has_many :product_subcategories
+    has_many :subcategories, through: :product_subcategories, as: :productable
+
     friendly_id :name, use: :slugged
 
+    has_ancestry
     acts_as_favoritable
     acts_as_votable
 
@@ -29,8 +37,8 @@ module Products
     validates :retail_price, presence: true, numericality: { greater_than: 0, less_than: 1000000 }
     #validates :type_of, presence: true, if: :has_type_of?
     validates :body_part, presence: true, inclusion: { in: ["Crown", "Eyes", "Ears", "Neck", "Arm", "Forearm", "Hands", "Finger", "Back", "Chest", "Abdomen", "Waist", "Legs", "Feet", "Not on Body" ] }
-    validates :category, presence: true, length: { in: 2..75 }
-    validates :subcategory, presence: true, length: { in: 2..75 }
+    # validates :category, presence: true, length: { in: 2..75 }
+    # validates :subcategory, presence: true, length: { in: 2..75 }
     validates :gender, presence: true, length: { maximum: 6 }, unless: :has_gender?
     validates :materials, presence: true, length: { minimum: 3, maximum: 150 }, if: :has_material_or_colors?
     validates :ingredients, presence: true, length: { minimum: 3, maximum: 3000 }, if: :has_ingredients?
@@ -50,7 +58,6 @@ module Products
     {
       name: name,
       brand: brand.name,
-      # type_of: type_of,
       body_part: body_part,
       category: category,
       subcategory: subcategory,

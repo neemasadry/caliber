@@ -5,6 +5,8 @@ class CreateGuides < ActiveRecord::Migration[6.0]
       t.references :user, null: false, foreign_key: true
       t.references :account, null: false, foreign_key: true
       t.references :brand, null: true, foreign_key: true
+      t.references :category, null: false, index: true
+      t.references :subcategory, null: false, index: true
 
       t.string :title, null: false, limit: 80
       t.string :category, null: false, limit: 30

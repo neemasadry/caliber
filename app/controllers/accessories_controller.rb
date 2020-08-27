@@ -39,6 +39,8 @@ class AccessoriesController < ApplicationController
   def create
     @accessory = Accessory.new(accessory_params)
     @accessory.user = current_user
+    @accessory.account = current_account
+    @accessory.brand = current_account.brand
 
     authorize @accessory
 
@@ -128,7 +130,9 @@ class AccessoriesController < ApplicationController
     end
 
     def set_users_outfits
-      @users_outfits = Outfit.all.where(user_id: current_user.id, account_id: current_account.id)
+      if user_signed_in?
+        @users_outfits = Outfit.all.where(user_id: current_user.id, account_id: current_account.id)
+      end
     end
 
     # Only allow a trusted parameter "white list" through.

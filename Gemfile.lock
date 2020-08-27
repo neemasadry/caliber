@@ -131,6 +131,8 @@ GEM
       activerecord (>= 3.0.0)
       activesupport (>= 3.0.0)
     ambry (1.0.0)
+    ancestry (2.2.2)
+      activerecord (>= 3.0.0)
     annotate (3.1.1)
       activerecord (>= 3.2, < 7.0)
       rake (>= 10.4, < 14.0)
@@ -1468,6 +1470,7 @@ DEPENDENCIES
   acts_as_votable (~> 0.12.1)
   administrate!
   administrate-field-active_storage (~> 0.3.0)
+  ancestry (~> 2.1)
   annotate
   attr_encrypted (~> 3.1)
   aws-sdk (~> 3.0, >= 3.0.1)

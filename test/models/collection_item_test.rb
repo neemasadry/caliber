@@ -3,6 +3,7 @@
 # Table name: collection_items
 #
 #  id                    :bigint           not null, primary key
+#  ancestry              :string
 #  collectable_item_type :string           not null
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
@@ -11,6 +12,7 @@
 #
 # Indexes
 #
+#  index_collection_items_on_ancestry                 (ancestry)
 #  index_collection_items_on_collectable_type_and_id  (collectable_item_type,collectable_item_id)
 #  index_collection_items_on_collection_id            (collection_id)
 #

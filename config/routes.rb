@@ -1,10 +1,12 @@
 # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 Rails.application.routes.draw do
 
-  resources :suits
   # Search
   get :autocomplete, controller: :search
   get :search, controller: :search
+
+  # Categorization
+  resources :categories
 
   resources :brands, model_name: "Brand" do
     member do
@@ -34,6 +36,8 @@ Rails.application.routes.draw do
     member do
       put "like", to: "catalogs#like"
       put "favorite", to: "catalogs#favorite"
+      put "add_item", to: "catalogs#add_item"
+      delete "remove_item", to: "catalogs#remove_item"
     end
   end
 
@@ -66,8 +70,8 @@ Rails.application.routes.draw do
 
   resources :bottoms, model_name: "Bottom" do
     member do
-      put "like", to: "accessories#like"
-      put "favorite", to: "accessories#favorite"
+      put "like", to: "bottoms#like"
+      put "favorite", to: "bottoms#favorite"
       put "collect", to: "bottoms#collect"
     end
 
@@ -82,8 +86,8 @@ Rails.application.routes.draw do
 
   resources :cosmetics, model_name: "Cosmetic" do
     member do
-      put "like", to: "accessories#like"
-      put "favorite", to: "accessories#favorite"
+      put "like", to: "cosmetics#like"
+      put "favorite", to: "cosmetics#favorite"
       put "collect", to: "cosmetics#collect"
     end
 
@@ -98,8 +102,8 @@ Rails.application.routes.draw do
 
   resources :dresses, model_name: "Dress" do
     member do
-      put "like", to: "accessories#like"
-      put "favorite", to: "accessories#favorite"
+      put "like", to: "dresses#like"
+      put "favorite", to: "dresses#favorite"
       put "collect", to: "dresses#collect"
     end
 
@@ -114,8 +118,8 @@ Rails.application.routes.draw do
 
   resources :fragrances, model_name: "Fragrance" do
     member do
-      put "like", to: "accessories#like"
-      put "favorite", to: "accessories#favorite"
+      put "like", to: "fragrances#like"
+      put "favorite", to: "fragrances#favorite"
       put "collect", to: "fragrances#collect"
     end
 
@@ -130,8 +134,8 @@ Rails.application.routes.draw do
 
   resources :jewelries, model_name: "Jewelry" do
     member do
-      put "like", to: "accessories#like"
-      put "favorite", to: "accessories#favorite"
+      put "like", to: "jewelries#like"
+      put "favorite", to: "jewelries#favorite"
       put "collect", to: "jewelries#collect"
     end
 
@@ -146,9 +150,25 @@ Rails.application.routes.draw do
 
   resources :shoes, model_name: "Shoe" do
     member do
-      put "like", to: "accessories#like"
-      put "favorite", to: "accessories#favorite"
+      put "like", to: "shoes#like"
+      put "favorite", to: "shoes#favorite"
       put "collect", to: "shoes#collect"
+    end
+
+    resources :reviews do
+      member do
+        put "like", to: "reviews#like"
+      end
+
+      resources :comments, only: [:create, :destroy], module: :reviews
+    end
+  end # Shoe
+
+  resources :suits, model_name: "Suits" do
+    member do
+      put "like", to: "suits#like"
+      put "favorite", to: "suits#favorite"
+      put "collect", to: "suits#collect"
     end
 
     resources :reviews do
@@ -162,8 +182,8 @@ Rails.application.routes.draw do
 
   resources :tops, model_name: "Top" do
     member do
-      put "like", to: "accessories#like"
-      put "favorite", to: "accessories#favorite"
+      put "like", to: "tops#like"
+      put "favorite", to: "tops#favorite"
       put "collect", to: "tops#collect"
     end
 

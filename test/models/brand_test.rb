@@ -6,6 +6,7 @@
 #  about                   :text             not null
 #  address1                :string(100)      not null
 #  address2                :string(100)
+#  ancestry                :string
 #  brand_identifier        :string(60)       not null
 #  cached_votes_down       :integer          default(0)
 #  cached_votes_score      :integer          default(0)
@@ -14,7 +15,6 @@
 #  cached_weighted_average :float            default(0.0)
 #  cached_weighted_score   :integer          default(0)
 #  cached_weighted_total   :integer          default(0)
-#  category                :string(100)      not null
 #  city                    :string(100)      not null
 #  country_code            :string(5)        not null
 #  discarded_at            :datetime
@@ -41,15 +41,20 @@
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null
 #  account_id              :bigint           not null
+#  category_id             :bigint           not null
+#  subcategory_id          :bigint           not null
 #  user_id                 :bigint           not null
 #
 # Indexes
 #
 #  index_brands_on_account_id        (account_id)
+#  index_brands_on_ancestry          (ancestry)
 #  index_brands_on_brand_identifier  (brand_identifier) UNIQUE
+#  index_brands_on_category_id       (category_id)
 #  index_brands_on_discarded_at      (discarded_at)
 #  index_brands_on_name              (name)
 #  index_brands_on_slug              (slug) UNIQUE
+#  index_brands_on_subcategory_id    (subcategory_id)
 #  index_brands_on_user_id           (user_id)
 #
 # Foreign Keys

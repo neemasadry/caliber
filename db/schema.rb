@@ -10,14 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_13_181235) do
+ActiveRecord::Schema.define(version: 2020_08_27_133705) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "accessories", force: :cascade do |t|
     t.bigint "user_id", null: false
+    t.bigint "account_id", null: false
     t.bigint "brand_id", null: false
+    t.bigint "body_part_id", null: false
+    t.bigint "category_id", null: false
+    t.bigint "subcategory_id", null: false
     t.string "name", limit: 100, null: false
     t.text "description", null: false
     t.decimal "retail_price", precision: 10, scale: 2, null: false
@@ -41,8 +45,14 @@ ActiveRecord::Schema.define(version: 2020_08_13_181235) do
     t.text "favoritable_total"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "ancestry"
+    t.index ["account_id"], name: "index_accessories_on_account_id"
+    t.index ["ancestry"], name: "index_accessories_on_ancestry"
+    t.index ["body_part_id"], name: "index_accessories_on_body_part_id"
     t.index ["brand_id"], name: "index_accessories_on_brand_id"
+    t.index ["category_id"], name: "index_accessories_on_category_id"
     t.index ["slug"], name: "index_accessories_on_slug", unique: true
+    t.index ["subcategory_id"], name: "index_accessories_on_subcategory_id"
     t.index ["user_id"], name: "index_accessories_on_user_id"
   end
 
@@ -86,6 +96,8 @@ ActiveRecord::Schema.define(version: 2020_08_13_181235) do
     t.text "extra_billing_info"
     t.string "domain"
     t.string "subdomain"
+    t.string "ancestry"
+    t.index ["ancestry"], name: "index_accounts_on_ancestry"
     t.index ["owner_id"], name: "index_accounts_on_owner_id"
   end
 
@@ -149,10 +161,38 @@ ActiveRecord::Schema.define(version: 2020_08_13_181235) do
     t.index ["user_id"], name: "index_api_tokens_on_user_id"
   end
 
+  create_table "body_parts", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "account_id", null: false
+    t.bigint "category_group_id", null: false
+    t.string "name", limit: 150, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["account_id"], name: "index_body_parts_on_account_id"
+    t.index ["category_group_id"], name: "index_body_parts_on_category_group_id"
+    t.index ["user_id"], name: "index_body_parts_on_user_id"
+  end
+
+  create_table "body_regions", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "account_id", null: false
+    t.bigint "category_group_id", null: false
+    t.string "name", limit: 150, null: false
+    t.integer "body_part_count", default: 0, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["account_id"], name: "index_body_regions_on_account_id"
+    t.index ["category_group_id"], name: "index_body_regions_on_category_group_id"
+    t.index ["user_id"], name: "index_body_regions_on_user_id"
+  end
+
   create_table "bottoms", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "account_id", null: false
     t.bigint "brand_id", null: false
+    t.bigint "body_part_id", null: false
+    t.bigint "category_id", null: false
+    t.bigint "subcategory_id", null: false
     t.string "name", limit: 100, null: false
     t.text "description", null: false
     t.decimal "retail_price", precision: 10, scale: 2, null: false
@@ -161,9 +201,6 @@ ActiveRecord::Schema.define(version: 2020_08_13_181235) do
     t.string "primary_color", limit: 30, null: false
     t.string "secondary_color", limit: 30
     t.text "product_url"
-    t.string "body_part", limit: 50, null: false
-    t.string "category", limit: 75, null: false
-    t.string "subcategory", limit: 75, null: false
     t.string "slug"
     t.datetime "discarded_at"
     t.integer "cached_votes_total", default: 0
@@ -177,19 +214,25 @@ ActiveRecord::Schema.define(version: 2020_08_13_181235) do
     t.text "favoritable_total"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "ancestry"
     t.index ["account_id"], name: "index_bottoms_on_account_id"
+    t.index ["ancestry"], name: "index_bottoms_on_ancestry"
+    t.index ["body_part_id"], name: "index_bottoms_on_body_part_id"
     t.index ["brand_id"], name: "index_bottoms_on_brand_id"
+    t.index ["category_id"], name: "index_bottoms_on_category_id"
     t.index ["discarded_at"], name: "index_bottoms_on_discarded_at"
     t.index ["slug"], name: "index_bottoms_on_slug", unique: true
+    t.index ["subcategory_id"], name: "index_bottoms_on_subcategory_id"
     t.index ["user_id"], name: "index_bottoms_on_user_id"
   end
 
   create_table "brands", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "account_id", null: false
+    t.bigint "category_id", null: false
+    t.bigint "subcategory_id", null: false
     t.string "name", limit: 150, null: false
     t.string "brand_identifier", limit: 60, null: false
-    t.string "category", limit: 100, null: false
     t.integer "price_range", null: false
     t.date "founding_date", null: false
     t.string "mission", limit: 125, null: false
@@ -224,11 +267,15 @@ ActiveRecord::Schema.define(version: 2020_08_13_181235) do
     t.text "favoritable_total"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "ancestry"
     t.index ["account_id"], name: "index_brands_on_account_id"
+    t.index ["ancestry"], name: "index_brands_on_ancestry"
     t.index ["brand_identifier"], name: "index_brands_on_brand_identifier", unique: true
+    t.index ["category_id"], name: "index_brands_on_category_id"
     t.index ["discarded_at"], name: "index_brands_on_discarded_at"
     t.index ["name"], name: "index_brands_on_name"
     t.index ["slug"], name: "index_brands_on_slug", unique: true
+    t.index ["subcategory_id"], name: "index_brands_on_subcategory_id"
     t.index ["user_id"], name: "index_brands_on_user_id"
   end
 
@@ -238,6 +285,8 @@ ActiveRecord::Schema.define(version: 2020_08_13_181235) do
     t.bigint "catalog_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "ancestry"
+    t.index ["ancestry"], name: "index_catalog_items_on_ancestry"
     t.index ["catalog_id"], name: "index_catalog_items_on_catalog_id"
     t.index ["catalogable_item_type", "catalogable_item_id"], name: "index_catalogable_items_on_ccatalogable_type_and_id"
   end
@@ -246,10 +295,10 @@ ActiveRecord::Schema.define(version: 2020_08_13_181235) do
     t.bigint "user_id", null: false
     t.bigint "account_id", null: false
     t.bigint "brand_id"
+    t.bigint "category_id", null: false
+    t.bigint "subcategory_id", null: false
     t.string "title", limit: 150, null: false
     t.text "description", null: false
-    t.string "category", limit: 150, null: false
-    t.string "subcategory", limit: 150, null: false
     t.integer "total_items", default: 0, null: false
     t.decimal "total_price", precision: 10, scale: 2, default: "0.0", null: false
     t.string "slug"
@@ -265,12 +314,65 @@ ActiveRecord::Schema.define(version: 2020_08_13_181235) do
     t.text "favoritable_total"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "ancestry"
     t.index ["account_id"], name: "index_catalogs_on_account_id"
+    t.index ["ancestry"], name: "index_catalogs_on_ancestry"
     t.index ["brand_id"], name: "index_catalogs_on_brand_id"
+    t.index ["category_id"], name: "index_catalogs_on_category_id"
     t.index ["discarded_at"], name: "index_catalogs_on_discarded_at"
     t.index ["slug"], name: "index_catalogs_on_slug", unique: true
+    t.index ["subcategory_id"], name: "index_catalogs_on_subcategory_id"
     t.index ["title"], name: "index_catalogs_on_title"
     t.index ["user_id"], name: "index_catalogs_on_user_id"
+  end
+
+  create_table "categories", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "account_id", null: false
+    t.bigint "category_group_id", null: false
+    t.string "name", limit: 150, null: false
+    t.integer "subcategory_count", default: 0, null: false
+    t.integer "brands_count", default: 0, null: false
+    t.integer "accessories_count", default: 0, null: false
+    t.integer "bottoms_count", default: 0, null: false
+    t.integer "cosmetics_count", default: 0, null: false
+    t.integer "dresses_count", default: 0, null: false
+    t.integer "fragrances_count", default: 0, null: false
+    t.integer "jewelries_count", default: 0, null: false
+    t.integer "shoes_count", default: 0, null: false
+    t.integer "suits_count", default: 0, null: false
+    t.integer "tops_count", default: 0, null: false
+    t.integer "total_products_count", default: 0, null: false
+    t.integer "reviews_count", default: 0, null: false
+    t.integer "guides_count", default: 0, null: false
+    t.integer "outfits_count", default: 0, null: false
+    t.integer "catalogs_count", default: 0, null: false
+    t.string "slug"
+    t.datetime "discarded_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "ancestry"
+    t.index ["account_id"], name: "index_categories_on_account_id"
+    t.index ["ancestry"], name: "index_categories_on_ancestry"
+    t.index ["category_group_id"], name: "index_categories_on_category_group_id"
+    t.index ["discarded_at"], name: "index_categories_on_discarded_at"
+    t.index ["slug"], name: "index_categories_on_slug", unique: true
+    t.index ["user_id"], name: "index_categories_on_user_id"
+  end
+
+  create_table "category_groups", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "account_id", null: false
+    t.string "name", limit: 150, null: false
+    t.integer "categories_count", default: 0, null: false
+    t.datetime "discarded_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "ancestry"
+    t.index ["account_id"], name: "index_category_groups_on_account_id"
+    t.index ["ancestry"], name: "index_category_groups_on_ancestry"
+    t.index ["discarded_at"], name: "index_category_groups_on_discarded_at"
+    t.index ["user_id"], name: "index_category_groups_on_user_id"
   end
 
   create_table "collection_items", force: :cascade do |t|
@@ -279,6 +381,8 @@ ActiveRecord::Schema.define(version: 2020_08_13_181235) do
     t.bigint "collection_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "ancestry"
+    t.index ["ancestry"], name: "index_collection_items_on_ancestry"
     t.index ["collectable_item_type", "collectable_item_id"], name: "index_collection_items_on_collectable_type_and_id"
     t.index ["collection_id"], name: "index_collection_items_on_collection_id"
   end
@@ -300,17 +404,19 @@ ActiveRecord::Schema.define(version: 2020_08_13_181235) do
     t.text "favoritable_total"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "ancestry"
+    t.index ["ancestry"], name: "index_collections_on_ancestry"
     t.index ["discarded_at"], name: "index_collections_on_discarded_at"
     t.index ["user_id"], name: "index_collections_on_user_id"
   end
 
   create_table "comments", force: :cascade do |t|
-    t.string "commentable_type", null: false
-    t.integer "commentable_id", null: false
-    t.integer "parent_id", default: 0, null: false
     t.bigint "user_id", null: false
     t.bigint "account_id", null: false
     t.bigint "brand_id"
+    t.string "commentable_type", null: false
+    t.integer "commentable_id", null: false
+    t.integer "parent_id", default: 0, null: false
     t.text "body", null: false
     t.boolean "deleted", default: false, null: false
     t.datetime "discarded_at"
@@ -323,7 +429,9 @@ ActiveRecord::Schema.define(version: 2020_08_13_181235) do
     t.float "cached_weighted_average", default: 0.0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "ancestry"
     t.index ["account_id"], name: "index_comments_on_account_id"
+    t.index ["ancestry"], name: "index_comments_on_ancestry"
     t.index ["brand_id"], name: "index_comments_on_brand_id"
     t.index ["commentable_id"], name: "index_comments_on_commentable_id"
     t.index ["commentable_type"], name: "index_comments_on_commentable_type"
@@ -335,15 +443,15 @@ ActiveRecord::Schema.define(version: 2020_08_13_181235) do
     t.bigint "user_id", null: false
     t.bigint "account_id", null: false
     t.bigint "brand_id", null: false
+    t.bigint "body_part_id", null: false
+    t.bigint "category_id", null: false
+    t.bigint "subcategory_id", null: false
     t.string "name", limit: 100, null: false
     t.text "description", null: false
     t.decimal "retail_price", precision: 10, scale: 2, null: false
     t.string "gender", limit: 6, null: false
     t.text "ingredients"
     t.text "product_url"
-    t.string "body_part", limit: 50, null: false
-    t.string "category", limit: 75, null: false
-    t.string "subcategory", limit: 75, null: false
     t.string "slug"
     t.datetime "discarded_at"
     t.integer "cached_votes_total", default: 0
@@ -357,10 +465,15 @@ ActiveRecord::Schema.define(version: 2020_08_13_181235) do
     t.text "favoritable_total"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "ancestry"
     t.index ["account_id"], name: "index_cosmetics_on_account_id"
+    t.index ["ancestry"], name: "index_cosmetics_on_ancestry"
+    t.index ["body_part_id"], name: "index_cosmetics_on_body_part_id"
     t.index ["brand_id"], name: "index_cosmetics_on_brand_id"
+    t.index ["category_id"], name: "index_cosmetics_on_category_id"
     t.index ["discarded_at"], name: "index_cosmetics_on_discarded_at"
     t.index ["slug"], name: "index_cosmetics_on_slug", unique: true
+    t.index ["subcategory_id"], name: "index_cosmetics_on_subcategory_id"
     t.index ["user_id"], name: "index_cosmetics_on_user_id"
   end
 
@@ -368,6 +481,9 @@ ActiveRecord::Schema.define(version: 2020_08_13_181235) do
     t.bigint "user_id", null: false
     t.bigint "account_id", null: false
     t.bigint "brand_id", null: false
+    t.bigint "body_part_id", null: false
+    t.bigint "category_id", null: false
+    t.bigint "subcategory_id", null: false
     t.string "name", limit: 100, null: false
     t.text "description", null: false
     t.decimal "retail_price", precision: 10, scale: 2, null: false
@@ -376,9 +492,6 @@ ActiveRecord::Schema.define(version: 2020_08_13_181235) do
     t.string "primary_color", limit: 30, null: false
     t.string "secondary_color", limit: 30
     t.text "product_url"
-    t.string "body_part", limit: 50, null: false
-    t.string "category", limit: 75, null: false
-    t.string "subcategory", limit: 75, null: false
     t.string "slug"
     t.datetime "discarded_at"
     t.integer "cached_votes_total", default: 0
@@ -392,10 +505,15 @@ ActiveRecord::Schema.define(version: 2020_08_13_181235) do
     t.text "favoritable_total"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "ancestry"
     t.index ["account_id"], name: "index_dresses_on_account_id"
+    t.index ["ancestry"], name: "index_dresses_on_ancestry"
+    t.index ["body_part_id"], name: "index_dresses_on_body_part_id"
     t.index ["brand_id"], name: "index_dresses_on_brand_id"
+    t.index ["category_id"], name: "index_dresses_on_category_id"
     t.index ["discarded_at"], name: "index_dresses_on_discarded_at"
     t.index ["slug"], name: "index_dresses_on_slug", unique: true
+    t.index ["subcategory_id"], name: "index_dresses_on_subcategory_id"
     t.index ["user_id"], name: "index_dresses_on_user_id"
   end
 
@@ -420,6 +538,9 @@ ActiveRecord::Schema.define(version: 2020_08_13_181235) do
     t.bigint "user_id", null: false
     t.bigint "account_id", null: false
     t.bigint "brand_id", null: false
+    t.bigint "body_part_id", null: false
+    t.bigint "category_id", null: false
+    t.bigint "subcategory_id", null: false
     t.string "name", limit: 100, null: false
     t.text "description", null: false
     t.decimal "retail_price", precision: 10, scale: 2, null: false
@@ -431,10 +552,6 @@ ActiveRecord::Schema.define(version: 2020_08_13_181235) do
     t.string "base_notes", limit: 150
     t.string "accords", limit: 150
     t.text "product_url"
-    t.string "seasons", limit: 75, null: false
-    t.string "occassions", limit: 240, null: false
-    t.string "category", limit: 75, null: false
-    t.string "subcategory", limit: 75, null: false
     t.string "slug"
     t.datetime "discarded_at"
     t.integer "cached_votes_total", default: 0
@@ -448,10 +565,15 @@ ActiveRecord::Schema.define(version: 2020_08_13_181235) do
     t.text "favoritable_total"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "ancestry"
     t.index ["account_id"], name: "index_fragrances_on_account_id"
+    t.index ["ancestry"], name: "index_fragrances_on_ancestry"
+    t.index ["body_part_id"], name: "index_fragrances_on_body_part_id"
     t.index ["brand_id"], name: "index_fragrances_on_brand_id"
+    t.index ["category_id"], name: "index_fragrances_on_category_id"
     t.index ["discarded_at"], name: "index_fragrances_on_discarded_at"
     t.index ["slug"], name: "index_fragrances_on_slug", unique: true
+    t.index ["subcategory_id"], name: "index_fragrances_on_subcategory_id"
     t.index ["user_id"], name: "index_fragrances_on_user_id"
   end
 
@@ -470,6 +592,8 @@ ActiveRecord::Schema.define(version: 2020_08_13_181235) do
     t.bigint "user_id", null: false
     t.bigint "account_id", null: false
     t.bigint "brand_id"
+    t.bigint "category_id", null: false
+    t.bigint "subcategory_id", null: false
     t.string "title", limit: 80, null: false
     t.string "category", limit: 30, null: false
     t.string "subcategory_one", limit: 30
@@ -487,10 +611,14 @@ ActiveRecord::Schema.define(version: 2020_08_13_181235) do
     t.text "favoritable_total"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "ancestry"
     t.index ["account_id"], name: "index_guides_on_account_id"
+    t.index ["ancestry"], name: "index_guides_on_ancestry"
     t.index ["brand_id"], name: "index_guides_on_brand_id"
+    t.index ["category_id"], name: "index_guides_on_category_id"
     t.index ["discarded_at"], name: "index_guides_on_discarded_at"
     t.index ["slug"], name: "index_guides_on_slug", unique: true
+    t.index ["subcategory_id"], name: "index_guides_on_subcategory_id"
     t.index ["user_id"], name: "index_guides_on_user_id"
   end
 
@@ -498,6 +626,9 @@ ActiveRecord::Schema.define(version: 2020_08_13_181235) do
     t.bigint "user_id", null: false
     t.bigint "account_id", null: false
     t.bigint "brand_id", null: false
+    t.bigint "body_part_id", null: false
+    t.bigint "category_id", null: false
+    t.bigint "subcategory_id", null: false
     t.string "name", limit: 100, null: false
     t.text "description", null: false
     t.decimal "retail_price", precision: 10, scale: 2, null: false
@@ -506,9 +637,6 @@ ActiveRecord::Schema.define(version: 2020_08_13_181235) do
     t.string "primary_color", limit: 30, null: false
     t.string "secondary_color", limit: 30
     t.text "product_url"
-    t.string "body_part", limit: 50, null: false
-    t.string "category", limit: 75, null: false
-    t.string "subcategory", limit: 75, null: false
     t.string "slug"
     t.datetime "discarded_at"
     t.integer "cached_votes_total", default: 0
@@ -522,10 +650,15 @@ ActiveRecord::Schema.define(version: 2020_08_13_181235) do
     t.text "favoritable_total"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "ancestry"
     t.index ["account_id"], name: "index_jewelries_on_account_id"
+    t.index ["ancestry"], name: "index_jewelries_on_ancestry"
+    t.index ["body_part_id"], name: "index_jewelries_on_body_part_id"
     t.index ["brand_id"], name: "index_jewelries_on_brand_id"
+    t.index ["category_id"], name: "index_jewelries_on_category_id"
     t.index ["discarded_at"], name: "index_jewelries_on_discarded_at"
     t.index ["slug"], name: "index_jewelries_on_slug", unique: true
+    t.index ["subcategory_id"], name: "index_jewelries_on_subcategory_id"
     t.index ["user_id"], name: "index_jewelries_on_user_id"
   end
 
@@ -547,11 +680,10 @@ ActiveRecord::Schema.define(version: 2020_08_13_181235) do
     t.bigint "outfit_id", null: false
     t.string "productable_type", null: false
     t.bigint "productable_id", null: false
-    t.string "body_part", limit: 75, null: false
-    t.string "category", limit: 75, null: false
-    t.string "subcategory", limit: 75, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "ancestry"
+    t.index ["ancestry"], name: "index_outfit_items_on_ancestry"
     t.index ["outfit_id"], name: "index_outfit_items_on_outfit_id"
     t.index ["productable_type", "productable_id"], name: "index_outfit_items_on_productable_type_and_productable_id"
   end
@@ -560,6 +692,8 @@ ActiveRecord::Schema.define(version: 2020_08_13_181235) do
     t.bigint "user_id", null: false
     t.bigint "account_id", null: false
     t.bigint "brand_id"
+    t.bigint "category_id", null: false
+    t.bigint "subcategory_id", null: false
     t.string "name", limit: 150, null: false
     t.text "description", null: false
     t.string "season", limit: 10, null: false
@@ -580,11 +714,15 @@ ActiveRecord::Schema.define(version: 2020_08_13_181235) do
     t.text "favoritable_total"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "ancestry"
     t.index ["account_id"], name: "index_outfits_on_account_id"
+    t.index ["ancestry"], name: "index_outfits_on_ancestry"
     t.index ["brand_id"], name: "index_outfits_on_brand_id"
+    t.index ["category_id"], name: "index_outfits_on_category_id"
     t.index ["discarded_at"], name: "index_outfits_on_discarded_at"
     t.index ["name"], name: "index_outfits_on_name"
     t.index ["slug"], name: "index_outfits_on_slug", unique: true
+    t.index ["subcategory_id"], name: "index_outfits_on_subcategory_id"
     t.index ["user_id"], name: "index_outfits_on_user_id"
   end
 
@@ -646,7 +784,9 @@ ActiveRecord::Schema.define(version: 2020_08_13_181235) do
     t.text "favoritable_total"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "ancestry"
     t.index ["account_id"], name: "index_posts_on_account_id"
+    t.index ["ancestry"], name: "index_posts_on_ancestry"
     t.index ["brand_id"], name: "index_posts_on_brand_id"
     t.index ["discarded_at"], name: "index_posts_on_discarded_at"
     t.index ["user_id"], name: "index_posts_on_user_id"
@@ -656,6 +796,9 @@ ActiveRecord::Schema.define(version: 2020_08_13_181235) do
     t.string "reviewable_type", null: false
     t.bigint "reviewable_id", null: false
     t.bigint "user_id", null: false
+    t.bigint "account_id", null: false
+    t.bigint "category_id", null: false
+    t.bigint "subcategory_id", null: false
     t.string "title", limit: 100, null: false
     t.integer "quality", default: 0, null: false
     t.integer "value", default: 0, null: false
@@ -674,9 +817,14 @@ ActiveRecord::Schema.define(version: 2020_08_13_181235) do
     t.text "favoritable_total"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "ancestry"
+    t.index ["account_id"], name: "index_reviews_on_account_id"
+    t.index ["ancestry"], name: "index_reviews_on_ancestry"
+    t.index ["category_id"], name: "index_reviews_on_category_id"
     t.index ["discarded_at"], name: "index_reviews_on_discarded_at"
     t.index ["reviewable_type", "reviewable_id"], name: "index_reviews_on_reviewable_type_and_reviewable_id"
     t.index ["slug"], name: "index_reviews_on_slug", unique: true
+    t.index ["subcategory_id"], name: "index_reviews_on_subcategory_id"
     t.index ["user_id"], name: "index_reviews_on_user_id"
   end
 
@@ -684,6 +832,9 @@ ActiveRecord::Schema.define(version: 2020_08_13_181235) do
     t.bigint "user_id", null: false
     t.bigint "account_id", null: false
     t.bigint "brand_id", null: false
+    t.bigint "body_part_id", null: false
+    t.bigint "category_id", null: false
+    t.bigint "subcategory_id", null: false
     t.string "name", limit: 100, null: false
     t.text "description", null: false
     t.decimal "retail_price", precision: 10, scale: 2, null: false
@@ -692,9 +843,6 @@ ActiveRecord::Schema.define(version: 2020_08_13_181235) do
     t.string "primary_color", limit: 30, null: false
     t.string "secondary_color", limit: 30
     t.text "product_url"
-    t.string "body_part", limit: 50, default: "Feet", null: false
-    t.string "category", limit: 75, null: false
-    t.string "subcategory", limit: 75, null: false
     t.string "slug"
     t.datetime "discarded_at"
     t.integer "cached_votes_total", default: 0
@@ -708,11 +856,47 @@ ActiveRecord::Schema.define(version: 2020_08_13_181235) do
     t.text "favoritable_total"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "ancestry"
     t.index ["account_id"], name: "index_shoes_on_account_id"
+    t.index ["ancestry"], name: "index_shoes_on_ancestry"
+    t.index ["body_part_id"], name: "index_shoes_on_body_part_id"
     t.index ["brand_id"], name: "index_shoes_on_brand_id"
+    t.index ["category_id"], name: "index_shoes_on_category_id"
     t.index ["discarded_at"], name: "index_shoes_on_discarded_at"
     t.index ["slug"], name: "index_shoes_on_slug", unique: true
+    t.index ["subcategory_id"], name: "index_shoes_on_subcategory_id"
     t.index ["user_id"], name: "index_shoes_on_user_id"
+  end
+
+  create_table "subcategories", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "account_id", null: false
+    t.bigint "category_id", null: false
+    t.string "name", limit: 150, null: false
+    t.integer "brands_count", default: 0, null: false
+    t.integer "accessories_count", default: 0, null: false
+    t.integer "bottoms_count", default: 0, null: false
+    t.integer "cosmetics_count", default: 0, null: false
+    t.integer "dresses_count", default: 0, null: false
+    t.integer "fragrances_count", default: 0, null: false
+    t.integer "jewelries_count", default: 0, null: false
+    t.integer "shoes_count", default: 0, null: false
+    t.integer "suits_count", default: 0, null: false
+    t.integer "tops_count", default: 0, null: false
+    t.integer "total_products_count", default: 0, null: false
+    t.integer "reviews_count", default: 0, null: false
+    t.integer "guides_count", default: 0, null: false
+    t.integer "outfits_count", default: 0, null: false
+    t.integer "catalogs_count", default: 0, null: false
+    t.datetime "discarded_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "ancestry"
+    t.index ["account_id"], name: "index_subcategories_on_account_id"
+    t.index ["ancestry"], name: "index_subcategories_on_ancestry"
+    t.index ["category_id"], name: "index_subcategories_on_category_id"
+    t.index ["discarded_at"], name: "index_subcategories_on_discarded_at"
+    t.index ["user_id"], name: "index_subcategories_on_user_id"
   end
 
   create_table "suits", force: :cascade do |t|
@@ -721,6 +905,9 @@ ActiveRecord::Schema.define(version: 2020_08_13_181235) do
     t.bigint "brand_id", null: false
     t.bigint "top_id", null: false
     t.bigint "bottom_id", null: false
+    t.bigint "body_part_id", null: false
+    t.bigint "category_id", null: false
+    t.bigint "subcategory_id", null: false
     t.string "name", limit: 100, null: false
     t.text "description", null: false
     t.decimal "retail_price", precision: 10, scale: 2, null: false
@@ -740,9 +927,6 @@ ActiveRecord::Schema.define(version: 2020_08_13_181235) do
     t.string "trouser_waistband_style", limit: 75, null: false
     t.string "trouser_pleats", limit: 75, null: false
     t.string "trouser_cuff", limit: 75, null: false
-    t.string "body_part", limit: 50, null: false
-    t.string "category", limit: 75, null: false
-    t.string "subcategory", limit: 75, null: false
     t.string "slug"
     t.datetime "discarded_at"
     t.integer "cached_votes_total", default: 0
@@ -756,11 +940,16 @@ ActiveRecord::Schema.define(version: 2020_08_13_181235) do
     t.text "favoritable_total"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "ancestry"
     t.index ["account_id"], name: "index_suits_on_account_id"
+    t.index ["ancestry"], name: "index_suits_on_ancestry"
+    t.index ["body_part_id"], name: "index_suits_on_body_part_id"
     t.index ["bottom_id"], name: "index_suits_on_bottom_id"
     t.index ["brand_id"], name: "index_suits_on_brand_id"
+    t.index ["category_id"], name: "index_suits_on_category_id"
     t.index ["discarded_at"], name: "index_suits_on_discarded_at"
     t.index ["slug"], name: "index_suits_on_slug", unique: true
+    t.index ["subcategory_id"], name: "index_suits_on_subcategory_id"
     t.index ["top_id"], name: "index_suits_on_top_id"
     t.index ["user_id"], name: "index_suits_on_user_id"
   end
@@ -796,6 +985,9 @@ ActiveRecord::Schema.define(version: 2020_08_13_181235) do
     t.bigint "user_id", null: false
     t.bigint "account_id", null: false
     t.bigint "brand_id", null: false
+    t.bigint "body_part_id", null: false
+    t.bigint "category_id", null: false
+    t.bigint "subcategory_id", null: false
     t.string "name", limit: 100, null: false
     t.text "description", null: false
     t.decimal "retail_price", precision: 10, scale: 2, null: false
@@ -804,9 +996,6 @@ ActiveRecord::Schema.define(version: 2020_08_13_181235) do
     t.string "primary_color", limit: 30, null: false
     t.string "secondary_color", limit: 30
     t.text "product_url"
-    t.string "body_part", limit: 50, null: false
-    t.string "category", limit: 75, null: false
-    t.string "subcategory", limit: 75, null: false
     t.string "slug"
     t.datetime "discarded_at"
     t.integer "cached_votes_total", default: 0
@@ -820,10 +1009,15 @@ ActiveRecord::Schema.define(version: 2020_08_13_181235) do
     t.text "favoritable_total"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "ancestry"
     t.index ["account_id"], name: "index_tops_on_account_id"
+    t.index ["ancestry"], name: "index_tops_on_ancestry"
+    t.index ["body_part_id"], name: "index_tops_on_body_part_id"
     t.index ["brand_id"], name: "index_tops_on_brand_id"
+    t.index ["category_id"], name: "index_tops_on_category_id"
     t.index ["discarded_at"], name: "index_tops_on_discarded_at"
     t.index ["slug"], name: "index_tops_on_slug", unique: true
+    t.index ["subcategory_id"], name: "index_tops_on_subcategory_id"
     t.index ["user_id"], name: "index_tops_on_user_id"
   end
 
@@ -895,6 +1089,8 @@ ActiveRecord::Schema.define(version: 2020_08_13_181235) do
     t.integer "cached_weighted_total", default: 0
     t.float "cached_weighted_average", default: 0.0
     t.string "slug"
+    t.string "ancestry"
+    t.index ["ancestry"], name: "index_users_on_ancestry"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["invitation_token"], name: "index_users_on_invitation_token", unique: true
     t.index ["invitations_count"], name: "index_users_on_invitations_count"
@@ -930,6 +1126,7 @@ ActiveRecord::Schema.define(version: 2020_08_13_181235) do
     t.index ["voter_type", "voter_id"], name: "index_votes_on_voter_type_and_voter_id"
   end
 
+  add_foreign_key "accessories", "accounts"
   add_foreign_key "accessories", "brands"
   add_foreign_key "accessories", "users"
   add_foreign_key "account_invitations", "accounts"
@@ -938,6 +1135,12 @@ ActiveRecord::Schema.define(version: 2020_08_13_181235) do
   add_foreign_key "account_users", "users"
   add_foreign_key "accounts", "users", column: "owner_id"
   add_foreign_key "api_tokens", "users"
+  add_foreign_key "body_parts", "accounts"
+  add_foreign_key "body_parts", "category_groups"
+  add_foreign_key "body_parts", "users"
+  add_foreign_key "body_regions", "accounts"
+  add_foreign_key "body_regions", "category_groups"
+  add_foreign_key "body_regions", "users"
   add_foreign_key "bottoms", "accounts"
   add_foreign_key "bottoms", "brands"
   add_foreign_key "bottoms", "users"
@@ -947,6 +1150,11 @@ ActiveRecord::Schema.define(version: 2020_08_13_181235) do
   add_foreign_key "catalogs", "accounts"
   add_foreign_key "catalogs", "brands"
   add_foreign_key "catalogs", "users"
+  add_foreign_key "categories", "accounts"
+  add_foreign_key "categories", "category_groups"
+  add_foreign_key "categories", "users"
+  add_foreign_key "category_groups", "accounts"
+  add_foreign_key "category_groups", "users"
   add_foreign_key "collection_items", "collections"
   add_foreign_key "collections", "users"
   add_foreign_key "comments", "accounts"
@@ -974,10 +1182,14 @@ ActiveRecord::Schema.define(version: 2020_08_13_181235) do
   add_foreign_key "posts", "accounts"
   add_foreign_key "posts", "brands"
   add_foreign_key "posts", "users"
+  add_foreign_key "reviews", "accounts"
   add_foreign_key "reviews", "users"
   add_foreign_key "shoes", "accounts"
   add_foreign_key "shoes", "brands"
   add_foreign_key "shoes", "users"
+  add_foreign_key "subcategories", "accounts"
+  add_foreign_key "subcategories", "categories"
+  add_foreign_key "subcategories", "users"
   add_foreign_key "suits", "accounts"
   add_foreign_key "suits", "bottoms"
   add_foreign_key "suits", "brands"

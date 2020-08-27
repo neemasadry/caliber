@@ -3,6 +3,7 @@
 # Table name: outfits
 #
 #  id                       :bigint           not null, primary key
+#  ancestry                 :string
 #  cached_votes_down        :integer          default(0)
 #  cached_votes_score       :integer          default(0)
 #  cached_votes_total       :integer          default(0)
@@ -25,16 +26,21 @@
 #  updated_at               :datetime         not null
 #  account_id               :bigint           not null
 #  brand_id                 :bigint
+#  category_id              :bigint           not null
+#  subcategory_id           :bigint           not null
 #  user_id                  :bigint           not null
 #
 # Indexes
 #
-#  index_outfits_on_account_id    (account_id)
-#  index_outfits_on_brand_id      (brand_id)
-#  index_outfits_on_discarded_at  (discarded_at)
-#  index_outfits_on_name          (name)
-#  index_outfits_on_slug          (slug) UNIQUE
-#  index_outfits_on_user_id       (user_id)
+#  index_outfits_on_account_id      (account_id)
+#  index_outfits_on_ancestry        (ancestry)
+#  index_outfits_on_brand_id        (brand_id)
+#  index_outfits_on_category_id     (category_id)
+#  index_outfits_on_discarded_at    (discarded_at)
+#  index_outfits_on_name            (name)
+#  index_outfits_on_slug            (slug) UNIQUE
+#  index_outfits_on_subcategory_id  (subcategory_id)
+#  index_outfits_on_user_id         (user_id)
 #
 # Foreign Keys
 #

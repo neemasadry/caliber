@@ -3,6 +3,7 @@
 # Table name: accounts
 #
 #  id                 :bigint           not null, primary key
+#  ancestry           :string
 #  card_exp_month     :string
 #  card_exp_year      :string
 #  card_last4         :string
@@ -21,6 +22,7 @@
 #
 # Indexes
 #
+#  index_accounts_on_ancestry  (ancestry)
 #  index_accounts_on_owner_id  (owner_id)
 #
 # Foreign Keys
