@@ -4,6 +4,7 @@ Accessory.destroy_all
 
 brand_entry = Brand.find_by(name: "Jade Black")
 user_entry = User.find_by(email: "jzuniga@gmail.com")
+account_entry = Account.find_by(name: "Jade Black", personal: false)
 
 counter = 1
 
@@ -20,15 +21,16 @@ csv.each do |row|
   t.description = row['description']
   t.retail_price = row['retail_price']
   # t.type_of = row['type_of']
-  t.body_part = "Eyes"
-  t.category = "Eyewear"
-  t.subcategory = "Sunglasses"
+  # t.body_part = "Eyes"
+  # t.category = "Eyewear"
+  # t.subcategory = "Sunglasses"
   t.gender = "Male"
   t.materials = row['material']
   t.primary_color = "N/A"
   t.secondary_color = "N/A"
   t.product_url = row['url']
   t.user_id = user_entry.id
+  t.account_id = account_entry.id
 
   # puts "\n"
   # puts "\t --- Begin: Upload associated product images ---\n"

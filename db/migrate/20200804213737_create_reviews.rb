@@ -5,8 +5,8 @@ class CreateReviews < ActiveRecord::Migration[6.0]
       t.references :reviewable, polymorphic: true, null: false, index: true
       t.references :user, null: false, foreign_key: true
       t.references :account, null: false, foreign_key: true
-      t.references :category, null: false, index: true
-      t.references :subcategory, null: false, index: true
+      # t.references :category, null: false, index: true
+      # t.references :subcategory, null: false, index: true
 
       t.string  :title, null: false, limit: 100
       t.integer :quality, null: false, default: 0

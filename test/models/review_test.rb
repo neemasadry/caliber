@@ -24,20 +24,16 @@
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null
 #  account_id              :bigint           not null
-#  category_id             :bigint           not null
 #  reviewable_id           :bigint           not null
-#  subcategory_id          :bigint           not null
 #  user_id                 :bigint           not null
 #
 # Indexes
 #
 #  index_reviews_on_account_id                         (account_id)
 #  index_reviews_on_ancestry                           (ancestry)
-#  index_reviews_on_category_id                        (category_id)
 #  index_reviews_on_discarded_at                       (discarded_at)
 #  index_reviews_on_reviewable_type_and_reviewable_id  (reviewable_type,reviewable_id)
 #  index_reviews_on_slug                               (slug) UNIQUE
-#  index_reviews_on_subcategory_id                     (subcategory_id)
 #  index_reviews_on_user_id                            (user_id)
 #
 # Foreign Keys

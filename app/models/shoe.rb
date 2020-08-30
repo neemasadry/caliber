@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: cosmetics
+# Table name: shoes
 #
 #  id                      :bigint           not null, primary key
 #  ancestry                :string
@@ -16,31 +16,27 @@
 #  favoritable_score       :text
 #  favoritable_total       :text
 #  gender                  :string(6)        not null
-#  ingredients             :text
+#  materials               :text
 #  name                    :string(100)      not null
+#  primary_color           :string(30)       not null
 #  product_url             :text
 #  retail_price            :decimal(10, 2)   not null
+#  secondary_color         :string(30)
 #  slug                    :string
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null
 #  account_id              :bigint           not null
-#  body_part_id            :bigint           not null
 #  brand_id                :bigint           not null
-#  category_id             :bigint           not null
-#  subcategory_id          :bigint           not null
 #  user_id                 :bigint           not null
 #
 # Indexes
 #
-#  index_cosmetics_on_account_id      (account_id)
-#  index_cosmetics_on_ancestry        (ancestry)
-#  index_cosmetics_on_body_part_id    (body_part_id)
-#  index_cosmetics_on_brand_id        (brand_id)
-#  index_cosmetics_on_category_id     (category_id)
-#  index_cosmetics_on_discarded_at    (discarded_at)
-#  index_cosmetics_on_slug            (slug) UNIQUE
-#  index_cosmetics_on_subcategory_id  (subcategory_id)
-#  index_cosmetics_on_user_id         (user_id)
+#  index_shoes_on_account_id    (account_id)
+#  index_shoes_on_ancestry      (ancestry)
+#  index_shoes_on_brand_id      (brand_id)
+#  index_shoes_on_discarded_at  (discarded_at)
+#  index_shoes_on_slug          (slug) UNIQUE
+#  index_shoes_on_user_id       (user_id)
 #
 # Foreign Keys
 #
@@ -48,6 +44,6 @@
 #  fk_rails_...  (brand_id => brands.id)
 #  fk_rails_...  (user_id => users.id)
 #
-class Cosmetic < ApplicationRecord
+class Shoe < ApplicationRecord
   include Products
 end

@@ -67,14 +67,14 @@ class AddAncestryToAll < ActiveRecord::Migration[6.0]
       add_column :catalog_items, :ancestry, :string
       add_index :catalog_items, :ancestry
 
-      add_column :category_groups, :ancestry, :string
-      add_index :category_groups, :ancestry
+      # add_column :category_groups, :ancestry, :string
+      # add_index :category_groups, :ancestry
 
-      add_column :categories, :ancestry, :string
-      add_index :categories, :ancestry
+      # add_column :categories, :ancestry, :string
+      # add_index :categories, :ancestry
 
-      add_column :subcategories, :ancestry, :string
-      add_index :subcategories, :ancestry
+      # add_column :subcategories, :ancestry, :string
+      # add_index :subcategories, :ancestry
 
       # add_column :body_parts, :ancestry, :string
       # add_index :body_parts, :ancestry

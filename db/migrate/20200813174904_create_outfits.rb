@@ -4,8 +4,8 @@ class CreateOutfits < ActiveRecord::Migration[6.0]
       t.references :user, null: false, foreign_key: true
       t.references :account, null: false, foreign_key: true
       t.references :brand, null: true, foreign_key: true
-      t.references :category, null: false, index: true
-      t.references :subcategory, null: false, index: true
+      # t.references :category, null: false, index: true
+      # t.references :subcategory, null: false, index: true
 
       t.string :name, null: false, limit: 150, index: true
       t.text :description, null: false, limit: 3000

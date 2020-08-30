@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: dresses
+# Table name: tops
 #
 #  id                      :bigint           not null, primary key
 #  ancestry                :string
@@ -26,23 +26,17 @@
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null
 #  account_id              :bigint           not null
-#  body_part_id            :bigint           not null
 #  brand_id                :bigint           not null
-#  category_id             :bigint           not null
-#  subcategory_id          :bigint           not null
 #  user_id                 :bigint           not null
 #
 # Indexes
 #
-#  index_dresses_on_account_id      (account_id)
-#  index_dresses_on_ancestry        (ancestry)
-#  index_dresses_on_body_part_id    (body_part_id)
-#  index_dresses_on_brand_id        (brand_id)
-#  index_dresses_on_category_id     (category_id)
-#  index_dresses_on_discarded_at    (discarded_at)
-#  index_dresses_on_slug            (slug) UNIQUE
-#  index_dresses_on_subcategory_id  (subcategory_id)
-#  index_dresses_on_user_id         (user_id)
+#  index_tops_on_account_id    (account_id)
+#  index_tops_on_ancestry      (ancestry)
+#  index_tops_on_brand_id      (brand_id)
+#  index_tops_on_discarded_at  (discarded_at)
+#  index_tops_on_slug          (slug) UNIQUE
+#  index_tops_on_user_id       (user_id)
 #
 # Foreign Keys
 #
@@ -50,6 +44,6 @@
 #  fk_rails_...  (brand_id => brands.id)
 #  fk_rails_...  (user_id => users.id)
 #
-class Dress < ApplicationRecord
+class Top < ApplicationRecord
   include Products
 end

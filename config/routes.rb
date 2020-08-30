@@ -5,9 +5,6 @@ Rails.application.routes.draw do
   get :autocomplete, controller: :search
   get :search, controller: :search
 
-  # Categorization
-  resources :categories
-
   resources :brands, model_name: "Brand" do
     member do
       put "like", to: "brands#like"
