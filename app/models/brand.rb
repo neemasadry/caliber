@@ -15,7 +15,6 @@
 #  cached_weighted_average :float            default(0.0)
 #  cached_weighted_score   :integer          default(0)
 #  cached_weighted_total   :integer          default(0)
-#  category                :string(100)      not null
 #  city                    :string(100)      not null
 #  country_code            :string(5)        not null
 #  discarded_at            :datetime
@@ -43,7 +42,7 @@
 #  updated_at              :datetime         not null
 #  account_id              :bigint           not null
 #  category_id             :bigint           not null
-#  subcategory_id          :bigint           not null
+#  subcategory_id          :bigint
 #  user_id                 :bigint           not null
 #
 # Indexes
@@ -73,6 +72,12 @@ class Brand < ApplicationRecord
   belongs_to :user
 
   has_one_attached :logo
+
+  # Categorization
+  has_many :brand_categories, dependent: :destroy
+  has_many :categories, through: :brand_category_items
+  has_many :brand_subcategories, dependent: :destroy
+  has_many :subcategories, through: :brand_subcategory_items
 
   has_many :comments, as: :commentable
   has_many :posts, dependent: :destroy

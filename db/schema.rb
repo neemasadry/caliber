@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_30_204622) do
+ActiveRecord::Schema.define(version: 2020_08_31_182446) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,7 +19,9 @@ ActiveRecord::Schema.define(version: 2020_08_30_204622) do
     t.bigint "user_id", null: false
     t.bigint "account_id", null: false
     t.bigint "brand_id", null: false
+    t.bigint "body_part_group_id", null: false
     t.bigint "body_part_id", null: false
+    t.bigint "category_group_id", null: false
     t.bigint "category_id", null: false
     t.bigint "subcategory_id", null: false
     t.string "name", limit: 100, null: false
@@ -45,8 +47,10 @@ ActiveRecord::Schema.define(version: 2020_08_30_204622) do
     t.string "ancestry"
     t.index ["account_id"], name: "index_accessories_on_account_id"
     t.index ["ancestry"], name: "index_accessories_on_ancestry"
+    t.index ["body_part_group_id"], name: "index_accessories_on_body_part_group_id"
     t.index ["body_part_id"], name: "index_accessories_on_body_part_id"
     t.index ["brand_id"], name: "index_accessories_on_brand_id"
+    t.index ["category_group_id"], name: "index_accessories_on_category_group_id"
     t.index ["category_id"], name: "index_accessories_on_category_id"
     t.index ["slug"], name: "index_accessories_on_slug", unique: true
     t.index ["subcategory_id"], name: "index_accessories_on_subcategory_id"
@@ -235,10 +239,9 @@ ActiveRecord::Schema.define(version: 2020_08_30_204622) do
     t.bigint "user_id", null: false
     t.bigint "account_id", null: false
     t.bigint "category_id", null: false
-    t.bigint "subcategory_id", null: false
+    t.bigint "subcategory_id"
     t.string "name", limit: 150, null: false
     t.string "brand_identifier", limit: 60, null: false
-    t.string "category", limit: 100, null: false
     t.integer "price_range", null: false
     t.date "founding_date", null: false
     t.string "mission", limit: 125, null: false
@@ -679,6 +682,13 @@ ActiveRecord::Schema.define(version: 2020_08_30_204622) do
     t.index ["outfit_id"], name: "index_outfit_categories_on_outfit_id"
   end
 
+  create_table "outfit_item_body_parts", force: :cascade do |t|
+    t.bigint "outfit_item_id", null: false
+    t.bigint "body_part_id", null: false
+    t.index ["body_part_id"], name: "index_outfit_item_body_parts_on_body_part_id"
+    t.index ["outfit_item_id"], name: "index_outfit_item_body_parts_on_outfit_item_id"
+  end
+
   create_table "outfit_item_categories", force: :cascade do |t|
     t.bigint "outfit_items_id"
     t.bigint "category_id"
@@ -812,20 +822,28 @@ ActiveRecord::Schema.define(version: 2020_08_30_204622) do
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
-  create_table "product_categories", force: :cascade do |t|
-    t.string "productable_type"
-    t.bigint "productable_id"
-    t.bigint "category_id"
-    t.index ["category_id"], name: "index_product_categories_on_category_id"
-    t.index ["productable_type", "productable_id"], name: "index_product_categories_on_productable"
-  end
-
   create_table "product_subcategories", force: :cascade do |t|
     t.string "productable_type"
     t.bigint "productable_id"
     t.bigint "subcategory_id"
     t.index ["productable_type", "productable_id"], name: "index_product_subcategories_on_productable"
     t.index ["subcategory_id"], name: "index_product_subcategories_on_subcategory_id"
+  end
+
+  create_table "productable_body_parts", force: :cascade do |t|
+    t.string "productable_type", null: false
+    t.bigint "productable_id", null: false
+    t.bigint "body_part_id", null: false
+    t.index ["body_part_id"], name: "index_productable_body_parts_on_body_part_id"
+    t.index ["productable_type", "productable_id"], name: "index_productable_body_part_on_type_and_id"
+  end
+
+  create_table "productable_categories", force: :cascade do |t|
+    t.string "productable_type"
+    t.bigint "productable_id"
+    t.bigint "category_id"
+    t.index ["category_id"], name: "index_productable_categories_on_category_id"
+    t.index ["productable_type", "productable_id"], name: "index_product_categories_on_productable"
   end
 
   create_table "review_categories", force: :cascade do |t|
@@ -1207,6 +1225,8 @@ ActiveRecord::Schema.define(version: 2020_08_30_204622) do
   add_foreign_key "jewelries", "users"
   add_foreign_key "outfit_categories", "categories"
   add_foreign_key "outfit_categories", "outfits"
+  add_foreign_key "outfit_item_body_parts", "body_parts"
+  add_foreign_key "outfit_item_body_parts", "outfit_items"
   add_foreign_key "outfit_item_categories", "categories"
   add_foreign_key "outfit_item_categories", "outfit_items", column: "outfit_items_id"
   add_foreign_key "outfit_item_subcategories", "outfit_items", column: "outfit_items_id"
@@ -1220,8 +1240,9 @@ ActiveRecord::Schema.define(version: 2020_08_30_204622) do
   add_foreign_key "posts", "accounts"
   add_foreign_key "posts", "brands"
   add_foreign_key "posts", "users"
-  add_foreign_key "product_categories", "categories"
   add_foreign_key "product_subcategories", "subcategories"
+  add_foreign_key "productable_body_parts", "body_parts"
+  add_foreign_key "productable_categories", "categories"
   add_foreign_key "review_categories", "categories"
   add_foreign_key "review_categories", "reviews"
   add_foreign_key "review_subcategories", "reviews"

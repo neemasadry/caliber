@@ -55,10 +55,10 @@ class Outfit < ApplicationRecord
   has_many :outfit_items, dependent: :destroy
 
   # Categorization
-  has_many :outfit_categories
-  has_many :categories, through: :outfit_categories
-  has_many :outfit_subcategories
-  has_many :subcategories, through: :outfit_subcategories
+  has_many :outfit_category_items, dependent: :destroy
+  has_many :categories, through: :outfit_category_items
+  has_many :outfit_subcategory_items, dependent: :destroy
+  has_many :subcategories, through: :outfit_subcategory_items
 
   friendly_id :name, use: :slugged
 

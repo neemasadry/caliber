@@ -23,15 +23,18 @@
 class OutfitItem < ApplicationRecord
   belongs_to :outfit
   belongs_to :productable, polymorphic: true
-  belongs_to :body_part
-  belongs_to :category
-  belongs_to :subcategory
+
+  # Categorization
+  has_many :outfit_item_category_items, dependent: :destroy
+  has_many :categories, through: :outfit_item_category_items
+  has_many :outfit_item_subcategory_items, dependent: :destroy
+  has_many :subcategories, through: :outfit_item_subcategory_items
 
   has_ancestry
 
   validates :productable_type, presence: true
   validates :productable_id, presence: true, uniqueness: { scope: [:outfit_id, :productable_type] }
-  validates :body_part, presence: true, length: { minimum: 1, maximum: 50 }, inclusion: { in: ["Crown", "Eyes", "Ears", "Neck", "Arm", "Forearm", "Wrist", "Hands", "Finger", "Back", "Chest", "Abdomen", "Waist", "Legs", "Feet", "Not on Body" ] }
+  # validates :body_part, presence: true, length: { minimum: 1, maximum: 50 }, inclusion: { in: ["Crown", "Eyes", "Ears", "Neck", "Arm", "Forearm", "Wrist", "Hands", "Finger", "Back", "Chest", "Abdomen", "Waist", "Legs", "Feet", "Not on Body" ] }
   validates :outfit_id, presence: true
 
   before_create do |outfit_item|

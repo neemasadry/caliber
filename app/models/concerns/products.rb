@@ -12,6 +12,17 @@ module Products
 
     has_many_attached :images
 
+    # Begin: Categorization
+    has_many :productable_body_parts, dependent: :destroy
+    has_many :body_part, through: :productable_body_part_items, as: :productable
+
+    has_many :productable_category_items, dependent: :destroy
+    has_many :categories, through: :productable_category_items, as: :productable
+
+    has_many :productable_subcategory_items, dependent: :destroy
+    has_many :subcategories, through: :productable_subcategory_items, as: :productable
+    # End: Categorization
+
     has_many :reviews, as: :reviewable, dependent: :destroy
     has_many :collectable_items
     has_many :collections, through: :collectable_items
@@ -31,8 +42,8 @@ module Products
     validates :retail_price, presence: true, numericality: { greater_than: 0, less_than: 1000000 }
     #validates :type_of, presence: true, if: :has_type_of?
     validates :body_part, presence: true, inclusion: { in: ["Crown", "Eyes", "Ears", "Neck", "Arm", "Forearm", "Hands", "Finger", "Back", "Chest", "Abdomen", "Waist", "Legs", "Feet", "Not on Body" ] }
-    validates :category, presence: true, length: { in: 2..75 }
-    validates :subcategory, presence: true, length: { in: 2..75 }
+    # validates :category, presence: true, length: { in: 2..75 }
+    # validates :subcategory, presence: true, length: { in: 2..75 }
     validates :gender, presence: true, length: { maximum: 6 }, unless: :has_gender?
     validates :materials, presence: true, length: { minimum: 3, maximum: 150 }, if: :has_material_or_colors?
     validates :ingredients, presence: true, length: { minimum: 3, maximum: 3000 }, if: :has_ingredients?

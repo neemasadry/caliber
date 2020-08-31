@@ -22,7 +22,7 @@ body_parts_selection = {
 # Terminal level should be an Array for simplicity, otherwise needs new conditional
 
 category_tree = {
-  products: {
+  product: {
     # Skip next level for categorization as it's already accessible via productable_type
     accessory: {
       eyewear: [ "Eyeglasses", "Sunglasses", "Contact Lenses", "Goggles","Spectacles", "Safety"],
@@ -54,7 +54,44 @@ category_tree = {
 
     # }
   },
-  seasons: [
+  brands: [
+    #"App Page",
+    "Appliances",
+    "Baby Goods/Kids Goods",
+    "Bags/Luggage",
+    "Beauty/Cosmetics",
+    #"Board Game",
+    #"Brand",
+    #"Building Materials",
+    "Camera/Photo",
+    "Cars",
+    "Clothing",
+    #"Commercial Equipment",
+    "Computers (Brand)",
+    "Electronics",
+    "Food & Beverage Company",
+    "Furniture",
+    #"Games/Toys",
+    "Grooming/Hygiene",
+    "Health/Nutrition",
+    "Home Décor",
+    "Household Supplies",
+    "Jewelry/Watches",
+    "Kitchen/Cooking",
+    "Office Supplies",
+    "Patio/Garden",
+    "Pet Supplies",
+    "Pharmaceuticals",
+    #"Phone/Tablet",
+    "Product/Service",
+    #"Software",
+    "Tools/Equipment",
+    #"Video Game",
+    "Vitamins/Supplements",
+    #"Website",
+    "Wine/Spirits"
+  ],
+  season: [
     "Spring",
     "Summer",
     "Fall",
@@ -270,7 +307,7 @@ category_tree.each do |category_group_key, category_group_values|
 
       end # category_values.each
     end # category_group_values.each
-  elsif category_group_key == :seasons
+  elsif category_group_key == :seasons || category_group_key == :brands
 
     # seasons_category_group = CategoryGroup.create!(
     #   name: category_group_key.to_s.capitalize

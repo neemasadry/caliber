@@ -8,65 +8,83 @@ amarino = User.find_by(email: "amarino@alpham.com")
 jzuniga = User.find_by(email: "jzuniga@gmail.com")
 kjenner = User.find_by(email: "kylie@jenner.com")
 
-users_with_brands = [acosta, amarino, jzuniga, kjenner]
+# users_with_brands = [acosta, amarino, jzuniga, kjenner]
+user_account_brand = {
+  "Forte": acosta,
+  "Pete & Pedro": amarino,
+  "Tiege Hanley": amarino,
+  "Enemy": amarino,
+  "Jade Black": jzuniga,
+  "ESNTLS": jzuniga,
+  "Kylie Skin": kjenner
+}
 
 puts "---------------- Begin: Account ----------------"
 
-### Alex Costa
-Account.new(
-    name: "Forte",
-    owner: acosta,
-    personal: false
-  ).account_users.new(user: acosta, admin: true).save!
-puts "Forte created!"
+user_account_brand.each do |account_key, account_value|
+  Account.new(
+      name: account_key,
+      owner: account_value,
+      personal: false
+    ).account_users.new(user: account_value, admin: true).save!
+  puts "#{account_key} created!"
+end
+
+# ### Alex Costa
+# Account.new(
+#     name: "Forte",
+#     owner: acosta,
+#     personal: false
+#   ).account_users.new(user: acosta, admin: true).save!
+# puts "Forte created!"
 
 
-### Aaron Marino
-Account.new(
-    name: "Pete & Pedro",
-    owner: amarino,
-    personal: false
-  ).account_users.new(user: amarino, admin: true).save!
-puts "Pete & Pedro created!"
+# ### Aaron Marino
+# Account.new(
+#     name: "Pete & Pedro",
+#     owner: amarino,
+#     personal: false
+#   ).account_users.new(user: amarino, admin: true).save!
+# puts "Pete & Pedro created!"
 
-Account.new(
-    name: "Tiege Hanley",
-    owner: amarino,
-    personal: false
-  ).account_users.new(user: amarino, admin: true).save!
-puts "Tiege Hanley created!"
+# Account.new(
+#     name: "Tiege Hanley",
+#     owner: amarino,
+#     personal: false
+#   ).account_users.new(user: amarino, admin: true).save!
+# puts "Tiege Hanley created!"
 
-Account.new(
-    name: "Enemy",
-    owner: amarino,
-    personal: false
-  ).account_users.new(user: amarino, admin: true).save!
-puts "Enemy created!"
-
-
-### Jose Zuniga
-Account.new(
-    name: "Jade Black",
-    owner: jzuniga,
-    personal: false
-  ).account_users.new(user: jzuniga, admin: true).save!
-puts "Jade Black created!"
-
-Account.new(
-    name: "ESNTLS",
-    owner: jzuniga,
-    personal: false
-  ).account_users.new(user: jzuniga, admin: true).save!
-puts "ESNTLS created!"
+# Account.new(
+#     name: "Enemy",
+#     owner: amarino,
+#     personal: false
+#   ).account_users.new(user: amarino, admin: true).save!
+# puts "Enemy created!"
 
 
-### Kylie Jenner
-Account.new(
-    name: "Kylie Skin",
-    owner: kjenner,
-    personal: false
-  ).account_users.new(user: kjenner, admin: true).save!
-puts "Kylie Skin created!"
+# ### Jose Zuniga
+# Account.new(
+#     name: "Jade Black",
+#     owner: jzuniga,
+#     personal: false
+#   ).account_users.new(user: jzuniga, admin: true).save!
+# puts "Jade Black created!"
+
+# Account.new(
+#     name: "ESNTLS",
+#     owner: jzuniga,
+#     personal: false
+#   ).account_users.new(user: jzuniga, admin: true).save!
+# puts "ESNTLS created!"
+
+
+# ### Kylie Jenner
+# Account.new(
+#     name: "Kylie Skin",
+#     owner: kjenner,
+#     personal: false
+#   ).account_users.new(user: kjenner, admin: true).save!
+# puts "Kylie Skin created!"
 
 
 puts "---------------- End: Account ----------------"
@@ -94,7 +112,7 @@ b_forte = Brand.create!(
   account_id: Account.find_by(name: acosta_forte).id,
   name: acosta_forte,
   brand_identifier: "forte",
-  category: "Grooming & Hygiene",
+  # category_id: Category.find_by(name: "Grooming/Hygiene").id,
   founding_date: "2020-02-24",
   about: Faker::Lorem.paragraphs(4..7).join(" "),
   price_range: 2,
@@ -135,7 +153,7 @@ b_peteandpedro = Brand.create!(
   account_id: Account.find_by(name: amarino_pnp).id,
   name: amarino_pnp,
   brand_identifier: "peteandpedro",
-  category: "Grooming & Hygiene",
+  # category_id: Category.find_by(name: "Grooming/Hygiene").id,
   founding_date: "2013-04-01",
   about: Faker::Lorem.paragraphs(4..7).join(" "),
   price_range: 2,
@@ -175,7 +193,7 @@ b_tiege = Brand.create!(
     account_id: Account.find_by(name: amarino_th).id,
     name: amarino_th,
     brand_identifier: "tiegehanley",
-    category: "Grooming & Hygiene",
+    # category_id: Category.find_by(name: "Grooming/Hygiene").id,
     founding_date: "2016-05-21",
     about: Faker::Lorem.paragraphs(4..7).join(" "),
     price_range: 2,
@@ -215,7 +233,7 @@ b_esntls = Brand.create!(
     account_id: Account.find_by(name: jzuniga_esntls).id,
     name: jzuniga_esntls,
     brand_identifier: "esntls",
-    category: "Clothing & Accessories",
+    # category_id: Category.find_by(name: "Clothing").id,
     founding_date: "2017-05-21",
     about: Faker::Lorem.paragraphs(4..7).join(" "),
     price_range: 2,
@@ -254,7 +272,7 @@ b_jade_black = Brand.create!(
     account_id: Account.find_by(name: jzuniga_jb).id,
     name: jzuniga_jb,
     brand_identifier: "jadeblack",
-    category: "Clothing & Accessories",
+    # category_id: Category.find_by(name: "Clothing").id,
     founding_date: "2017-05-21",
     about: Faker::Lorem.paragraphs(4..7).join(" "),
     price_range: 2,
@@ -295,7 +313,7 @@ b_kylieskin = Brand.create!(
     account_id: Account.find_by(name: kjenner_ks).id,
     name: kjenner_ks,
     brand_identifier: "kylieskin",
-    category: "Beauty & Hygiene",
+    # category_id: Category.find_by(name: "Beauty/Cosmetics").id,
     founding_date: "2014-05-21",
     about: Faker::Lorem.paragraphs(4..7).join(" "),
     price_range: 2,

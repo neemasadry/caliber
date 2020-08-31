@@ -20,10 +20,14 @@ csv.each do |row|
   t.brand_id = brand_entry.id
   t.description = row['description']
   t.retail_price = row['retail_price']
-  # t.type_of = row['type_of']
-  t.body_part = "Eyes"
-  t.category = "Eyewear"
-  t.subcategory = "Sunglasses"
+
+  # Categorization
+  t.body_part_group   = BodyPartGroup.find_by(name: "Head").id
+  t.body_part_id      = BodyPart.find_by(name: "Eyes").id
+  t.category_group_id = CategoryGroup.find_by(name: "Product").id
+  t.category_id       = Category.find_by(name: "Eyewear").id
+  t.subcategory_id    = Subcategory.find_by(name: "Sunglasses").id
+
   t.gender = "Male"
   t.materials = row['material']
   t.primary_color = "N/A"
