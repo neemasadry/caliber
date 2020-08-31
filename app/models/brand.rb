@@ -42,6 +42,8 @@
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null
 #  account_id              :bigint           not null
+#  category_id             :bigint           not null
+#  subcategory_id          :bigint           not null
 #  user_id                 :bigint           not null
 #
 # Indexes
@@ -49,9 +51,11 @@
 #  index_brands_on_account_id        (account_id)
 #  index_brands_on_ancestry          (ancestry)
 #  index_brands_on_brand_identifier  (brand_identifier) UNIQUE
+#  index_brands_on_category_id       (category_id)
 #  index_brands_on_discarded_at      (discarded_at)
 #  index_brands_on_name              (name)
 #  index_brands_on_slug              (slug) UNIQUE
+#  index_brands_on_subcategory_id    (subcategory_id)
 #  index_brands_on_user_id           (user_id)
 #
 # Foreign Keys

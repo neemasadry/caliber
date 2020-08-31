@@ -30,9 +30,9 @@ module Products
     validates :description, presence: true, length: { maximum: 3000 }
     validates :retail_price, presence: true, numericality: { greater_than: 0, less_than: 1000000 }
     #validates :type_of, presence: true, if: :has_type_of?
-    # validates :body_part, presence: true, inclusion: { in: ["Crown", "Eyes", "Ears", "Neck", "Arm", "Forearm", "Hands", "Finger", "Back", "Chest", "Abdomen", "Waist", "Legs", "Feet", "Not on Body" ] }
-    # validates :category, presence: true, length: { in: 2..75 }
-    # validates :subcategory, presence: true, length: { in: 2..75 }
+    validates :body_part, presence: true, inclusion: { in: ["Crown", "Eyes", "Ears", "Neck", "Arm", "Forearm", "Hands", "Finger", "Back", "Chest", "Abdomen", "Waist", "Legs", "Feet", "Not on Body" ] }
+    validates :category, presence: true, length: { in: 2..75 }
+    validates :subcategory, presence: true, length: { in: 2..75 }
     validates :gender, presence: true, length: { maximum: 6 }, unless: :has_gender?
     validates :materials, presence: true, length: { minimum: 3, maximum: 150 }, if: :has_material_or_colors?
     validates :ingredients, presence: true, length: { minimum: 3, maximum: 3000 }, if: :has_ingredients?
@@ -52,9 +52,9 @@ module Products
     {
       name: name,
       brand: brand.name,
-      # body_part: body_part,
-      # category: category,
-      # subcategory: subcategory,
+      body_part: body_part,
+      category: category,
+      subcategory: subcategory,
       primary_color: primary_color,
       secondary_color: secondary_color
     }

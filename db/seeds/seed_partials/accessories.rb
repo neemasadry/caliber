@@ -21,9 +21,9 @@ csv.each do |row|
   t.description = row['description']
   t.retail_price = row['retail_price']
   # t.type_of = row['type_of']
-  # t.body_part = "Eyes"
-  # t.category = "Eyewear"
-  # t.subcategory = "Sunglasses"
+  t.body_part = "Eyes"
+  t.category = "Eyewear"
+  t.subcategory = "Sunglasses"
   t.gender = "Male"
   t.materials = row['material']
   t.primary_color = "N/A"

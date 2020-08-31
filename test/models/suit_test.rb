@@ -37,21 +37,27 @@
 #  created_at               :datetime         not null
 #  updated_at               :datetime         not null
 #  account_id               :bigint           not null
+#  body_part_id             :bigint           not null
 #  bottom_id                :bigint           not null
 #  brand_id                 :bigint           not null
+#  category_id              :bigint           not null
+#  subcategory_id           :bigint           not null
 #  top_id                   :bigint           not null
 #  user_id                  :bigint           not null
 #
 # Indexes
 #
-#  index_suits_on_account_id    (account_id)
-#  index_suits_on_ancestry      (ancestry)
-#  index_suits_on_bottom_id     (bottom_id)
-#  index_suits_on_brand_id      (brand_id)
-#  index_suits_on_discarded_at  (discarded_at)
-#  index_suits_on_slug          (slug) UNIQUE
-#  index_suits_on_top_id        (top_id)
-#  index_suits_on_user_id       (user_id)
+#  index_suits_on_account_id      (account_id)
+#  index_suits_on_ancestry        (ancestry)
+#  index_suits_on_body_part_id    (body_part_id)
+#  index_suits_on_bottom_id       (bottom_id)
+#  index_suits_on_brand_id        (brand_id)
+#  index_suits_on_category_id     (category_id)
+#  index_suits_on_discarded_at    (discarded_at)
+#  index_suits_on_slug            (slug) UNIQUE
+#  index_suits_on_subcategory_id  (subcategory_id)
+#  index_suits_on_top_id          (top_id)
+#  index_suits_on_user_id         (user_id)
 #
 # Foreign Keys
 #
