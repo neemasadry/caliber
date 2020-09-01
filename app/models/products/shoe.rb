@@ -3,7 +3,6 @@
 # Table name: shoes
 #
 #  id                      :bigint           not null, primary key
-#  ancestry                :string
 #  cached_votes_down       :integer          default(0)
 #  cached_votes_score      :integer          default(0)
 #  cached_votes_total      :integer          default(0)
@@ -35,7 +34,6 @@
 # Indexes
 #
 #  index_shoes_on_account_id      (account_id)
-#  index_shoes_on_ancestry        (ancestry)
 #  index_shoes_on_body_part_id    (body_part_id)
 #  index_shoes_on_brand_id        (brand_id)
 #  index_shoes_on_category_id     (category_id)

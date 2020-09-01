@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: brand_categories
+# Table name: brand_category_items
 #
 #  id          :bigint           not null, primary key
 #  brand_id    :bigint
@@ -8,8 +8,8 @@
 #
 # Indexes
 #
-#  index_brand_categories_on_brand_id     (brand_id)
-#  index_brand_categories_on_category_id  (category_id)
+#  index_brand_category_items_on_brand_id     (brand_id)
+#  index_brand_category_items_on_category_id  (category_id)
 #
 # Foreign Keys
 #
@@ -17,8 +17,8 @@
 #  fk_rails_...  (category_id => categories.id)
 #
 class BrandCategoryItem < ApplicationRecord
-  belongs_to :brand
-  belongs_to :category
+  belongs_to :brand, optional: true
+  belongs_to :category, optional: true
 
-  has_ancestry
+  # has_ancestry
 end

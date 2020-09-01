@@ -3,7 +3,6 @@
 # Table name: body_parts
 #
 #  id                 :bigint           not null, primary key
-#  ancestry           :string           default("0"), not null
 #  name               :string(75)       not null
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null

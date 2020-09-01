@@ -3,7 +3,6 @@
 # Table name: body_parts
 #
 #  id                 :bigint           not null, primary key
-#  ancestry           :string           default("0"), not null
 #  name               :string(75)       not null
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
@@ -20,6 +19,8 @@
 #
 class BodyPart < ApplicationRecord
   belongs_to :body_part_group
+
+  #has_many :productable_body_part_items, through: :productable_body_part_items, dependent: :destroy
 
   counter_culture :body_part_group
 end

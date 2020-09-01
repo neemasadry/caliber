@@ -54,12 +54,12 @@ category_tree = {
 
     # }
   },
-  brands: [
+  brand: [
     #"App Page",
     "Appliances",
     "Baby Goods/Kids Goods",
     "Bags/Luggage",
-    "Beauty/Cosmetics",
+    "Beauty/Cosmetics/Hygiene",
     #"Board Game",
     #"Brand",
     #"Building Materials",
@@ -281,8 +281,9 @@ category_tree.each do |category_group_key, category_group_values|
     name: category_group_key.to_s.capitalize
   )
   puts "CategoryGroup: #{create_category_group.name} created!"
+  puts "#{category_group_key}"
 
-  if (category_group_key == :products)
+  if (category_group_key == :product)
     # Essentially, skip this level if Product as this would lead to redundant categorization
     category_group_values.each do |category_key, category_values|
       #if (category_key == :accessory || category_key == :bottom || category_key == :cosmetic || category_key == :dress || category_key == :fragrance || category_key == :jewelry || category_key == :suit || category_key == :shoe || category_key == :top)
@@ -307,7 +308,7 @@ category_tree.each do |category_group_key, category_group_values|
 
       end # category_values.each
     end # category_group_values.each
-  elsif category_group_key == :seasons || category_group_key == :brands
+  elsif category_group_key == :season || category_group_key == :brand
 
     # seasons_category_group = CategoryGroup.create!(
     #   name: category_group_key.to_s.capitalize

@@ -3,7 +3,6 @@
 # Table name: subcategories
 #
 #  id                :bigint           not null, primary key
-#  ancestry          :string
 #  name              :string(150)      not null
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null

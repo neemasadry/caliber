@@ -6,7 +6,6 @@
 #  accepted_privacy_at     :datetime
 #  accepted_terms_at       :datetime
 #  admin                   :boolean          default(FALSE)
-#  ancestry                :string
 #  announcements_read_at   :datetime
 #  cached_votes_down       :integer          default(0)
 #  cached_votes_score      :integer          default(0)
@@ -56,7 +55,6 @@
 #
 # Indexes
 #
-#  index_users_on_ancestry                           (ancestry)
 #  index_users_on_email                              (email) UNIQUE
 #  index_users_on_invitation_token                   (invitation_token) UNIQUE
 #  index_users_on_invitations_count                  (invitations_count)
@@ -109,7 +107,7 @@ class User < ApplicationRecord
   friendly_id :username, use: :slugged
   searchkick word_start: [:username, :first_name, :last_name], word_middle: [:username, :first_name, :last_name]
 
-  has_ancestry
+  # has_ancestry
   acts_as_favoritor
   acts_as_favoritable
 

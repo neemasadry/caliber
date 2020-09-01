@@ -3,7 +3,6 @@
 # Table name: comments
 #
 #  id                      :bigint           not null, primary key
-#  ancestry                :string
 #  body                    :text             not null
 #  cached_votes_down       :integer          default(0)
 #  cached_votes_score      :integer          default(0)
@@ -26,7 +25,6 @@
 # Indexes
 #
 #  index_comments_on_account_id        (account_id)
-#  index_comments_on_ancestry          (ancestry)
 #  index_comments_on_brand_id          (brand_id)
 #  index_comments_on_commentable_id    (commentable_id)
 #  index_comments_on_commentable_type  (commentable_type)

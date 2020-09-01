@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: guide_subcategories
+# Table name: guide_subcategory_items
 #
 #  id             :bigint           not null, primary key
 #  guide_id       :bigint
@@ -8,8 +8,8 @@
 #
 # Indexes
 #
-#  index_guide_subcategories_on_guide_id        (guide_id)
-#  index_guide_subcategories_on_subcategory_id  (subcategory_id)
+#  index_guide_subcategory_items_on_guide_id        (guide_id)
+#  index_guide_subcategory_items_on_subcategory_id  (subcategory_id)
 #
 # Foreign Keys
 #
@@ -20,5 +20,5 @@ class GuideSubcategoryItem < ApplicationRecord
   belongs_to :guide
   belongs_to :subcategory
 
-  has_ancestry
+  # has_ancestry
 end

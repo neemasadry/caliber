@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: brand_subcategories
+# Table name: brand_subcategory_items
 #
 #  id             :bigint           not null, primary key
 #  brand_id       :bigint
@@ -8,8 +8,8 @@
 #
 # Indexes
 #
-#  index_brand_subcategories_on_brand_id        (brand_id)
-#  index_brand_subcategories_on_subcategory_id  (subcategory_id)
+#  index_brand_subcategory_items_on_brand_id        (brand_id)
+#  index_brand_subcategory_items_on_subcategory_id  (subcategory_id)
 #
 # Foreign Keys
 #
@@ -20,5 +20,5 @@ class BrandSubcategoryItem < ApplicationRecord
   belongs_to :brand
   belongs_to :subcategory
 
-  has_ancestry
+  # has_ancestry
 end

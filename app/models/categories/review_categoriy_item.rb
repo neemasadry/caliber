@@ -20,5 +20,5 @@ class ReviewCategoryItem < ApplicationRecord
   belongs_to :review
   belongs_to :category
 
-  has_ancestry
+  # has_ancestry
 end

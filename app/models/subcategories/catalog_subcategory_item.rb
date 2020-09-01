@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: catalog_subcategories
+# Table name: catalog_subcategory_items
 #
 #  id             :bigint           not null, primary key
 #  catalog_id     :bigint
@@ -8,8 +8,8 @@
 #
 # Indexes
 #
-#  index_catalog_subcategories_on_catalog_id      (catalog_id)
-#  index_catalog_subcategories_on_subcategory_id  (subcategory_id)
+#  index_catalog_subcategory_items_on_catalog_id      (catalog_id)
+#  index_catalog_subcategory_items_on_subcategory_id  (subcategory_id)
 #
 # Foreign Keys
 #
@@ -20,5 +20,5 @@ class CatalogSubcategoryItem < ApplicationRecord
   belongs_to :catalog
   belongs_to :subcategory
 
-  has_ancestry
+  # has_ancestry
 end

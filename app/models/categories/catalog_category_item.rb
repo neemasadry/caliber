@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: catalog_categories
+# Table name: catalog_category_items
 #
 #  id          :bigint           not null, primary key
 #  catalog_id  :bigint
@@ -8,8 +8,8 @@
 #
 # Indexes
 #
-#  index_catalog_categories_on_catalog_id   (catalog_id)
-#  index_catalog_categories_on_category_id  (category_id)
+#  index_catalog_category_items_on_catalog_id   (catalog_id)
+#  index_catalog_category_items_on_category_id  (category_id)
 #
 # Foreign Keys
 #
@@ -20,5 +20,5 @@ class CatalogCategoryItem < ApplicationRecord
   belongs_to :catalog
   belongs_to :category
 
-  has_ancestry
+  # has_ancestry
 end

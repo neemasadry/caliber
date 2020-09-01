@@ -3,7 +3,6 @@
 # Table name: category_groups
 #
 #  id                  :bigint           not null, primary key
-#  ancestry            :string
 #  categories_count    :integer          default(0), not null
 #  name                :string(150)      not null
 #  subcategories_count :integer          default(0), not null

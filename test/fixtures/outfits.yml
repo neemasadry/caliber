@@ -3,7 +3,6 @@
 # Table name: outfits
 #
 #  id                       :bigint           not null, primary key
-#  ancestry                 :string
 #  cached_votes_down        :integer          default(0)
 #  cached_votes_score       :integer          default(0)
 #  cached_votes_total       :integer          default(0)
@@ -31,7 +30,6 @@
 # Indexes
 #
 #  index_outfits_on_account_id    (account_id)
-#  index_outfits_on_ancestry      (ancestry)
 #  index_outfits_on_brand_id      (brand_id)
 #  index_outfits_on_discarded_at  (discarded_at)
 #  index_outfits_on_name          (name)

@@ -3,7 +3,6 @@
 # Table name: reviews
 #
 #  id                      :bigint           not null, primary key
-#  ancestry                :string
 #  cached_votes_down       :integer          default(0)
 #  cached_votes_score      :integer          default(0)
 #  cached_votes_total      :integer          default(0)
@@ -30,7 +29,6 @@
 # Indexes
 #
 #  index_reviews_on_account_id                         (account_id)
-#  index_reviews_on_ancestry                           (ancestry)
 #  index_reviews_on_discarded_at                       (discarded_at)
 #  index_reviews_on_reviewable_type_and_reviewable_id  (reviewable_type,reviewable_id)
 #  index_reviews_on_slug                               (slug) UNIQUE

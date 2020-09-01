@@ -111,7 +111,7 @@ gem 'faker', '~> 1.6', '>= 1.6.6'
 gem 'searchkick', '~> 4.3'
 gem 'friendly_id', '~> 5.2.4'
 gem 'jsonb_accessor', '~> 1.1'
-gem 'ancestry', '~> 2.1'
+# gem 'ancestry', '~> 2.1'
 
 gem 'discard', '~> 1.2'
 gem 'paper_trail'

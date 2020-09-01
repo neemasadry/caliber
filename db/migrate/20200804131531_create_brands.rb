@@ -3,8 +3,8 @@ class CreateBrands < ActiveRecord::Migration[6.0]
     create_table :brands do |t|
       t.references :user, null: false, foreign_key: true
       t.references :account, null: false, foreign_key: true
-      t.references :category, null: false, index: true
-      t.references :subcategory, null: true, index: true
+      # t.references :category, null: false, index: true
+      # t.references :subcategory, null: true, index: true
 
       # Company info
       t.string :name, null: false, limit: 150, index: true

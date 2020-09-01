@@ -3,7 +3,6 @@
 # Table name: suits
 #
 #  id                       :bigint           not null, primary key
-#  ancestry                 :string
 #  cached_votes_down        :integer          default(0)
 #  cached_votes_score       :integer          default(0)
 #  cached_votes_total       :integer          default(0)
@@ -48,7 +47,6 @@
 # Indexes
 #
 #  index_suits_on_account_id      (account_id)
-#  index_suits_on_ancestry        (ancestry)
 #  index_suits_on_body_part_id    (body_part_id)
 #  index_suits_on_bottom_id       (bottom_id)
 #  index_suits_on_brand_id        (brand_id)

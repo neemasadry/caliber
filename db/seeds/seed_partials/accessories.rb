@@ -22,11 +22,11 @@ csv.each do |row|
   t.retail_price = row['retail_price']
 
   # Categorization
-  t.body_part_group   = BodyPartGroup.find_by(name: "Head").id
-  t.body_part_id      = BodyPart.find_by(name: "Eyes").id
-  t.category_group_id = CategoryGroup.find_by(name: "Product").id
-  t.category_id       = Category.find_by(name: "Eyewear").id
-  t.subcategory_id    = Subcategory.find_by(name: "Sunglasses").id
+  # t.body_part_group   = BodyPartGroup.find_by(name: "Head").id
+  # t.body_part_id      = BodyPart.find_by(name: "Eyes").id
+  # t.category_group_id = CategoryGroup.find_by(name: "Product").id
+  # t.category_id       = Category.find_by(name: "Eyewear").id
+  # t.subcategory_id    = Subcategory.find_by(name: "Sunglasses").id
 
   t.gender = "Male"
   t.materials = row['material']
@@ -36,9 +36,7 @@ csv.each do |row|
   t.user_id = user_entry.id
   t.account_id = account_entry.id
 
-  # puts "\n"
   # puts "\t --- Begin: Upload associated product images ---\n"
-
   image1_path = File.open(Rails.root.join('db', 'seeds', 'Jade_Black', 'Mens', 'Jade-Black-(Images-and-Files)---2020-03-28T163728Z', row['image1_filename']))
   image2_path = File.open(Rails.root.join('db', 'seeds', 'Jade_Black', 'Mens', 'Jade-Black-(Images-and-Files)---2020-03-28T163728Z', row['image2_filename']))
   imageDemo_path = File.open(Rails.root.join('db', 'seeds', 'Jade_Black', 'Mens', 'Jade-Black-(Images-and-Files)---2020-03-28T163728Z', row['imageDemo_filename']))
@@ -53,12 +51,20 @@ csv.each do |row|
 
   t.images.attach([image1, image2, imageDemo])
   # ### End: ActiveStorage ###
-
-
-  # puts "\n"
   # puts "\t --- End: Upload associated product images ---\n"
 
+  puts "#{t.inspect}"
+
   if t.save!
+    find_created_accessory = Accessory.find(t.id)
+    create_productable_body_part_item = find_created_accessory.productable_body_part_items.new(productable_type: t.model_name, productable_id: t.id, body_part_id: BodyPart.find_by(name: "Eyes").id)
+    create_productable_category_item = find_created_accessory.productable_category_items.new(productable_type: t.model_name, productable_id: t.id, category_id: Category.find_by(name: "Eyewear").id)
+    create_productable_subcategory_item = find_created_accessory.productable_subcategory_items.new(productable_type: t.model_name, productable_id: t.id, subcategory_id: Subcategory.find_by(name: "Sunglasses").id)
+
+    create_productable_body_part_item.save!
+    create_productable_category_item.save!
+    create_productable_subcategory_item.save!
+
     puts "#{counter} - #{t.name} created!\n"
   else
     puts "#{counter} - An error occured.\n"

@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: outfit_subcategories
+# Table name: outfit_subcategory_items
 #
 #  id             :bigint           not null, primary key
 #  outfit_id      :bigint
@@ -8,8 +8,8 @@
 #
 # Indexes
 #
-#  index_outfit_subcategories_on_outfit_id       (outfit_id)
-#  index_outfit_subcategories_on_subcategory_id  (subcategory_id)
+#  index_outfit_subcategory_items_on_outfit_id       (outfit_id)
+#  index_outfit_subcategory_items_on_subcategory_id  (subcategory_id)
 #
 # Foreign Keys
 #
@@ -20,5 +20,5 @@ class OutfitSubcategoryItem < ApplicationRecord
   belongs_to :outfit_item
   belongs_to :subcategory
 
-  has_ancestry
+  # has_ancestry
 end

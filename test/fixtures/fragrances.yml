@@ -4,7 +4,6 @@
 #
 #  id                      :bigint           not null, primary key
 #  accords                 :string(150)
-#  ancestry                :string
 #  base_notes              :string(150)
 #  cached_votes_down       :integer          default(0)
 #  cached_votes_score      :integer          default(0)
@@ -37,7 +36,6 @@
 # Indexes
 #
 #  index_fragrances_on_account_id      (account_id)
-#  index_fragrances_on_ancestry        (ancestry)
 #  index_fragrances_on_brand_id        (brand_id)
 #  index_fragrances_on_category_id     (category_id)
 #  index_fragrances_on_discarded_at    (discarded_at)

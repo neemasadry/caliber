@@ -3,7 +3,6 @@
 # Table name: catalog_items
 #
 #  id                    :bigint           not null, primary key
-#  ancestry              :string
 #  catalogable_item_type :string           not null
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
@@ -12,7 +11,6 @@
 #
 # Indexes
 #
-#  index_catalog_items_on_ancestry                      (ancestry)
 #  index_catalog_items_on_catalog_id                    (catalog_id)
 #  index_catalogable_items_on_ccatalogable_type_and_id  (catalogable_item_type,catalogable_item_id)
 #

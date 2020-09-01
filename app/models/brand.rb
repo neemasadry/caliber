@@ -6,7 +6,6 @@
 #  about                   :text             not null
 #  address1                :string(100)      not null
 #  address2                :string(100)
-#  ancestry                :string
 #  brand_identifier        :string(60)       not null
 #  cached_votes_down       :integer          default(0)
 #  cached_votes_score      :integer          default(0)
@@ -41,20 +40,15 @@
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null
 #  account_id              :bigint           not null
-#  category_id             :bigint           not null
-#  subcategory_id          :bigint
 #  user_id                 :bigint           not null
 #
 # Indexes
 #
 #  index_brands_on_account_id        (account_id)
-#  index_brands_on_ancestry          (ancestry)
 #  index_brands_on_brand_identifier  (brand_identifier) UNIQUE
-#  index_brands_on_category_id       (category_id)
 #  index_brands_on_discarded_at      (discarded_at)
 #  index_brands_on_name              (name)
 #  index_brands_on_slug              (slug) UNIQUE
-#  index_brands_on_subcategory_id    (subcategory_id)
 #  index_brands_on_user_id           (user_id)
 #
 # Foreign Keys
@@ -74,9 +68,9 @@ class Brand < ApplicationRecord
   has_one_attached :logo
 
   # Categorization
-  has_many :brand_categories, dependent: :destroy
+  has_many :brand_category_items, dependent: :destroy
   has_many :categories, through: :brand_category_items
-  has_many :brand_subcategories, dependent: :destroy
+  has_many :brand_subcategory_items, dependent: :destroy
   has_many :subcategories, through: :brand_subcategory_items
 
   has_many :comments, as: :commentable
@@ -85,7 +79,7 @@ class Brand < ApplicationRecord
 
   friendly_id :brand_identifier, use: :slugged
 
-  has_ancestry
+  # has_ancestry
   acts_as_favoritor
   acts_as_favoritable
   acts_as_votable
@@ -126,7 +120,6 @@ class Brand < ApplicationRecord
   validates :snapchat_link,  allow_blank: true, length: { minimum: 4, maximum: 150 }
   validates :tiktok_link,    allow_blank: true, length: { minimum: 4, maximum: 150 }
   validates :pinterest_link, allow_blank: true, length: { minimum: 4, maximum: 150 }
-
 
   def search_data
     {

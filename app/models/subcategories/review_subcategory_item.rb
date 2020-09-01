@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: review_subcategories
+# Table name: review_subcategory_items
 #
 #  id             :bigint           not null, primary key
 #  review_id      :bigint
@@ -8,8 +8,8 @@
 #
 # Indexes
 #
-#  index_review_subcategories_on_review_id       (review_id)
-#  index_review_subcategories_on_subcategory_id  (subcategory_id)
+#  index_review_subcategory_items_on_review_id       (review_id)
+#  index_review_subcategory_items_on_subcategory_id  (subcategory_id)
 #
 # Foreign Keys
 #
@@ -20,5 +20,5 @@ class ReviewSubcategoryItem < ApplicationRecord
   belongs_to :review
   belongs_to :subcategory
 
-  has_ancestry
+  # has_ancestry
 end
