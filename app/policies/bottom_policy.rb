@@ -1,4 +1,4 @@
-class BottomPolicy < ProductPolicy
+class BottomPolicy < ApplicationPolicy
 
   def like?
     return true if user.present? && user.personal_account.present?
