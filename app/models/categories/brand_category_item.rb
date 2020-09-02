@@ -17,8 +17,8 @@
 #  fk_rails_...  (category_id => categories.id)
 #
 class BrandCategoryItem < ApplicationRecord
-  belongs_to :brand, optional: true
-  belongs_to :category, optional: true
+  belongs_to :brand
+  belongs_to :category
 
   # has_ancestry
 end

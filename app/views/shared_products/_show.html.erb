@@ -59,17 +59,23 @@
 
       <div class="mb-4">
         <h5>Body Part</h5>
-        <%= product.body_part %>
+        <% product.body_parts.each do |body_part| %>
+          <%= body_part.name %>
+        <% end %>
       </div>
 
       <div class="mb-4">
         <h5>Category</h5>
-        <%= product.category %>
+        <% product.categories.each do |category| %>
+          <%= category.name %>
+        <% end %>
       </div>
 
       <div class="mb-4">
         <h5>Subcategory</h5>
-        <%= product.subcategory %>
+        <% product.subcategories.each do |subcategory| %>
+          <%= subcategory.name %>
+        <% end %>
       </div>
 
       <!-- <div class="mb-4">
