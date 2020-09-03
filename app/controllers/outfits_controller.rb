@@ -120,7 +120,7 @@ class OutfitsController < ApplicationController
       if outfit_to_add_item.outfit_items.find_by(productable_type: productable_type, productable_id: productable_id).present?
         redirect_to polymorphic_path(productable), flash: { warning: "This product is already included in the outfit: #{outfit_to_add_item.name}" }
       else
-        item_for_outfit = outfit_to_add_item.outfit_items.build(productable_type: params[:product_type], productable_id: params[:product_id], body_part: params[:body_part], category: params[:category], subcategory: params[:subcategory])
+        item_for_outfit = outfit_to_add_item.outfit_items.build(productable_type: params[:product_type], productable_id: params[:product_id]) #, body_part: params[:body_part].to_i, category: params[:category].to_i, subcategory: params[:subcategory].to_i)
 
         if item_for_outfit.save!
           redirect_to polymorphic_path(outfit_to_add_item), flash: { success: "#{productable.name} by #{productable.brand.name} has been added to this outfit." }

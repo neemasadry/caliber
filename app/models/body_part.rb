@@ -21,6 +21,7 @@ class BodyPart < ApplicationRecord
   belongs_to :body_part_group
 
   #has_many :productable_body_part_items, through: :productable_body_part_items, dependent: :destroy
+  has_many :outfit_items, through: :outfit_item_body_part_items
 
   counter_culture :body_part_group
 end

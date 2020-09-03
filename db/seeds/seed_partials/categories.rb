@@ -5,208 +5,21 @@
 puts "--- Begin: Categorization ---\n"
 
 body_parts_selection = {
-  head: ["Crown", "Eyes", "Ears"],
-  neck: ["Neck"],
+  head_and_neck: ["Crown", "Eyes", "Ears", "Neck"],
   "Right Arm": ["Right Arm", "Right Forearm", "Right Wrist", "Right Hand", "Right Thumb", "Right Index Finger", "Right Middle Finger", "Right Ring Finger", "Right Baby Finger"],
   body: ["Chest", "Abdomen"],
   "Left Arm": ["Left Arm", "Left Forearm", "Left Wrist", "Left Hand", "Left Thumb", "Left Index Finger", "Left Middle Finger", "Left Ring Finger", "Left Baby Finger"],
-  waist: ["Belt", "Accessory"],
+  midline: ["Waist"],
   legs: ["Upper Half", "Lower Half", "Full Length"],
   feet: ["Feet"]
 }
 
+
 # Nested Level - Model
 # 1 - CategoryGroup
 # 2 - Category (relative terminal)
-# 3 - Subcategory (abdolute terminal)
+# 3 - Subcategory (absolute terminal)
 # Terminal level should be an Array for simplicity, otherwise needs new conditional
-
-category_tree = {
-  product: {
-    # Skip next level for categorization as it's already accessible via productable_type
-    accessory: {
-      eyewear: [ "Eyeglasses", "Sunglasses", "Contact Lenses", "Goggles","Spectacles", "Safety"],
-      earwear: ["Earrings"]
-    },
-    bottom: {
-      styles: ["Jeans", "Khakis"]
-    },
-    cosmetic: {
-      hair: ["Styling", "Shampoo", "Conditioning", "Repair", "Growth"],
-      skin: ["Moisturize", "Aging", "Sunscreen", "Body Wash", "Exfoliating", "Oil Control", "Acne Treatment", "Eye Cream"]
-    },
-    # dress: {
-    #   styles: []
-    # },
-    # fragrance: {
-
-    # },
-    # jewelry: {
-
-    # },
-    # shoe: {
-    #   style: []
-    # },
-    # suit: {
-
-    # },
-    # top: {
-
-    # }
-  },
-  brand: [
-    #"App Page",
-    "Appliances",
-    "Baby Goods/Kids Goods",
-    "Bags/Luggage",
-    "Beauty/Cosmetics/Hygiene",
-    #"Board Game",
-    #"Brand",
-    #"Building Materials",
-    "Camera/Photo",
-    "Cars",
-    "Clothing",
-    #"Commercial Equipment",
-    "Computers (Brand)",
-    "Electronics",
-    "Food & Beverage Company",
-    "Furniture",
-    #"Games/Toys",
-    "Grooming/Hygiene",
-    "Health/Nutrition",
-    "Home Décor",
-    "Household Supplies",
-    "Jewelry/Watches",
-    "Kitchen/Cooking",
-    "Office Supplies",
-    "Patio/Garden",
-    "Pet Supplies",
-    "Pharmaceuticals",
-    #"Phone/Tablet",
-    "Product/Service",
-    #"Software",
-    "Tools/Equipment",
-    #"Video Game",
-    "Vitamins/Supplements",
-    #"Website",
-    "Wine/Spirits"
-  ],
-  season: [
-    "Spring",
-    "Summer",
-    "Fall",
-    "Winter",
-    "All Year"
-  ],
-=begin
-  events: {
-    # festivals: [
-
-    # ],
-    # celebrations: [
-
-    # ],
-    ceremonies: [
-      "Award",
-      "Opening",
-      "Baptism/Christening",
-      "Initiation",
-      "Social adulthood",
-      "Graduation",
-      "Retirement",
-      "Funeral"
-    ],
-    holidays: [
-      "New Year",
-      "Christmas",
-      "Thanksgiving",
-      "Easter",
-      "Independence Day",
-      "Mother's Day",
-      "Father's Day",
-      "Halloween",
-      "Valentine's Day",
-      "St. Patrick's Day",
-      "Labor Day",
-      "Memorial Day"
-    ],
-    meetings: [
-      "Seminar",
-      "Conference",
-      "Convention",
-      "Trade Show",
-      "Workshop",
-      "Networking",
-      "Exhibition",
-      "Business Dinner"
-    ],
-    occasions: [
-      "First Date",
-      "First Day of School",
-      "Prom",
-      "Wedding",
-      "Reunion",
-      "Gala"
-    ],
-    public: [
-      "Concert/Live Performance",
-      "Speaker",
-      "Convention",
-      "Press conference",
-      "Charity",
-      "Fundraising",
-    ]
-  },
-  relationships: [
-    "Dating",
-    "Marriage",
-    "Family",
-    "Friendships",
-    "Professional"
-  ],
-  electronics: {
-
-  },
-  software: {
-
-  },
-  career: {
-
-  },
-  hobbies: {
-
-  },
-  cooking: {
-
-  },
-  fitness: {
-
-  },
-  class: {
-
-  },
-  cleanliness: {
-
-  },
-  nutrition: {
-    diet: [
-      "Buddhist",
-    ],
-    supplement: [
-      "Protein",
-      "Vitamins",
-      "Minerals",
-      "Fiber"
-    ]
-  },
-  furniture: {
-
-  },
-  organization: {
-
-  }
-=end
-}
 
 puts "--- Begin: BodyPartGroup ---"
 
@@ -255,6 +68,9 @@ puts "--- End: BodyPartGroup ---\n"
 
 
 
+
+
+
 puts "--- Begin: Category (Tree) ---\n"
 
 # Clean DB tables containing previous data and reset primary key count
@@ -275,6 +91,18 @@ categorization_models.each do |model|
 end # categorization_models.each
 
 
+# Load each partial for categories under db/seeds/seed_partials/categories/
+Dir[File.join(Rails.root, 'db', 'seeds', 'seed_partials', 'categories', '*.rb')].sort.each do |filename|
+  ### TEMPORARILY OMITTED - Until these categories are filled out with acceptable entries
+  next if (filename == 'career_categories.rb' || filename == 'electronic_categories.rb' || filename == 'health_categories.rb' || filename == 'home_and_decor_categories.rb')
+  if load filename
+    puts "\t'#{filename}' loaded successfully!\n"
+  else
+    puts "\tAn error occured for '#{filename}'.\n"
+  end
+end
+
+=begin
 # Build categorization tree, nested in order: CategoryGroup -> Category -> Subcategory
 category_tree.each do |category_group_key, category_group_values|
   create_category_group = CategoryGroup.create!(
@@ -326,7 +154,7 @@ category_tree.each do |category_group_key, category_group_values|
 
   end # if category_key == :Accessory || category_key == :Bottom || ...
 end # category_tree.each
-
+=end
 puts "--- End: Category (Tree) ---\n"
 
 

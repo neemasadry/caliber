@@ -678,6 +678,43 @@ ActiveRecord::Schema.define(version: 2020_08_31_182446) do
     t.bigint "user_id", null: false
     t.bigint "account_id", null: false
     t.bigint "brand_id"
+    t.integer "head_and_necks_group_count", default: 0, null: false
+    t.integer "crowns_count", default: 0, null: false
+    t.integer "eyes_count", default: 0, null: false
+    t.integer "ears_count", default: 0, null: false
+    t.integer "necks_count", default: 0, null: false
+    t.integer "right_arms_group_count", default: 0, null: false
+    t.integer "right_arms_count", default: 0, null: false
+    t.integer "right_forearms_count", default: 0, null: false
+    t.integer "right_wrists_count", default: 0, null: false
+    t.integer "right_hands_count", default: 0, null: false
+    t.integer "right_thumbs_count", default: 0, null: false
+    t.integer "right_index_fingers_count", default: 0, null: false
+    t.integer "right_middle_fingers_count", default: 0, null: false
+    t.integer "right_ring_fingers_count", default: 0, null: false
+    t.integer "right_baby_fingers_count", default: 0, null: false
+    t.integer "bodies_group_count", default: 0, null: false
+    t.integer "chests_count", default: 0, null: false
+    t.integer "abdomen_count", default: 0, null: false
+    t.integer "left_arms_group_count", default: 0, null: false
+    t.integer "left_arms_count", default: 0, null: false
+    t.integer "left_forearms_count", default: 0, null: false
+    t.integer "left_wrists_count", default: 0, null: false
+    t.integer "left_hands_count", default: 0, null: false
+    t.integer "left_thumbs_count", default: 0, null: false
+    t.integer "left_index_fingers_count", default: 0, null: false
+    t.integer "left_middle_fingers_count", default: 0, null: false
+    t.integer "left_ring_fingers_count", default: 0, null: false
+    t.integer "left_baby_fingers_count", default: 0, null: false
+    t.integer "waists_group_count", default: 0, null: false
+    t.integer "belts_count", default: 0, null: false
+    t.integer "accessories_count", default: 0, null: false
+    t.integer "legs_group_count", default: 0, null: false
+    t.integer "upper_halves_count", default: 0, null: false
+    t.integer "lower_halves_count", default: 0, null: false
+    t.integer "full_lengths_count", default: 0, null: false
+    t.integer "feets_group_count", default: 0, null: false
+    t.integer "feets_count", default: 0, null: false
     t.string "name", limit: 150, null: false
     t.text "description", null: false
     t.string "season", limit: 10, null: false
