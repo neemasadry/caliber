@@ -24,5 +24,15 @@ class Category < ApplicationRecord
   has_many :subcategories, dependent: :destroy
 
   counter_culture :category_group
+
+  searchkick word_start: [:name], word_middle: [:name]
   #counter_culture :subcategory, column_name: "subcategories_count"
+
+  def search_data
+    {
+      name: name,
+      occasion: occasion,
+      dress_code: dress_code
+    }
+  end
 end
