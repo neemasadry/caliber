@@ -9,12 +9,12 @@ class CategoriesController < ApplicationController
   # GET /categories
   def index
     # Body Part
-    @pagy_body_part_groups, @body_part_groups = pagy(BodyPartGroup.sort_by_params(params[:sort], sort_direction))
-    @pagy_body_parts, @body_parts = pagy(BodyPart.sort_by_params(params[:sort], sort_direction))
+    @pagy_body_part_groups, @body_part_groups = pagy(BodyPartGroup.sort_by_params(params[:sort], sort_direction), page_param: "body_part_group_page")
+    @pagy_body_parts, @body_parts = pagy(BodyPart.sort_by_params(params[:sort], sort_direction), page_param: "body_part_page")
     # Categorization
-    @pagy_category_groups, @category_groups = pagy(CategoryGroup.sort_by_params(params[:sort], sort_direction))
-    @pagy_categories, @categories = pagy(Category.sort_by_params(params[:sort], sort_direction))
-    @pagy_subcategories, @subcategories = pagy(Subcategory.sort_by_params(params[:sort], sort_direction))
+    @pagy_category_groups, @category_groups = pagy(CategoryGroup.sort_by_params(params[:sort], sort_direction), page_param: "category_group_page")
+    @pagy_categories, @categories = pagy(Category.sort_by_params(params[:sort], sort_direction), page_param: "category_page")
+    @pagy_subcategories, @subcategories = pagy(Subcategory.sort_by_params(params[:sort], sort_direction), page_param: "subcategory_page")
 
     @categories_index_array = [
       { body_part_groups: {

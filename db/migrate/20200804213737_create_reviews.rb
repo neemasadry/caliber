@@ -3,6 +3,7 @@ class CreateReviews < ActiveRecord::Migration[6.0]
     create_table :reviews do |t|
 
       t.references :reviewable, polymorphic: true, null: false, index: true
+      t.references :product, null: false, foreign_key: true
       t.references :user, null: false, foreign_key: true
       t.references :account, null: false, foreign_key: true
       # t.references :category, null: false, index: true

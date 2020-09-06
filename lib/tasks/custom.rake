@@ -15,9 +15,19 @@ namespace :db do
     ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ###
 
 
-    # namespace :foundation do
+    task :foundation => :environment do
+      foundation_partials_path_array = [
+        Rails.root.join('db', 'seeds', 'seed_partials', 'users.rb'),
+        Rails.root.join('db', 'seeds', 'seed_partials', 'categories.rb'),
+        Rails.root.join('db', 'seeds', 'seed_partials', 'brands.rb'),
+        Rails.root.join('db', 'seeds', 'seed_partials', 'products', 'accessories.rb'),
+        Rails.root.join('db', 'seeds', 'seed_partials', 'products', 'bottoms.rb')
+      ]
 
-    # end
+      foundation_partials_path_array.each do |foundation_partial_path|
+        load(foundation_partial_path) if File.exist?(foundation_partial_path)
+      end
+    end
 
 
     ### BEGIN REVIEW PARTIALS ###

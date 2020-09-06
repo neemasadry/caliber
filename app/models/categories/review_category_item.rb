@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: review_categories
+# Table name: review_category_items
 #
 #  id          :bigint           not null, primary key
 #  category_id :bigint
@@ -8,8 +8,8 @@
 #
 # Indexes
 #
-#  index_review_categories_on_category_id  (category_id)
-#  index_review_categories_on_review_id    (review_id)
+#  index_review_category_items_on_category_id  (category_id)
+#  index_review_category_items_on_review_id    (review_id)
 #
 # Foreign Keys
 #

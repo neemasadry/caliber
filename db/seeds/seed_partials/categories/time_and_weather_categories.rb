@@ -30,7 +30,7 @@ time_and_weather_categories_hash.each do |category_group_key, category_group_val
 
   # Nested hash contains value to create CategoryGroup
   created_category_group = CategoryGroup.create!(
-    name: category_group_key
+    name: category_group_key.to_s.titleize
   )
 
   puts "CategoryGroup: #{created_category_group.name} created"

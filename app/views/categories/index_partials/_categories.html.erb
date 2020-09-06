@@ -33,9 +33,9 @@
       </table>
     </div>
 
-    <% if !@pagy_categories.present? && @pagy_categories.pages > 1 %>
+    <% if @pagy_categories.present? && @pagy_categories.pages > 1 %>
       <div class="text-center my-6">
-        <%== pagy_nav(@pagy) %>
+        <%== pagy_nav(@pagy_categories) %>
       </div>
     <% end %>
 

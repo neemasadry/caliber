@@ -1,71 +1,72 @@
+<%= render partial: "shared_products/index", locals: { products: @bottoms, product_model: "Bottom", product_model_plural: "Bottoms" } %>
+<!--
 <div class="container mx-auto my-8 px-4">
   <div class="flex justify-between items-center mb-4">
     <h1 class="h3">Bottoms</h1>
 
-    <% if @bottoms.any? %>
-      <%= link_to 'New Bottom', new_bottom_path, class: "btn btn-primary" %>
-    <% end %>
+    <%# if @bottoms.any? %>
+      <%#= link_to 'New Bottom', new_bottom_path, class: "btn btn-primary" %>
+    <%# end %>
   </div>
 
-  <% if @bottoms.any? %>
+  <%# if @bottoms.any? %>
     <div class="bg-white rounded shadow table-responsive">
       <table class="table">
         <thead>
           <tr>
-            <th class="p-3 uppercase text-left text-xs"><%= sortable @bottoms, :user_id, 'User', class: 'text-gray-700' %></th>
-            <th class="p-3 uppercase text-left text-xs"><%= sortable @bottoms, :brand_id, 'Brand', class: 'text-gray-700' %></th>
-            <th class="p-3 uppercase text-left text-xs"><%= sortable @bottoms, :name, 'Name', class: 'text-gray-700' %></th>
-            <th class="p-3 uppercase text-left text-xs"><%= sortable @bottoms, :description, 'Description', class: 'text-gray-700' %></th>
-            <th class="p-3 uppercase text-left text-xs"><%= sortable @bottoms, :retail_price, 'Retail price', class: 'text-gray-700' %></th>
-            <th class="p-3 uppercase text-left text-xs"><%= sortable @bottoms, :retail_price, 'Retail price', class: 'text-gray-700' %></th>
-            <th class="p-3 uppercase text-left text-xs"><%= sortable @bottoms, :type_of, 'Type of', class: 'text-gray-700' %></th>
-            <th class="p-3 uppercase text-left text-xs"><%= sortable @bottoms, :gender, 'Gender', class: 'text-gray-700' %></th>
-            <th class="p-3 uppercase text-left text-xs"><%= sortable @bottoms, :material, 'Material', class: 'text-gray-700' %></th>
-            <th class="p-3 uppercase text-left text-xs"><%= sortable @bottoms, :primary_color, 'Primary color', class: 'text-gray-700' %></th>
-            <th class="p-3 uppercase text-left text-xs"><%= sortable @bottoms, :secondary_color, 'Secondary color', class: 'text-gray-700' %></th>
-            <th class="p-3 uppercase text-left text-xs"><%= sortable @bottoms, :product_url, 'Product url', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%#= sortable @bottoms, :user_id, 'User', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%#= sortable @bottoms, :brand_id, 'Brand', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%#= sortable @bottoms, :name, 'Name', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%#= sortable @bottoms, :description, 'Description', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%#= sortable @bottoms, :retail_price, 'Retail price', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%#= sortable @bottoms, :retail_price, 'Retail price', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%#= sortable @bottoms, :gender, 'Gender', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%#= sortable @bottoms, :materials, 'Material', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%#= sortable @bottoms, :primary_color, 'Primary color', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%#= sortable @bottoms, :secondary_color, 'Secondary color', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-left text-xs"><%#= sortable @bottoms, :product_url, 'Product url', class: 'text-gray-700' %></th>
             <th class="p-3 uppercase text-left text-xs text-gray-700 w-20">Actions</th>
           </tr>
         </thead>
 
         <tbody>
-        <% @bottoms.each do |bottom| %>
+        <%# @bottoms.each do |bottom| %>
           <tr class="group border-t border-gray-400 hover:bg-gray-100">
-                      <td class="p-3"><%= bottom.user_id %></td>
-                      <td class="p-3"><%= bottom.brand_id %></td>
-                      <td class="p-3"><%= bottom.name %></td>
-                      <td class="p-3"><%= bottom.description %></td>
-                      <td class="p-3"><%= bottom.retail_price %></td>
-                      <td class="p-3"><%= bottom.retail_price %></td>
-                      <td class="p-3"><%= bottom.type_of %></td>
-                      <td class="p-3"><%= bottom.gender %></td>
-                      <td class="p-3"><%= bottom.material %></td>
-                      <td class="p-3"><%= bottom.primary_color %></td>
-                      <td class="p-3"><%= bottom.secondary_color %></td>
-                      <td class="p-3"><%= bottom.product_url %></td>
+                      <td class="p-3"><%#= bottom.user_id %></td>
+                      <td class="p-3"><%#= bottom.brand_id %></td>
+                      <td class="p-3"><%#= bottom.name %></td>
+                      <td class="p-3"><%#= bottom.description %></td>
+                      <td class="p-3"><%#= bottom.retail_price %></td>
+                      <td class="p-3"><%#= bottom.retail_price %></td>
+                      <td class="p-3"><%#= bottom.gender %></td>
+                      <td class="p-3"><%#= bottom.materials %></td>
+                      <td class="p-3"><%#= bottom.primary_color %></td>
+                      <td class="p-3"><%#= bottom.secondary_color %></td>
+                      <td class="p-3"><%#= bottom.product_url %></td>
 
             <td>
-              <%= link_to "View", bottom, class: "btn btn-link no-underline" %>
+              <%#= link_to "View", bottom, class: "btn btn-link no-underline" %>
             </td>
           </tr>
-        <% end %>
+        <%# end %>
         </tbody>
       </table>
     </div>
 
-    <% if @pagy.pages > 1 %>
+    <%# if @pagy.pages > 1 %>
       <div class="text-center my-6">
-        <%== pagy_nav(@pagy) %>
+        <%#== pagy_nav(@pagy) %>
       </div>
-    <% end %>
+    <%# end %>
 
-  <% else %>
+  <%# else %>
     <div class="bg-white rounded shadow flex flex-col items-center justify-between p-8 lg:flex-row">
-      <%= image_tag "empty.svg", class: "mb-4 lg:w-1/2" %>
+      <%#= image_tag "empty.svg", class: "mb-4 lg:w-1/2" %>
       <div class="flex-1 text-center">
         <p class="h3 mb-4">Create your first Bottom</p>
-        <%= link_to 'New Bottom', new_bottom_path, class: "btn btn-primary" %>
+        <%#= link_to 'New Bottom', new_bottom_path, class: "btn btn-primary" %>
       </div>
     </div>
-  <% end %>
+  <%# end %>
 </div>
+ -->

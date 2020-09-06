@@ -54,6 +54,7 @@ users.each do |user|
           Review.create!(
             reviewable_type: product_instance.class.name,
             reviewable_id: product_instance.id,
+            #product_id: product_instance.find_by(name: ), ADD :product_id references!
             user_id: user.id,
             title: Faker::Lorem.words(5..7).join(" ").titleize,
             body: Faker::Lorem.paragraphs(6..12).join(" "),

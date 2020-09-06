@@ -10,7 +10,7 @@ body_parts_selection = {
   body: ["Chest", "Abdomen"],
   "Left Arm": ["Left Arm", "Left Forearm", "Left Wrist", "Left Hand", "Left Thumb", "Left Index Finger", "Left Middle Finger", "Left Ring Finger", "Left Baby Finger"],
   midline: ["Waist"],
-  legs: ["Upper Half", "Lower Half", "Full Length"],
+  legs: ["Upper Legs", "Lower Legs", "Full Length (Legs)"],
   feet: ["Feet"]
 }
 
@@ -45,7 +45,7 @@ body_parts_selection.each do |body_part_group_key, body_part_group_values|
   puts "\t--- Begin: BodyPartGroup (#{body_part_group_key}) ---\n"
 
   create_body_part_group = BodyPartGroup.create!(
-    name: body_part_group_key.to_s.capitalize
+    name: body_part_group_key.to_s.titleize
   )
   puts "\t\t#{create_body_part_group.name} created!"
 
@@ -53,7 +53,7 @@ body_parts_selection.each do |body_part_group_key, body_part_group_values|
   body_part_group_values.each do |value|
     create_body_part = BodyPart.create!(
       name: value,
-      body_part_group_id: BodyPartGroup.find_by(name: body_part_group_key.to_s.capitalize).id
+      body_part_group_id: BodyPartGroup.find_by(name: body_part_group_key.to_s.titleize).id
     )
 
     puts "\t\t\t#{create_body_part.name} created!"

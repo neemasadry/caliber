@@ -35,7 +35,7 @@ module Products
     acts_as_favoritable
     acts_as_votable
 
-    searchkick word_start: [:name, :brand], word_middle: [:name, :brand], text_middle: [:type_of, :primary_color]
+    searchkick word_start: [:name, :brand], word_middle: [:name, :brand], text_middle: [:primary_color]
 
     validates :name, presence: true, length: { maximum: 100 }
     validates :description, presence: true, length: { maximum: 3000 }

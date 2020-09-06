@@ -2,6 +2,7 @@ class BottomsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :set_user_on_personal_account, if: :user_signed_in?
   before_action :set_bottom, only: [:show, :edit, :update, :destroy]
+  before_action :set_users_outfits, only: [:show, :outfit]
 
   after_action :verify_authorized
 
@@ -11,7 +12,7 @@ class BottomsController < ApplicationController
 
     # We explicitly load the records to avoid triggering multiple DB calls in the views when checking if records exist and iterating over them.
     # Calling @bottoms.any? in the view will use the loaded records to check existence instead of making an extra DB call.
-    @bottoms.load
+    authorize @bottoms.load
   end
 
   # GET /bottoms/1
@@ -112,6 +113,12 @@ class BottomsController < ApplicationController
   def set_bottom
     @bottom = Bottom.friendly.find(params[:id])
     authorize @bottom
+  end
+
+  def set_users_outfits
+    if user_signed_in?
+      @users_outfits = Outfit.all.where(user_id: current_user.id, account_id: current_account.id)
+    end
   end
 
   # Only allow a trusted parameter "white list" through.

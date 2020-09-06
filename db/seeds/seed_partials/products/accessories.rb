@@ -53,9 +53,18 @@ csv.each do |row|
   # ### End: ActiveStorage ###
   # puts "\t --- End: Upload associated product images ---\n"
 
-  puts "#{t.inspect}"
-
   if t.save!
+
+    # Create associated Product object
+    Product.create!(
+      name: t.name,
+      productable_type: t.model_name,
+      productable_id: t.id,
+      user_id: t.user_id,
+      account_id: t.account_id,
+      brand_id: t.brand_id,
+    )
+
     find_created_accessory = Accessory.find(t.id)
     create_productable_body_part_item = find_created_accessory.productable_body_part_items.new(productable_type: t.model_name, productable_id: t.id, body_part_id: BodyPart.find_by(name: "Eyes").id)
     create_productable_category_item = find_created_accessory.productable_category_items.new(productable_type: t.model_name, productable_id: t.id, category_id: Category.find_by(name: "Eyewear").id)
@@ -65,9 +74,9 @@ csv.each do |row|
     create_productable_category_item.save!
     create_productable_subcategory_item.save!
 
-    puts "#{counter} - #{t.name} created!\n"
+    puts "#{counter} - #{t.name} created!"
   else
-    puts "#{counter} - An error occured.\n"
+    puts "#{counter} - An error occured."
   end
 
   counter += 1 # Keep track of how many products added and/or left to create (25 objects total)

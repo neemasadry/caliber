@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_31_182446) do
+ActiveRecord::Schema.define(version: 2020_09_06_162346) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -169,9 +169,6 @@ ActiveRecord::Schema.define(version: 2020_08_31_182446) do
     t.bigint "user_id", null: false
     t.bigint "account_id", null: false
     t.bigint "brand_id", null: false
-    t.bigint "body_part_id", null: false
-    t.bigint "category_id", null: false
-    t.bigint "subcategory_id", null: false
     t.string "name", limit: 100, null: false
     t.text "description", null: false
     t.decimal "retail_price", precision: 10, scale: 2, null: false
@@ -194,12 +191,9 @@ ActiveRecord::Schema.define(version: 2020_08_31_182446) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["account_id"], name: "index_bottoms_on_account_id"
-    t.index ["body_part_id"], name: "index_bottoms_on_body_part_id"
     t.index ["brand_id"], name: "index_bottoms_on_brand_id"
-    t.index ["category_id"], name: "index_bottoms_on_category_id"
     t.index ["discarded_at"], name: "index_bottoms_on_discarded_at"
     t.index ["slug"], name: "index_bottoms_on_slug", unique: true
-    t.index ["subcategory_id"], name: "index_bottoms_on_subcategory_id"
     t.index ["user_id"], name: "index_bottoms_on_user_id"
   end
 
@@ -398,9 +392,6 @@ ActiveRecord::Schema.define(version: 2020_08_31_182446) do
     t.bigint "user_id", null: false
     t.bigint "account_id", null: false
     t.bigint "brand_id", null: false
-    t.bigint "body_part_id", null: false
-    t.bigint "category_id", null: false
-    t.bigint "subcategory_id", null: false
     t.string "name", limit: 100, null: false
     t.text "description", null: false
     t.decimal "retail_price", precision: 10, scale: 2, null: false
@@ -421,12 +412,9 @@ ActiveRecord::Schema.define(version: 2020_08_31_182446) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["account_id"], name: "index_cosmetics_on_account_id"
-    t.index ["body_part_id"], name: "index_cosmetics_on_body_part_id"
     t.index ["brand_id"], name: "index_cosmetics_on_brand_id"
-    t.index ["category_id"], name: "index_cosmetics_on_category_id"
     t.index ["discarded_at"], name: "index_cosmetics_on_discarded_at"
     t.index ["slug"], name: "index_cosmetics_on_slug", unique: true
-    t.index ["subcategory_id"], name: "index_cosmetics_on_subcategory_id"
     t.index ["user_id"], name: "index_cosmetics_on_user_id"
   end
 
@@ -434,9 +422,6 @@ ActiveRecord::Schema.define(version: 2020_08_31_182446) do
     t.bigint "user_id", null: false
     t.bigint "account_id", null: false
     t.bigint "brand_id", null: false
-    t.bigint "body_part_id", null: false
-    t.bigint "category_id", null: false
-    t.bigint "subcategory_id", null: false
     t.string "name", limit: 100, null: false
     t.text "description", null: false
     t.decimal "retail_price", precision: 10, scale: 2, null: false
@@ -459,12 +444,9 @@ ActiveRecord::Schema.define(version: 2020_08_31_182446) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["account_id"], name: "index_dresses_on_account_id"
-    t.index ["body_part_id"], name: "index_dresses_on_body_part_id"
     t.index ["brand_id"], name: "index_dresses_on_brand_id"
-    t.index ["category_id"], name: "index_dresses_on_category_id"
     t.index ["discarded_at"], name: "index_dresses_on_discarded_at"
     t.index ["slug"], name: "index_dresses_on_slug", unique: true
-    t.index ["subcategory_id"], name: "index_dresses_on_subcategory_id"
     t.index ["user_id"], name: "index_dresses_on_user_id"
   end
 
@@ -489,8 +471,6 @@ ActiveRecord::Schema.define(version: 2020_08_31_182446) do
     t.bigint "user_id", null: false
     t.bigint "account_id", null: false
     t.bigint "brand_id", null: false
-    t.bigint "category_id", null: false
-    t.bigint "subcategory_id", null: false
     t.string "name", limit: 100, null: false
     t.text "description", null: false
     t.decimal "retail_price", precision: 10, scale: 2, null: false
@@ -517,10 +497,8 @@ ActiveRecord::Schema.define(version: 2020_08_31_182446) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["account_id"], name: "index_fragrances_on_account_id"
     t.index ["brand_id"], name: "index_fragrances_on_brand_id"
-    t.index ["category_id"], name: "index_fragrances_on_category_id"
     t.index ["discarded_at"], name: "index_fragrances_on_discarded_at"
     t.index ["slug"], name: "index_fragrances_on_slug", unique: true
-    t.index ["subcategory_id"], name: "index_fragrances_on_subcategory_id"
     t.index ["user_id"], name: "index_fragrances_on_user_id"
   end
 
@@ -581,9 +559,6 @@ ActiveRecord::Schema.define(version: 2020_08_31_182446) do
     t.bigint "user_id", null: false
     t.bigint "account_id", null: false
     t.bigint "brand_id", null: false
-    t.bigint "body_part_id", null: false
-    t.bigint "category_id", null: false
-    t.bigint "subcategory_id", null: false
     t.string "name", limit: 100, null: false
     t.text "description", null: false
     t.decimal "retail_price", precision: 10, scale: 2, null: false
@@ -606,12 +581,9 @@ ActiveRecord::Schema.define(version: 2020_08_31_182446) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["account_id"], name: "index_jewelries_on_account_id"
-    t.index ["body_part_id"], name: "index_jewelries_on_body_part_id"
     t.index ["brand_id"], name: "index_jewelries_on_brand_id"
-    t.index ["category_id"], name: "index_jewelries_on_category_id"
     t.index ["discarded_at"], name: "index_jewelries_on_discarded_at"
     t.index ["slug"], name: "index_jewelries_on_slug", unique: true
-    t.index ["subcategory_id"], name: "index_jewelries_on_subcategory_id"
     t.index ["user_id"], name: "index_jewelries_on_user_id"
   end
 
@@ -831,6 +803,34 @@ ActiveRecord::Schema.define(version: 2020_08_31_182446) do
     t.index ["subcategory_id"], name: "index_productable_subcategory_items_on_subcategory_id"
   end
 
+  create_table "products", force: :cascade do |t|
+    t.string "name", limit: 100, null: false
+    t.string "productable_type", null: false
+    t.bigint "productable_id", null: false
+    t.bigint "user_id", null: false
+    t.bigint "account_id", null: false
+    t.bigint "brand_id", null: false
+    t.string "slug"
+    t.datetime "discarded_at"
+    t.integer "cached_votes_total", default: 0
+    t.integer "cached_votes_score", default: 0
+    t.integer "cached_votes_up", default: 0
+    t.integer "cached_votes_down", default: 0
+    t.integer "cached_weighted_score", default: 0
+    t.integer "cached_weighted_total", default: 0
+    t.float "cached_weighted_average", default: 0.0
+    t.text "favoritable_score"
+    t.text "favoritable_total"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["account_id"], name: "index_products_on_account_id"
+    t.index ["brand_id"], name: "index_products_on_brand_id"
+    t.index ["discarded_at"], name: "index_products_on_discarded_at"
+    t.index ["productable_type", "productable_id"], name: "index_products_on_productable_type_and_productable_id"
+    t.index ["slug"], name: "index_products_on_slug", unique: true
+    t.index ["user_id"], name: "index_products_on_user_id"
+  end
+
   create_table "review_category_items", force: :cascade do |t|
     t.bigint "review_id"
     t.bigint "category_id"
@@ -879,9 +879,6 @@ ActiveRecord::Schema.define(version: 2020_08_31_182446) do
     t.bigint "user_id", null: false
     t.bigint "account_id", null: false
     t.bigint "brand_id", null: false
-    t.bigint "body_part_id", null: false
-    t.bigint "category_id", null: false
-    t.bigint "subcategory_id", null: false
     t.string "name", limit: 100, null: false
     t.text "description", null: false
     t.decimal "retail_price", precision: 10, scale: 2, null: false
@@ -904,12 +901,9 @@ ActiveRecord::Schema.define(version: 2020_08_31_182446) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["account_id"], name: "index_shoes_on_account_id"
-    t.index ["body_part_id"], name: "index_shoes_on_body_part_id"
     t.index ["brand_id"], name: "index_shoes_on_brand_id"
-    t.index ["category_id"], name: "index_shoes_on_category_id"
     t.index ["discarded_at"], name: "index_shoes_on_discarded_at"
     t.index ["slug"], name: "index_shoes_on_slug", unique: true
-    t.index ["subcategory_id"], name: "index_shoes_on_subcategory_id"
     t.index ["user_id"], name: "index_shoes_on_user_id"
   end
 
@@ -930,9 +924,6 @@ ActiveRecord::Schema.define(version: 2020_08_31_182446) do
     t.bigint "brand_id", null: false
     t.bigint "top_id", null: false
     t.bigint "bottom_id", null: false
-    t.bigint "body_part_id", null: false
-    t.bigint "category_id", null: false
-    t.bigint "subcategory_id", null: false
     t.string "name", limit: 100, null: false
     t.text "description", null: false
     t.decimal "retail_price", precision: 10, scale: 2, null: false
@@ -966,13 +957,10 @@ ActiveRecord::Schema.define(version: 2020_08_31_182446) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["account_id"], name: "index_suits_on_account_id"
-    t.index ["body_part_id"], name: "index_suits_on_body_part_id"
     t.index ["bottom_id"], name: "index_suits_on_bottom_id"
     t.index ["brand_id"], name: "index_suits_on_brand_id"
-    t.index ["category_id"], name: "index_suits_on_category_id"
     t.index ["discarded_at"], name: "index_suits_on_discarded_at"
     t.index ["slug"], name: "index_suits_on_slug", unique: true
-    t.index ["subcategory_id"], name: "index_suits_on_subcategory_id"
     t.index ["top_id"], name: "index_suits_on_top_id"
     t.index ["user_id"], name: "index_suits_on_user_id"
   end
@@ -1008,9 +996,6 @@ ActiveRecord::Schema.define(version: 2020_08_31_182446) do
     t.bigint "user_id", null: false
     t.bigint "account_id", null: false
     t.bigint "brand_id", null: false
-    t.bigint "body_part_id", null: false
-    t.bigint "category_id", null: false
-    t.bigint "subcategory_id", null: false
     t.string "name", limit: 100, null: false
     t.text "description", null: false
     t.decimal "retail_price", precision: 10, scale: 2, null: false
@@ -1033,12 +1018,9 @@ ActiveRecord::Schema.define(version: 2020_08_31_182446) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["account_id"], name: "index_tops_on_account_id"
-    t.index ["body_part_id"], name: "index_tops_on_body_part_id"
     t.index ["brand_id"], name: "index_tops_on_brand_id"
-    t.index ["category_id"], name: "index_tops_on_category_id"
     t.index ["discarded_at"], name: "index_tops_on_discarded_at"
     t.index ["slug"], name: "index_tops_on_slug", unique: true
-    t.index ["subcategory_id"], name: "index_tops_on_subcategory_id"
     t.index ["user_id"], name: "index_tops_on_user_id"
   end
 
@@ -1217,6 +1199,9 @@ ActiveRecord::Schema.define(version: 2020_08_31_182446) do
   add_foreign_key "productable_body_part_items", "body_parts"
   add_foreign_key "productable_category_items", "categories"
   add_foreign_key "productable_subcategory_items", "subcategories"
+  add_foreign_key "products", "accounts"
+  add_foreign_key "products", "brands"
+  add_foreign_key "products", "users"
   add_foreign_key "review_category_items", "categories"
   add_foreign_key "review_category_items", "reviews"
   add_foreign_key "review_subcategory_items", "reviews"
