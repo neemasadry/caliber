@@ -26,13 +26,10 @@ class Category < ApplicationRecord
   counter_culture :category_group
 
   searchkick word_start: [:name], word_middle: [:name]
-  #counter_culture :subcategory, column_name: "subcategories_count"
 
   def search_data
     {
-      name: name,
-      occasion: occasion,
-      dress_code: dress_code
+      name: name
     }
   end
 end

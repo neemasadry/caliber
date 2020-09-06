@@ -24,4 +24,12 @@ class BodyPart < ApplicationRecord
   has_many :outfit_items, through: :outfit_item_body_part_items
 
   counter_culture :body_part_group
+
+  searchkick word_start: [:name], word_middle: [:name]
+
+  def search_data
+    {
+      name: name
+    }
+  end
 end

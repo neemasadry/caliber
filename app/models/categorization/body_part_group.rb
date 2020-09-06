@@ -15,4 +15,11 @@
 class BodyPartGroup < ApplicationRecord
   has_many :body_parts, dependent: :destroy
 
+  searchkick word_start: [:name], word_middle: [:name]
+
+  def search_data
+    {
+      name: name
+    }
+  end
 end

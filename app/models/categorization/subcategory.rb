@@ -26,4 +26,12 @@ class Subcategory < ApplicationRecord
 
   counter_culture [:category, :category_group]
   counter_culture :category, column_name: "subcategories_count"
+
+  searchkick word_start: [:name], word_middle: [:name]
+
+  def search_data
+    {
+      name: name
+    }
+  end
 end
