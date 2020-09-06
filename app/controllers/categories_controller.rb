@@ -16,6 +16,29 @@ class CategoriesController < ApplicationController
     @pagy_categories, @categories = pagy(Category.sort_by_params(params[:sort], sort_direction))
     @pagy_subcategories, @subcategories = pagy(Subcategory.sort_by_params(params[:sort], sort_direction))
 
+    @categories_index_array = [
+      { body_part_groups: {
+          results: @body_part_groups,
+          pagy: @pagy_body_part_groups
+        } },
+      { body_parts: {
+          results: @body_parts,
+          pagy: @pagy_body_parts
+        } },
+      { category_groups: {
+          results: @category_groups,
+          pagy: @pagy_category_groups
+        } },
+      { categories: {
+          results: @categories,
+          pagy: @pagy_categories
+      } },
+      { subcategories: {
+          results: @subcategories,
+          pagy: @pagy_subcategories
+      } }
+    ]
+
     # We explicitly load the records to avoid triggering multiple DB calls in the views when checking if records exist and iterating over them.
     # Calling @categories.any? in the view will use the loaded records to check existence instead of making an extra DB call.
     @body_part_groups.load

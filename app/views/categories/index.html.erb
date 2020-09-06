@@ -2,52 +2,48 @@
   <div class="flex justify-between items-center mb-4">
     <h1 class="h3">Categories</h1>
 
-    <% if @categories.any? %>
-      <%= link_to 'New Category', new_category_path, class: "btn btn-primary" %>
-    <% end %>
   </div>
 
-  <% if @categories.any? %>
-    <div class="bg-white rounded shadow table-responsive">
-      <table class="table">
-        <thead>
-          <tr>
-            <th class="p-3 uppercase text-left text-xs"><%= sortable @categories, :name, 'Name', class: 'text-gray-700' %></th>
-            <th class="p-3 uppercase text-left text-xs"><%= sortable @categories, :subcategory_count, 'Subcategory count', class: 'text-gray-700' %></th>
-            <th class="p-3 uppercase text-left text-xs"><%= sortable @categories, :ancestry, 'Ancestry', class: 'text-gray-700' %></th>
-            <th class="p-3 uppercase text-left text-xs text-gray-700 w-20">Actions</th>
-          </tr>
-        </thead>
+  <div data-controller="tabs" data-tabs-active-tab="-mb-px tab-active transition">
 
-        <tbody>
-        <% @categories.each do |category| %>
-          <tr class="group border-t border-gray-400 hover:bg-gray-100">
-                      <td class="p-3"><%= category.name %></td>
-                      <td class="p-3"><%= category.subcategory_count %></td>
-                      <td class="p-3"><%= category.ancestry %></td>
-          
-            <td>
-              <%= link_to "View", category, class: "btn btn-link no-underline" %>
-            </td>
-          </tr>
-        <% end %>
-        </tbody>
-      </table>
+    <div>
+      <div class="sm:hidden">
+        <%= select_tag "page", options_for_select(user_profile_nav_tab_options("render_page_names")), aria: { label: "Selected tab" }, class: "form-select block w-full" %>
+        <!-- <select aria-label="Selected tab" class="form-select block w-full">
+          <option>My Account</option>
+          <option>Company</option>
+          <option selected>Team Members</option>
+          <option>Billing</option>
+        </select> -->
+      </div>
+      <div class="hidden bg-white sm:block">
+        <div class="border-b border-gray-200">
+          <nav class="-mb-px flex">
+
+            <% categories_nav_tab_options("nav_only").each do |link_title, icon_id| %>
+              <%# next if ((@user_profile.id != current_user.id) && (link_title == "notifications" || link_title == "settings")) %>
+              <%= link_to "#", data: { target: "tabs.tab", action: "click->tabs#change" }, class: "group w-1/4 py-4 px-1 text-center border-b-2 border-transparent text-md leading-5 text-gray-600 hover:text-gray-800 hover:border-gray-500 focus:outline-none focus:text-gray-800 focus:border-gray-500 active:text-gray-800 active:border-gray-500" do %>
+                <i class='fal <%= "#{icon_id}" %> fa-lg -ml-0.5 mr-2 h-5 w-5 text-gray-400 group-hover:text-gray-500 group-focus:text-gray-600'></i>
+                <%= link_title.humanize.titleize %>
+              <% end %>
+            <% end %>
+
+          </nav>
+
+        </div>
+      </div>
     </div>
 
-    <% if @pagy.pages > 1 %>
-      <div class="text-center my-6">
-        <%== pagy_nav(@pagy) %>
+    <% categories_nav_tab_options("render_page_names").each do |option| %>
+      <%# next if ((@user_profile.id != current_user.id) && (option == "notifications" || option == "settings")) %>
+      <div class="hidden py-4 px-4" data-target="tabs.panel">
+        <div class="container max-w-8xl mx-auto">
+          <%= render "categories/index_partials/#{option}" %>
+        </div>
       </div>
     <% end %>
 
-  <% else %>
-    <div class="bg-white rounded shadow flex flex-col items-center justify-between p-8 lg:flex-row">
-      <%= image_tag "empty.svg", class: "mb-4 lg:w-1/2" %>
-      <div class="flex-1 text-center">
-        <p class="h3 mb-4">Create your first Category</p>
-        <%= link_to 'New Category', new_category_path, class: "btn btn-primary" %>
-      </div>
-    </div>
-  <% end %>
+  </div> <!-- div data-controller="tabs" data-tabs-active-tab="-mb-px tab-active transition" -->
+
+
 </div>

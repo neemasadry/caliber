@@ -25,5 +25,5 @@ class Subcategory < ApplicationRecord
   belongs_to :category
 
   counter_culture [:category, :category_group]
-  counter_culture :category
+  counter_culture :category, column_name: "subcategories_count"
 end

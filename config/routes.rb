@@ -1,7 +1,7 @@
 # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 Rails.application.routes.draw do
 
-  resources :categories
+
   # Search
   get :autocomplete, controller: :search
   get :search, controller: :search
@@ -205,11 +205,19 @@ Rails.application.routes.draw do
 
   # Administrate
   authenticated :user, lambda { |u| u.admin? } do
+    ### SHOULD BE UNDER namespace :admin do (below)
+    ### Begin: App Specific ###
+    resources :categories
+    ### End: App Specific ###
+
+
     namespace :admin do
       if defined?(Sidekiq)
         require "sidekiq/web"
         mount Sidekiq::Web => "/sidekiq"
       end
+
+
 
       resources :announcements
       resources :users
