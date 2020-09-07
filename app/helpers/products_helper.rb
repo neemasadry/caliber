@@ -1,5 +1,15 @@
 module ProductsHelper
 
+  def product_type_array(select_type = "singular")
+    if select_type == "singular"
+      return_arr = ["Accessory", "Bottom", "Cosmetic", "Dress", "Fragrance", "Jewelry", "Shoe", "Suit", "Top"]
+    elsif select_type == "plural"
+      return_arr = ["accessories", "bottoms", "cosmetics", "dresses", "fragrances", "jewelries", "shoes", "suits", "tops"]
+    end
+
+    return return_arr
+  end
+
   def products_nav_tab_options(select_arr)
     #["products_&_brands", "guides", "profile", "notifications", "social", "settings", "subscription", "chat", "sponsor", "analytics"]
     if select_arr == "nav_only"

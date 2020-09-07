@@ -21,6 +21,9 @@ class CreateCosmetics < ActiveRecord::Migration[6.0]
       # t.string  :category, null: false, limit: 75
       # t.string  :subcategory, null: false, limit: 75
 
+      # Wicked Products::BuildController
+      # t.string :build_status, null: false, limit: 100
+
       # Slug for FriendlyID
       t.string :slug, index: { unique: true }
 

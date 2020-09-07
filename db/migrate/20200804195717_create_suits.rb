@@ -21,6 +21,9 @@ class CreateSuits < ActiveRecord::Migration[6.0]
       t.string  :secondary_color, null: true, limit: 30
       t.text    :product_url, null: true
 
+      # Wicked Products::BuildController
+      # t.string :build_status, null: false, limit: 100
+
       # Suit-specific characteristics
       t.string :suit_type, null: false, limit: 75
       t.string :jacket_breasted_style, null: false, limit: 75

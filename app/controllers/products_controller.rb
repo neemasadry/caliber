@@ -22,6 +22,18 @@ class ProductsController < ApplicationController
     @pagy_suits, @suits = pagy(Suit.sort_by_params(params[:sort], sort_direction), page_param: "suits_page")
     @pagy_tops, @tops = pagy(Top.sort_by_params(params[:sort], sort_direction), page_param: "tops_page")
 
+    @all_category_results = [
+      {pagy: @pagy_accessories, results: @accessories, category_name: "Accessories", fa_icon: "fa-hat-winter"},
+      {pagy: @pagy_bottoms, results: @bottoms, category_name: "Bottoms", fa_icon: "fa-socks"},
+      {pagy: @pagy_cosmetics, results: @cosmetics, category_name: "Cosmetics", fa_icon: "fa-mask"},
+      {pagy: @pagy_dresses, results: @dresses, category_name: "Dresses", fa_icon: "fa-question"},
+      {pagy: @pagy_fragrances, results: @fragrances, category_name: "Fragrances", fa_icon: "fa-spray-can"},
+      {pagy: @pagy_jewelries, results: @jewelries, category_name: "Jewelries", fa_icon: "fa-gem"},
+      {pagy: @pagy_shoes, results: @shoes, category_name: "Shoes", fa_icon: "fa-shoe-prints"},
+      {pagy: @pagy_suits, results: @suits, category_name: "Suits", fa_icon: "fa-user-tie"},
+      {pagy: @pagy_tops, results: @tops, category_name: "Tops", fa_icon: "fa-tshirt"}
+    ]
+
     @accessories.load
     @bottoms.load
     @cosmetics.load
@@ -39,7 +51,17 @@ class ProductsController < ApplicationController
 
   # GET /products/new
   def new
-    @product = Product.new
+    if user_signed_in? && !current_account.personal?
+
+      @product = Product.new
+
+    else
+      redirect_to products_path, flash: { danger: "You must be signed in to an account associated with a Brand to create a new product." }
+    end
+  end
+
+  def new_product_type
+
   end
 
   # GET /products/1/edit
@@ -48,12 +70,20 @@ class ProductsController < ApplicationController
 
   # POST /products
   def create
-    @product = Product.new(product_params)
+    if user_signed_in? && !current_account.personal?
+      @product = Product.new(product_params)
+      @product.productable_type = params[:productable_type]
+      @product.user = current_user
+      @product.account = current_account
+      @product.brand = current_account.brand
 
-    if @product.save
-      redirect_to @product, notice: "Product was successfully created."
+      if @product.save
+        redirect_to @product, notice: "Product was successfully created."
+      else
+        render :new
+      end
     else
-      render :new
+      redirect_to products_path, flash: { danger: "You must be signed in to an account associated with a Brand to create a new product." }
     end
   end
 
@@ -132,8 +162,26 @@ class ProductsController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def product_params
-    params.require(:product).permit(:name, :productable_id, :productable_type, :user_id, :account_id, :brand_id)
+    params.require(:product).permit(
+      :name,
+      :productable_id,
+      :productable_type,
+      :user_id,
+      :account_id,
+      :brand_id,
+      accessories_attributes: {},
+      bottoms_attributes: {},
+      cosmetics_attributes: {},
+      dresses_attributes: {},
+      fragrances_attributes: {},
+      jewelries_attributes: {},
+      shoes_attributes: {},
+      suits_attributes: {},
+      tops_attributes: {}
+    )
   end
+
+
 
   def set_user_on_personal_account
     @user_on_personal_account = current_account.personal?

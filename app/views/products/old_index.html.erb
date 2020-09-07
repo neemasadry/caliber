@@ -8,7 +8,7 @@
 
     <div>
       <div class="sm:hidden">
-        <%#= select_tag "page", options_for_select(user_profile_nav_tab_options("render_page_names")), aria: { label: "Selected tab" }, class: "form-select block w-full" %>
+        <%= select_tag "page", options_for_select(user_profile_nav_tab_options("render_page_names")), aria: { label: "Selected tab" }, class: "form-select block w-full" %>
         <!-- <select aria-label="Selected tab" class="form-select block w-full">
           <option>My Account</option>
           <option>Company</option>
@@ -20,10 +20,11 @@
         <div class="border-b border-gray-200">
           <nav class="-mb-px flex">
 
-            <% @all_category_results.each do |result_hash| %>
+            <% products_nav_tab_options("nav_only").each do |link_title, icon_id| %>
+              <%# next if ((@user_profile.id != current_user.id) && (link_title == "notifications" || link_title == "settings")) %>
               <%= link_to "#", data: { target: "tabs.tab", action: "click->tabs#change" }, class: "group w-1/4 py-4 px-1 text-center border-b-2 border-transparent text-md leading-5 text-gray-600 hover:text-gray-800 hover:border-gray-500 focus:outline-none focus:text-gray-800 focus:border-gray-500 active:text-gray-800 active:border-gray-500" do %>
-                <i class='fal <%= "#{result_hash[:fa_icon]}" %> fa-lg -ml-0.5 mr-2 h-5 w-5 text-gray-400 group-hover:text-gray-500 group-focus:text-gray-600'></i>
-                <%= result_hash[:category_name] %>
+                <i class='fal <%= "#{icon_id}" %> fa-lg -ml-0.5 mr-2 h-5 w-5 text-gray-400 group-hover:text-gray-500 group-focus:text-gray-600'></i>
+                <%= link_title.humanize.titleize %>
               <% end %>
             <% end %>
 
@@ -33,10 +34,11 @@
       </div>
     </div>
 
-    <% @all_category_results.each do |result_hash| %>
+    <% products_nav_tab_options("render_page_names").each do |option| %>
+      <%# next if ((@user_profile.id != current_user.id) && (option == "notifications" || option == "settings")) %>
       <div class="hidden py-4 px-4" data-target="tabs.panel">
         <div class="container max-w-8xl mx-auto">
-          <%= render partial: "products/index_results", locals: { result_hash: result_hash } %>
+          <%= render "products/index_partials/#{option}" %>
         </div>
       </div>
     <% end %>

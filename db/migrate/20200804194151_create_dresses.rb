@@ -18,6 +18,9 @@ class CreateDresses < ActiveRecord::Migration[6.0]
       t.string  :secondary_color, null: true, limit: 30
       t.text    :product_url, null: true
 
+      # Wicked Products::BuildController
+      # t.string :build_status, null: false, limit: 100
+
       # Categorization
       # t.string  :body_part, null: false, limit: 50
       # t.string  :category, null: false, limit: 75

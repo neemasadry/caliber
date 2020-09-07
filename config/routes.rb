@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
 
   resources :products
+
   # Search
   get :autocomplete, controller: :search
   get :search, controller: :search

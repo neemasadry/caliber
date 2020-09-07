@@ -26,6 +26,7 @@ khaki_chinos_esntls = Bottom.new(
 	materials: "97% Cotton. 3% Spandex",
 	primary_color: "Beige",
 	secondary_color: "N/A",
+	# build_status: "finished",
 	user_id: user_esntls,
 	account_id: account_esntls
 )
@@ -60,6 +61,7 @@ wolf_sweats_esntls = Bottom.new(
 	materials: "80% Cotton. 20% Polyester",
 	primary_color: "Gray",
 	secondary_color: "N/A",
+	# build_status: "finished",
 	user_id: user_esntls,
 	account_id: account_esntls
 )

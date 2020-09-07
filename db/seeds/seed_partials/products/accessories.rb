@@ -33,6 +33,7 @@ csv.each do |row|
   t.primary_color = "N/A"
   t.secondary_color = "N/A"
   t.product_url = row['url']
+  # t.build_status = "finished"
   t.user_id = user_entry.id
   t.account_id = account_entry.id
 
@@ -58,6 +59,7 @@ csv.each do |row|
     # Create associated Product object
     Product.create!(
       name: t.name,
+      # build_status: "finished",
       productable_type: t.model_name,
       productable_id: t.id,
       user_id: t.user_id,

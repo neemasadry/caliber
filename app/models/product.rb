@@ -45,13 +45,23 @@ class Product < ApplicationRecord
   belongs_to :account
   belongs_to :brand
 
+  has_one :accessory
+  has_one :bottom
+  has_one :cosmetic
+  has_one :dress
+  has_one :fragrance
+  has_one :jewelry
+  has_one :shoe
+  has_one :suit
+  has_one :top
+
   friendly_id :name, use: :slugged
 
   # has_ancestry
   acts_as_favoritable
   acts_as_votable
 
-  searchkick word_start: [:name, :brand], word_middle: [:name, :brand]
+  #searchkick word_start: [:name, :brand], word_middle: [:name, :brand]
 
   accepts_nested_attributes_for :accessory, :bottom, :cosmetic, :dress, :fragrance, :jewelry, :shoe, :suit, :top, allow_destroy: true
 
@@ -61,5 +71,10 @@ class Product < ApplicationRecord
       brand: brand.name,
     }
   end
+
+  # Wicked
+  # def active?
+  #   status == 'active'
+  # end
 
 end

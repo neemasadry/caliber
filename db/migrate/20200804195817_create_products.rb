@@ -1,3 +1,4 @@
+# Original timestamp: 20200906162346
 class CreateProducts < ActiveRecord::Migration[6.0]
   def change
 =begin
@@ -67,6 +68,9 @@ class CreateProducts < ActiveRecord::Migration[6.0]
       t.references :user, null: false, foreign_key: true
       t.references :account, null: false, foreign_key: true
       t.references :brand, null: false, foreign_key: true
+
+      # Wicked Products::BuildController
+      # t.string :build_status, null: false, limit: 100
 
       # Slug for FriendlyID
       t.string :slug, index: { unique: true }

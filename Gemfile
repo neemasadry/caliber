@@ -113,6 +113,7 @@ gem 'friendly_id', '~> 5.2.4'
 gem 'jsonb_accessor', '~> 1.1'
 # gem 'ancestry', '~> 2.1'
 
+# gem 'wicked', '~> 1.3', '>= 1.3.4'
 gem 'discard', '~> 1.2'
 gem 'paper_trail'
 gem 'merit', '~> 4.0'

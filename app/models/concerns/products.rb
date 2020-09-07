@@ -87,4 +87,13 @@ module Products
     self.class.name != "Fragrance"
   end
 
+  # Wicked
+  # def active?
+  #   status == 'active'
+  # end
+
+  # def active_or_productable_type?
+  #   status.include?('productable_type') || active?
+  # end
+
 end

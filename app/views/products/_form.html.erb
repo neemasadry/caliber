@@ -1,30 +1,24 @@
 <%= form_with(model: product) do |form| %>
   <%= render "shared/error_messages", resource: form.object %>
 
+  <%= form.label :productable_type, "Product Type" %>
+  <div class="relative">
+    <%= form.select(:productable_type, options_for_select(product_type_array("singular")), class: "select") %>
+    <div class="caret">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" role="img" aria-labelledby="af7emarxzvkpnyerzwp9wr8exwugoios" class="fill-current h-4 w-4"><title id="af7emarxzvkpnyerzwp9wr8exwugoios">Icons/caret</title><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"></path></svg>
+    </div>
+  </div>
+
+  <%#  %>
+  <%# fields_for  %>
+  <%#  %>
+
   <div class="form-group">
     <%= form.label :name %>
     <%= form.text_field :name, class: "form-control" %>
   </div>
 
-  <div class="form-group">
-    <%= form.label :productable_id %>
-    <%= form.text_field :productable_id, class: "form-control" %>
-  </div>
 
-  <div class="form-group">
-    <%= form.label :user_id %>
-    <%= form.text_field :user_id, class: "form-control" %>
-  </div>
-
-  <div class="form-group">
-    <%= form.label :account_id %>
-    <%= form.text_field :account_id, class: "form-control" %>
-  </div>
-
-  <div class="form-group">
-    <%= form.label :brand_id %>
-    <%= form.text_field :brand_id, class: "form-control" %>
-  </div>
 
   <div class="form-group flex justify-between">
     <%= form.button class: "btn btn-primary" %>

@@ -23,6 +23,7 @@
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null
 #  account_id              :bigint           not null
+#  product_id              :bigint           not null
 #  reviewable_id           :bigint           not null
 #  user_id                 :bigint           not null
 #
@@ -30,6 +31,7 @@
 #
 #  index_reviews_on_account_id                         (account_id)
 #  index_reviews_on_discarded_at                       (discarded_at)
+#  index_reviews_on_product_id                         (product_id)
 #  index_reviews_on_reviewable_type_and_reviewable_id  (reviewable_type,reviewable_id)
 #  index_reviews_on_slug                               (slug) UNIQUE
 #  index_reviews_on_user_id                            (user_id)
@@ -37,6 +39,7 @@
 # Foreign Keys
 #
 #  fk_rails_...  (account_id => accounts.id)
+#  fk_rails_...  (product_id => products.id)
 #  fk_rails_...  (user_id => users.id)
 #
 require 'test_helper'
