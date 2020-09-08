@@ -209,7 +209,11 @@ Rails.application.routes.draw do
   authenticated :user, lambda { |u| u.admin? } do
     ### SHOULD BE UNDER namespace :admin do (below)
     ### Begin: App Specific ###
+    resources :body_part_groups
+    resources :body_part
+    resources :category_groups
     resources :categories
+    resources :subcategories
     ### End: App Specific ###
 
 

@@ -17,26 +17,11 @@ class CategoriesController < ApplicationController
     @pagy_subcategories, @subcategories = pagy(Subcategory.sort_by_params(params[:sort], sort_direction), page_param: "subcategory_page")
 
     @categories_index_array = [
-      { body_part_groups: {
-          results: @body_part_groups,
-          pagy: @pagy_body_part_groups
-        } },
-      { body_parts: {
-          results: @body_parts,
-          pagy: @pagy_body_parts
-        } },
-      { category_groups: {
-          results: @category_groups,
-          pagy: @pagy_category_groups
-        } },
-      { categories: {
-          results: @categories,
-          pagy: @pagy_categories
-      } },
-      { subcategories: {
-          results: @subcategories,
-          pagy: @pagy_subcategories
-      } }
+      { results: @body_part_groups, pagy: @pagy_body_part_groups, category_name: "Body Part Group", fa_icon: "fa-users-class" },
+      { results: @body_parts, pagy: @pagy_body_parts, category_name: "Body Part", fa_icon: "fa-child" },
+      { results: @category_groups, pagy: @pagy_category_groups, category_name: "Category Group", fa_icon: "fa-th-list" },
+      { results: @categories, pagy: @pagy_categories, category_name: "Category", fa_icon: "fa-list" },
+      { results: @subcategories, pagy: @pagy_subcategories, category_name: "Subcategory", fa_icon: "fa-stream" }
     ]
 
     # We explicitly load the records to avoid triggering multiple DB calls in the views when checking if records exist and iterating over them.

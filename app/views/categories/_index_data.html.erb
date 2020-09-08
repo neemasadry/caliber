@@ -1,0 +1,79 @@
+<div class="container mx-auto my-8 px-4">
+  <div class="flex justify-between items-center mb-4">
+    <h1 class="h3"><%= pluralize result_hash[:pagy].count, result_hash[:category_name].singularize %> <%= "(#{result_hash[:pagy].from} - #{result_hash[:pagy].to})" if result_hash[:pagy].pages > 1 && result_hash[:pagy].from.present? && result_hash[:pagy].to.present? %></h1>
+
+    <% if result_hash[:results].any? %>
+      <%= link_to "New #{result_hash[:category_name].singularize}", new_polymorphic_path(result_hash[:category_name].parameterize.underscore), class: "btn btn-primary" %>
+    <% end %>
+  </div>
+
+  <% if result_hash[:results].any? %>
+    <div class="bg-white rounded shadow table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th class="p-3 uppercase text-center text-xs"><%= sortable result_hash[:results], :name, 'Name', class: 'text-gray-700' %></th>
+
+            <% if result_hash[:category_name] == "Body Part Group" %>
+              <th class="p-3 uppercase text-center text-xs"><%= sortable result_hash[:results], :body_parts_count, 'Body Part Count', class: 'text-gray-700' %></th>
+            <% elsif result_hash[:category_name] == "Body Part" %>
+              <th class="p-3 uppercase text-center text-xs"><%= sortable result_hash[:results], :body_part_group_id, 'Body Part Group', class: 'text-gray-700' %></th>
+            <% elsif result_hash[:category_name] == "Category Group" %>
+              <th class="p-3 uppercase text-center text-xs"><%= sortable result_hash[:results], :categories_count, 'Categories Count', class: 'text-gray-700' %></th>
+              <th class="p-3 uppercase text-center text-xs"><%= sortable result_hash[:results], :subcategories_count, 'Subcategories Count', class: 'text-gray-700' %></th>
+            <% elsif result_hash[:category_name] == "Category" %>
+              <th class="p-3 uppercase text-center text-xs"><%= sortable result_hash[:results], :subcategories_count, 'Subcategories Count', class: 'text-gray-700' %></th>
+              <th class="p-3 uppercase text-center text-xs"><%= sortable result_hash[:results], :category_group_id, 'Caategory Group', class: 'text-gray-700' %></th>
+            <% elsif result_hash[:category_name] == "Subcategory" %>
+              <th class="p-3 uppercase text-center text-xs"><%= sortable result_hash[:results], :category_group_id, 'Caategory Group', class: 'text-gray-700' %></th>
+              <th class="p-3 uppercase text-center text-xs"><%= sortable result_hash[:results], :category_id, 'Category', class: 'text-gray-700' %></th>
+
+            <% end %>
+
+            <th class="p-3 uppercase text-center text-xs text-gray-700 cursor-default">Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+        <% result_hash[:results].each do |result| %>
+          <tr class="group border-t border-gray-400 hover:bg-gray-100">
+
+            <td class="p-3 text-center"><%= link_to result.name, product_path(result) %></td>
+
+            <% if result_hash[:category_name] == "Body Part Group" %>
+              <td class="p-3 text-center"><%= result.body_parts_count %></td>
+            <% elsif result_hash[:category_name] == "Body Part" %>
+              <td class="p-3 text-center"><%= result.body_part_group.name %></td>
+            <% elsif result_hash[:category_name] == "Category Group" %>
+              <td class="p-3 text-center"><%= result.categories_count %></td>
+              <td class="p-3 text-center"><%= result.subcategories_count %></td>
+            <% elsif result_hash[:category_name] == "Category" %>
+              <td class="p-3 text-center"><%= result.category_group.name %></td>
+              <td class="p-3 text-center"><%= result.subcategories_count %></td>
+            <% elsif result_hash[:category_name] == "Subcategory" %>
+              <td class="p-3 text-center"><%= result.category_group.name %></td>
+              <td class="p-3 text-center"><%= result.category.name %></td>
+            <% end %>
+
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <% if result_hash[:pagy].pages > 1 %>
+      <div class="text-center my-6">
+        <%== pagy_nav(result_hash[:pagy]) %>
+      </div>
+    <% end %>
+
+  <% else %>
+    <div class="bg-white rounded shadow flex flex-col items-center justify-between p-8 lg:flex-row">
+      <%= image_tag "empty.svg", class: "mb-4 lg:w-1/2" %>
+      <div class="flex-1 text-center">
+        <p class="h3 mb-4">Create your first <%= result_hash[:category_name].singularize %></p>
+        <%= link_to "New #{result_hash[:category_name].singularize}", new_polymorphic_path(result_hash[:category_name].singularize.constantize), class: "btn btn-primary" %>
+      </div>
+    </div>
+  <% end %>
+</div>

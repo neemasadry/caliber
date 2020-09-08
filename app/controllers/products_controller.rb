@@ -23,15 +23,15 @@ class ProductsController < ApplicationController
     @pagy_tops, @tops = pagy(Top.sort_by_params(params[:sort], sort_direction), page_param: "tops_page")
 
     @all_category_results = [
-      {pagy: @pagy_accessories, results: @accessories, category_name: "Accessories", fa_icon: "fa-hat-winter"},
-      {pagy: @pagy_bottoms, results: @bottoms, category_name: "Bottoms", fa_icon: "fa-socks"},
-      {pagy: @pagy_cosmetics, results: @cosmetics, category_name: "Cosmetics", fa_icon: "fa-mask"},
-      {pagy: @pagy_dresses, results: @dresses, category_name: "Dresses", fa_icon: "fa-question"},
-      {pagy: @pagy_fragrances, results: @fragrances, category_name: "Fragrances", fa_icon: "fa-spray-can"},
-      {pagy: @pagy_jewelries, results: @jewelries, category_name: "Jewelries", fa_icon: "fa-gem"},
-      {pagy: @pagy_shoes, results: @shoes, category_name: "Shoes", fa_icon: "fa-shoe-prints"},
-      {pagy: @pagy_suits, results: @suits, category_name: "Suits", fa_icon: "fa-user-tie"},
-      {pagy: @pagy_tops, results: @tops, category_name: "Tops", fa_icon: "fa-tshirt"}
+      { pagy: @pagy_accessories, results: @accessories, category_name: "Accessories", fa_icon: "fa-hat-winter" },
+      { pagy: @pagy_bottoms, results: @bottoms, category_name: "Bottoms", fa_icon: "fa-socks" },
+      { pagy: @pagy_cosmetics, results: @cosmetics, category_name: "Cosmetics", fa_icon: "fa-mask" },
+      { pagy: @pagy_dresses, results: @dresses, category_name: "Dresses", fa_icon: "fa-question" },
+      { pagy: @pagy_fragrances, results: @fragrances, category_name: "Fragrances", fa_icon: "fa-spray-can" },
+      { pagy: @pagy_jewelries, results: @jewelries, category_name: "Jewelries", fa_icon: "fa-gem" },
+      { pagy: @pagy_shoes, results: @shoes, category_name: "Shoes", fa_icon: "fa-shoe-prints" },
+      { pagy: @pagy_suits, results: @suits, category_name: "Suits", fa_icon: "fa-user-tie" },
+      { pagy: @pagy_tops, results: @tops, category_name: "Tops", fa_icon: "fa-tshirt" }
     ]
 
     @accessories.load

@@ -3,7 +3,7 @@
     <h1 class="h3"><%= pluralize result_hash[:pagy].count, result_hash[:category_name].singularize %> <%= "(#{result_hash[:pagy].from} - #{result_hash[:pagy].to})" if result_hash[:pagy].pages > 1 && result_hash[:pagy].from.present? && result_hash[:pagy].to.present? %></h1>
 
     <% if result_hash[:results].any? %>
-      <%= link_to "New Accessory", new_polymorphic_path(result_hash[:category_name].singularize.downcase), class: "btn btn-primary" %>
+      <%= link_to "New #{result_hash[:category_name].singularize}", new_polymorphic_path(result_hash[:category_name].singularize.downcase), class: "btn btn-primary" %>
     <% end %>
   </div>
 
