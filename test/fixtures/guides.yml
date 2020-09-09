@@ -10,13 +10,10 @@
 #  cached_weighted_average :float            default(0.0)
 #  cached_weighted_score   :integer          default(0)
 #  cached_weighted_total   :integer          default(0)
-#  category                :string(30)       not null
 #  discarded_at            :datetime
 #  favoritable_score       :text
 #  favoritable_total       :text
 #  slug                    :string
-#  subcategory_one         :string(30)
-#  subcategory_two         :string(30)
 #  title                   :string(80)       not null
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null

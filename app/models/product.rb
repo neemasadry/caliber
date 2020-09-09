@@ -45,15 +45,15 @@ class Product < ApplicationRecord
   belongs_to :account
   belongs_to :brand
 
-  has_one :accessory
-  has_one :bottom
-  has_one :cosmetic
-  has_one :dress
-  has_one :fragrance
-  has_one :jewelry
-  has_one :shoe
-  has_one :suit
-  has_one :top
+  has_one :accessory, as: :productable
+  has_one :bottom, as: :productable
+  has_one :cosmetic, as: :productable
+  has_one :dress, as: :productable
+  has_one :fragrance, as: :productable
+  has_one :jewelry, as: :productable
+  has_one :shoe, as: :productable
+  has_one :suit, as: :productable
+  has_one :top, as: :productable
 
   has_many :reviews, as: :reviewable, dependent: :destroy
   has_many :collectable_items

@@ -17,9 +17,9 @@
         <thead>
           <tr>
             <th class="p-3 uppercase text-center text-xs"><%= sortable @outfits, :name, 'Name', class: 'text-gray-700' %></th>
-            <th class="p-3 uppercase text-center text-xs"><%= sortable @outfits, :seasons, 'Season', class: 'text-gray-700' %></th>
-            <th class="p-3 uppercase text-center text-xs"><%= sortable @outfits, :occasion, 'Occasion(s)', class: 'text-gray-700' %></th>
-            <th class="p-3 uppercase text-center text-xs"><%= sortable @outfits, :dress_code, 'Dress Code', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-center text-xs text-gray-700 cursor-default">Seasons</th>
+            <th class="p-3 uppercase text-center text-xs text-gray-700 cursor-default">Occasion(s)</th>
+            <th class="p-3 uppercase text-center text-xs text-gray-700 cursor-default">Dress Code</th>
             <th class="p-3 uppercase text-center text-xs"><%= sortable @outfits, :total_number_of_products, 'No. of products', class: 'text-gray-700' %></th>
             <th class="p-3 uppercase text-center text-xs"><%= sortable @outfits, :total_price, 'Total price', class: 'text-gray-700' %></th>
             <th class="p-3 uppercase text-center text-xs"><%= sortable @outfits, :user_id, 'Created By', class: 'text-gray-700' %></th>

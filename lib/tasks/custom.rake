@@ -16,12 +16,15 @@ namespace :db do
 
 
     task :foundation => :environment do
+      Rake::Task["db:schema:load"].invoke
       foundation_partials_path_array = [
         Rails.root.join('db', 'seeds', 'seed_partials', 'users.rb'),
         Rails.root.join('db', 'seeds', 'seed_partials', 'categories.rb'),
         Rails.root.join('db', 'seeds', 'seed_partials', 'brands.rb'),
         Rails.root.join('db', 'seeds', 'seed_partials', 'products', 'accessories.rb'),
-        Rails.root.join('db', 'seeds', 'seed_partials', 'products', 'bottoms.rb')
+        Rails.root.join('db', 'seeds', 'seed_partials', 'products', 'bottoms.rb'),
+        Rails.root.join('db', 'seeds', 'seed_partials', 'reviews.rb'),
+        Rails.root.join('db', 'seeds', 'seed_partials', 'guides.rb')
       ]
 
       foundation_partials_path_array.each do |foundation_partial_path|

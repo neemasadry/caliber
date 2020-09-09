@@ -533,9 +533,6 @@ ActiveRecord::Schema.define(version: 2020_08_31_182446) do
     t.bigint "account_id", null: false
     t.bigint "brand_id"
     t.string "title", limit: 80, null: false
-    t.string "category", limit: 30, null: false
-    t.string "subcategory_one", limit: 30
-    t.string "subcategory_two", limit: 30
     t.string "slug"
     t.datetime "discarded_at"
     t.integer "cached_votes_total", default: 0

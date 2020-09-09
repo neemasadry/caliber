@@ -13,6 +13,29 @@ csv = CSV.parse(jade_black_csv_text, headers: true, encoding: "utf-8")
 puts "---------------- Begin: Accessory ----------------"
 csv.each do |row|
 
+=begin
+  # Create associated Product object
+  Product.new(
+    name: row['name'],
+    user_id: user_entry.id,
+    account_id: account_entry.id,
+    brand_id: brand_entry.id,
+  ).build_accessory(
+    name: row['name'],
+    brand_id: brand_entry.id,
+    description: row['description'],
+    retail_price: row['retail_price'],
+
+    gender: "Male",
+    materials: row['material'],
+    primary_color: "N/A",
+    secondary_color: "N/A",
+    product_url: row['url'],
+    user_id: user_entry.id,
+    account_id: account_entry.id
+  ).save!
+=end
+
   puts "-- Accessory No. #{counter} -- \n\n"
 
   t = Accessory.new
@@ -21,45 +44,37 @@ csv.each do |row|
   t.description = row['description']
   t.retail_price = row['retail_price']
 
-  # Categorization
-  # t.body_part_group   = BodyPartGroup.find_by(name: "Head").id
-  # t.body_part_id      = BodyPart.find_by(name: "Eyes").id
-  # t.category_group_id = CategoryGroup.find_by(name: "Product").id
-  # t.category_id       = Category.find_by(name: "Eyewear").id
-  # t.subcategory_id    = Subcategory.find_by(name: "Sunglasses").id
-
   t.gender = "Male"
   t.materials = row['material']
   t.primary_color = "N/A"
   t.secondary_color = "N/A"
   t.product_url = row['url']
-  # t.build_status = "finished"
   t.user_id = user_entry.id
   t.account_id = account_entry.id
 
-  # puts "\t --- Begin: Upload associated product images ---\n"
-  image1_path = File.open(Rails.root.join('db', 'seeds', 'Jade_Black', 'Mens', 'Jade-Black-(Images-and-Files)---2020-03-28T163728Z', row['image1_filename']))
-  image2_path = File.open(Rails.root.join('db', 'seeds', 'Jade_Black', 'Mens', 'Jade-Black-(Images-and-Files)---2020-03-28T163728Z', row['image2_filename']))
-  imageDemo_path = File.open(Rails.root.join('db', 'seeds', 'Jade_Black', 'Mens', 'Jade-Black-(Images-and-Files)---2020-03-28T163728Z', row['imageDemo_filename']))
-
-  # ### Begin: ActiveStorage ###
-  image1_path = File.open(Rails.root.join('db', 'seeds', 'Jade_Black', 'Mens', 'Jade-Black-(Images-and-Files)---2020-03-28T163728Z', row['image1_filename']))
-  image2_path = File.open(Rails.root.join('db', 'seeds', 'Jade_Black', 'Mens', 'Jade-Black-(Images-and-Files)---2020-03-28T163728Z', row['image2_filename']))
-  imageDemo_path = File.open(Rails.root.join('db', 'seeds', 'Jade_Black', 'Mens', 'Jade-Black-(Images-and-Files)---2020-03-28T163728Z', row['imageDemo_filename']))
-  image1 = { io: image1_path, filename: File.basename(image1_path), content_type: ((File.extname(image1_path) == ".jpg" || File.extname(image1_path) == ".jpeg") ? "image/jpg" : "image/png") }
-  image2 = { io: image2_path, filename: File.basename(image2_path), content_type: ((File.extname(image2_path) == ".jpg" || File.extname(image2_path) == ".jpeg") ? "image/jpg" : "image/png") }
-  imageDemo = { io: imageDemo_path, filename: File.basename(imageDemo_path), content_type: ((File.extname(imageDemo_path) == ".jpg" || File.extname(imageDemo_path) == ".jpeg") ? "image/jpg" : "image/png") }
-
-  t.images.attach([image1, image2, imageDemo])
-  # ### End: ActiveStorage ###
-  # puts "\t --- End: Upload associated product images ---\n"
-
   if t.save!
+
+    # puts "\t --- Begin: Upload associated product images ---\n"
+    image1_path = File.open(Rails.root.join('db', 'seeds', 'Jade_Black', 'Mens', 'Jade-Black-(Images-and-Files)---2020-03-28T163728Z', row['image1_filename']))
+    image2_path = File.open(Rails.root.join('db', 'seeds', 'Jade_Black', 'Mens', 'Jade-Black-(Images-and-Files)---2020-03-28T163728Z', row['image2_filename']))
+    imageDemo_path = File.open(Rails.root.join('db', 'seeds', 'Jade_Black', 'Mens', 'Jade-Black-(Images-and-Files)---2020-03-28T163728Z', row['imageDemo_filename']))
+
+    # ### Begin: ActiveStorage ###
+    image1_path = File.open(Rails.root.join('db', 'seeds', 'Jade_Black', 'Mens', 'Jade-Black-(Images-and-Files)---2020-03-28T163728Z', row['image1_filename']))
+    image2_path = File.open(Rails.root.join('db', 'seeds', 'Jade_Black', 'Mens', 'Jade-Black-(Images-and-Files)---2020-03-28T163728Z', row['image2_filename']))
+    imageDemo_path = File.open(Rails.root.join('db', 'seeds', 'Jade_Black', 'Mens', 'Jade-Black-(Images-and-Files)---2020-03-28T163728Z', row['imageDemo_filename']))
+    image1 = { io: image1_path, filename: File.basename(image1_path), content_type: ((File.extname(image1_path) == ".jpg" || File.extname(image1_path) == ".jpeg") ? "image/jpg" : "image/png") }
+    image2 = { io: image2_path, filename: File.basename(image2_path), content_type: ((File.extname(image2_path) == ".jpg" || File.extname(image2_path) == ".jpeg") ? "image/jpg" : "image/png") }
+    imageDemo = { io: imageDemo_path, filename: File.basename(imageDemo_path), content_type: ((File.extname(imageDemo_path) == ".jpg" || File.extname(imageDemo_path) == ".jpeg") ? "image/jpg" : "image/png") }
+
+    t.images.attach([image1, image2, imageDemo])
+
+    # ### End: ActiveStorage ###
+    # puts "\t --- End: Upload associated product images ---\n"
 
     # Create associated Product object
     Product.create!(
       name: t.name,
-      # build_status: "finished",
       productable_type: t.model_name,
       productable_id: t.id,
       user_id: t.user_id,

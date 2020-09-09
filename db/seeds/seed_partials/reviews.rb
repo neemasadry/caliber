@@ -54,8 +54,9 @@ users.each do |user|
           Review.create!(
             reviewable_type: product_instance.class.name,
             reviewable_id: product_instance.id,
-            #product_id: product_instance.find_by(name: ), ADD :product_id references!
+            product_id: Product.find_by(productable_type: product_instance.class.name, productable_id: product_instance.id).id,
             user_id: user.id,
+            account_id: user.accounts.personal.first.id,
             title: Faker::Lorem.words(5..7).join(" ").titleize,
             body: Faker::Lorem.paragraphs(6..12).join(" "),
             quality: rand_quality,
@@ -68,14 +69,14 @@ users.each do |user|
               accessory_uniqueness: uniqueness_rand
             }
           )
-          puts "#{product_counter} - #{user.username} wrote a review.\n"
+          # puts "\t#{product_counter} - #{user.username} wrote a review.\n"
           product_counter += 1
         end
       end # check if user is an owner
     end # brand_owners.each
   end # accessories.each
 
-  puts "#{user.id} - #{user.username} wrote a review.\n"
+  puts "#{user.username} (#{user.id}) - wrote #{product_counter} Review(s).\n"
 
 end # users.each
 

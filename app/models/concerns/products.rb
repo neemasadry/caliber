@@ -9,6 +9,7 @@ module Products
     belongs_to :user
     belongs_to :account
     belongs_to :brand
+    belongs_to :productable, polymorphic: true, optional: true
 
     has_many_attached :images
 

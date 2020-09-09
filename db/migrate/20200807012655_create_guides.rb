@@ -9,9 +9,9 @@ class CreateGuides < ActiveRecord::Migration[6.0]
       # t.references :subcategory, null: false, index: true
 
       t.string :title, null: false, limit: 80
-      t.string :category, null: false, limit: 30
-      t.string :subcategory_one, null: true, limit: 30
-      t.string :subcategory_two, null: true, limit: 30
+      # t.string :category, null: false, limit: 30
+      # t.string :subcategory_one, null: true, limit: 30
+      # t.string :subcategory_two, null: true, limit: 30
 
       # Shrine uploader
       # t.text :guide_image_data, null: true
