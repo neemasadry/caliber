@@ -6,12 +6,12 @@ class AccessoryPolicy < ApplicationPolicy
   end
 
   def favorite?
-    return true if user.present? && user.personal_account?
+    return true if user.present? && user.personal_account.present?
     false
   end
 
   def collect?
-    return true if user.present? && user.personal_account?
+    return true if user.present? && user.personal_account.present?
     false
   end
 

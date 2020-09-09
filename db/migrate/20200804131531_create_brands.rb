@@ -15,6 +15,7 @@ class CreateBrands < ActiveRecord::Migration[6.0]
       t.string :mission, null: false, limit: 125
       t.text :about, null: false, limit: 6000
       t.text :story, null: false, limit: 6000
+      t.boolean :claimed, null: false, default: false
 
       # Contact info
       t.string :email, null: false, limit: 100

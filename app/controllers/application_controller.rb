@@ -158,6 +158,28 @@ class ApplicationController < ActionController::Base
           @favorite_status = false
         end
       else
+        if request.filtered_parameters["controller"] == "products"
+
+          if current_user.liked?(@product)
+            @like_status = true
+          else
+            @like_status = false
+          end
+
+          if current_user.favorited?(@product, scope: :favorite)
+            @favorite_status = true
+          else
+            @favorite_status = false
+          end
+
+          if current_user.collected?("products", @product)
+            @collected_status = true
+          else
+            @collected_status = false
+          end
+
+        end # request.filtered_parameters["controller"] == "products"
+=begin
         # Check liked? and favorited? for all product models
         product_controller_categories = ["accessories", "bottoms", "cosmetics", "dresses", "fragrances", "jewelries", "shoes", "tops"]
 
@@ -184,7 +206,7 @@ class ApplicationController < ActionController::Base
             end
           end # if request.filtered_parameters["controller"] == product_controller
         end # product_controller_categories.each
-
+=end
       end # check which controller
 
     end # user_signed_in?

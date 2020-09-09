@@ -28,9 +28,9 @@ class CreateOutfits < ActiveRecord::Migration[6.0]
 
       t.string :name, null: false, limit: 150, index: true
       t.text :description, null: false, limit: 3000
-      t.string :season, null: false, limit: 10
-      t.string :occasion, null: false, limit: 50
-      t.string :dress_code, null: false, limit: 50
+      # t.string :season, null: false, limit: 10
+      # t.string :occasion, null: false, limit: 50
+      # t.string :dress_code, null: false, limit: 50
       t.integer :total_number_of_products, null: false, default: 0
       t.decimal :total_price, precision: 10, scale: 2, null: false, default: 0.00
 

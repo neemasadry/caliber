@@ -17,7 +17,7 @@
 #  fk_rails_...  (subcategory_id => subcategories.id)
 #
 class OutfitSubcategoryItem < ApplicationRecord
-  belongs_to :outfit_item
+  belongs_to :outfit
   belongs_to :subcategory
 
   # has_ancestry

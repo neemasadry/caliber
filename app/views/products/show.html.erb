@@ -3,7 +3,7 @@
 
     <div class="flex justify-between items-center mb-4">
       <h4>
-        <%#= link_to product_model_plural, polymorphic_path(product_model.constantize) %> > <%= @product.name %>
+        <%= link_to @product.productable_type.pluralize, products_path %> > <%= @product.name %>
       </h4>
       <%#= link_to 'Edit', edit_polymorphic_path(product), class: "btn btn-link" %>
     </div>

@@ -47,6 +47,7 @@ class ProductsController < ApplicationController
 
   # GET /products/1
   def show
+    votable_on_show_action
   end
 
   # GET /products/new
@@ -103,46 +104,46 @@ class ProductsController < ApplicationController
   end
 
   def collect # acts_as_favoritor
-    if current_account.personal? && user_signed_in?
+    if user_signed_in? && current_account.personal?
       if current_user.collected?(params[:controller], @product)
         current_user.remove_from_collection(@product.productable_type, @product)
-        redirect_to(accessory_path(@product), alert: "You removed the product #{@product.name} from your #{@product.productable_type.pluralize} Collection." )
+        redirect_to(product_path(@product), flash: { warning: "You removed the product #{@product.name} from your #{@product.productable_type.pluralize} Collection." })
       else
         current_user.add_to_collection(@product.productable_type, @product)
-        redirect_to(accessory_path(@product), flash: { success: "You added the product #{@product.name} to your #{@product.productable_type.pluralize} Collection!" })
+        redirect_to(product_path(@product), flash: { success: "You added the product #{@product.name} to your #{@product.productable_type.pluralize} Collection!" })
       end
     else
-      redirect_to accessory_path(@product), flash: { danger: "You can only add an item to your Collection on your personal account." }
+      redirect_to product_path(@product), flash: { danger: "You can only add an item to your Collection on your personal account." }
     end
   end
 
   def favorite # acts_as_favoritor
-    if current_account.personal? && user_signed_in?
+    if user_signed_in? && current_account.personal?
       if current_user.favorited? @product
-        current_user.unfavorite(@product, scopes: [:favorite, :product, :accessory])
-        redirect_to(accessory_path(@product), flash: { warning: "You removed the product #{@product.name} from your favorites." })
+        current_user.unfavorite(@product, scopes: [:favorite, :product, @product.productable_type.downcase.to_sym])
+        redirect_to(product_path(@product), flash: { warning: "You removed the product #{@product.name} from your favorites." })
       else
-        current_user.favorite(@product, scopes: [:favorite, :product, :accessory])
-        redirect_to(accessory_path(@product), flash: { success: "You added the product #{@product.name} to your favorites!" })
+        current_user.favorite(@product, scopes: [:favorite, :product, @product.productable_type.downcase.to_sym])
+        redirect_to(product_path(@product), flash: { success: "You added the product #{@product.name} to your favorites!" })
       end
     else
-      redirect_to accessory_path(@product), flash: { danger: "You can only Favorite an item using your personal account." }
+      redirect_to product_path(@product), flash: { danger: "You can only Favorite an item using your personal account." }
     end
   end
 
   def like # acts_as_votable
-    if current_account.personal? && user_signed_in?
+    if  user_signed_in? && current_account.personal?
       if current_user.liked? @product
         @product.unliked_by(current_user)
-        redirect_to(accessory_path(@product), flash: { warning: "You unliked the product: #{@product.name}." })
+        redirect_to(product_path(@product), flash: { warning: "You unliked the product: #{@product.name}." })
       elsif current_user.id != @product.user_id
         @product.liked_by(current_user)
-        redirect_to(accessory_path(@product), flash: { success: "You like the product: #{@product.name}!" })
+        redirect_to(product_path(@product), flash: { success: "You like the product: #{@product.name}!" })
       else
         redirect_to(root_path, flash: { danger: "An error occurred. Redirected to homepage." })
       end
     else
-      redirect_to accessory_path(@product), flash: { danger: "You can only Like an item using your personal account." }
+      redirect_to product_path(@product), flash: { danger: "You can only Like an item using your personal account." }
     end
   end
 

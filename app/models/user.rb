@@ -126,7 +126,8 @@ class User < ApplicationRecord
 
   # Scopes and Methods
   def collected?(product_controller, collectable)
-    self.collections.find_by(collection_type: product_controller.singularize.capitalize).collection_items.find_by(collectable_item: collectable)
+    #self.collections.find_by(collection_type: product_controller.singularize.capitalize).collection_items.find_by(collectable_item: collectable)
+    self.collections.find_by(collection_type: collectable.productable_type).collection_items.find_by(collectable_item: collectable)
   end
 
   def add_to_collection(product_type, collectable)

@@ -38,6 +38,7 @@ class Collection < ApplicationRecord
   acts_as_votable
   acts_as_favoritable
 
+  has_many :products, through: :collectable_items
   has_many :accessories, through: :collectable_items
   has_many :bottoms, through: :collectable_items
   has_many :cosmetics, through: :collectable_items

@@ -55,6 +55,12 @@ class Product < ApplicationRecord
   has_one :suit
   has_one :top
 
+  has_many :reviews, as: :reviewable, dependent: :destroy
+  has_many :collectable_items
+  has_many :collections, through: :collectable_items
+  has_many :outfit_items
+  has_many :outfits, through: :outfit_items, as: :productable
+
   friendly_id :name, use: :slugged
 
   # has_ancestry

@@ -1,6 +1,10 @@
 <div class="container mx-auto my-8 px-4">
   <div class="flex justify-between items-center mb-4">
-    <h3>Outfits</h3>
+    <% if params[:profile_id].present? %>
+      <h3><%= pluralize(@pagy.count, "Outfit") %> by <%= @user_profile.name %> <%= "(#{@pagy.from} - #{@pagy.to})" if @pagy.pages > 1 && @pagy.from.present? && @pagy.to.present? %></h3>
+    <% else %>
+      <h3><%= pluralize(@pagy.count, "Outfit") %> <%= "(#{@pagy.from} - #{@pagy.to})" if @pagy.pages > 1 && @pagy.from.present? && @pagy.to.present? %></h3>
+    <% end %>
 
     <% if @outfits.any? %>
       <%= link_to 'New Outfit', new_outfit_path, class: "btn btn-primary" %>
@@ -12,24 +16,43 @@
       <table class="table">
         <thead>
           <tr>
-            <th class="p-3 uppercase text-left text-xs"><%= sortable @outfits, :name, 'Name', class: 'text-gray-700' %></th>
-            <th class="p-3 uppercase text-left text-xs"><%= sortable @outfits, :occasion, 'Occasion', class: 'text-gray-700' %></th>
-            <th class="p-3 uppercase text-left text-xs"><%= sortable @outfits, :dress_code, 'Dress code', class: 'text-gray-700' %></th>
-            <th class="p-3 uppercase text-left text-xs"><%= sortable @outfits, :total_number_of_products, 'No. of products', class: 'text-gray-700' %></th>
-            <th class="p-3 uppercase text-left text-xs"><%= sortable @outfits, :total_price, 'Total price', class: 'text-gray-700' %></th>
-            <th class="p-3 uppercase text-left text-xs"><%= sortable @outfits, :user_id, 'Created By', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-center text-xs"><%= sortable @outfits, :name, 'Name', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-center text-xs"><%= sortable @outfits, :seasons, 'Season', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-center text-xs"><%= sortable @outfits, :occasion, 'Occasion(s)', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-center text-xs"><%= sortable @outfits, :dress_code, 'Dress Code', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-center text-xs"><%= sortable @outfits, :total_number_of_products, 'No. of products', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-center text-xs"><%= sortable @outfits, :total_price, 'Total price', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-center text-xs"><%= sortable @outfits, :user_id, 'Created By', class: 'text-gray-700' %></th>
           </tr>
         </thead>
 
         <tbody>
         <% @outfits.each do |outfit| %>
           <tr class="group border-t border-gray-400 hover:bg-gray-100">
-            <td class="p-3"><%= link_to outfit.name, outfit_path(outfit) %></td>
-            <td class="p-3"><%= outfit.occasion %></td>
-            <td class="p-3"><%= outfit.dress_code %></td>
-            <td class="p-3"><%= outfit.total_number_of_products %></td>
-            <td class="p-3"><%= number_to_currency(outfit.total_price) %></td>
-            <td class="p-3"><%= link_to outfit.user.username, user_profile_path(outfit.user) %></td>
+            <td class="text-center p-3"><%= link_to outfit.name, outfit_path(outfit) %></td>
+
+            <% outfit.outfit_subcategory_items.each do |outfit_subcategory_item| %>
+              <% if outfit_subcategory_item.subcategory.category.name == "Seasons" %>
+                <td class="text-center p-3"><%= outfit_subcategory_item.subcategory.name %></td>
+              <% end %>
+            <% end %>
+
+            <% outfit.outfit_subcategory_items.each do |outfit_subcategory_item| %>
+              <% if outfit_subcategory_item.subcategory.category.name == "Occasions" %>
+                <td class="text-center p-3"><%= outfit_subcategory_item.subcategory.name %></td>
+              <% end %>
+            <% end %>
+
+            <% outfit.outfit_subcategory_items.each do |outfit_subcategory_item| %>
+              <% if outfit_subcategory_item.subcategory.category.name == "Dress Code" %>
+                <td class="text-center p-3"><%= outfit_subcategory_item.subcategory.name %></td>
+              <% end %>
+            <% end %>
+
+
+            <td class="text-center p-3"><%= outfit.total_number_of_products %></td>
+            <td class="text-center p-3"><%= number_to_currency(outfit.total_price) %></td>
+            <td class="text-center p-3"><%= link_to outfit.user.username, profile_path(outfit.user) %></td>
 
           </tr>
         <% end %>

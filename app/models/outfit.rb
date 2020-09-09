@@ -18,7 +18,6 @@
 #  crowns_count               :integer          default(0), not null
 #  description                :text             not null
 #  discarded_at               :datetime
-#  dress_code                 :string(50)       not null
 #  ears_count                 :integer          default(0), not null
 #  eyes_count                 :integer          default(0), not null
 #  favoritable_score          :text
@@ -41,7 +40,6 @@
 #  lower_halves_count         :integer          default(0), not null
 #  name                       :string(150)      not null
 #  necks_count                :integer          default(0), not null
-#  occasion                   :string(50)       not null
 #  right_arms_count           :integer          default(0), not null
 #  right_arms_group_count     :integer          default(0), not null
 #  right_baby_fingers_count   :integer          default(0), not null
@@ -52,7 +50,6 @@
 #  right_ring_fingers_count   :integer          default(0), not null
 #  right_thumbs_count         :integer          default(0), not null
 #  right_wrists_count         :integer          default(0), not null
-#  season                     :string(10)       not null
 #  slug                       :string
 #  total_number_of_products   :integer          default(0), not null
 #  total_price                :decimal(10, 2)   default(0.0), not null
@@ -110,17 +107,18 @@ class Outfit < ApplicationRecord
   validates :name, presence: true, length: { minimum: 4, maximum: 150 }
   validates :description, presence: true, length: { minimum: 10, maximum: 3000 }
   #validates :gender, presence: true, length: { minimum: 1, maximum: 6 }
-  validates :season, presence: true, length: { minimum: 1, maximum: 10 }
-  validates :occasion, presence: true, length: { minimum: 1, maximum: 50 }
-  validates :dress_code, presence: true, length: { minimum: 1, maximum: 50 }
+  # validates :season, presence: true, length: { minimum: 1, maximum: 10 }
+  # validates :occasion, presence: true, length: { minimum: 1, maximum: 50 }
+  # validates :dress_code, presence: true, length: { minimum: 1, maximum: 50 }
   validates :total_number_of_products, allow_blank: true, numericality: { integer_only: true, greater_than_or_equal_to: 0 }
   validates :total_price, allow_blank: true, numericality: { greater_than_or_equal_to: 0.0 }
 
   def search_data
     {
       name: name,
-      occasion: occasion,
-      dress_code: dress_code
+      # season: Category.find_by().subcategories,
+      # occasion: Category.find_by().subcategories,
+      # dress_code: Category.find_by().subcategories
     }
   end
 

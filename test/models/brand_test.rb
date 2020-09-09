@@ -15,6 +15,7 @@
 #  cached_weighted_score   :integer          default(0)
 #  cached_weighted_total   :integer          default(0)
 #  city                    :string(100)      not null
+#  claimed                 :boolean          default(FALSE), not null
 #  country_code            :string(5)        not null
 #  discarded_at            :datetime
 #  email                   :string(100)      not null

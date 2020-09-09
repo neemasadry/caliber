@@ -34,6 +34,20 @@ module OutfitsHelper
 
   # end
 
+  def dropdowns_for_new_outfit(field_name)
+    if field_name == "Seasons"
+      return_obj = Category.find_by(name: "Seasons").subcategories
+    elsif field_name == "Occasion"
+      return_obj = Category.find_by(name: "Occasion").subcategories
+    elsif field_name == "Dress Code"
+      return_obj = Category.find_by(name: "Dress Code").subcategories
+    else
+
+    end
+
+    return return_obj
+  end
+
   def body_categorization
     {
       Head: ["Crown", "Eyes", "Ears"],

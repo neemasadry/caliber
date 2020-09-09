@@ -18,7 +18,6 @@
 #  crowns_count               :integer          default(0), not null
 #  description                :text             not null
 #  discarded_at               :datetime
-#  dress_code                 :string(50)       not null
 #  ears_count                 :integer          default(0), not null
 #  eyes_count                 :integer          default(0), not null
 #  favoritable_score          :text
@@ -41,7 +40,6 @@
 #  lower_halves_count         :integer          default(0), not null
 #  name                       :string(150)      not null
 #  necks_count                :integer          default(0), not null
-#  occasion                   :string(50)       not null
 #  right_arms_count           :integer          default(0), not null
 #  right_arms_group_count     :integer          default(0), not null
 #  right_baby_fingers_count   :integer          default(0), not null
@@ -52,7 +50,6 @@
 #  right_ring_fingers_count   :integer          default(0), not null
 #  right_thumbs_count         :integer          default(0), not null
 #  right_wrists_count         :integer          default(0), not null
-#  season                     :string(10)       not null
 #  slug                       :string
 #  total_number_of_products   :integer          default(0), not null
 #  total_price                :decimal(10, 2)   default(0.0), not null

@@ -32,6 +32,18 @@ khaki_chinos_esntls = Bottom.new(
 )
 
 if khaki_chinos_esntls.save!
+
+	# Create associated Product object
+	Product.create!(
+	  name: khaki_chinos_esntls.name,
+	  # build_status: "finished",
+	  productable_type: khaki_chinos_esntls.model_name,
+	  productable_id: khaki_chinos_esntls.id,
+	  user_id: khaki_chinos_esntls.user_id,
+	  account_id: khaki_chinos_esntls.account_id,
+	  brand_id: khaki_chinos_esntls.brand_id,
+	)
+
 	khaki_chinos_esntls.images.attach(chinos_blob_one)
 	puts "\tImages attached for #{khaki_chinos_esntls.name}!"
 
@@ -51,7 +63,7 @@ end
 
 wolf_sweats_blob_one = {io: File.open(Rails.root.join(product_images_path, 'Esntls_Wolf_Sweat_Pants.png')), filename: "Esntls_Wolf_Sweat_Pants.png", content_type: "image/png"}
 wolf_sweats_esntls = Bottom.new(
-	name: "Wolf Seat Pants",
+	name: "Wolf Sweat Pants",
 	brand_id: brand_esntls,
 	#image_data: uploaded_file_esntls_wolf_sweat_pants.to_json,
 	description: "The ESNTL Sweat Pant is refined comfort at its finest in these pure, premium sweatpants. Tailored to a slim fit, each pair features rear pockets, a functioning button fly, and a drawstring closure. Our specialized knitter sources this ultra-fine material. *Please size down one size for a better fit.",
@@ -68,6 +80,18 @@ wolf_sweats_esntls = Bottom.new(
 ### BOTTOMS END ###
 
 if wolf_sweats_esntls.save!
+
+	# Create associated Product object
+	Product.create!(
+	  name: wolf_sweats_esntls.name,
+	  # build_status: "finished",
+	  productable_type: wolf_sweats_esntls.model_name,
+	  productable_id: wolf_sweats_esntls.id,
+	  user_id: wolf_sweats_esntls.user_id,
+	  account_id: wolf_sweats_esntls.account_id,
+	  brand_id: wolf_sweats_esntls.brand_id,
+	)
+
 	wolf_sweats_esntls.images.attach(wolf_sweats_blob_one)
 	puts "\tImages attached for #{wolf_sweats_esntls.name}!"
 

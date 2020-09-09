@@ -1,9 +1,6 @@
 # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 Rails.application.routes.draw do
 
-
-  resources :products
-
   # Search
   get :autocomplete, controller: :search
   get :search, controller: :search
@@ -51,6 +48,24 @@ Rails.application.routes.draw do
   end
 
   ### Begin: Products ###
+
+  resources :products, model_name: "Product" do
+    member do
+      put "like", to: "products#like"
+      put "favorite", to: "products#favorite"
+      put "collect", to: "products#collect"
+      put "outfit", to: "products#outfit"
+    end
+
+    resources :reviews do
+      member do
+        put "like", to: "reviews#like"
+      end
+
+      resources :comments, only: [:create, :destroy], module: :reviews
+    end
+  end
+
   resources :accessories, model_name: "Accessory" do
     member do
       put "like", to: "accessories#like"
@@ -261,12 +276,13 @@ Rails.application.routes.draw do
     }
 
   # scope module: 'user_profiles', path: 'users'
-  resources :user_profiles, :only => [:index, :show] do
+  resources :profiles, :only => [:index, :show, :edit, :update] do
     member do
       put "follow", to: "user_profiles#follow"
       # put "watch", to: "user_profiles#watch"
     end
     resources :collections, :only => [:index, :show, :destroy]
+    resources :outfits, only: [:index, :show]
     # resources :collections do
     #   resources :comments, only: [:create, :destroy], module: :collections
     # end

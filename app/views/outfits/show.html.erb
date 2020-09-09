@@ -29,16 +29,35 @@
       </div>
 
       <div class="text-center flex flex-wrap overflow-hidden md:-mx-1 lg:-mx-1 xl:-mx-1">
-        <div class="w-full overflow-hidden md:my-1 md:px-1 md:w-1/2 lg:my-1 lg:px-1 lg:w-1/2 xl:my-1 xl:px-1 xl:w-1/2">
-          <div class="block text-lg font-medium leading-5 text-gray-700">Occasion</div>
-          <%= @outfit.occasion %>
+        <div class="w-full overflow-hidden md:my-1 md:px-1 md:w-1/3 lg:my-1 lg:px-1 lg:w-1/3 xl:my-1 xl:px-1 xl:w-1/3">
+          <div class="block text-lg font-medium leading-5 text-gray-700">Season</div>
+          <% @outfit.outfit_subcategory_items.each do |outfit_subcategory_item| %>
+            <% if outfit_subcategory_item.subcategory.category.name == "Seasons" %>
+              <%= outfit_subcategory_item.subcategory.name %>
+            <% end %>
+          <% end %>
         </div>
 
-        <div class="w-full overflow-hidden md:my-1 md:px-1 md:w-1/2 lg:my-1 lg:px-1 lg:w-1/2 xl:my-1 xl:px-1 xl:w-1/2">
-          <div class="block text-lg font-medium leading-5 text-gray-700">Dress Code</div>
-          <%= @outfit.dress_code %>
+        <div class="w-full overflow-hidden md:my-1 md:px-1 md:w-1/3 lg:my-1 lg:px-1 lg:w-1/3 xl:my-1 xl:px-1 xl:w-1/3">
+          <div class="block text-lg font-medium leading-5 text-gray-700">Occasion(s)</div>
+          <% @outfit.outfit_subcategory_items.each do |outfit_subcategory_item| %>
+            <% if outfit_subcategory_item.subcategory.category.name == "Occasions" %>
+              <%= outfit_subcategory_item.subcategory.name %>
+            <% end %>
+          <% end %>
         </div>
-      </div>
+
+        <div class="w-full overflow-hidden md:my-1 md:px-1 md:w-1/3 lg:my-1 lg:px-1 lg:w-1/3 xl:my-1 xl:px-1 xl:w-1/3">
+          <div class="block text-lg font-medium leading-5 text-gray-700">Dress Code</div>
+          <% @outfit.outfit_subcategory_items.each do |outfit_subcategory_item| %>
+            <% if outfit_subcategory_item.subcategory.category.name == "Dress Code" %>
+              <%= outfit_subcategory_item.subcategory.name %>
+            <% end %>
+          <% end %>
+        </div>
+      </div> <!-- 3-Column table -->
+
+      <hr class="my-3">
 
       <div class="text-center flex flex-wrap overflow-hidden md:-mx-1 lg:-mx-1 xl:-mx-1">
         <div class="w-full overflow-hidden md:my-1 md:px-1 md:w-1/2 lg:my-1 lg:px-1 lg:w-1/2 xl:my-1 xl:px-1 xl:w-1/2">
@@ -51,7 +70,7 @@
           <%= number_to_currency(@outfit.total_price) %>
         </div>
       </div>
-    </div>
+    </div> <!-- 2-Column table -->
 
   <h3 class="mt-3 mb-3 text-center">
     <%= pluralize(@outfit_items.count, "Outfit Item") %>

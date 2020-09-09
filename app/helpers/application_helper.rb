@@ -120,7 +120,7 @@ module ApplicationHelper
     end # if..elsif..else
   end
 
-  def user_profile_nav_tab_options(select_arr)
+  def profile_nav_tab_options(select_arr)
     #["products_&_brands", "guides", "profile", "notifications", "social", "settings", "subscription", "chat", "sponsor", "analytics"]
     if select_arr == "nav_only"
       #return ["products_&_brands", "guides", "profile", "notifications", "social", "settings"]

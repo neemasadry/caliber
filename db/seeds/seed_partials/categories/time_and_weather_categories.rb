@@ -3,7 +3,7 @@
 
 time_and_weather_categories_hash = {
   weather: {
-    season: [
+    seasons: [
       "Spring",
       "Summer",
       "Fall",

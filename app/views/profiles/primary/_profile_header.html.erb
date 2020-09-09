@@ -1,0 +1,17 @@
+<div class="mt-14 text-center">
+  <div class="">
+    <!-- ADD USER AVATAR -->
+    <%= image_tag(avatar_url_for(@profile), class: "inline-block h-24 w-24") %>
+  </div>
+  <div class="">
+    <h2 class="my-4 text-2xl font-bold leading-7 text-gray-800 sm:text-3xl sm:leading-9 sm:truncate">
+      <%= @profile.name.full %><%= @profile.gender == "male" ? fa_icon("fal fa-mars", class: "text-gray-400 ml-3") : fa_icon("fal fa-venus", class: "text-gray-400 ml-3") %>
+    </h2>
+  </div>
+</div>
+
+<div class="text-center">
+  <%= render(partial: "/votable/following", locals: { followable: follow_profile_path(@profile) }) if user_signed_in? && (@profile.id != current_user.id) %>
+</div>
+
+<br>

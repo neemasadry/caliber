@@ -47,7 +47,7 @@
               <div class="bg-white shadow rounded border overflow-hidden">
                 <%= link_to t(".signed_in_as_html", user: current_account.name), current_account, class: 'border-b text-sm no-underline block px-6 py-3 text-gray-800 bg-white hover:bg-gray-300 whitespace-no-wrap' %>
                 <div class="border-t px-6 py-3 text-gray-800 bg-white font-bold text-xs uppercase">Personal</div>
-                <%= link_to t(".view_profile"), user_profile_path(current_user), class: 'no-underline block px-6 py-3 text-sm text-gray-800 bg-white hover:bg-gray-300 whitespace-no-wrap' %>
+                <%= link_to t(".view_profile"), profile_path(current_user), class: 'no-underline block px-6 py-3 text-sm text-gray-800 bg-white hover:bg-gray-300 whitespace-no-wrap' %>
                 <%= link_to t(".edit_profile"), edit_user_registration_path, class: 'no-underline block px-6 py-3 text-sm text-gray-800 bg-white hover:bg-gray-300 whitespace-no-wrap' %>
                 <%= link_to t(".password"), account_password_path, class: 'no-underline block px-6 py-3 text-sm text-gray-800 bg-white  hover:bg-gray-300 whitespace-no-wrap' %>
                 <%= link_to t(".connected_accounts"), user_connected_accounts_path, class: 'no-underline block px-6 py-3 text-sm text-gray-800 bg-white  hover:bg-gray-300 whitespace-no-wrap' if Devise.omniauth_configs.any? %>

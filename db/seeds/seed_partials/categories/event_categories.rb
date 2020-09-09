@@ -29,6 +29,11 @@ event_categories_hash = {
   public: [
     "Concert/Live Performance", "Speaker", "Press conference",
     "Charity", "Fundraising",
+  ],
+  "Dress Code": [
+    "White Tie", "Black Tie", "Create Black Tie",
+    "Black Tie Optional", "Semiformal", "Festive Attire",
+    "Business Formal", "Business Casual", "Dressy Casual", "Casual"
   ]
 }
 
@@ -41,7 +46,7 @@ puts "\tCategoryGroup: #{created_category_group.name} created!"
 event_categories_hash.each do |category_type, category_values|
 
   created_category = Category.create!(
-    name: category_type.to_s.capitalize,
+    name: category_type.to_s.titleize,
     category_group_id: created_category_group.id
   )
 
@@ -49,7 +54,7 @@ event_categories_hash.each do |category_type, category_values|
 
   category_values.each do |subcategory|
     created_subcategory = Subcategory.create!(
-      name: subcategory.to_s.capitalize,
+      name: subcategory.to_s.titleize,
       category_group_id: created_category_group.id,
       category_id: created_category.id
     )

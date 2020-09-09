@@ -6,11 +6,18 @@ class OutfitsController < ApplicationController
 
   # GET /outfits
   def index
-    @pagy, @outfits = pagy(Outfit.sort_by_params(params[:sort], sort_direction))
+    if params[:profile_id].present?
+      @user_profile = User.find_by(username: params[:profile_id])
+      @pagy, @outfits = pagy(Outfit.all.where(user_id: @user_profile).sort_by_params(params[:sort], sort_direction))
 
-    # We explicitly load the records to avoid triggering multiple DB calls in the views when checking if records exist and iterating over them.
-    # Calling @outfits.any? in the view will use the loaded records to check existence instead of making an extra DB call.
-    @outfits.load
+      @outfits.load
+    else
+      @pagy, @outfits = pagy(Outfit.sort_by_params(params[:sort], sort_direction))
+
+      # We explicitly load the records to avoid triggering multiple DB calls in the views when checking if records exist and iterating over them.
+      # Calling @outfits.any? in the view will use the loaded records to check existence instead of making an extra DB call.
+      @outfits.load
+    end
   end
 
   # GET /outfits/1

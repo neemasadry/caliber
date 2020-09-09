@@ -35,7 +35,7 @@ class CollectionItem < ApplicationRecord
     # Update total price of all the items in associated Collection object
     updated_price = 0.00
     collection_item.collection.collection_items.where(collection_id: collection_item.collection.id).find_each do |item_price_to_update|
-      updated_price = updated_price + item_price_to_update.collectable_item.retail_price
+      updated_price = updated_price + item_price_to_update.collectable_item.productable.retail_price
     end
 
     collection_item.collection.total_price = updated_price

@@ -221,6 +221,7 @@ ActiveRecord::Schema.define(version: 2020_08_31_182446) do
     t.string "mission", limit: 125, null: false
     t.text "about", null: false
     t.text "story", null: false
+    t.boolean "claimed", default: false, null: false
     t.string "email", limit: 100, null: false
     t.string "phone", limit: 20
     t.string "address1", limit: 100, null: false
@@ -689,9 +690,6 @@ ActiveRecord::Schema.define(version: 2020_08_31_182446) do
     t.integer "feets_count", default: 0, null: false
     t.string "name", limit: 150, null: false
     t.text "description", null: false
-    t.string "season", limit: 10, null: false
-    t.string "occasion", limit: 50, null: false
-    t.string "dress_code", limit: 50, null: false
     t.integer "total_number_of_products", default: 0, null: false
     t.decimal "total_price", precision: 10, scale: 2, default: "0.0", null: false
     t.string "slug"
