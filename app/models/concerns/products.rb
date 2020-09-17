@@ -41,15 +41,12 @@ module Products
     validates :name, presence: true, length: { maximum: 100 }
     validates :description, presence: true, length: { maximum: 3000 }
     validates :retail_price, presence: true, numericality: { greater_than: 0, less_than: 1000000 }
-    #validates :type_of, presence: true, if: :has_type_of?
-    # validates :body_part, presence: true, inclusion: { in: ["Crown", "Eyes", "Ears", "Neck", "Arm", "Forearm", "Hands", "Finger", "Back", "Chest", "Abdomen", "Waist", "Legs", "Feet", "Not on Body" ] }
-    # validates :category, presence: true, length: { in: 2..75 }
-    # validates :subcategory, presence: true, length: { in: 2..75 }
-    validates :gender, presence: true, length: { maximum: 6 }, unless: :has_gender?
-    validates :materials, presence: true, length: { minimum: 3, maximum: 150 }, if: :has_material_or_colors?
-    validates :ingredients, presence: true, length: { minimum: 3, maximum: 3000 }, if: :has_ingredients?
-    validates :primary_color, presence: true, length: { minimum: 2, maximum: 30 }, if: :has_material_or_colors?
-    validates :secondary_color, presence: false, length: { minimum: 2, maximum: 30 }, if: :has_material_or_colors?
+    validates :type_of, presence: true, inclusion: { in: ["Accessory", "Bottom", "Cosmetic", "Dress", "Fragrance", "Jewelry", "Shoe", "Suit", "Top"] }
+    validates :gender, presence: true, numericality: { in: 1..3 }
+    # validates :materials, presence: true, length: { minimum: 3, maximum: 150 }, if: :has_material_or_colors?
+    # validates :ingredients, presence: true, length: { minimum: 3, maximum: 3000 }, if: :has_ingredients?
+    # validates :primary_color, presence: true, length: { minimum: 2, maximum: 30 }, if: :has_material_or_colors?
+    # validates :secondary_color, presence: false, length: { minimum: 2, maximum: 30 }, if: :has_material_or_colors?
 
     # Searchkick specific scope
     scope :search_import, -> { includes(:brand) }
@@ -61,15 +58,26 @@ module Products
   end # included
 
   def search_data
-    {
-      name: name,
-      brand: brand.name,
-      # body_part: body_part,
-      # category: category,
-      # subcategory: subcategory,
-      primary_color: primary_color,
-      secondary_color: secondary_color
-    }
+    if self.class.name == "Cosmetic" || self.class.name == "Fragrance"
+      {
+        name: name,
+        brand: brand.name,
+        # body_part: body_part,
+        # category: category,
+        # subcategory: subcategory,
+        ingredients: ingredients,
+      }
+    else
+        {
+          name: name,
+          brand: brand.name,
+          # body_part: body_part,
+          # category: category,
+          # subcategory: subcategory,
+          primary_color: primary_color,
+          secondary_color: secondary_color
+        }
+    end
   end
 
   def has_gender?

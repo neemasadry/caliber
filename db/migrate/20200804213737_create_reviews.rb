@@ -2,18 +2,17 @@ class CreateReviews < ActiveRecord::Migration[6.0]
   def change
     create_table :reviews do |t|
 
-      t.references :reviewable, polymorphic: true, null: false, index: true
-      t.references :product, null: false, foreign_key: true
-      t.references :user, null: false, foreign_key: true
-      t.references :account, null: false, foreign_key: true
-      # t.references :category, null: false, index: true
-      # t.references :subcategory, null: false, index: true
-
       t.string  :title, null: false, limit: 100
       t.integer :quality, null: false, default: 0
       t.integer :value, null: false, default: 0
       t.integer :compliment, null: false, default: 0
       t.jsonb   :ratings, null: false
+
+      # References
+      # t.references :reviewable, polymorphic: true, null: false, index: true
+      t.references :product, null: false, foreign_key: true
+      t.references :user, null: false, foreign_key: true
+      t.references :account, null: false, foreign_key: true
 
       # Slug for FriendlyID
       t.string :slug, index: { unique: true }

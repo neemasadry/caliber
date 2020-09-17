@@ -102,7 +102,68 @@ namespace :db do
     #   end
     # end
 
-  end
+  end # namespace :seed
+
+
+  ################################################################################
+  ################################################################################
+  ################################################################################
+
+
+  # db:scrape: ...
+  namespace :scrape do
+
+    ### Begin: URL_BUILDERS ###
+    namespace :url_builder do
+      # All files
+      Dir[Rails.root.join('db', 'seeds', 'scrapers', 'url_builders', '*.rb')].each do |filename|
+        # task_name = File.basename(filename, '.rb')
+        desc "Seed all url_builders based on the file with the same name in `db/seeds/url_builders/*.rb`"
+
+        task :all => :environment do
+          load(filename) if File.exist?(filename)
+        end
+      end
+
+      # Individual files
+      Dir[Rails.root.join('db', 'seeds', 'scrapers', 'url_builders', '*.rb')].each do |filename|
+        task_name = File.basename(filename, '.rb')
+        desc "Seed " + task_name + ", based on the file with the same name in `db/seeds/url_builders/*.rb`"
+
+        task task_name.to_sym => :environment do
+          load(filename) if File.exist?(filename)
+        end
+      end
+    end
+    ### End: URL_BUILDERS ###
+
+
+
+    ### Begin: PRODUCT_SCRAPERS ###
+    namespace :product_scraper do
+      # All files
+      Dir[Rails.root.join('db', 'seeds', 'scrapers', 'product_scrapers', '*.rb')].each do |filename|
+        # task_name = File.basename(filename, '.rb')
+        desc "Seed all product_scrapers based on the file with the same name in `db/seeds/product_scrapers/*.rb`"
+
+        task :all => :environment do
+          load(filename) if File.exist?(filename)
+        end
+      end
+      # Individual files
+      Dir[Rails.root.join('db', 'seeds', 'scrapers', 'product_scrapers', '*.rb')].each do |filename|
+        task_name = File.basename(filename, '.rb')
+        desc "Seed " + task_name + ", based on the file with the same name in `db/seeds/product_scrapers/*.rb`"
+
+        task task_name.to_sym => :environment do
+          load(filename) if File.exist?(filename)
+        end
+      end
+    end
+    ### End: PRODUCT_SCRAPERS ###
+
+  end # namespace :scrape
+
 end
 
 =begin

@@ -16,7 +16,6 @@
 #  favoritable_total       :text
 #  quality                 :integer          default(0), not null
 #  ratings                 :jsonb            not null
-#  reviewable_type         :string           not null
 #  slug                    :string
 #  title                   :string(100)      not null
 #  value                   :integer          default(0), not null
@@ -24,17 +23,15 @@
 #  updated_at              :datetime         not null
 #  account_id              :bigint           not null
 #  product_id              :bigint           not null
-#  reviewable_id           :bigint           not null
 #  user_id                 :bigint           not null
 #
 # Indexes
 #
-#  index_reviews_on_account_id                         (account_id)
-#  index_reviews_on_discarded_at                       (discarded_at)
-#  index_reviews_on_product_id                         (product_id)
-#  index_reviews_on_reviewable_type_and_reviewable_id  (reviewable_type,reviewable_id)
-#  index_reviews_on_slug                               (slug) UNIQUE
-#  index_reviews_on_user_id                            (user_id)
+#  index_reviews_on_account_id    (account_id)
+#  index_reviews_on_discarded_at  (discarded_at)
+#  index_reviews_on_product_id    (product_id)
+#  index_reviews_on_slug          (slug) UNIQUE
+#  index_reviews_on_user_id       (user_id)
 #
 # Foreign Keys
 #
@@ -46,7 +43,9 @@ class Review < ApplicationRecord
   extend FriendlyId
 
   belongs_to :user
-  belongs_to :reviewable, polymorphic: true
+  belongs_to :account
+  belongs_to :product
+  # belongs_to :reviewable, polymorphic: true
 
   has_many :comments, as: :commentable, dependent: :destroy
 

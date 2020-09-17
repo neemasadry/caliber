@@ -10,27 +10,27 @@
 #  cached_weighted_average :float            default(0.0)
 #  cached_weighted_score   :integer          default(0)
 #  cached_weighted_total   :integer          default(0)
-#  discarded_at            :datetime
+#  description             :text             not null
 #  favoritable_score       :text
 #  favoritable_total       :text
+#  gender                  :integer          not null
 #  name                    :string(100)      not null
-#  productable_type        :string           not null
+#  product_url             :text
+#  retail_price            :decimal(10, 2)   not null
 #  slug                    :string
+#  type_of                 :string(50)       not null
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null
 #  account_id              :bigint           not null
 #  brand_id                :bigint           not null
-#  productable_id          :bigint           not null
 #  user_id                 :bigint           not null
 #
 # Indexes
 #
-#  index_products_on_account_id                           (account_id)
-#  index_products_on_brand_id                             (brand_id)
-#  index_products_on_discarded_at                         (discarded_at)
-#  index_products_on_productable_type_and_productable_id  (productable_type,productable_id)
-#  index_products_on_slug                                 (slug) UNIQUE
-#  index_products_on_user_id                              (user_id)
+#  index_products_on_account_id  (account_id)
+#  index_products_on_brand_id    (brand_id)
+#  index_products_on_slug        (slug) UNIQUE
+#  index_products_on_user_id     (user_id)
 #
 # Foreign Keys
 #

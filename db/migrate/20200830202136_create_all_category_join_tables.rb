@@ -7,8 +7,14 @@ class CreateAllCategoryJoinTables < ActiveRecord::Migration[6.0]
       # t.string :ancestry
     end
 
-    create_table :productable_category_items do |t|
-      t.references :productable, polymorphic: true, index: { name: "index_product_category_items_on_productable" }
+    # create_table :productable_category_items do |t|
+    #   t.references :productable, polymorphic: true, index: { name: "index_product_category_items_on_productable" }
+    #   t.references :category, foreign_key: true
+    #   # t.string :ancestry
+    # end
+
+    create_table :product_category_items do |t|
+      t.references :product, null: false, foreign_key: true
       t.references :category, foreign_key: true
       # t.string :ancestry
     end

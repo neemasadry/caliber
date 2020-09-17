@@ -10,27 +10,27 @@
 #  cached_weighted_average :float            default(0.0)
 #  cached_weighted_score   :integer          default(0)
 #  cached_weighted_total   :integer          default(0)
-#  discarded_at            :datetime
+#  description             :text             not null
 #  favoritable_score       :text
 #  favoritable_total       :text
+#  gender                  :integer          not null
 #  name                    :string(100)      not null
-#  productable_type        :string           not null
+#  product_url             :text
+#  retail_price            :decimal(10, 2)   not null
 #  slug                    :string
+#  type_of                 :string(50)       not null
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null
 #  account_id              :bigint           not null
 #  brand_id                :bigint           not null
-#  productable_id          :bigint           not null
 #  user_id                 :bigint           not null
 #
 # Indexes
 #
-#  index_products_on_account_id                           (account_id)
-#  index_products_on_brand_id                             (brand_id)
-#  index_products_on_discarded_at                         (discarded_at)
-#  index_products_on_productable_type_and_productable_id  (productable_type,productable_id)
-#  index_products_on_slug                                 (slug) UNIQUE
-#  index_products_on_user_id                              (user_id)
+#  index_products_on_account_id  (account_id)
+#  index_products_on_brand_id    (brand_id)
+#  index_products_on_slug        (slug) UNIQUE
+#  index_products_on_user_id     (user_id)
 #
 # Foreign Keys
 #
@@ -40,26 +40,42 @@
 #
 class Product < ApplicationRecord
   extend FriendlyId
-  belongs_to :productable, polymorphic: true
+  extend Pagy::Search
+  # belongs_to :productable, polymorphic: true
   belongs_to :user
   belongs_to :account
   belongs_to :brand
 
-  has_one :accessory, as: :productable
-  has_one :bottom, as: :productable
-  has_one :cosmetic, as: :productable
-  has_one :dress, as: :productable
-  has_one :fragrance, as: :productable
-  has_one :jewelry, as: :productable
-  has_one :shoe, as: :productable
-  has_one :suit, as: :productable
-  has_one :top, as: :productable
+=begin
+  has_one :accessory, as: :productable, dependent: :destroy
+  has_one :bottom, as: :productable, dependent: :destroy
+  has_one :cosmetic, as: :productable, dependent: :destroy
+  has_one :dress, as: :productable, dependent: :destroy
+  has_one :fragrance, as: :productable, dependent: :destroy
+  has_one :jewelry, as: :productable, dependent: :destroy
+  has_one :shoe, as: :productable, dependent: :destroy
+  has_one :suit, as: :productable, dependent: :destroy
+  has_one :top, as: :productable, dependent: :destroy
+=end
 
-  has_many :reviews, as: :reviewable, dependent: :destroy
+  # Begin: Categorization
+  has_many :product_body_part_items, dependent: :destroy #, as: :productable
+  has_many :body_parts, through: :product_body_part_items #, as: :productable
+
+  has_many :product_category_items, dependent: :destroy #, as: :productable
+  has_many :categories, through: :product_category_items #, as: :productable
+
+  has_many :product_subcategory_items, dependent: :destroy #, as: :productable
+  has_many :subcategories, through: :product_subcategory_items #, as: :productable
+  # End: Categorization
+
+  has_many :reviews, dependent: :destroy
   has_many :collectable_items
   has_many :collections, through: :collectable_items
   has_many :outfit_items
-  has_many :outfits, through: :outfit_items, as: :productable
+  has_many :outfits, through: :outfit_items
+
+  has_many_attached :images
 
   friendly_id :name, use: :slugged
 
@@ -67,9 +83,15 @@ class Product < ApplicationRecord
   acts_as_favoritable
   acts_as_votable
 
-  #searchkick word_start: [:name, :brand], word_middle: [:name, :brand]
+  searchkick word_start: [:name, :brand], word_middle: [:name, :brand]
 
   accepts_nested_attributes_for :accessory, :bottom, :cosmetic, :dress, :fragrance, :jewelry, :shoe, :suit, :top, allow_destroy: true
+
+  validates :name, presence: true, length: { maximum: 100 }
+  validates :description, presence: true, length: { maximum: 3000 }
+  validates :retail_price, presence: true, numericality: { greater_than: 0, less_than: 1000000 }
+  validates :type_of, presence: true, inclusion: { in: ["Accessory", "Bottom", "Cosmetic", "Dress", "Fragrance", "Jewelry", "Shoe", "Suit", "Top"] }
+  validates :gender, presence: true, numericality: { in: 1..3 }
 
   def search_data
     {
@@ -77,10 +99,5 @@ class Product < ApplicationRecord
       brand: brand.name,
     }
   end
-
-  # Wicked
-  # def active?
-  #   status == 'active'
-  # end
 
 end

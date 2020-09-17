@@ -6,12 +6,12 @@ class ProductsController < ApplicationController
 
   # GET /products
   def index
-    # @pagy, @products = pagy(Product.sort_by_params(params[:sort], sort_direction))
-    # @products.load
+    @pagy, @products = pagy(Product.sort_by_params(params[:sort], sort_direction))
+    @products.load
 
     # We explicitly load the records to avoid triggering multiple DB calls in the views when checking if records exist and iterating over them.
     # Calling @products.any? in the view will use the loaded records to check existence instead of making an extra DB call.
-
+=begin
     @pagy_accessories, @accessories = pagy(Accessory.sort_by_params(params[:sort], sort_direction), page_param: "accessories_page")
     @pagy_bottoms, @bottoms = pagy(Bottom.sort_by_params(params[:sort], sort_direction), page_param: "bottoms_page")
     @pagy_cosmetics, @cosmetics = pagy(Cosmetic.sort_by_params(params[:sort], sort_direction), page_param: "cosmetics_page")
@@ -43,6 +43,7 @@ class ProductsController < ApplicationController
     @shoes.load
     @suits.load
     @tops.load
+=end
   end
 
   # GET /products/1
@@ -59,10 +60,6 @@ class ProductsController < ApplicationController
     else
       redirect_to products_path, flash: { danger: "You must be signed in to an account associated with a Brand to create a new product." }
     end
-  end
-
-  def new_product_type
-
   end
 
   # GET /products/1/edit
@@ -163,6 +160,8 @@ class ProductsController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def product_params
+    params.require(:product).permit(:name, :description, :retail_price, :gender, :type_of, :product_url)
+=begin
     params.require(:product).permit(
       :name,
       :productable_id,
@@ -180,9 +179,8 @@ class ProductsController < ApplicationController
       suits_attributes: {},
       tops_attributes: {}
     )
+=end
   end
-
-
 
   def set_user_on_personal_account
     @user_on_personal_account = current_account.personal?

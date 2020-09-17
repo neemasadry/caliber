@@ -1,18 +1,16 @@
 class CreateCatalogs < ActiveRecord::Migration[6.0]
   def change
     create_table :catalogs do |t|
-      t.references :user, null: false, foreign_key: true
-      t.references :account, null: false, foreign_key: true
-      t.references :brand, null: true, foreign_key: true
-      # t.references :category, null: false, index: true
-      # t.references :subcategory, null: false, index: true
 
       t.string :title, null: false, limit: 150, index: true
       t.text :description, null: false, limit: 3000
-      # t.string :category, null: false, limit: 150
-      # t.string :subcategory, null: false, limit: 150
       t.integer :total_items, null: false, default: 0
       t.decimal :total_price, precision: 10, scale: 2, null: false, default: 0.00
+
+      # References
+      t.references :user, null: false, foreign_key: true
+      t.references :account, null: false, foreign_key: true
+      t.references :brand, null: true, foreign_key: true
 
       # FriendlyID slug
       t.string :slug, index: { unique: true }
