@@ -1,47 +1,73 @@
 <div class="container mx-auto my-8 px-4">
   <div class="flex justify-between items-center mb-4">
-    <h1 class="h3">Products</h1>
+    <h1 class="h3"><%= pluralize @pagy.count, "Product" %> <%= "(#{@pagy.from} - #{@pagy.to})" if @pagy.pages > 1 && @pagy.from.present? && @pagy.to.present? %></h1>
 
+    <% if @products.any? %>
+      <%#= link_to "New #{result_hash[:category_name].singularize}", new_polymorphic_path(result_hash[:category_name].singularize.downcase), class: "btn btn-primary" %>
+    <% end %>
   </div>
 
-  <div data-controller="tabs" data-tabs-active-tab="-mb-px tab-active transition">
+  <% if @products.any? %>
+    <div class="bg-white rounded shadow table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th class="p-3 uppercase text-left text-xs"></th>
+            <th class="p-3 uppercase text-center text-xs"><%= sortable @products, :name, 'Name', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-center text-xs"><%= sortable @products, :brand, 'Brand', class: 'text-gray-700' %></th>
 
-    <div>
-      <div class="sm:hidden">
-        <%#= select_tag "page", options_for_select(user_profile_nav_tab_options("render_page_names")), aria: { label: "Selected tab" }, class: "form-select block w-full" %>
-        <!-- <select aria-label="Selected tab" class="form-select block w-full">
-          <option>My Account</option>
-          <option>Company</option>
-          <option selected>Team Members</option>
-          <option>Billing</option>
-        </select> -->
-      </div>
-      <div class="hidden bg-white sm:block">
-        <div class="border-b border-gray-200">
-          <nav class="-mb-px flex">
+            <th class="p-3 uppercase text-center text-xs"><%= sortable @products, :description, 'Description', class: 'text-gray-700' %></th>
+            <th class="p-3 uppercase text-center text-xs"><%= sortable @products, :retail_price, 'Retail price', class: 'text-gray-700' %></th>
 
-            <% @all_category_results.each do |result_hash| %>
-              <%= link_to "#", data: { target: "tabs.tab", action: "click->tabs#change" }, class: "group w-1/4 py-4 px-1 text-center border-b-2 border-transparent text-md leading-5 text-gray-600 hover:text-gray-800 hover:border-gray-500 focus:outline-none focus:text-gray-800 focus:border-gray-500 active:text-gray-800 active:border-gray-500" do %>
-                <i class='fal <%= "#{result_hash[:fa_icon]}" %> fa-lg -ml-0.5 mr-2 h-5 w-5 text-gray-400 group-hover:text-gray-500 group-focus:text-gray-600'></i>
-                <%= result_hash[:category_name] %>
+            <th class="p-3 uppercase text-center text-xs text-gray-700 cursor-default">Categories</th>
+          </tr>
+        </thead>
+
+        <tbody>
+        <% @products.each do |result| %>
+          <tr class="group border-t border-gray-400 hover:bg-gray-100">
+
+            <td class="p-3 text-left"><%= determine_gender_sign(result) %></td>
+            <td class="p-3 text-center"><%= link_to result.name, product_path(result) %></td>
+            <td class="p-3 text-center"><%= link_to result.brand.name, brand_path(result.brand) %></td>
+            <td class="p-3 text-center"><%= truncate(result.description, length: 60) %></td>
+            <td class="p-3 text-center"><%= number_to_currency(result.retail_price) %></td>
+            <td class="p-3 text-center">
+              <% result.body_parts.each do |body_part| %>
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium leading-4 bg-red-100 text-red-800">
+                  <%= body_part.name %>
+                </span>
               <% end %>
-            <% end %>
-
-          </nav>
-
-        </div>
-      </div>
+              <% result.categories.each do |category| %>
+                <span class="flex-shrink-0 inline-block px-2 text-blue-800 text-xs leading-4 font-medium bg-blue-100 rounded-full">
+                  <%= category.name %>
+                </span>
+              <% end %>
+              <% result.subcategories.each do |subcategory| %>
+                <span class="flex-shrink-0 inline-block px-2 text-green-800 text-xs leading-4 font-medium bg-green-100 rounded-full">
+                  <%= subcategory.name %>
+                </span>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
     </div>
 
-    <% @all_category_results.each do |result_hash| %>
-      <div class="hidden py-4 px-4" data-target="tabs.panel">
-        <div class="container max-w-8xl mx-auto">
-          <%= render partial: "products/index_results", locals: { result_hash: result_hash } %>
-        </div>
+    <% if @pagy.pages > 1 %>
+      <div class="text-center my-6">
+        <%== pagy_nav(@pagy) %>
       </div>
     <% end %>
 
-  </div> <!-- div data-controller="tabs" data-tabs-active-tab="-mb-px tab-active transition" -->
-
-
+  <% else %>
+    <div class="bg-white rounded shadow flex flex-col items-center justify-between p-8 lg:flex-row">
+      <%= image_tag "empty.svg", class: "mb-4 lg:w-1/2" %>
+      <div class="flex-1 text-center">
+        <p class="h3 mb-4">Create your first Product</p>
+        <%= link_to "New Product", new_product_path, class: "btn btn-primary" %>
+      </div>
+    </div>
+  <% end %>
 </div>

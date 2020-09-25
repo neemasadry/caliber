@@ -10,9 +10,12 @@
 #  cached_weighted_average :float            default(0.0)
 #  cached_weighted_score   :integer          default(0)
 #  cached_weighted_total   :integer          default(0)
+#  clothing_attributes     :jsonb            not null
+#  cosmetic_attributes     :jsonb            not null
 #  description             :text             not null
 #  favoritable_score       :text
 #  favoritable_total       :text
+#  fragrance_attributes    :jsonb            not null
 #  gender                  :integer          not null
 #  name                    :string(100)      not null
 #  product_url             :text
@@ -45,6 +48,26 @@ class Product < ApplicationRecord
   belongs_to :user
   belongs_to :account
   belongs_to :brand
+
+  jsonb_accessor(:fragrance_attributes,
+    top_notes: [:string],
+    middle_notes: [:string],
+    base_notes: [:string],
+    accords: [:string],
+    ingredients: [:text],
+  )
+
+  jsonb_accessor(:clothing_attributes,
+    materials: [:text],
+    primary_color: [:string],
+    secondary_color: [:string],
+    tertiary_color: [:string]
+  )
+
+  jsonb_accessor(:cosmetic_attributes,
+    ingredients: [:text],
+    allergens: [:text]
+  )
 
 =begin
   has_one :accessory, as: :productable, dependent: :destroy
@@ -85,13 +108,14 @@ class Product < ApplicationRecord
 
   searchkick word_start: [:name, :brand], word_middle: [:name, :brand]
 
-  accepts_nested_attributes_for :accessory, :bottom, :cosmetic, :dress, :fragrance, :jewelry, :shoe, :suit, :top, allow_destroy: true
+  # accepts_nested_attributes_for :accessory, :bottom, :cosmetic, :dress, :fragrance, :jewelry, :shoe, :suit, :top, allow_destroy: true
 
-  validates :name, presence: true, length: { maximum: 100 }
+  validates :name, presence: true, uniqueness: { scope: :brand_id, case_sensitive: false, message: "cannot create multiple entries for the same product." }, length: { maximum: 100 }
   validates :description, presence: true, length: { maximum: 3000 }
   validates :retail_price, presence: true, numericality: { greater_than: 0, less_than: 1000000 }
   validates :type_of, presence: true, inclusion: { in: ["Accessory", "Bottom", "Cosmetic", "Dress", "Fragrance", "Jewelry", "Shoe", "Suit", "Top"] }
   validates :gender, presence: true, numericality: { in: 1..3 }
+  validates :product_url, presence: true, uniqueness: { scope: :brand_id, message: "cannot create multiple entries for the same product." }
 
   def search_data
     {

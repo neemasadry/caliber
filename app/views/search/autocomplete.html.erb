@@ -8,18 +8,17 @@
             <% next if !results.present? %>
             <!-- <h5 class="block text-sm font-medium leading-2 text-gray-700"></h5> -->
             <div class="ml-4">
-              <% results.each do |product| %>
+              <% results.each do |result| %>
                 <%= content_tag :li, role: :option do %>
-                  <%= link_to polymorphic_path(product), data: { "autocomplete-value": product.id }, class: "-m-3 p-3 flex items-start space-x-4 rounded-lg hover:bg-gray-100 transition ease-in-out duration-150" do %>
+                  <%= link_to polymorphic_path(result), data: { "autocomplete-value": result.id }, class: "-m-3 p-3 flex items-start space-x-4 rounded-lg hover:bg-gray-100 transition ease-in-out duration-150" do %>
                     <%= fa_icon("fal fa-level-up fa-rotate-90", class: "my-auto mr-2 text-gray-600") %>
-                    <%= image_tag(product.images.first, size: "75x75") %>
-                    <%#= image_tag(product.product_images.first.product_image_url, width: 50, height: 50, crop: :fit, gravity: :center) %>
+                    <%= image_tag(result.images.first, size: "75x75") %>
                     <div class="space-y-1">
                       <p class="text-base leading-6 font-medium text-gray-900">
-                        <%= product.name %> by <%= product.brand.name %>
+                        <%= result.name %> by <%= result.brand.name %>
                       </p>
                       <p class="text-sm leading-5 text-gray-500">
-                        <%= truncate(product.description, length: 100) %>
+                        <%= truncate(result.description, length: 100) %>
                       </p>
                     </div>
                   <% end %>

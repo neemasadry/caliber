@@ -38,6 +38,9 @@ product_categories_hash = {
       "Electrolysis", "Hair bleaching", "Laser", "Shaving",
       "Sugaring", "Threading", "Waxing"
     ],
+    "Hair": [
+      "Styling", "Pre-Styler"
+    ],
     "Hair Salon": [
       "Blowouts", "Braids", "Color", "Haircut",
       "Hair extensions", "Highlights / lowlights", "Kids", "Men’s cut",
@@ -64,6 +67,22 @@ product_categories_hash = {
     "Tattoo/Piercing": [
       "Body", "Body art", "Consultation",
       "Ear", "Henna", "Removal"
+    ],
+    "Hygiene": [
+      "Shampoo", "Conditioner", "Body Wash", "Soap",
+      "Deoderant", "Antiperspirant"
+    ],
+    "Grooming Tool": [
+      "Comb/Brush", "File", "Clipper/Tweezer",
+    ],
+    "Dental Hygiene": [
+      "Toothpaste", "Whitening", "Floss", "Tooth Brush (Manual)",
+      "Tooth Brush (Electric)", "Mouth Wash"
+    ],
+    "Shaving": [
+      "Shaving Cream", "Shaving Soap", "Razor",
+      "After-Shave", "Pre-Shave Oil", "Blades",
+      "Beard Oil", "Other"
     ]
 
     # hair: ["Styling", "Shampoo", "Conditioning", "Repair", "Growth"],

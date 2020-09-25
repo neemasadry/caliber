@@ -5,6 +5,73 @@ class SearchController < ApplicationController
   def autocomplete
     query = params[:q].presence || "*" # Check to see if params[:q] is present OR return default value "*" if not present
 
+    @products    = Product.search(query, fields: [:name, :brand], match: :word_start, limit: 3)
+    # @catalogs    = Catalog.search(query, fields: [:title, :category], match: :word_start, limit: 3)
+    @outfits     = Outfit.search(query, fields: [:name, :occasion, :dress_code], match: :word_start, limit: 3)
+    @guides      = Guide.search(query, fields: [:title], match: :word_start, limit: 3)
+    @users       = User.search(query, fields: [:username, :first_name, :last_name], match: :word_start, limit: 3)
+
+    @autocomplete_array = [@products, @outfits, @guides, @users]
+
+    @autocomplete_results = {
+      products: @products,
+      outfits: @outfits,
+      guides: @guides,
+      users: @users
+    }
+
+    render template: "search/autocomplete.html.erb", layout: false, locals: { autocomplete_results: @autocomplete_results }
+  end
+
+  def search
+    query = params[:q].presence || "*" # Check to see if params[:q] is present OR return default value "*" if not present
+
+    if params[:q].present? && params.has_key?(:q)
+
+      products  = Product.pagy_search(query)
+      # catalogs  = Catalog.pagy_search(query)
+      outfits   = Outfit.pagy_search(query)
+      guides    = Guide.pagy_search(query)
+      users     = User.pagy_search(query)
+
+      @pagy_products, @products       = pagy_searchkick(products, fields: [:name, :brand], match: :word_start, per_page: 10, page_param: :accessories_page, page: params[:page])
+      # @pagy_catalogs, @catalogs       = pagy_searchkick(catalogs, fields: [:title, :category], match: :word_start, per_page: 10, page_param: :guides_page, page: params[:page])
+      @pagy_outfits, @outfits         = pagy_searchkick(outfits, fields: [:name, :occasion, :dress_code], match: :word_start, per_page: 10, page_param: :guides_page, page: params[:page])
+      @pagy_guides, @guides           = pagy_searchkick(guides, fields: [:title], match: :word_start, per_page: 10, page_param: :guides_page, page: params[:page])
+      @pagy_users, @users             = pagy_searchkick(users, fields: [:username, :first_name, :last_name], match: :word_start, per_page: 10, page_param: :users_page, page: params[:page])
+
+      @result_categories_array = [@products, @outfits, @guides, @users]
+
+      @result_categories = {
+        products: @products,
+        # catalogs: @catalogs,
+        outfits: @outfits,
+        guides: @guides,
+        users: @users
+      }
+
+    else
+      redirect_to root_path, flash: { warning: "Search field must contain a value." }
+    end
+  end
+
+  private
+
+    def force_json
+      request.format = :json
+    end
+
+end
+
+
+=begin
+class SearchController < ApplicationController
+
+  #before_action :force_json, only: :autocomplete
+
+  def autocomplete
+    query = params[:q].presence || "*" # Check to see if params[:q] is present OR return default value "*" if not present
+
     @accessories = Accessory.search(query, fields: [:name, :brand], match: :word_start, limit: 3)
     @bottoms     = Bottom.search(query, fields: [:name, :brand], match: :word_start, limit: 3)
     @cosmetics   = Cosmetic.search(query, fields: [:name, :brand], match: :word_start, limit: 3)
@@ -99,3 +166,4 @@ class SearchController < ApplicationController
     end
 
 end
+=end

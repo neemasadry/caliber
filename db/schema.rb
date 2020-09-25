@@ -198,12 +198,19 @@ ActiveRecord::Schema.define(version: 2020_09_16_162631) do
   end
 
   create_table "built_links", force: :cascade do |t|
+    t.string "product_name", null: false
     t.string "product_url", null: false
-    t.string "category"
+    t.jsonb "link_attributes", default: {}, null: false
     t.bigint "brand_id", null: false
+    t.bigint "body_part_id", null: false
+    t.bigint "category_id", null: false
+    t.bigint "subcategory_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["body_part_id"], name: "index_built_links_on_body_part_id"
     t.index ["brand_id"], name: "index_built_links_on_brand_id"
+    t.index ["category_id"], name: "index_built_links_on_category_id"
+    t.index ["subcategory_id"], name: "index_built_links_on_subcategory_id"
   end
 
   create_table "catalog_category_items", force: :cascade do |t|
@@ -590,6 +597,13 @@ ActiveRecord::Schema.define(version: 2020_09_16_162631) do
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
+  create_table "product_body_part_items", force: :cascade do |t|
+    t.bigint "product_id", null: false
+    t.bigint "body_part_id", null: false
+    t.index ["body_part_id"], name: "index_product_body_part_items_on_body_part_id"
+    t.index ["product_id"], name: "index_product_body_part_items_on_product_id"
+  end
+
   create_table "product_category_items", force: :cascade do |t|
     t.bigint "product_id", null: false
     t.bigint "category_id"
@@ -604,13 +618,6 @@ ActiveRecord::Schema.define(version: 2020_09_16_162631) do
     t.index ["subcategory_id"], name: "index_product_subcategory_items_on_subcategory_id"
   end
 
-  create_table "productable_body_part_items", force: :cascade do |t|
-    t.bigint "product_id", null: false
-    t.bigint "body_part_id", null: false
-    t.index ["body_part_id"], name: "index_productable_body_part_items_on_body_part_id"
-    t.index ["product_id"], name: "index_productable_body_part_items_on_product_id"
-  end
-
   create_table "products", force: :cascade do |t|
     t.string "name", limit: 100, null: false
     t.text "description", null: false
@@ -618,6 +625,9 @@ ActiveRecord::Schema.define(version: 2020_09_16_162631) do
     t.integer "gender", null: false
     t.string "type_of", limit: 50, null: false
     t.text "product_url"
+    t.jsonb "fragrance_attributes", default: {}, null: false
+    t.jsonb "clothing_attributes", default: {}, null: false
+    t.jsonb "cosmetic_attributes", default: {}, null: false
     t.bigint "user_id", null: false
     t.bigint "account_id", null: false
     t.bigint "brand_id", null: false
@@ -836,7 +846,10 @@ ActiveRecord::Schema.define(version: 2020_09_16_162631) do
   add_foreign_key "brand_subcategory_items", "subcategories"
   add_foreign_key "brands", "accounts"
   add_foreign_key "brands", "users"
+  add_foreign_key "built_links", "body_parts"
   add_foreign_key "built_links", "brands"
+  add_foreign_key "built_links", "categories"
+  add_foreign_key "built_links", "subcategories"
   add_foreign_key "catalog_category_items", "catalogs"
   add_foreign_key "catalog_category_items", "categories"
   add_foreign_key "catalog_items", "catalogs"
@@ -877,12 +890,12 @@ ActiveRecord::Schema.define(version: 2020_09_16_162631) do
   add_foreign_key "posts", "accounts"
   add_foreign_key "posts", "brands"
   add_foreign_key "posts", "users"
+  add_foreign_key "product_body_part_items", "body_parts"
+  add_foreign_key "product_body_part_items", "products"
   add_foreign_key "product_category_items", "categories"
   add_foreign_key "product_category_items", "products"
   add_foreign_key "product_subcategory_items", "products"
   add_foreign_key "product_subcategory_items", "subcategories"
-  add_foreign_key "productable_body_part_items", "body_parts"
-  add_foreign_key "productable_body_part_items", "products"
   add_foreign_key "products", "accounts"
   add_foreign_key "products", "brands"
   add_foreign_key "products", "users"

@@ -48,4 +48,10 @@ yarn-debug.log*
 
 /config/credentials/staging.key
 
+### ADDED ###
+
+# Ignore redis dump file
 dump.rdb
+
+# Ignore db/seeds/scrapers/files upload
+/db/seeds/scrapers/files/*

@@ -1,39 +1,43 @@
-BRAND_NAME = "peteandpedro"
+BRAND_NAME          = "peteandpedro"
+BRAND_NAME_PROPER   = "Pete & Pedro"
 PRODUCTS_FILES_PATH = File.expand_path('../files/', File.dirname(__FILE__)) # Pathname("../files/#{BRAND_NAME}")
-puts PRODUCTS_FILES_PATH
-BRAND_REFERENCE = Brand.find_by(brand_identifier: BRAND_NAME)
-# Time format: YYYY MM DD HH (no spaces)
-current_timestamp = Time.now.strftime("%Y%m%d")
+BRAND_OBJECT        = Brand.find_by(brand_identifier: BRAND_NAME)
+BRAND_REFERENCE     = BRAND_OBJECT.id
+current_timestamp   = Time.now.strftime("%Y%m%d") # Time format: YYYY MM DD HH (no spaces)
 
-# Open CSV file created from the URL Builder script
-# opened_csv_file = IO.readlines(URLS_CSV_FILE_PATH + "/#{BRAND_NAME}.csv").drop(1)
-# opened_csv_file = CSV.parse(URLS_CSV_FILE_PATH + "/#{BRAND_NAME}.csv", headers: true, encoding: "utf-8")
-
-agent = Mechanize.new
+# Initialize Mechanize agent
+agent               = Mechanize.new
 agent.history_added = Proc.new { sleep 0.5 }
 
 
-counter = 1
-product_entries = []
+built_links             = BuiltLink.all.where(brand_id: BRAND_REFERENCE)
+product_entries         = Product.all.where(brand_id: BRAND_REFERENCE)
+size_of_product_entries = product_entries.size
+counter                 = 1
 
-built_links = BuiltLink.all.where(brand_id: BRAND_REFERENCE.id)
+# Destroy all previous product entries in the DB
+if size_of_product_entries >= 1
+  product_entries.destroy_all
+  puts "\n#{size_of_product_entries} #{BRAND_NAME_PROPER} products deleted from the database.\n"
+else
+  puts "\n#{BRAND_NAME_PROPER} has no products.\n"
+end
 
 built_links.each do |built_link|
-  page = agent.get(built_link.product_url)
+  page            = agent.get(built_link.product_url)
 
-  p_name = page.xpath("/html/body/div[3]/main/div[2]/div[2]/div[2]/div[1]/h1").text.strip
-
-  p_brand = BRAND_REFERENCE.id
-
-  p_description = page.css(".product-description").text.strip
-
-  p_retail_price = page.at("#ProductPrice")['content']
-
-  p_gender = "Male"
-
-  p_ingredients = page.search("div.ingredients").map{|x| x.text.strip} #.delete!("\n")
+  p_name          = page.xpath("/html/body/div[3]/main/div[2]/div[2]/div[2]/div[1]/h1").text.strip
+  p_brand         = BRAND_REFERENCE
+  p_description   = page.css(".product-description").text.strip
+  p_retail_price  = page.at("#ProductPrice")['content']
+  p_gender        = 1
+  p_type_of       = "Cosmetic"
+  p_ingredients   = page.search("div.ingredients").map{|x| x.text.strip} #.delete!("\n")
 
   # Categorization
+  p_body_part     = built_link.body_part_id
+  p_category      = built_link.category_id
+  p_subcategory   = built_link.subcategory_id
 
   if Rails.env.production?
     product_entry = {
@@ -43,108 +47,65 @@ built_links.each do |built_link|
       retail_price: p_retail_price,
       gender: p_gender,
       ingredients: p_ingredients,
-      category: built_link.category,
+      body_part: p_body_part,
+      category: p_category,
+      subcategory: p_subcategory,
       product_url: built_link.product_url,
     }
 
   else
-    tempfile_path = "#{PRODUCTS_FILES_PATH}/#{current_timestamp}_product_images/"
+    tempfile_path = "#{PRODUCTS_FILES_PATH}/#{current_timestamp}_#{BRAND_NAME}_images"
     FileUtils.mkdir(tempfile_path) unless File.exists?(tempfile_path)
 
     image_data = []
     page.search("#ProductPhotoImg").each do |img|
-      image_data_hash = {}
-      img_src = img['src'].gsub("//", "https://")
-      img_alt = img['alt']
+      image_datum = {}
 
-      # Download image
+      img_src = img['src'].gsub("//", "https://")
+
+      # 1) Download image 2) Construct full path for tempfile (Down object) and include original filename 3) Move tempfile to save it on disk
       tempfile = Down.download(img_src)
-      # Construct full path for tempfile (Down object) and include original filename
       tempfile_path_filename = "#{tempfile_path}/#{tempfile.original_filename}"
-      # Move tempfile to save it on disk
       FileUtils.mv(tempfile.path, tempfile_path_filename)
 
-      image_data_hash[:src] = img_src
-      image_data_hash[:alt] = img_alt
-      image_data_hash[:relative_path] = tempfile_path_filename
+      image_datum[:io]           = File.open(tempfile_path_filename)
+      image_datum[:filename]     = tempfile.original_filename
+      image_datum[:content_type] = tempfile.content_type
 
-      image_data << image_data_hash
+      image_data << image_datum
+    end # page.search("#ProductPhotoImg").each
 
-      product_entry = {
-        name: p_name,
-        description: p_description,
-        retail_price: p_retail_price,
-        gender: p_gender,
-        ingredients: p_ingredients,
-        category: built_link.category,
-        product_url: built_link.product_url,
-        image_data: image_data,
-        brand: p_brand
-      }
+    # next if entry[:category] == "Tools" || entry[:category] == "Lifestyle"
+    puts "-----------------------------Begin-------------------------------"
+    puts "Before Create: #{p_name} - #{built_link.product_url}"
 
-      product_entries << product_entry
+    created_product = Product.create!(
+      name:                p_name,
+      description:         p_description,
+      retail_price:        p_retail_price,
+      gender:              p_gender,
+      type_of:             p_type_of,
+      product_url:         built_link.product_url,
+      cosmetic_attributes: { ingredients: p_ingredients },
+      user_id:             BRAND_OBJECT.user.id,
+      account_id:          BRAND_OBJECT.account.id,
+      brand_id:            BRAND_REFERENCE
+    )
 
-      puts "----------------------------------------------------------------"
-      puts tempfile_path_filename
-      puts "#{counter}) #{built_link.category} - #{built_link.product_url}"
-      puts "----------------------------------------------------------------"
-    end # page.search("#ProductPhotoImg").each do |img|
+    image_data.each do |img_hash|
+      created_product.images.attach(img_hash)
+    end
+
+    ProductBodyPartItem.new(product_id: created_product.id, body_part_id: p_body_part).save!
+    ProductCategoryItem.new(product_id: created_product.id, category_id: p_category).save!
+    ProductSubcategoryItem.new(product_id: created_product.id, subcategory_id: p_subcategory).save!
+
+    puts "[#{counter}] #{p_name} (C#: #{built_link.category_id}) - #{built_link.product_url}"
+    puts "---------------------------------END----------------------------\n\n"
   end # Rails.env.production?
 
   counter += 1
 
-  break if counter == 5
+  # break if counter == 5
 
 end # BuiltLink.all.where(brand_id: BRAND_REFERENCE).each
-
-
-
-product_entries.each do |entry|
-
-  product_present = Product.find_by(
-    name: entry[:name],
-    brand_id: BRAND_REFERENCE.id
-  )
-
-  if product_present.present?
-    product_present.destroy
-    puts " DESTROYED #{product_present.name} - #{product_present.brand.name}"
-  end
-
-  next if entry[:category] == "Tools" || entry[:category] == "Lifestyle"
-
-  created_cosmetic = Cosmetic.create!(
-    name: entry[:name],
-    description: entry[:description],
-    retail_price: entry[:retail_price],
-    gender: entry[:gender],
-    ingredients: entry[:ingredients],
-    product_url: entry[:product_url],
-    user_id: BRAND_REFERENCE.user.id,
-    account_id: BRAND_REFERENCE.account.id,
-    brand_id: BRAND_REFERENCE.id
-  )
-
-  Product.create!(
-    name: entry[:name],
-    productable: created_cosmetic,
-    user_id: BRAND_REFERENCE.user.id,
-    account_id: BRAND_REFERENCE.account.id,
-    brand_id: BRAND_REFERENCE.id
-  )
-
-end
-
-# puts "\n\n\n"
-# puts "-------------------"
-# puts product_entries.inspect
-# puts "-------------------\n\n\n"
-
-# File.delete("#{PRODUCTS_CSV_FILE_PATH}/peteandpedro.csv") if File.exists?("#{PRODUCTS_CSV_FILE_PATH}/peteandpedro.csv")
-
-# CSV.open(PRODUCTS_CSV_FILE_PATH + "/#{BRAND_NAME}.csv", "w", { write_headers: true, headers: product_entries.first.keys, col_sep: "," }) do |row|
-#   product_entries.each do |row_entry|
-#     puts row_entry.values
-#     row << row_entry.values
-#   end
-# end

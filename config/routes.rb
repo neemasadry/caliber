@@ -65,7 +65,7 @@ Rails.application.routes.draw do
       resources :comments, only: [:create, :destroy], module: :reviews
     end
   end
-
+=begin
   resources :accessories, model_name: "Accessory" do
     member do
       put "like", to: "accessories#like"
@@ -210,7 +210,7 @@ Rails.application.routes.draw do
       resources :comments, only: [:create, :destroy], module: :reviews
     end
   end # Top
-
+=end
   ### End: Products ###
 
 

@@ -1,92 +1,91 @@
 agent = Mechanize.new
-agent.history_added = Proc.new { sleep 1 }
+agent.history_added = Proc.new { sleep 0.5 }
+product_agent = Mechanize.new
+product_agent.history_added = Proc.new { sleep 0.5 }
 BRAND = "peteandpedro"
+BRAND_FORMAL = "Pete & Pedro"
 DOMAIN = "https://peteandpedro.com"
 COLLECTIONS = "/collections/"
-BRAND_REFERENCE = Brand.find_by(brand_identifier: BRAND)
+BRAND_OBJECT = Brand.find_by(brand_identifier: BRAND)
+BRAND_REFERENCE = BRAND_OBJECT.id
 
 
 presence_of_links = BuiltLink.all.where(brand_id: BRAND_REFERENCE)
 size_link_present = presence_of_links.size
 
+collections = {
+  "styling-aids": { body_part: BodyPart.find_by(name: "Crown"), category: Category.find_by(name: "Hair"), subcategory: Subcategory.find_by(name: "Styling") },
+  "body-wash":    { body_part: BodyPart.find_by(name: "Crown"), category: Category.find_by(name: "Hygiene"), subcategory: Subcategory.find_by(name: "Body wash") },
+  "shampoos":     { body_part: BodyPart.find_by(name: "Crown"), category: Category.find_by(name: "Hygiene"), subcategory: Subcategory.find_by(name: "Shampoo") },
+  "conditioners": { body_part: BodyPart.find_by(name: "Crown"), category: Category.find_by(name: "Hygiene"), subcategory: Subcategory.find_by(name: "Conditioner") },
+  "shave":        { body_part: BodyPart.find_by(name: "Face"), category: Category.find_by(name: "Shaving"), subcategory: Subcategory.find_by(name: "Shaving cream") },
+  "beards":       { body_part: BodyPart.find_by(name: "Face"), category: Category.find_by(name: "Shaving"), subcategory: Subcategory.find_by(name: "Beard oil") },
+  "tools":        { body_part: BodyPart.find_by(name: "N/A"), category: Category.find_by(name: "Shaving"), subcategory: Subcategory.find_by(name: "Other") },
+  "lifestyle":    { body_part: BodyPart.find_by(name: "N/A"), category: Category.find_by(name: "Shaving"), subcategory: Subcategory.find_by(name: "Other") },
+}
+
+
+puts "----------------------------------------------------------------------------------------------------"
 if size_link_present >= 1
-  puts "#{size_link_present} links present."
+  puts "\t#{size_link_present} links present."
   presence_of_links.delete_all
   size_link_present = presence_of_links.size
   if size_link_present == 0
-    puts "All links for #{BRAND_REFERENCE.name} have been deleted."
+    puts "\tAll links for #{BRAND_OBJECT.name} have been destroyed."
   else
-    puts "Error: Links have not been deleted!"
+    puts "\tError: Links have not been deleted!"
   end
 else
-  puts "No presence of links for #{BRAND_REFERENCE.name}"
+  puts "\tNo presence of links for #{BRAND_OBJECT.name}"
 end
+puts "----------------------------------------------------------------------------------------------------\n\n"
 
-collections = [
-  "styling-aids",
-  "body-wash",
-  "shampoos",
-  "conditioners",
-  "shave",
-  "beards",
-  "tools",
-  "lifestyle",
-]
 
-#pages_collections = agent.get(DOMAIN + "/collections/")
-
-page_paths = []
-collections.each do |collection|
-  full_path = DOMAIN + COLLECTIONS + collection
-  puts full_path
-  page_paths << full_path
-end
-
-page_paths_with_collections = page_paths.zip collections
-
-all_product_urls = []
-
-page_paths_with_collections.each do |page_path, collection|
-  page = agent.get(page_path)
-
-  product_links = page.links_with(href: %r{/collections/#{collection}/products/})
+total_counter = 1
+collections.each do |collection_key, collection_values_hash|
+  full_path     = DOMAIN + COLLECTIONS + collection_key.to_s
+  page          = agent.get(full_path)
+  product_links = page.links_with(href: %r{/collections/#{collection_key.to_s}/products/})
+  counter       = 1
 
   product_links.each do |product_link|
-    next if product_link.href.include?("set")
+    full_product_path = DOMAIN + product_link.href
+    product_entry = BuiltLink.find_by(product_url: full_product_path)
 
-    full_path = DOMAIN + product_link.href
+    next if full_product_path.include?("set") || full_product_path.include?("pack") || full_product_path.include?("kit")
+    next if full_product_path.include?("https://peteandpedro.comhttps://peteandpedro.com")
+    next if full_product_path.include?("trifecta") || full_product_path.include?("combo")
 
-    next if full_path.include?("https://peteandpedro.comhttps://peteandpedro.com")
+    product_page_agent = product_agent.get(full_product_path)
+    product_name       = product_page_agent.xpath("/html/body/div[3]/main/div[2]/div[2]/div[2]/div[1]/h1").text.strip
 
-    all_product_urls << [full_path, (collection.split("-").map(&:capitalize).join(" "))]
-  end # product_links.each
-end # page_paths.each
+    if !product_entry.present?
+      puts full_product_path
 
-# test_counter = 1
-# all_product_urls.uniq!.each do |test_url, test_category|
-#   puts "#{test_counter} #{test_category}: #{test_url}"
-#   test_counter += 1
-# end
-
-
-if all_product_urls.uniq!
-  puts "all_product_urls are now unique!"
-
-  counter = 1
-  all_product_urls.each do |full_path, product_category|
-    if full_path.include?("set")
-      puts "#{counter} #{product_category}: " + full_path + " (Set: TRUE)"
-    else
-      BuiltLink.create!(
-        product_url: full_path,
-        category: product_category,
-        brand_id: BRAND_REFERENCE.id
+      BuiltLink.create(
+        product_name: product_name,
+        product_url: full_product_path,
+        brand_id: BRAND_REFERENCE,
+        body_part_id: collection_values_hash[:body_part].id,
+        category_id: collection_values_hash[:category].id,
+        subcategory_id: collection_values_hash[:subcategory].id
       )
 
-      puts "#{counter} #{product_category}: " + full_path
+      counter += 1
+      total_counter += 1
+    else
+      next
     end
-    counter += 1
-  end
-else
-  puts "Error: not unique!"
+
+  end # page_values_arr.each
+
+  puts "----------------------------------------------------------------------------------------"
+  puts "\t #{collection_key} has #{counter} links."
+  puts "----------------------------------------------------------------------------------------\n\n"
+
 end
+
+
+puts "\n----------------------------------------------------------------------------------------"
+puts "Built #{total_counter} product URLs from #{DOMAIN} - #{BRAND_FORMAL}"
+puts "----------------------------------------------------------------------------------------"

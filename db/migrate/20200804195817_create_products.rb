@@ -8,6 +8,9 @@ class CreateProducts < ActiveRecord::Migration[6.0]
       t.integer :gender, null: false
       t.string  :type_of, null: false, limit: 50
       t.text    :product_url, null: true, limit: 5000
+      t.jsonb   :fragrance_attributes, null: false, default: {}
+      t.jsonb   :clothing_attributes, null: false, default: {}
+      t.jsonb   :cosmetic_attributes, null: false, default: {}
 
       # References
       t.references :user, null: false, foreign_key: true

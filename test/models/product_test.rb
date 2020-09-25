@@ -10,9 +10,12 @@
 #  cached_weighted_average :float            default(0.0)
 #  cached_weighted_score   :integer          default(0)
 #  cached_weighted_total   :integer          default(0)
+#  clothing_attributes     :jsonb            not null
+#  cosmetic_attributes     :jsonb            not null
 #  description             :text             not null
 #  favoritable_score       :text
 #  favoritable_total       :text
+#  fragrance_attributes    :jsonb            not null
 #  gender                  :integer          not null
 #  name                    :string(100)      not null
 #  product_url             :text

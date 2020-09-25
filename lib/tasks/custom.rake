@@ -21,9 +21,11 @@ namespace :db do
         Rails.root.join('db', 'seeds', 'seed_partials', 'users.rb'),
         Rails.root.join('db', 'seeds', 'seed_partials', 'categories.rb'),
         Rails.root.join('db', 'seeds', 'seed_partials', 'brands.rb'),
-        Rails.root.join('db', 'seeds', 'seed_partials', 'products', 'accessories.rb'),
-        Rails.root.join('db', 'seeds', 'seed_partials', 'products', 'bottoms.rb'),
-        Rails.root.join('db', 'seeds', 'seed_partials', 'reviews.rb'),
+        Rails.root.join('db', 'seeds', 'scrapers', 'url_builders', 'peteandpedro.rb'),
+        Rails.root.join('db', 'seeds', 'scrapers', 'product_scrapers', 'peteandpedro.rb'),
+        # Rails.root.join('db', 'seeds', 'seed_partials', 'products', 'accessories.rb'),
+        # Rails.root.join('db', 'seeds', 'seed_partials', 'products', 'bottoms.rb'),
+        # Rails.root.join('db', 'seeds', 'seed_partials', 'reviews.rb'),
         Rails.root.join('db', 'seeds', 'seed_partials', 'guides.rb')
       ]
 
@@ -114,7 +116,7 @@ namespace :db do
   namespace :scrape do
 
     ### Begin: URL_BUILDERS ###
-    namespace :url_builder do
+    namespace :links do
       # All files
       Dir[Rails.root.join('db', 'seeds', 'scrapers', 'url_builders', '*.rb')].each do |filename|
         # task_name = File.basename(filename, '.rb')
@@ -140,7 +142,7 @@ namespace :db do
 
 
     ### Begin: PRODUCT_SCRAPERS ###
-    namespace :product_scraper do
+    namespace :products do
       # All files
       Dir[Rails.root.join('db', 'seeds', 'scrapers', 'product_scrapers', '*.rb')].each do |filename|
         # task_name = File.basename(filename, '.rb')
