@@ -79,7 +79,7 @@ built_links.each do |built_link|
     puts "-----------------------------Begin-------------------------------"
     puts "Before Create: #{p_name} - #{built_link.product_url}"
 
-    created_product = Product.create!(
+    created_product = Product.create(
       name:                p_name,
       description:         p_description,
       retail_price:        p_retail_price,

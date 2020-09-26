@@ -1,0 +1,9 @@
+Description:
+  Creates the necessary template scripts for scraping links (model: BuiltLink) and products (model: Product)
+
+Example:
+  rails generate scraper amazing_company https://www.amazingcompany.com/ [optional]
+
+  This will create:
+    db/seeds/scrapers/links/amazingcompany.rb
+    db/seeds/scrapers/products/amazingcompany.rb
