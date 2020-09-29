@@ -7,9 +7,9 @@ namespace :db do
     task :reset_dcm => :environment do
 
       # Purge ActiveStorage tables and all files stored in subdirectories under storage/
-      ActiveStorage::Attachment.all.each do |attachment|
-        attachment.purge
-      end
+      # ActiveStorage::Attachment.all.each do |attachment|
+      #   attachment.purge
+      # end
 
       Rake::Task["db:drop"].invoke
       Rake::Task["db:create"].invoke

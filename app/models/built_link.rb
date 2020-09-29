@@ -28,6 +28,7 @@
 #  fk_rails_...  (subcategory_id => subcategories.id)
 #
 class BuiltLink < ApplicationRecord
+
   belongs_to :brand
 
   jsonb_accessor(:link_attributes,
