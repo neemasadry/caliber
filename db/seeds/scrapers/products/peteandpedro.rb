@@ -54,7 +54,7 @@ built_links.each do |built_link|
     }
 
   else
-    tempfile_path = "#{PRODUCTS_FILES_PATH}/#{current_timestamp}_#{BRAND_NAME}_images"
+    tempfile_path = "#{PRODUCTS_FILES_PATH}/#{BRAND_NAME}/#{current_timestamp}_#{BRAND_NAME}_images"
     FileUtils.mkdir(tempfile_path) unless File.exists?(tempfile_path)
 
     image_data = []

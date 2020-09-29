@@ -7,6 +7,15 @@ class ScraperGenerator < Rails::Generators::NamedBase
 
   class_option :doc, type: :boolean, default: false, desc: "Include documentation."
 
+  def create_brands_template
+    template "brands.template", "db/seeds/scrapers/brands/#{brand_identifier}.rb"
+  end
+
+  def create_files_directory
+    empty_directory "db/seeds/scrapers/files/#{brand_identifier}"
+    empty_directory "db/seeds/scrapers/files/#{brand_identifier}/logo"
+  end
+
   def create_links_template
     template "links.template", "db/seeds/scrapers/links/#{brand_identifier}.rb"
   end

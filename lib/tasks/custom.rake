@@ -5,6 +5,12 @@ namespace :db do
     ### BEGIN DROP, CREATE, MIGRATE DATABASE ###
     desc "Seed all User entries in db/seed_partials/users.rb"
     task :reset_dcm => :environment do
+
+      # Purge ActiveStorage tables and all files stored in subdirectories under storage/
+      ActiveStorage::Attachment.all.each do |attachment|
+        attachment.purge
+      end
+
       Rake::Task["db:drop"].invoke
       Rake::Task["db:create"].invoke
       Rake::Task["db:migrate"].invoke

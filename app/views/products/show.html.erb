@@ -3,7 +3,7 @@
 
     <div class="flex justify-between items-center mb-4">
       <h4>
-        <%= link_to @product.productable_type.pluralize, products_path %> > <%= @product.name %>
+        <%= link_to @product.type_of.pluralize, products_path %> > <%= @product.name %>
       </h4>
       <%#= link_to 'Edit', edit_polymorphic_path(product), class: "btn btn-link" %>
     </div>
@@ -26,127 +26,99 @@
     <div class="bg-white rounded shadow p-8">
 
       <div class="mb-4">
-        <% @product.productable.images.each do |image| %>
+        <% @product.images.each do |image| %>
           <%= image_tag image %>
         <% end %>
       </div>
 
       <div class="mb-4">
         <h5>User</h5>
-        <%= @product.productable.user.name %>
+        <%= @product.user.name %>
       </div>
 
       <div class="mb-4">
         <h5>Brand</h5>
-        <%= @product.productable.brand.name %>
+        <%= @product.brand.name %>
       </div>
 
       <div class="mb-4">
         <h5>Name</h5>
-        <%= @product.productable.name %>
+        <%= @product.name %>
       </div>
 
 
       <div class="mb-4">
         <h5>Description</h5>
-        <%= @product.productable.description %>
+        <%= @product.description %>
       </div>
 
       <div class="mb-4">
         <h5>Retail price</h5>
-        <%= number_to_currency(@product.productable.retail_price) %>
+        <%= number_to_currency(@product.retail_price) %>
       </div>
 
       <div class="mb-4">
         <h5>Body Part</h5>
-        <% @product.productable.body_parts.each do |body_part| %>
+        <% @product.body_parts.each do |body_part| %>
           <%= body_part.name %>
         <% end %>
       </div>
 
       <div class="mb-4">
         <h5>Category</h5>
-        <% @product.productable.categories.each do |category| %>
+        <% @product.categories.each do |category| %>
           <%= category.name %>
         <% end %>
       </div>
 
       <div class="mb-4">
         <h5>Subcategory</h5>
-        <% @product.productable.subcategories.each do |subcategory| %>
+        <% @product.subcategories.each do |subcategory| %>
           <%= subcategory.name %>
         <% end %>
       </div>
 
-      <!-- <div class="mb-4">
+      <div class="mb-4">
         <h5>Type of</h5>
-        <%#= product.type_of %>
-      </div> -->
+        <%= @product.type_of %>
+      </div>
 
       <% unless params[:controller] == "dresses" %>
         <div class="mb-4">
           <h5>Gender</h5>
-          <%= @product.productable.gender %>
+          <%= @product.gender %>
         </div>
       <% end %>
 
       <% unless params[:controller] == "cosmetics" || params[:controller] == "fragrances" %>
         <div class="mb-4">
           <h5>Material</h5>
-          <%= @product.productable.materials %>
+          <%= @product.materials %>
         </div>
 
         <div class="mb-4">
           <h5>Primary color</h5>
-          <%= @product.productable.primary_color %>
+          <%= @product.primary_color %>
         </div>
 
         <div class="mb-4">
           <h5>Secondary color</h5>
-          <%= @product.productable.secondary_color %>
+          <%= @product.secondary_color %>
         </div>
 
       <% else %>
         <div class="mb-4">
           <h5>Ingredients</h5>
-          <%= @product.productable.ingredients %>
+          <%= @product.ingredients %>
         </div>
       <% end %>
 
       <div class="mb-4">
         <h5>Product url</h5>
-        <%= @product.productable.product_url %>
+        <%= @product.product_url %>
       </div>
 
     </div>
-
-    <div class="flex justify-between items-center mb-4">
-      <h1 class="h3"><%= link_to 'Products', products_path %> > Product #<%= @product.id %></h1>
-      <%= link_to 'Edit', edit_product_path(@product), class: "btn btn-link" %>
-    </div>
-
-    <div class="bg-white rounded shadow p-8">
-            <div class="mb-4">
-        <h5>Name</h5>
-        <%= @product.name %>
-      </div>
-            <div class="mb-4">
-        <h5>Productable</h5>
-        <%= link_to @product.name, polymorphic_path([@product.productable]) %>
-      </div>
-            <div class="mb-4">
-        <h5>User</h5>
-        <%= @product.user.username %>
-      </div>
-            <div class="mb-4">
-        <h5>Account</h5>
-        <%= @product.account.name %>
-      </div>
-            <div class="mb-4">
-        <h5>Brand</h5>
-        <%= @product.brand.name %>
-      </div>
-          </div>
 
   </div>
 </div>

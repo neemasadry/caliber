@@ -306,30 +306,3 @@ end # hash_of_brand_data.each
 
 
 puts "---------------- End: Brand ----------------"
-
-
-# Brand.create!(
-#   user_id: ,
-#   account_id: ,
-#   name: ,
-#   category: ,
-#   founding_date: ,
-#   about: ,
-#   price_range: ,
-#   homepage_link: ,
-#   email: ,
-#   story: ,
-#   mission: ,
-#   phone: ,
-#   address1: ,
-#   address2: ,
-#   city: ,
-#   state_code: ,
-#   country_code: ,
-#   zipcode: ,
-#   instagram_link: ,
-#   youtube_link: ,
-#   facebook_link: ,
-#   twitter_link: ,
-#   snapchat_link:
-# )
