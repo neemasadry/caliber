@@ -82,7 +82,7 @@ module.exports = {
     // override the default theme using the key directly
     fontFamily: {
       sans: [
-        "Lato",
+        "Inter",
         "-apple-system",
         "BlinkMacSystemFont",
         '"Segoe UI"',

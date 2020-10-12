@@ -3,52 +3,29 @@
 }
 
 .form-control {
-  @apply appearance-none block w-full bg-white text-gray-900 border border-gray-400 rounded py-3 px-4 leading-tight;
+  @apply bg-white appearance-none block w-full text-black border border-gray-400 rounded py-3 px-4 leading-none;
 
   transition: ease 0.2s border;
 
   &:focus {
-    @apply outline-none bg-white border-primary-500;
+    @apply shadow outline-none border-primary-500;
+
+    box-shadow: 0 0 0 0.2rem theme("colors.primary.100");
+    background-clip: padding-box;
   }
 
   &::placeholder {
-    @apply text-gray-500;
+    @apply text-gray-600;
   }
 
   &.error {
     @apply border-red-300;
   }
-
-  &.form-file {
-    width: inherit;
-    height: auto;
-    z-index: 2;
-    cursor: pointer;
-
-    @apply inline-block opacity-0 pl-0 pr-0 py-3 px-3 overflow-hidden absolute border-none;
-  }
-
-  &.form-file + label {
-    @extend .btn;
-    @extend .btn-white;
-    @extend .gray;
-
-    @apply cursor-pointer;
-
-    * {
-      pointer-events: none;
-    }
-
-    &:focus {
-      outline: 1px dotted #000;
-      outline: -webkit-focus-ring-color auto 5px;
-    }
-  }
 }
 
 label,
 .label {
-  @apply block uppercase tracking-wide text-gray-800 text-xs font-semibold mb-2 cursor-pointer;
+  @apply block text-sm font-medium leading-5 text-gray-700 mb-1 cursor-pointer;
 }
 
 .form-hint {
@@ -59,19 +36,19 @@ label,
   }
 }
 
-select,
 .select {
-  @apply relative block appearance-none w-full bg-white border border-gray-300 text-gray-900 py-3 px-4 pr-8 rounded leading-tight cursor-pointer;
+  @apply appearance-none block w-full bg-white border border-gray-400 text-gray-700 rounded leading-tight;
+  -webkit-appearance: none;
+  padding: 12px 24px 12px 12px;
+}
 
-  &:focus {
-    @apply outline-none bg-white border-primary-500;
-  }
+.select:focus {
+  @apply outline-none bg-white border-primary-500;
 }
 
 .caret {
   @apply pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-800;
 }
-
 
 form.inline {
   .form-group {
@@ -90,4 +67,60 @@ form.inline {
 // Fix flatpickr
 .flatpickr-current-month .flatpickr-monthDropdown-months {
   display: inline-block;
+}
+
+.form-checkbox {
+  @apply text-primary-500 hidden appearance-none inline-block h-4 w-4 align-middle select-none flex-shrink-0 bg-white rounded;
+
+  -webkit-print-color-adjust: exact;
+  color-adjust: exact;
+  background-origin: border-box;
+  border: 1px solid rgb(209, 209, 209);
+  box-shadow: inset 0 1px 1px rgba(#ddd, 0.8);
+  background-size: 10px 10px;
+
+  &:checked {
+    @apply border-transparent bg-center bg-no-repeat shadow-none;
+    background-color: currentColor;
+    background-image: url("../images/icons/checkmark.svg");
+    background-size: 10px 10px;
+
+    &:focus {
+      @apply border-transparent;
+    }
+  }
+
+  &:disabled {
+    @apply bg-gray-400;
+  }
+
+  &:focus {
+    @apply outline-none;
+    box-shadow: 0 0 0 3px rgba(164,202,254,.45);
+    border-color: theme("colors.primary.300");
+  }
+}
+
+.input-file {
+  height: auto;
+  z-index: 2;
+  cursor: pointer;
+
+  @apply opacity-0 inline-block pl-0 pr-0 py-3 px-3 overflow-hidden absolute border-none;
+
+  + label {
+    @apply inline-flex text-sm font-bold text-center px-4 py-0 rounded no-underline items-center justify-between cursor-pointer;
+
+    height: 40px;
+    line-height: 40px;
+    transition: ease 0.3s background, ease 0.3s transform, ease 0.2s color;
+
+    @extend .btn;
+    @extend .btn-tertiary.outline;
+
+    &:focus {
+      outline: 1px dotted #000;
+      outline: -webkit-focus-ring-color auto 5px;
+    }
+  }
 }
