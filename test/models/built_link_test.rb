@@ -8,10 +8,10 @@
 #  product_url     :string           not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
-#  body_part_id    :bigint           not null
+#  body_part_id    :bigint
 #  brand_id        :bigint           not null
-#  category_id     :bigint           not null
-#  subcategory_id  :bigint           not null
+#  category_id     :bigint
+#  subcategory_id  :bigint
 #
 # Indexes
 #

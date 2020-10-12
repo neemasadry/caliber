@@ -25,6 +25,7 @@ brand_categories_array = [
   "Household Supplies",
   "Jewelry/Watches",
   "Kitchen/Cooking",
+  "Luxury Goods",
   "Office Supplies",
   "Patio/Garden",
   "Pet Supplies",

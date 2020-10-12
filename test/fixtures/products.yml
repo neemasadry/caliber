@@ -13,11 +13,12 @@
 #  clothing_attributes     :jsonb            not null
 #  cosmetic_attributes     :jsonb            not null
 #  description             :text             not null
+#  discarded_at            :datetime
 #  favoritable_score       :text
 #  favoritable_total       :text
 #  fragrance_attributes    :jsonb            not null
 #  gender                  :integer          not null
-#  name                    :string(100)      not null
+#  name                    :string(200)      not null
 #  product_url             :text
 #  retail_price            :decimal(10, 2)   not null
 #  slug                    :string
@@ -30,10 +31,11 @@
 #
 # Indexes
 #
-#  index_products_on_account_id  (account_id)
-#  index_products_on_brand_id    (brand_id)
-#  index_products_on_slug        (slug) UNIQUE
-#  index_products_on_user_id     (user_id)
+#  index_products_on_account_id    (account_id)
+#  index_products_on_brand_id      (brand_id)
+#  index_products_on_discarded_at  (discarded_at)
+#  index_products_on_slug          (slug) UNIQUE
+#  index_products_on_user_id       (user_id)
 #
 # Foreign Keys
 #

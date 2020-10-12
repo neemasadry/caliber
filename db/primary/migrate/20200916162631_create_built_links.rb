@@ -9,9 +9,9 @@ class CreateBuiltLinks < ActiveRecord::Migration[6.0]
 
       # References
       t.references :brand, null: false, foreign_key: true
-      t.references :body_part, null: false, foreign_key: true
-      t.references :category, null: false, foreign_key: true
-      t.references :subcategory, null: false, foreign_key: true
+      t.references :body_part, null: true, foreign_key: true
+      t.references :category, null: true, foreign_key: true
+      t.references :subcategory, null: true, foreign_key: true
 
       t.timestamps
     end

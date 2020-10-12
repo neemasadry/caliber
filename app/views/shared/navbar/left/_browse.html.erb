@@ -81,10 +81,22 @@
                     Outfits
                   </p>
                   <p class="text-sm leading-5 text-gray-500">
-                    Explore and find a new outfit to try out.
+                    Discover new outfits created by other members of the community.
                   </p>
                 </div>
               <% end %>
+
+            <%= link_to routines_path, class: '-m-3 p-3 flex items-start space-x-4 rounded-lg hover:bg-gray-100 transition ease-in-out duration-150' do %>
+              <%= fa_icon("fal fa-repeat fa-lg", class: "flex-shrink-0 h-6 w-6 text-indigo-600") %>
+              <div class="space-y-1">
+                <p class="text-base leading-6 font-medium text-gray-900">
+                  Routines
+                </p>
+                <p class="text-sm leading-5 text-gray-500">
+                  Find the best routine that works for you.
+                </p>
+              </div>
+            <% end %>
 
             </div>
             <!-- <div class="px-5 py-5 bg-gray-50 space-y-6 sm:flex sm:space-y-0 sm:space-x-10 sm:px-8">

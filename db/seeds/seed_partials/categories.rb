@@ -7,8 +7,9 @@ puts "--- Begin: Categorization ---\n"
 body_parts_selection = {
   full: [ "Skin" ],
   head_and_neck: ["Crown", "Eyes", "Ears", "Face", "Neck"],
+  arms: ["Arms", "Forearms", "Wrists", "Hands", "Fingers"],
   "Right Arm": ["Right Arm", "Right Forearm", "Right Wrist", "Right Hand", "Right Thumb", "Right Index Finger", "Right Middle Finger", "Right Ring Finger", "Right Baby Finger"],
-  body: ["Chest", "Abdomen"],
+  body: ["Chest", "Abdomen", "Back"],
   "Left Arm": ["Left Arm", "Left Forearm", "Left Wrist", "Left Hand", "Left Thumb", "Left Index Finger", "Left Middle Finger", "Left Ring Finger", "Left Baby Finger"],
   midline: ["Waist"],
   legs: ["Upper Legs", "Lower Legs", "Full Length (Legs)"],

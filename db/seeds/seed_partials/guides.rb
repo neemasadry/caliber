@@ -21,7 +21,7 @@ all_users.each do |user|
 	user_accounts_entry.each do |username_key, user_accounts|
 		user_accounts.each do |account|
 
-			random_number_of_guides = Random.new.rand(20..80)
+			random_number_of_guides = Random.new.rand(5..30)
 
 			random_number_of_guides.times do
 

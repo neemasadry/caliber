@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_16_162631) do
+ActiveRecord::Schema.define(version: 2020_09_29_151753) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -202,9 +202,9 @@ ActiveRecord::Schema.define(version: 2020_09_16_162631) do
     t.string "product_url", null: false
     t.jsonb "link_attributes", default: {}, null: false
     t.bigint "brand_id", null: false
-    t.bigint "body_part_id", null: false
-    t.bigint "category_id", null: false
-    t.bigint "subcategory_id", null: false
+    t.bigint "body_part_id"
+    t.bigint "category_id"
+    t.bigint "subcategory_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["body_part_id"], name: "index_built_links_on_body_part_id"
@@ -619,7 +619,7 @@ ActiveRecord::Schema.define(version: 2020_09_16_162631) do
   end
 
   create_table "products", force: :cascade do |t|
-    t.string "name", limit: 100, null: false
+    t.string "name", limit: 200, null: false
     t.text "description", null: false
     t.decimal "retail_price", precision: 10, scale: 2, null: false
     t.integer "gender", null: false
@@ -632,6 +632,7 @@ ActiveRecord::Schema.define(version: 2020_09_16_162631) do
     t.bigint "account_id", null: false
     t.bigint "brand_id", null: false
     t.string "slug"
+    t.datetime "discarded_at"
     t.integer "cached_votes_total", default: 0
     t.integer "cached_votes_score", default: 0
     t.integer "cached_votes_up", default: 0
@@ -645,6 +646,7 @@ ActiveRecord::Schema.define(version: 2020_09_16_162631) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["account_id"], name: "index_products_on_account_id"
     t.index ["brand_id"], name: "index_products_on_brand_id"
+    t.index ["discarded_at"], name: "index_products_on_discarded_at"
     t.index ["slug"], name: "index_products_on_slug", unique: true
     t.index ["user_id"], name: "index_products_on_user_id"
   end
@@ -690,6 +692,65 @@ ActiveRecord::Schema.define(version: 2020_09_16_162631) do
     t.index ["product_id"], name: "index_reviews_on_product_id"
     t.index ["slug"], name: "index_reviews_on_slug", unique: true
     t.index ["user_id"], name: "index_reviews_on_user_id"
+  end
+
+  create_table "routine_categories", force: :cascade do |t|
+    t.bigint "routine_id", null: false
+    t.bigint "category_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["category_id"], name: "index_routine_categories_on_category_id"
+    t.index ["routine_id"], name: "index_routine_categories_on_routine_id"
+  end
+
+  create_table "routine_steps", force: :cascade do |t|
+    t.bigint "routine_id", null: false
+    t.string "name", limit: 125, null: false
+    t.text "description", null: false
+    t.time "est_time"
+    t.bigint "product_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["product_id"], name: "index_routine_steps_on_product_id"
+    t.index ["routine_id"], name: "index_routine_steps_on_routine_id"
+  end
+
+  create_table "routine_subcategories", force: :cascade do |t|
+    t.bigint "routine_id", null: false
+    t.bigint "subcategory_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["routine_id"], name: "index_routine_subcategories_on_routine_id"
+    t.index ["subcategory_id"], name: "index_routine_subcategories_on_subcategory_id"
+  end
+
+  create_table "routines", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "account_id", null: false
+    t.bigint "brand_id"
+    t.string "name", limit: 125, null: false
+    t.text "description", null: false
+    t.jsonb "action_days", default: {}, null: false
+    t.time "est_time"
+    t.integer "total_steps"
+    t.string "slug"
+    t.datetime "discarded_at"
+    t.integer "cached_votes_total", default: 0
+    t.integer "cached_votes_score", default: 0
+    t.integer "cached_votes_up", default: 0
+    t.integer "cached_votes_down", default: 0
+    t.integer "cached_weighted_score", default: 0
+    t.integer "cached_weighted_total", default: 0
+    t.float "cached_weighted_average", default: 0.0
+    t.text "favoritable_score"
+    t.text "favoritable_total"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["account_id"], name: "index_routines_on_account_id"
+    t.index ["brand_id"], name: "index_routines_on_brand_id"
+    t.index ["discarded_at"], name: "index_routines_on_discarded_at"
+    t.index ["slug"], name: "index_routines_on_slug", unique: true
+    t.index ["user_id"], name: "index_routines_on_user_id"
   end
 
   create_table "subcategories", force: :cascade do |t|
@@ -906,6 +967,9 @@ ActiveRecord::Schema.define(version: 2020_09_16_162631) do
   add_foreign_key "reviews", "accounts"
   add_foreign_key "reviews", "products"
   add_foreign_key "reviews", "users"
+  add_foreign_key "routines", "accounts"
+  add_foreign_key "routines", "brands"
+  add_foreign_key "routines", "users"
   add_foreign_key "subcategories", "categories"
   add_foreign_key "subcategories", "category_groups"
   add_foreign_key "taggings", "tags"

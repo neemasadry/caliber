@@ -1,4 +1,18 @@
 data_hash = {
+  user_info: {
+    email: "",
+    password: "password",
+    first_name: "",
+    last_name: "",
+    username: "",
+    gender: "",
+    country_code: "",
+    time_zone: "",
+    date_of_birth: "",
+    admin: false,
+    moderator: false,
+    terms_of_service: true
+  },
   brand_info: {
     user_id: User.find_by(username: "...").id,
     account_id: Account.find_by(name: "<%= brand_name %>").id,
@@ -35,16 +49,27 @@ data_hash = {
   }
 }
 
-create_brand = Brand.new(data_hash[:brand_info])
+create_user = User.new(data_hash[:user_info])
 
-if create_brand.save! && Brand.find_by(brand_identifier: data_hash[:brand_info][:brand_identifier]).brand_category_items.build(data_hash[:categorization_info]).save!
+if create_user.save!
+  create_account = Account.new(name: "<%= brand_name %>", owner_id: data_hash[:brand_info][:user_id], personal: false)
 
-  puts "#{data_hash[:brand_info][:name]} created!"
+  if create_account.save!
+    create_brand = Brand.new(data_hash[:brand_info])
 
-  if create_brand.logo.attach(data_hash[:logo_info])
-    puts "\tLogo successfully attached! [#{data_hash[:logo_info][:filename]} -> #{data_hash[:brand_info][:brand_identifier]}]\n"
-  end
-end
+    if create_brand.save! && Brand.find_by(brand_identifier: data_hash[:brand_info][:brand_identifier]).brand_category_items.build(data_hash[:categorization_info]).save!
 
+      puts "#{data_hash[:brand_info][:name]} created!"
 
+      if create_brand.logo.attach(data_hash[:logo_info])
+        puts "\tLogo successfully attached! [#{data_hash[:logo_info][:filename]} -> #{data_hash[:brand_info][:brand_identifier]}]\n"
+      end # create_brand.logo.attach
 
+    end # create_brand.save! && ...
+  else
+    puts "Error: Account was not created!\n"
+  end # create_account.save!
+
+else
+  puts "Error: User not created!\n"
+end # create_user.save!

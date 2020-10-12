@@ -20,7 +20,8 @@
 #
 class OutfitItem < ApplicationRecord
   belongs_to :outfit
-  belongs_to :productable, polymorphic: true
+  belongs_to :product
+  # belongs_to :productable, polymorphic: true
 
   # Categorization
   has_many :outfit_item_body_part_items, dependent: :destroy
@@ -32,10 +33,11 @@ class OutfitItem < ApplicationRecord
 
   # has_ancestry
 
-  validates :productable_type, presence: true
-  validates :productable_id, presence: true, uniqueness: { scope: [:outfit_id, :productable_type] }
+  # validates :productable_type, presence: true
+  # validates :productable_id, presence: true, uniqueness: { scope: [:outfit_id, :productable_type] }
   # validates :body_part, presence: true, length: { minimum: 1, maximum: 50 }, inclusion: { in: ["Crown", "Eyes", "Ears", "Neck", "Arm", "Forearm", "Wrist", "Hands", "Finger", "Back", "Chest", "Abdomen", "Waist", "Legs", "Feet", "Not on Body" ] }
-  validates :outfit_id, presence: true
+  validates :product_id, presence: true, numericality: { only_integer: true }
+  validates :outfit_id, presence: true, numericality: { only_integer: true }
 
   # Check BodyPart
 
@@ -48,7 +50,7 @@ class OutfitItem < ApplicationRecord
     # Update total price of all the items in associated Outfit object
     updated_price = 0.00
     outfit_item.outfit.outfit_items.where(outfit_id: outfit_item.outfit.id).find_each do |item_price_to_update|
-      updated_price = updated_price + item_price_to_update.productable.retail_price
+      updated_price = updated_price + item_price_to_update.product.retail_price
     end
 
     outfit_item.outfit.total_price = updated_price

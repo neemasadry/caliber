@@ -9,7 +9,8 @@ product_categories_hash = {
     "Head and Neck": ["Hats", "Bonnets", "Ties", "Cravats", "Scarves", "Shawls", "Lanyards"],
     wrist: ["Watches"],
     hands: ["Gloves"],
-    handheld: ["Handbags", "Umbrella", "Fans"]
+    handheld: ["Bags", "Handbags", "Umbrella", "Fans"],
+    back: ["Backpack"]
   },
   bottom: {
     "Bottom (Women)": [
@@ -207,7 +208,7 @@ product_categories_hash = {
   },
 =end
   shoe: {
-    "Styles (Shoes)": [
+    "Shoes": [
       "Ballet shoe", "Pointe shoe", "Blucher shoe", "Boat shoe",
       "Brogan (shoes)", "Brogue shoe", "Brothel creeper", "Bucks",
       "Chelsea boot", "Chukka boot", "Climbing shoe", "Clog",
@@ -230,7 +231,7 @@ product_categories_hash = {
     ]
   },
   suit: {
-    "Types (Suit)": [
+    "Suits": [
       "Slim Fit", "Classic Fit", "Modern Fit",
       "Notch Lapel", "Shawel Lapel", "Peak Lapel",
       "Single Breasted", "Double Breasted", "Unstructured Blazer",

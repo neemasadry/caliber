@@ -1,8 +1,10 @@
 # == Schema Information
 #
-# Table name: products
+# Table name: scraper_products
 #
 #  id                      :bigint           not null, primary key
+#  account_name            :string           not null
+#  brand_identifier        :string           not null
 #  cached_votes_down       :integer          default(0)
 #  cached_votes_score      :integer          default(0)
 #  cached_votes_total      :integer          default(0)
@@ -23,33 +25,25 @@
 #  retail_price            :decimal(10, 2)   not null
 #  slug                    :string
 #  type_of                 :string(50)       not null
+#  username                :string           not null
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null
-#  account_id              :bigint           not null
-#  brand_id                :bigint           not null
-#  user_id                 :bigint           not null
 #
 # Indexes
 #
-#  index_products_on_account_id    (account_id)
-#  index_products_on_brand_id      (brand_id)
-#  index_products_on_discarded_at  (discarded_at)
-#  index_products_on_slug          (slug) UNIQUE
-#  index_products_on_user_id       (user_id)
+#  index_scraper_products_on_discarded_at  (discarded_at)
+#  index_scraper_products_on_slug          (slug) UNIQUE
 #
-# Foreign Keys
-#
-#  fk_rails_...  (account_id => accounts.id)
-#  fk_rails_...  (brand_id => brands.id)
-#  fk_rails_...  (user_id => users.id)
-#
-class Product < ApplicationRecord
+class ScraperProduct < ApplicationRecord
+
+  connects_to database: { writing: :scraper, reading: :scraper }
+
   extend FriendlyId
   extend Pagy::Search
   # belongs_to :productable, polymorphic: true
-  belongs_to :user
-  belongs_to :account
-  belongs_to :brand
+  # belongs_to :user
+  # belongs_to :account
+  # belongs_to :brand
 
   jsonb_accessor(:fragrance_attributes,
     top_notes: [:string],
@@ -108,22 +102,22 @@ class Product < ApplicationRecord
   acts_as_favoritable
   acts_as_votable
 
-  searchkick word_start: [:name, :brand], word_middle: [:name, :brand]
+  # searchkick word_start: [:name], word_middle: [:name]
 
   # accepts_nested_attributes_for :accessory, :bottom, :cosmetic, :dress, :fragrance, :jewelry, :shoe, :suit, :top, allow_destroy: true
 
-  validates :name, presence: true, uniqueness: { scope: :brand_id, case_sensitive: false, message: "cannot create multiple entries for the same product." }, length: { maximum: 100 }
+  validates :name, presence: true, uniqueness: { scope: :brand_identifier, case_sensitive: false, message: "cannot create multiple entries for the same product." }, length: { maximum: 100 }
   validates :description, presence: true, length: { maximum: 3000 }
   validates :retail_price, presence: true, numericality: { greater_than: 0, less_than: 1000000 }
   validates :type_of, presence: true, inclusion: { in: ["Accessory", "Bottom", "Cosmetic", "Dress", "Fragrance", "Jewelry", "Shoe", "Suit", "Top"] }
   validates :gender, presence: true, numericality: { in: 1..3 }
-  validates :product_url, presence: true, uniqueness: { scope: :brand_id, message: "cannot create multiple entries for the same product." }
+  validates :product_url, presence: true, uniqueness: { scope: :brand_identifier, message: "cannot create multiple entries for the same product." }
 
-  def search_data
-    {
-      name: name,
-      brand: brand.name,
-    }
-  end
+  # def search_data
+  #   {
+  #     name: name,
+  #     # brand: brand.name,
+  #   }
+  # end
 
 end

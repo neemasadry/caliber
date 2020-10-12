@@ -2,7 +2,7 @@
 class CreateProducts < ActiveRecord::Migration[6.0]
   def change
     create_table :products do |t|
-      t.string  :name, null: false, limit: 100
+      t.string  :name, null: false, limit: 200
       t.text    :description, null: false, limit: 3000
       t.decimal :retail_price, null: false, precision: 10, scale: 2
       t.integer :gender, null: false
@@ -19,6 +19,9 @@ class CreateProducts < ActiveRecord::Migration[6.0]
 
       # Slug for FriendlyID
       t.string :slug, index: { unique: true }
+
+      # Discarded gem
+      t.datetime :discarded_at, index: true
 
       # caching for acts_as_votable
       t.integer :cached_votes_total, default: 0
