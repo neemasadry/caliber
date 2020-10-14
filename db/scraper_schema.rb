@@ -10,10 +10,34 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_16_162631) do
+ActiveRecord::Schema.define(version: 2020_10_14_151730) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "pete_and_pedro_built_links", force: :cascade do |t|
+    t.string "product_name", null: false
+    t.string "product_url", null: false
+    t.jsonb "link_attributes", default: {}, null: false
+    t.string "brand_identifier", null: false
+    t.string "body_part_name"
+    t.string "category_name"
+    t.string "subcategory_name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "pete_and_pedro_products", force: :cascade do |t|
+    t.string "product_name", null: false
+    t.string "product_url", null: false
+    t.jsonb "product_attributes", default: {}, null: false
+    t.string "brand_identifier", null: false
+    t.string "body_part_name"
+    t.string "category_name"
+    t.string "subcategory_name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "scraper_built_links", force: :cascade do |t|
     t.string "product_name", null: false

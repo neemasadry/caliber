@@ -1,40 +1,4 @@
-# == Schema Information
-#
-# Table name: scraper_products
-#
-#  id                      :bigint           not null, primary key
-#  account_name            :string           not null
-#  brand_identifier        :string           not null
-#  cached_votes_down       :integer          default(0)
-#  cached_votes_score      :integer          default(0)
-#  cached_votes_total      :integer          default(0)
-#  cached_votes_up         :integer          default(0)
-#  cached_weighted_average :float            default(0.0)
-#  cached_weighted_score   :integer          default(0)
-#  cached_weighted_total   :integer          default(0)
-#  clothing_attributes     :jsonb            not null
-#  cosmetic_attributes     :jsonb            not null
-#  description             :text             not null
-#  discarded_at            :datetime
-#  favoritable_score       :text
-#  favoritable_total       :text
-#  fragrance_attributes    :jsonb            not null
-#  gender                  :integer          not null
-#  name                    :string(200)      not null
-#  product_url             :text
-#  retail_price            :decimal(10, 2)   not null
-#  slug                    :string
-#  type_of                 :string(50)       not null
-#  username                :string           not null
-#  created_at              :datetime         not null
-#  updated_at              :datetime         not null
-#
-# Indexes
-#
-#  index_scraper_products_on_discarded_at  (discarded_at)
-#  index_scraper_products_on_slug          (slug) UNIQUE
-#
-class ScraperProduct < ApplicationRecord
+class <%= brand_model_name %>Product < ApplicationRecord
 
   connects_to database: { writing: :scraper, reading: :scraper }
 

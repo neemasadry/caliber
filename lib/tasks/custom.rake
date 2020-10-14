@@ -110,9 +110,23 @@ namespace :db do
       end
     end
 
+    # Individual files
+    # BRAND_IDENTIFIER_ [brand, links, products].rb
+    Dir[Rails.root.join('db', 'seeds', 'scrapers', '*', '*.rb')].each do |filename|
+      task_name = File.basename(filename, '.rb')
+      desc "Seed " + task_name + ", based on the file with the same name in `db/seeds/scrapers/brands/*.rb`"
 
+      task task_name.to_sym => :environment do
+        load(filename) if File.exist?(filename)
+      end
+    end
+
+  end # namespace :scrape
+
+=begin
     ### Begin: BRANDS ###
     namespace :brands do
+
       # All files
       Dir[Rails.root.join('db', 'seeds', 'scrapers', 'brands', '*.rb')].each do |filename|
         desc "Seed all product_scrapers based on the file with the same name in `db/seeds/scrapers/brands/*.rb`"
@@ -121,6 +135,7 @@ namespace :db do
           load(filename) if File.exist?(filename)
         end
       end
+
 
       # Individual files
       Dir[Rails.root.join('db', 'seeds', 'scrapers', 'brands', '*.rb')].each do |filename|
@@ -131,6 +146,7 @@ namespace :db do
           load(filename) if File.exist?(filename)
         end
       end
+
     end
     ### End: BRANDS ###
 
@@ -186,6 +202,8 @@ namespace :db do
     ### End: PRODUCTS ###
 
   end # namespace :scrape
+
+=end
 
   namespace :scraper do
     desc "Copy data from :built_links and :products tables to scraper database equivalent"

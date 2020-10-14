@@ -1,6 +1,6 @@
 PRODUCTS_FILES_PATH = File.expand_path('/files/', File.dirname(__FILE__)) # Pathname("../files/#{BRAND_NAME}")
-BRAND_ID            = "<%= brand_identifier.to_s %>"
-BRAND_NAME          = "<%= brand_name.to_s %>"
+BRAND_ID            = "peteandpedro"
+BRAND_NAME          = "Pete & Pedro"
 BRAND_OBJECT        = Brand.find_by(brand_identifier: BRAND_ID)
 BRAND_REFERENCE     = BRAND_OBJECT.id
 current_timestamp   = Time.now.strftime("%Y%m%d") # Time format: YYYY MM DD HH (no spaces)

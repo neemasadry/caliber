@@ -1,6 +1,6 @@
-class CreateTablesFor<%= brand_model_name %> < ActiveRecord::Migration[6.0]
+class CreateTablesForPeteAndPedro < ActiveRecord::Migration[6.0]
   def change
-    create_table :<%= brand_table_name %>_built_links do |t|
+    create_table :pete_and_pedro_built_links do |t|
 
       t.string :product_name, null: false
       t.string :product_url, null: false
@@ -17,7 +17,7 @@ class CreateTablesFor<%= brand_model_name %> < ActiveRecord::Migration[6.0]
     end
 
 
-    create_table :<%= brand_table_name %>_products do |t|
+    create_table :pete_and_pedro_products do |t|
 
       t.string :product_name, null: false
       t.string :product_url, null: false
