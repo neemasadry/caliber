@@ -39,70 +39,55 @@ built_links.each do |built_link|
   p_category      = built_link.category_id
   p_subcategory   = built_link.subcategory_id
 
-  if Rails.env.production?
-    product_entry = {
-      name: p_name,
-      brand: p_brand,
-      description: p_description,
-      retail_price: p_retail_price,
-      gender: p_gender,
-      ingredients: p_ingredients,
-      body_part: p_body_part,
-      category: p_category,
-      subcategory: p_subcategory,
-      product_url: built_link.product_url,
-    }
 
-  else
-    tempfile_path = "#{PRODUCTS_FILES_PATH}/#{BRAND_NAME}/#{current_timestamp}_#{BRAND_NAME}_images"
-    FileUtils.mkdir(tempfile_path) unless File.exists?(tempfile_path)
+  tempfile_path = "#{PRODUCTS_FILES_PATH}/#{BRAND_NAME}/#{current_timestamp}_#{BRAND_NAME}_images"
+  FileUtils.mkdir(tempfile_path) unless File.exists?(tempfile_path)
 
-    image_data = []
-    page.search("#ProductPhotoImg").each do |img|
-      image_datum = {}
+  image_data = []
+  page.search("#ProductPhotoImg").each do |img|
+    image_datum = {}
 
-      img_src = img['src'].gsub("//", "https://")
+    img_src = img['src'].gsub("//", "https://")
 
-      # 1) Download image 2) Construct full path for tempfile (Down object) and include original filename 3) Move tempfile to save it on disk
-      tempfile = Down.download(img_src)
-      tempfile_path_filename = "#{tempfile_path}/#{tempfile.original_filename}"
-      FileUtils.mv(tempfile.path, tempfile_path_filename)
+    # 1) Download image 2) Construct full path for tempfile (Down object) and include original filename 3) Move tempfile to save it on disk
+    tempfile = Down.download(img_src)
+    tempfile_path_filename = "#{tempfile_path}/#{tempfile.original_filename}"
+    FileUtils.mv(tempfile.path, tempfile_path_filename)
 
-      image_datum[:io]           = File.open(tempfile_path_filename)
-      image_datum[:filename]     = tempfile.original_filename
-      image_datum[:content_type] = tempfile.content_type
+    image_datum[:io]           = File.open(tempfile_path_filename)
+    image_datum[:filename]     = tempfile.original_filename
+    image_datum[:content_type] = tempfile.content_type
 
-      image_data << image_datum
-    end # page.search("#ProductPhotoImg").each
+    image_data << image_datum
+  end # page.search("#ProductPhotoImg").each
 
-    # next if entry[:category] == "Tools" || entry[:category] == "Lifestyle"
-    puts "-----------------------------Begin-------------------------------"
-    puts "Before Create: #{p_name} - #{built_link.product_url}"
+  # next if entry[:category] == "Tools" || entry[:category] == "Lifestyle"
+  puts "-----------------------------Begin-------------------------------"
+  puts "Before Create: #{p_name} - #{built_link.product_url}"
 
-    created_product = Product.create(
-      name:                p_name,
-      description:         p_description,
-      retail_price:        p_retail_price,
-      gender:              p_gender,
-      type_of:             p_type_of,
-      product_url:         built_link.product_url,
-      cosmetic_attributes: { ingredients: p_ingredients },
-      user_id:             BRAND_OBJECT.user.id,
-      account_id:          BRAND_OBJECT.account.id,
-      brand_id:            BRAND_REFERENCE
-    )
+  created_product = Product.create(
+    name:                p_name,
+    description:         p_description,
+    retail_price:        p_retail_price,
+    gender:              p_gender,
+    type_of:             p_type_of,
+    product_url:         built_link.product_url,
+    cosmetic_attributes: { ingredients: p_ingredients },
+    user_id:             BRAND_OBJECT.user.id,
+    account_id:          BRAND_OBJECT.account.id,
+    brand_id:            BRAND_REFERENCE
+  )
 
-    image_data.each do |img_hash|
-      created_product.images.attach(img_hash)
-    end
+  image_data.each do |img_hash|
+    created_product.images.attach(img_hash)
+  end
 
-    ProductBodyPartItem.new(product_id: created_product.id, body_part_id: p_body_part).save!
-    ProductCategoryItem.new(product_id: created_product.id, category_id: p_category).save!
-    ProductSubcategoryItem.new(product_id: created_product.id, subcategory_id: p_subcategory).save!
+  ProductBodyPartItem.new(product_id: created_product.id, body_part_id: p_body_part).save!
+  ProductCategoryItem.new(product_id: created_product.id, category_id: p_category).save!
+  ProductSubcategoryItem.new(product_id: created_product.id, subcategory_id: p_subcategory).save!
 
-    puts "[#{counter}] #{p_name} (C#: #{built_link.category_id}) - #{built_link.product_url}"
-    puts "---------------------------------END----------------------------\n\n"
-  end # Rails.env.production?
+  puts "[#{counter}] #{p_name} (C#: #{built_link.category_id}) - #{built_link.product_url}"
+  puts "---------------------------------END----------------------------\n\n"
 
   counter += 1
 

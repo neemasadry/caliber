@@ -6,9 +6,9 @@ product_agent.history_added = Proc.new { sleep 0.5 }
 
 # Set constants
 BRAND_DOMAIN                = "<%= brand_url %>"
-BRAND_ID                    = "<%= brand_identifier %>"
+BRAND_IDENTIFIER            = "<%= brand_identifier %>"
 BRAND_NAME                  = "<%= brand_name %>"
-BRAND_OBJECT                = Brand.find_by(brand_identifier: BRAND_ID)
+BRAND_OBJECT                = Brand.find_by(brand_identifier: BRAND_IDENTIFIER)
 BRAND_REFERENCE             = BRAND_OBJECT.id
 
 presence_of_links = BuiltLink.all.where(brand_id: BRAND_REFERENCE)
