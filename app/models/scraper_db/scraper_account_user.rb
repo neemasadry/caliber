@@ -1,0 +1,3 @@
+class ScraperAccountUser < ApplicationRecord
+
+end

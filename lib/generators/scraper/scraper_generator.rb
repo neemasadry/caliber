@@ -16,8 +16,8 @@ class ScraperGenerator < Rails::Generators::NamedBase
     template "migrations.template", "db/scraper/migrate/#{current_timestamp}_create_tables_for_#{brand_table_name}.rb"
 
     # Models for BuiltLink and ScraperProduct
-    template "built_links_models.template", "app/models/scraper_db/#{brand_identifier}/#{brand_identifier}_built_link.rb"
-    template "products_models.template", "app/models/scraper_db/#{brand_identifier}/#{brand_identifier}_product.rb"
+    template "built_links_models.template", "app/models/scraper_db/#{brand_identifier}/#{brand_table_name}_built_link.rb"
+    template "products_models.template", "app/models/scraper_db/#{brand_identifier}/#{brand_table_name}_product.rb"
   end
 
   def create_empty_directories
@@ -30,6 +30,7 @@ class ScraperGenerator < Rails::Generators::NamedBase
     template "brands.template", "db/seeds/scrapers/#{brand_identifier}/#{brand_identifier}_brand.rb"
     template "links.template", "db/seeds/scrapers/#{brand_identifier}/#{brand_identifier}_links.rb"
     template "products.template", "db/seeds/scrapers/#{brand_identifier}/#{brand_identifier}_products.rb"
+    template "product_transfer.template", "db/seeds/scrapers/#{brand_identifier}/#{brand_identifier}_product_transfer.rb"
   end
 
 =begin

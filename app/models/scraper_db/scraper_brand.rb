@@ -1,0 +1,3 @@
+class ScraperBrand < ApplicationRecord
+
+end
