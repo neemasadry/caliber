@@ -72,7 +72,12 @@ if find_user.present?
       logo_info: {
         io: File.open(Rails.root.join(logo_path, "...")),
         filename: "...",
-        content_type: "..."
+        content_type: "image/png" OR "image/jpg"
+      },
+      scraper_logo_info: {
+        io: File.open(Rails.root.join(LOGO_PATH, "...")),
+        filename: "...",
+        content_type: "image/png" OR "image/jpg"
       },
       categorization_info: {
         category_id: Category.find_by(name: "...").id
@@ -80,7 +85,16 @@ if find_user.present?
     }
 
     create_brand = Brand.create(brand_data_hash[:brand_info])
+
+    scraper_brand_data_hash = brand_data_hash
+    scraper_brand_data_hash[:brand_info][:user_id] = "<%= username.to_s %>"
+    scraper_brand_data_hash[:brand_info][:account_id] = "<%= brand_name.to_s %>"
+
+    create_scraper_brand = ScraperBrand.create(scraper_brand_data_hash[:brand_info])
+
+    # Find Brand
     find_brand = Brand.find_by(brand_identifier: create_brand.brand_identifier)
+    find_scraper_brand = ScraperBrand.find_by(brand_identifier: create_brand.brand_identifier)
 
     if find_brand.present? && find_brand.brand_category_items.build(brand_data_hash[:categorization_info]).save
 

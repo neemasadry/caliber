@@ -14,12 +14,13 @@ COLLECTIONS              = "/collections/"
 SCRAPER_BRAND_OBJECT     = ScraperBrand.find_by(brand_identifier: BRAND_IDENTIFIER)
 SCRAPER_BRAND_REFERENCE  = SCRAPER_BRAND_OBJECT.id
 
-
-presence_of_links = BuiltLink.all.where(brand_id: BRAND_REFERENCE)
-presence_of_scraper_links = ScraperBuiltLink.all.where(scraper_brand_id: BRAND_REFERENCE)
+presence_of_links              = BuiltLink.all.where(brand_id: BRAND_REFERENCE)
+presence_of_scraper_links      = ScraperBuiltLink.all.where(scraper_brand_id: BRAND_REFERENCE)
 presence_of_peteandpedro_links = PeteAndPedroBuiltLink.all.where(scraper_brand_id: BRAND_REFERENCE)
 
-size_link_present = presence_of_links.size
+size_of_built_links              = presence_of_links.size
+size_of_scraper_built_links      = presence_of_scraper_links.size
+size_of_peteandpedro_built_links = presence_of_peteandpedro_links.size
 
 collections = {
   "styling-aids": { body_part: BodyPart.find_by(name: "Crown"), category: Category.find_by(name: "Hair"), subcategory: Subcategory.find_by(name: "Styling") },
@@ -35,21 +36,25 @@ collections = {
 
 puts "----------------------------------------------------------------------------------------------------"
 
-if size_link_present >= 1
+if size_of_built_links >= 1 || size_of_scraper_built_links >= 1 || size_of_peteandpedro_built_links >= 1
   puts "\t#{size_link_present} links present."
+  puts "ScraperBuiltLink: \t#{size_of_scraper_built_links} links present."
+  puts "PeteAndPedroBuiltLink: \t#{size_of_peteandpedro_built_links} links present."
+
   presence_of_links.delete_all
   presence_of_scraper_links.delete_all
   presence_of_peteandpedro_links.delete_all
 
-  size_link_present = presence_of_links.size
-  size_scraper_links_present = presence_of_scraper_links.delete_all
-  size_peteandpedro_links_present = presence_of_peteandpedro_links.delete_all
+  size_of_built_links              = presence_of_links.size
+  size_of_scraper_built_links      = presence_of_scraper_links.size
+  size_of_peteandpedro_built_links = presence_of_peteandpedro_links.size
 
-  if size_link_present == 0 && size_scraper_links_present == 0 && size_peteandpedro_links_present == 0
+  if size_of_built_links == 0 && size_of_scraper_built_links == 0 && size_of_peteandpedro_built_links == 0
     puts "\tAll links for #{BRAND_OBJECT.name} have been destroyed."
   else
     puts "\tError: Links have not been deleted!"
   end
+
 else
   puts "\tNo presence of links for #{BRAND_OBJECT.name}"
 end

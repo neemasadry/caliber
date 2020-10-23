@@ -1,11 +1,12 @@
 class ScraperGenerator < Rails::Generators::NamedBase
   source_root File.expand_path('templates', __dir__)
 
-  argument :brand_name, type: :string, required: true, desc: "Exact representation of the Brand/Company name"
-  argument :brand_identifier, type: :string, required: true, desc: "Use domain name"
-  argument :brand_model_name, type: :string, required: true, desc: "Brand/Company representation for model name (Ruby class)"
-  argument :brand_table_name, type: :string, required: true, desc: "Parameterized form of company name (i.e. All lower case with underscores for space separation)"
-  argument :brand_url, type: :string, required: true, desc: "Provide base URL only"
+  argument :username, type: :string, required: true, desc: "Username who is owner of the brand (must be unique)."
+  argument :brand_name, type: :string, required: true, desc: "Exact representation of the Brand/Company name."
+  argument :brand_identifier, type: :string, required: true, desc: "Use domain name."
+  argument :brand_model_name, type: :string, required: true, desc: "Brand/Company representation for model name (Ruby class)."
+  argument :brand_table_name, type: :string, required: true, desc: "Parameterized form of company name (i.e. All lower case with underscores for space separation)."
+  argument :brand_url, type: :string, required: true, desc: "Provide base URL only."
 
   class_option :doc, type: :boolean, default: false, desc: "Include documentation."
 

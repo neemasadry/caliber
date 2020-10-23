@@ -16,13 +16,12 @@ counter = 1
 built_links = BuiltLink.all.where(brand_id: BRAND_REFERENCE)
 
 product_entries              = Product.all.where(brand_id: BRAND_REFERENCE)
-scraper_product_entries      = ScraperProduct.all.where(brand_id: BRAND_REFERENCE)
-peteandpedro_product_entries = PeteAndPedroProduct.all.where(brand_id: BRAND_REFERENCE)
+scraper_product_entries      = ScraperProduct.all.where(scraper_brand_id: BRAND_REFERENCE)
+peteandpedro_product_entries = PeteAndPedroProduct.all.where(scraper_brand_id: BRAND_REFERENCE)
 
 size_of_product_entries              = product_entries.size
-size_of_scraper_product_entries      = product_entries.size
-size_of_peteandpedro_product_entries = product_entries.size
-
+size_of_scraper_product_entries      = scraper_product_entries.size
+size_of_peteandpedro_product_entries = peteandpedro_product_entries.size
 
 
 # Destroy all previous product entries in the DB
@@ -31,7 +30,9 @@ if size_of_product_entries >= 1 && size_of_scraper_product_entries >= 1 && size_
   scraper_product_entries.destroy_all
   peteandpedro_product_entries.destroy_all
 
-  puts "\n#{size_of_product_entries} #{BRAND_NAME} products deleted from the database.\n"
+  puts "\n\t[#{BRAND_NAME}] Product: #{size_of_product_entries} products deleted from the database.\n"
+  puts "\n\t[#{BRAND_NAME}] ScraperProduct: #{size_of_scraper_product_entries} products deleted from the database.\n"
+  puts "\n\t[#{BRAND_NAME}] PeteAndPedroProduct: #{size_of_peteandpedro_product_entries} products deleted from the database.\n"
 else
   puts "\n#{BRAND_NAME} has no products.\n"
 end
@@ -54,11 +55,12 @@ built_links.each do |built_link|
   tempfile_path = "#{FILES_PATH}/#{BRAND_IDENTIFIER}/files/#{current_timestamp}_#{BRAND_IDENTIFIER}_images"
   FileUtils.mkdir(tempfile_path) unless File.exists?(tempfile_path)
 
-  image_data = []
+  product_image_data = []
   scraper_image_data = []
   peteandpedro_image_data = []
+
   page.search("#ProductPhotoImg").each do |img|
-    image_datum = {}
+    product_image_datum = {}
     scraper_image_datum = {}
     peteandpedro_image_datum = {}
 
@@ -69,21 +71,22 @@ built_links.each do |built_link|
     tempfile_path_filename = "#{tempfile_path}/#{tempfile.original_filename}"
     FileUtils.mv(tempfile.path, tempfile_path_filename)
 
-    image_datum[:io]           = File.open(tempfile_path_filename)
-    image_datum[:filename]     = tempfile.original_filename
-    image_datum[:content_type] = tempfile.content_type
+    product_image_datum[:io]                = File.open(tempfile_path_filename)
+    product_image_datum[:filename]          = tempfile.original_filename
+    product_image_datum[:content_type]      = tempfile.content_type
 
-    scraper_image_datum[:io]           = File.open(tempfile_path_filename)
-    scraper_image_datum[:filename]     = tempfile.original_filename
-    scraper_image_datum[:content_type] = tempfile.content_type
+    scraper_image_datum[:io]                = File.open(tempfile_path_filename)
+    scraper_image_datum[:filename]          = tempfile.original_filename
+    scraper_image_datum[:content_type]      = tempfile.content_type
 
     peteandpedro_image_datum[:io]           = File.open(tempfile_path_filename)
     peteandpedro_image_datum[:filename]     = tempfile.original_filename
     peteandpedro_image_datum[:content_type] = tempfile.content_type
 
-    image_data << image_datum
-    scraper_image_data << scraper_image_datum
+    product_image_data      << product_image_datum
+    scraper_image_data      << scraper_image_datum
     peteandpedro_image_data << peteandpedro_image_datum
+
   end # page.search("#ProductPhotoImg").each
 
   # next if entry[:category] == "Tools" || entry[:category] == "Lifestyle"
@@ -103,7 +106,7 @@ built_links.each do |built_link|
     brand_id:            BRAND_REFERENCE
   )
 
-  image_data.each do |img_hash|
+  product_image_data.each do |img_hash|
     created_product.images.attach(img_hash)
   end
 
@@ -145,7 +148,7 @@ built_links.each do |built_link|
   ProductCategoryItem.new(product_id: created_product.id, category_id: p_category).save
   ProductSubcategoryItem.new(product_id: created_product.id, subcategory_id: p_subcategory).save
 
-  puts "[#{counter}] #{p_name} (C#: #{built_link.category_id}) - #{built_link.product_url}"
+  puts "[#{counter}] #{p_name} (Category #: #{built_link.category_id}) - #{built_link.product_url}"
   puts "---------------------------------END----------------------------\n\n"
 
   counter += 1
@@ -153,5 +156,5 @@ built_links.each do |built_link|
 end # BuiltLink.all.where(brand_id: BRAND_REFERENCE).each
 
 puts "\n----------------------------------------------------------------------------------------"
-puts "Built #{counter} product URLs under #{BRAND_NAME} [#{DOMAIN}]"
+puts "Built #{counter} product URLs under #{BRAND_NAME}"
 puts "----------------------------------------------------------------------------------------"

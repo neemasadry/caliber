@@ -9,9 +9,9 @@ class CreateTablesFor<%= brand_model_name %> < ActiveRecord::Migration[6.0]
 
       # References
       t.references :scraper_brand, null: false
-      t.references :scraper_body_part, null: true
-      t.references :scraper_category, null: true
-      t.references :scraper_subcategory, null: true
+      t.string :body_part, null: true
+      t.string :category, null: true
+      t.string :subcategory, null: true
 
       t.timestamps
     end
@@ -33,9 +33,9 @@ class CreateTablesFor<%= brand_model_name %> < ActiveRecord::Migration[6.0]
 
       # References
       t.references :scraper_brand, null: false
-      t.references :scraper_body_part, null: true
-      t.references :scraper_category, null: true
-      t.references :scraper_subcategory, null: true
+      t.string :body_part, null: true
+      t.string :category, null: true
+      t.string :subcategory, null: true
 
       t.timestamps
     end

@@ -14,7 +14,7 @@ class <%= brand_model_name %>BuiltLink < ApplicationRecord
     ninth: [:string],
   )
 
-  validates :product_name, presence: true, uniqueness: { scope: :brand_identifier }, length: { maximum: 200 }
-  validates :product_url, presence: true, uniqueness: { scope: :brand_identifier }, length: {minimum: 5, maximum: 10000}
+  validates :product_name, presence: true, length: { maximum: 200 }
+  validates :product_url, presence: true, uniqueness: { scope: :scraper_brand_id }, length: { minimum: 5, maximum: 10000 }
 
 end

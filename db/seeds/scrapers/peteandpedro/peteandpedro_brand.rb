@@ -81,6 +81,11 @@ if find_user.present?
         filename: "Pete_Pedro-with_donkey-horizontal.png",
         content_type: "image/png"
       },
+      scraper_logo_info: {
+        io: File.open(Rails.root.join(LOGO_PATH, "Pete_Pedro-with_donkey-horizontal.png")),
+        filename: "Pete_Pedro-with_donkey-horizontal.png",
+        content_type: "image/png"
+      },
       categorization_info: {
         category_id: Category.find_by(name: "Grooming/Hygiene").id
       }
@@ -105,7 +110,7 @@ if find_user.present?
 
       if find_brand.logo.blank?
         create_brand.logo.attach(brand_data_hash[:logo_info])
-        # create_scraper_brand.logo.attach(brand_data_hash[:logo_info])
+        create_scraper_brand.logo.attach(brand_data_hash[:scraper_logo_info])
         puts "\tLogo successfully attached! [#{brand_data_hash[:logo_info][:filename]} -> #{brand_data_hash[:brand_info][:brand_identifier]}]\n"
       else
         puts "\tLogo already attached."

@@ -42,6 +42,8 @@ class PeteAndPedroProduct < ApplicationRecord
   extend Pagy::Search
   include Discard::Model
 
+  belongs_to :scraper_brand
+
   jsonb_accessor(:fragrance_attributes,
     top_notes: [:string],
     middle_notes: [:string],
