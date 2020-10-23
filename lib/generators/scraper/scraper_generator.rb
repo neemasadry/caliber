@@ -34,6 +34,10 @@ class ScraperGenerator < Rails::Generators::NamedBase
     template "product_transfer.template", "db/seeds/scrapers/#{brand_identifier}/#{brand_identifier}_product_transfer.rb"
   end
 
+  def add_directory_to_gitignore
+    inject_into_file ".gitignore", "/db/seeds/scrapers/#{brand_identifier}/files/*", :before => /^end/
+  end
+
 =begin
   def create_brands_template
     template "brands.template", "db/seeds/scrapers/brands/#{brand_identifier}.rb"

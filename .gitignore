@@ -55,3 +55,4 @@ dump.rdb
 
 # Ignore db/seeds/scrapers/files upload
 /db/seeds/scrapers/files/*
+/db/seeds/scrapers/peteandpedro/files/*
