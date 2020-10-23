@@ -48,4 +48,14 @@ if create_brand.save! && Brand.find_by(brand_identifier: data_hash[:brand_info][
 end
 
 
+create_brand = ScraperBrand.new(data_hash[:brand_info])
+
+if create_brand.save! && ScraperBrand.find_by(brand_identifier: data_hash[:brand_info][:brand_identifier]).brand_category_items.build(data_hash[:categorization_info]).save!
+
+  puts "#{data_hash[:brand_info][:name]} created!"
+
+  if create_brand.logo.attach(data_hash[:logo_info])
+    puts "\tLogo successfully attached! [#{data_hash[:logo_info][:filename]} -> #{data_hash[:brand_info][:brand_identifier]}]\n"
+  end
+end
 

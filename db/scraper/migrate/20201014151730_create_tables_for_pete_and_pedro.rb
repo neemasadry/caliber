@@ -8,10 +8,10 @@ class CreateTablesForPeteAndPedro < ActiveRecord::Migration[6.0]
       t.jsonb :link_attributes, null: false, default: {}
 
       # References
-      t.string :brand_identifier, null: false
-      t.string :body_part_name, null: true
-      t.string :category_name, null: true
-      t.string :subcategory_name, null: true
+      t.references :scraper_brand, null: false, foreign_key: true
+      t.string :body_part, null: true
+      t.string :category, null: true
+      t.string :subcategory, null: true
 
       t.timestamps
     end
@@ -19,16 +19,32 @@ class CreateTablesForPeteAndPedro < ActiveRecord::Migration[6.0]
 
     create_table :pete_and_pedro_products do |t|
 
-      t.string :product_name, null: false
-      t.string :product_url, null: false
+      t.string  :name, null: false, limit: 200
+      t.text    :description, null: false, limit: 3000
+      t.decimal :retail_price, null: false, precision: 10, scale: 2
+      t.integer :gender, null: false
+      t.string  :type_of, null: false, limit: 50
+      t.text    :product_url, null: true, limit: 5000
 
-      t.jsonb :product_attributes, null: false, default: {}
+      # Attributes
+      t.jsonb   :fragrance_attributes, null: false, default: {}
+      t.jsonb   :clothing_attributes, null: false, default: {}
+      t.jsonb   :cosmetic_attributes, null: false, default: {}
+      t.jsonb   :product_attributes, null: false, default: {}
 
       # References
-      t.string :brand_identifier, null: false
-      t.string :body_part_name, null: true
-      t.string :category_name, null: true
-      t.string :subcategory_name, null: true
+      t.string :username, null: false
+      t.string :account_name, null: false
+      t.references :scraper_brand, null: false, foreign_key: true
+      t.string :body_part, null: true
+      t.string :category, null: true
+      t.string :subcategory, null: true
+
+      # Slug for FriendlyID
+      t.string :slug, index: { unique: true }
+
+      # Discarded gem
+      t.datetime :discarded_at, index: true
 
       t.timestamps
     end

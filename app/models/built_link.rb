@@ -46,5 +46,6 @@ class BuiltLink < ApplicationRecord
   )
 
   validates :product_name, presence: true, length: { maximum: 200 }
-  validates :product_url, presence: true, uniqueness: { scope: :brand_id }, length: {minimum: 5, maximum: 10000}
+  validates :product_url, presence: true, uniqueness: { scope: :brand_id }, length: { minimum: 5, maximum: 10000 }
+
 end

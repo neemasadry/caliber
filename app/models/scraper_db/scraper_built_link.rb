@@ -3,15 +3,23 @@
 # Table name: scraper_built_links
 #
 #  id               :bigint           not null, primary key
-#  body_part_name   :string
-#  brand_identifier :string           not null
-#  category_name    :string
+#  body_part        :string
+#  category         :string
 #  link_attributes  :jsonb            not null
 #  product_name     :string           not null
 #  product_url      :string           not null
-#  subcategory_name :string
+#  subcategory      :string
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
+#  scraper_brand_id :bigint           not null
+#
+# Indexes
+#
+#  index_scraper_built_links_on_scraper_brand_id  (scraper_brand_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (scraper_brand_id => scraper_brands.id)
 #
 class ScraperBuiltLink < ApplicationRecord
 
@@ -34,6 +42,7 @@ class ScraperBuiltLink < ApplicationRecord
     ninth: [:string],
   )
 
-  validates :product_name, presence: true, uniqueness: { scope: :brand_identifier }, length: { maximum: 200 }
-  validates :product_url, presence: true, uniqueness: { scope: :brand_identifier }, length: {minimum: 5, maximum: 10000}
+  validates :product_name, presence: true, length: { maximum: 200 }
+  validates :product_url, presence: true, uniqueness: { scope: :scraper_brand_id }, length: { minimum: 5, maximum: 10000 }
+
 end

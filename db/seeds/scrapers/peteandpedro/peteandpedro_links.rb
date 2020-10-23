@@ -5,15 +5,20 @@ product_agent               = Mechanize.new
 product_agent.history_added = Proc.new { sleep 0.5 }
 
 # Set constants
-BRAND_DOMAIN     = "https://peteandpedro.com/"
-BRAND_IDENTIFIER = "peteandpedro"
-BRAND_NAME       = "Pete & Pedro"
-BRAND_OBJECT     = Brand.find_by(brand_identifier: BRAND_IDENTIFIER)
-BRAND_REFERENCE  = BRAND_OBJECT.id
-COLLECTIONS      = "/collections/"
+BRAND_DOMAIN             = "https://peteandpedro.com"
+BRAND_IDENTIFIER         = "peteandpedro"
+BRAND_NAME               = "Pete & Pedro"
+BRAND_OBJECT             = Brand.find_by(brand_identifier: BRAND_IDENTIFIER)
+BRAND_REFERENCE          = BRAND_OBJECT.id
+COLLECTIONS              = "/collections/"
+SCRAPER_BRAND_OBJECT     = ScraperBrand.find_by(brand_identifier: BRAND_IDENTIFIER)
+SCRAPER_BRAND_REFERENCE  = SCRAPER_BRAND_OBJECT.id
 
 
 presence_of_links = BuiltLink.all.where(brand_id: BRAND_REFERENCE)
+presence_of_scraper_links = ScraperBuiltLink.all.where(scraper_brand_id: BRAND_REFERENCE)
+presence_of_peteandpedro_links = PeteAndPedroBuiltLink.all.where(scraper_brand_id: BRAND_REFERENCE)
+
 size_link_present = presence_of_links.size
 
 collections = {
@@ -27,12 +32,20 @@ collections = {
   "lifestyle":    { body_part: BodyPart.find_by(name: "N/A"), category: Category.find_by(name: "Shaving"), subcategory: Subcategory.find_by(name: "Other") },
 }
 
+
 puts "----------------------------------------------------------------------------------------------------"
+
 if size_link_present >= 1
   puts "\t#{size_link_present} links present."
   presence_of_links.delete_all
+  presence_of_scraper_links.delete_all
+  presence_of_peteandpedro_links.delete_all
+
   size_link_present = presence_of_links.size
-  if size_link_present == 0
+  size_scraper_links_present = presence_of_scraper_links.delete_all
+  size_peteandpedro_links_present = presence_of_peteandpedro_links.delete_all
+
+  if size_link_present == 0 && size_scraper_links_present == 0 && size_peteandpedro_links_present == 0
     puts "\tAll links for #{BRAND_OBJECT.name} have been destroyed."
   else
     puts "\tError: Links have not been deleted!"
@@ -40,6 +53,7 @@ if size_link_present >= 1
 else
   puts "\tNo presence of links for #{BRAND_OBJECT.name}"
 end
+
 puts "----------------------------------------------------------------------------------------------------\n\n"
 
 
@@ -51,11 +65,16 @@ collections.each do |collection_key, collection_values_hash|
   counter       = 1
 
   product_links.each do |product_link|
-    full_product_path = BRAND_DOMAIN + product_link.href
-    product_entry = BuiltLink.find_by(product_url: full_product_path)
+    full_product_path           = BRAND_DOMAIN + product_link.href
+
+    product_entry               = BuiltLink.find_by(product_url: full_product_path)
+    scraper_product_entry       = ScraperBuiltLink.find_by(product_url: full_product_path)
+    peteandpedro_product_entry  = PeteAndPedroBuiltLink.find_by(product_url: full_product_path)
 
     next if full_product_path.include?("set") || full_product_path.include?("pack") || full_product_path.include?("kit")
     next if full_product_path.include?("https://peteandpedro.com/https://peteandpedro.com")
+    next if full_product_path.include?("https://peteandpedro.comhttps://peteandpedro.com")
+    next if full_product_path.include?("https://peteandpedro.com/collections/beards/products/copy-of-beard-oil")
     next if full_product_path.include?("trifecta") || full_product_path.include?("combo")
 
     product_page_agent = product_agent.get(full_product_path)
@@ -63,7 +82,6 @@ collections.each do |collection_key, collection_values_hash|
 
     if !product_entry.present?
       puts full_product_path
-
       BuiltLink.create(
         product_name: product_name,
         product_url: full_product_path,
@@ -72,18 +90,34 @@ collections.each do |collection_key, collection_values_hash|
         category_id: collection_values_hash[:category].id,
         subcategory_id: collection_values_hash[:subcategory].id
       )
+      counter += 1
+      total_counter += 1
+    else
+      next
+    end
 
+    if !scraper_product_entry.present?
       ScraperBuiltLink.create(
         product_name: product_name,
         product_url: full_product_path,
-        brand_id: BRAND_REFERENCE,
-        body_part_id: collection_values_hash[:body_part].id,
-        category_id: collection_values_hash[:category].id,
-        subcategory_id: collection_values_hash[:subcategory].id
+        scraper_brand_id: SCRAPER_BRAND_REFERENCE,
+        body_part: collection_values_hash[:body_part].name,
+        category: collection_values_hash[:category].name,
+        subcategory: collection_values_hash[:subcategory].name
       )
+    else
+      next
+    end
 
-      counter += 1
-      total_counter += 1
+    if !peteandpedro_product_entry.present?
+      PeteAndPedroBuiltLink.create(
+        product_name: product_name,
+        product_url: full_product_path,
+        scraper_brand_id: SCRAPER_BRAND_REFERENCE,
+        body_part: collection_values_hash[:body_part].name,
+        category: collection_values_hash[:category].name,
+        subcategory: collection_values_hash[:subcategory].name
+      )
     else
       next
     end

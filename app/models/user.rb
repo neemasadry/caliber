@@ -64,6 +64,9 @@
 #
 
 class User < ApplicationRecord
+
+  # connects_to database: { writing: :primary, reading: :primary }
+
   extend FriendlyId
   extend Pagy::Search
   include ActionText::Attachable

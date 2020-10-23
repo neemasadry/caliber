@@ -8,10 +8,10 @@ class CreateScraperBuiltLinks < ActiveRecord::Migration[6.0]
       t.jsonb :link_attributes, null: false, default: {}
 
       # References
-      t.string :brand_identifier, null: false
-      t.string :body_part_name, null: true
-      t.string :category_name, null: true
-      t.string :subcategory_name, null: true
+      t.references :scraper_brand, null: false, foreign_key: true
+      t.string :body_part, null: true
+      t.string :category, null: true
+      t.string :subcategory, null: true
 
       t.timestamps
     end

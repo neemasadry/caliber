@@ -19,36 +19,91 @@ ActiveRecord::Schema.define(version: 2020_10_14_151730) do
     t.string "product_name", null: false
     t.string "product_url", null: false
     t.jsonb "link_attributes", default: {}, null: false
-    t.string "brand_identifier", null: false
-    t.string "body_part_name"
-    t.string "category_name"
-    t.string "subcategory_name"
+    t.bigint "scraper_brand_id", null: false
+    t.string "body_part"
+    t.string "category"
+    t.string "subcategory"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["scraper_brand_id"], name: "index_pete_and_pedro_built_links_on_scraper_brand_id"
   end
 
   create_table "pete_and_pedro_products", force: :cascade do |t|
-    t.string "product_name", null: false
-    t.string "product_url", null: false
+    t.string "name", limit: 200, null: false
+    t.text "description", null: false
+    t.decimal "retail_price", precision: 10, scale: 2, null: false
+    t.integer "gender", null: false
+    t.string "type_of", limit: 50, null: false
+    t.text "product_url"
+    t.jsonb "fragrance_attributes", default: {}, null: false
+    t.jsonb "clothing_attributes", default: {}, null: false
+    t.jsonb "cosmetic_attributes", default: {}, null: false
     t.jsonb "product_attributes", default: {}, null: false
-    t.string "brand_identifier", null: false
-    t.string "body_part_name"
-    t.string "category_name"
-    t.string "subcategory_name"
+    t.string "username", null: false
+    t.string "account_name", null: false
+    t.bigint "scraper_brand_id", null: false
+    t.string "body_part"
+    t.string "category"
+    t.string "subcategory"
+    t.string "slug"
+    t.datetime "discarded_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["discarded_at"], name: "index_pete_and_pedro_products_on_discarded_at"
+    t.index ["scraper_brand_id"], name: "index_pete_and_pedro_products_on_scraper_brand_id"
+    t.index ["slug"], name: "index_pete_and_pedro_products_on_slug", unique: true
+  end
+
+  create_table "scraper_brands", force: :cascade do |t|
+    t.string "user_id", limit: 150, null: false
+    t.string "account_id", limit: 150, null: false
+    t.string "name", limit: 150, null: false
+    t.string "brand_identifier", limit: 60, null: false
+    t.integer "price_range", null: false
+    t.date "founding_date", null: false
+    t.string "mission", limit: 125, null: false
+    t.text "about", null: false
+    t.text "story", null: false
+    t.boolean "claimed", default: false, null: false
+    t.string "email", limit: 100, null: false
+    t.string "phone", limit: 20
+    t.string "address1", limit: 100, null: false
+    t.string "address2", limit: 100
+    t.string "city", limit: 100, null: false
+    t.string "state_code", limit: 5, null: false
+    t.string "country_code", limit: 5, null: false
+    t.string "zipcode", limit: 15, null: false
+    t.text "homepage_link"
+    t.text "instagram_link"
+    t.text "youtube_link"
+    t.text "facebook_link"
+    t.text "twitter_link"
+    t.text "snapchat_link"
+    t.text "tiktok_link"
+    t.text "pinterest_link"
+    t.string "slug"
+    t.datetime "discarded_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["account_id"], name: "index_scraper_brands_on_account_id"
+    t.index ["brand_identifier"], name: "index_scraper_brands_on_brand_identifier", unique: true
+    t.index ["discarded_at"], name: "index_scraper_brands_on_discarded_at"
+    t.index ["name"], name: "index_scraper_brands_on_name"
+    t.index ["slug"], name: "index_scraper_brands_on_slug", unique: true
+    t.index ["user_id"], name: "index_scraper_brands_on_user_id"
   end
 
   create_table "scraper_built_links", force: :cascade do |t|
     t.string "product_name", null: false
     t.string "product_url", null: false
     t.jsonb "link_attributes", default: {}, null: false
-    t.string "brand_identifier", null: false
-    t.string "body_part_name"
-    t.string "category_name"
-    t.string "subcategory_name"
+    t.bigint "scraper_brand_id", null: false
+    t.string "body_part"
+    t.string "category"
+    t.string "subcategory"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["scraper_brand_id"], name: "index_scraper_built_links_on_scraper_brand_id"
   end
 
   create_table "scraper_products", force: :cascade do |t|
@@ -63,22 +118,18 @@ ActiveRecord::Schema.define(version: 2020_10_14_151730) do
     t.jsonb "cosmetic_attributes", default: {}, null: false
     t.string "username", null: false
     t.string "account_name", null: false
-    t.string "brand_identifier", null: false
+    t.bigint "scraper_brand_id", null: false
     t.string "slug"
     t.datetime "discarded_at"
-    t.integer "cached_votes_total", default: 0
-    t.integer "cached_votes_score", default: 0
-    t.integer "cached_votes_up", default: 0
-    t.integer "cached_votes_down", default: 0
-    t.integer "cached_weighted_score", default: 0
-    t.integer "cached_weighted_total", default: 0
-    t.float "cached_weighted_average", default: 0.0
-    t.text "favoritable_score"
-    t.text "favoritable_total"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["discarded_at"], name: "index_scraper_products_on_discarded_at"
+    t.index ["scraper_brand_id"], name: "index_scraper_products_on_scraper_brand_id"
     t.index ["slug"], name: "index_scraper_products_on_slug", unique: true
   end
 
+  add_foreign_key "pete_and_pedro_built_links", "scraper_brands"
+  add_foreign_key "pete_and_pedro_products", "scraper_brands"
+  add_foreign_key "scraper_built_links", "scraper_brands"
+  add_foreign_key "scraper_products", "scraper_brands"
 end

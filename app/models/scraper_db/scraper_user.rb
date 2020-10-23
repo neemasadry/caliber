@@ -1,3 +1,0 @@
-class ScraperUser < ApplicationRecord
-
-end

@@ -1,11 +1,15 @@
 # Original timestamp: 20201015154821
-class CreateScraperBrand < ActiveRecord::Migration[6.0]
+class CreateScraperBrands < ActiveRecord::Migration[6.0]
   def change
     create_table :scraper_brands do |t|
-      t.references :scraper_user, null: false, foreign_key: true
-      t.references :scraper_account, null: false, foreign_key: true
+      # t.references :scraper_user, null: false, foreign_key: true
+      # t.references :scraper_account, null: false, foreign_key: true
       # t.references :category, null: false, index: true
       # t.references :subcategory, null: true, index: true
+
+      # User & Account info
+      t.string :user_id, null: false, limit: 150, index: true
+      t.string :account_id, null: false, limit: 150, index: true
 
       # Company info
       t.string :name, null: false, limit: 150, index: true
@@ -37,6 +41,12 @@ class CreateScraperBrand < ActiveRecord::Migration[6.0]
       t.text :snapchat_link, null: true, limit: 500
       t.text :tiktok_link, null: true, limit: 500
       t.text :pinterest_link, null: true, limit: 500
+
+      # Slug for FriendlyID
+      t.string :slug, index: { unique: true }
+
+      # Discarded gem
+      t.datetime :discarded_at, index: true
 
       t.timestamps
     end

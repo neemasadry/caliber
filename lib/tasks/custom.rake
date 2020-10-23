@@ -14,6 +14,17 @@ namespace :db do
       Rake::Task["db:drop"].invoke
       Rake::Task["db:create"].invoke
       Rake::Task["db:migrate"].invoke
+
+      partials_path_array = [
+        Rails.root.join('db', 'seeds', 'seed_partials', 'categories.rb'),
+        Rails.root.join('db', 'seeds', 'scrapers', 'peteandpedro', 'peteandpedro_brand.rb'),
+        Rails.root.join('db', 'seeds', 'scrapers', 'peteandpedro', 'peteandpedro_links.rb'),
+        Rails.root.join('db', 'seeds', 'scrapers', 'peteandpedro', 'peteandpedro_products.rb'),
+      ]
+
+      partials_path_array.each do |partial_path|
+        load(partial_path) if File.exist?(partial_path)
+      end
     end
     ### END DROP, CREATE, MIGRATE DATABASE ###
 

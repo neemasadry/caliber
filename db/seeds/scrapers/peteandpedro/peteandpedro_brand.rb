@@ -23,11 +23,19 @@ user_data_hash = {
   }
 }
 
-create_user = User.create(user_data_hash[:user_info])
+# Create and find users
+create_user = User.create!(user_data_hash[:user_info])
 find_user = User.find_by(username: create_user.username)
+# create_scraper_user = ScraperUser.create(user_data_hash[:user_info])
+# find_scraper_user = ScraperUser.find_by(username: create_scraper_user.username)
 
+# Create and find accounts
 create_account = create_user.accounts.build(name: "Pete & Pedro", owner_id: find_user.id, personal: false).save
 find_account = Account.find_by(owner_id: find_user.id)
+# create_scraper_account = create_scraper_user.accounts.build(name: "Pete & Pedro", owner_id: find_user.id, personal: false).save
+# find_scraper_account = ScraperAccount.find_by(owner_id: find_scraper_user.id)
+
+
 
 if find_user.avatar.blank?
   create_user.avatar.attach(user_data_hash[:avatar_info])
@@ -42,8 +50,8 @@ if find_user.present?
 
     brand_data_hash = {
       brand_info: {
-        user_id: User.find_by(username: "alpham").id,
-        account_id: Account.find_by(name: "Pete & Pedro").id,
+        user_id: find_user.id,
+        account_id: find_account.id,
         name: "Pete & Pedro",
         brand_identifier: "peteandpedro",
         # category_id: Category.find_by(name: "Grooming/Hygiene").id,
@@ -78,8 +86,18 @@ if find_user.present?
       }
     }
 
+    # Create Brand
     create_brand = Brand.create(brand_data_hash[:brand_info])
+
+    scraper_brand_data_hash = brand_data_hash
+    scraper_brand_data_hash[:brand_info][:user_id] = "alpham"
+    scraper_brand_data_hash[:brand_info][:account_id] = "Pete & Pedro"
+
+    create_scraper_brand = ScraperBrand.create!(scraper_brand_data_hash[:brand_info])
+
+    # Find Brand
     find_brand = Brand.find_by(brand_identifier: create_brand.brand_identifier)
+    find_scraper_brand = ScraperBrand.find_by(brand_identifier: create_brand.brand_identifier)
 
     if find_brand.present? && find_brand.brand_category_items.build(brand_data_hash[:categorization_info]).save
 
@@ -87,6 +105,7 @@ if find_user.present?
 
       if find_brand.logo.blank?
         create_brand.logo.attach(brand_data_hash[:logo_info])
+        # create_scraper_brand.logo.attach(brand_data_hash[:logo_info])
         puts "\tLogo successfully attached! [#{brand_data_hash[:logo_info][:filename]} -> #{brand_data_hash[:brand_info][:brand_identifier]}]\n"
       else
         puts "\tLogo already attached."
