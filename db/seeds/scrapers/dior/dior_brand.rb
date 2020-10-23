@@ -1,0 +1,118 @@
+AVATAR_PATH = "db/seeds/scrapers/dior/files/avatars/"
+LOGO_PATH = "db/seeds/scrapers/dior/files/logos/"
+
+user_data_hash = {
+  user_info: {
+    email: "",
+    password: "password",
+    first_name: "",
+    last_name: "",
+    username: "",
+    gender: "",
+    country_code: "",
+    time_zone: "",
+    date_of_birth: "",
+    admin: false,
+    moderator: false,
+    terms_of_service: true
+  },
+  avatar_info: {
+    io: File.open(Rails.root.join(AVATAR_PATH, "...")),
+    filename: "...",
+    content_type: "image/ png jpg"
+  }
+}
+
+
+create_user = User.create(user_data_hash[:user_info])
+find_user = User.find_by(username: create_user.username)
+
+create_account = create_user.accounts.build(name: Dior, owner_id: find_user.id, personal: false).save
+find_account = Account.find_by(owner_id: find_user.id)
+
+if find_user.avatar.blank?
+  create_user.avatar.attach(user_data_hash[:avatar_info])
+  puts "Avatar attached successfully for #{user_data_hash[:user_info][:username]}!"
+else
+  puts "Avatar already attached for #{user_data_hash[:user_info][:username]}."
+end
+
+
+if find_user.present?
+
+  if find_account.present?
+
+    brand_data_hash = {
+      brand_info: {
+        user_id: User.find_by(username: "...").id,
+        account_id: Account.find_by(name: "Dior").id,
+        name: "Dior",
+        brand_identifier: "dior",
+        founding_date: "...",
+        about: Faker::Lorem.paragraphs(4..7).join(" "),
+        price_range: 2,
+        homepage_link: "https://www.dior.com/en_us",
+        email: "...",
+        story: "",
+        mission: "",
+        phone: "",
+        address1: "",
+        address2: "",
+        city: "",
+        state_code: "",
+        country_code: "",
+        zipcode: "",
+        instagram_link: "https://www.instagram.com/.../",
+        youtube_link: "https://www.youtube.com/user/...",
+        facebook_link: "https://www.facebook.com/.../",
+        twitter_link: "https://twitter.com/.../",
+        snapchat_link: "https://www.snapchat.com/add/...",
+        tiktok_link: "https://www.tiktok.com/@...",
+      },
+      logo_info: {
+        io: File.open(Rails.root.join(logo_path, "...")),
+        filename: "...",
+        content_type: "image/png" OR "image/jpg"
+      },
+      scraper_logo_info: {
+        io: File.open(Rails.root.join(LOGO_PATH, "...")),
+        filename: "...",
+        content_type: "image/png" OR "image/jpg"
+      },
+      categorization_info: {
+        category_id: Category.find_by(name: "...").id
+      }
+    }
+
+    create_brand = Brand.create(brand_data_hash[:brand_info])
+
+    scraper_brand_data_hash = brand_data_hash
+    scraper_brand_data_hash[:brand_info][:user_id] = "mariachiuri"
+    scraper_brand_data_hash[:brand_info][:account_id] = "Dior"
+
+    create_scraper_brand = ScraperBrand.create(scraper_brand_data_hash[:brand_info])
+
+    # Find Brand
+    find_brand = Brand.find_by(brand_identifier: create_brand.brand_identifier)
+    find_scraper_brand = ScraperBrand.find_by(brand_identifier: create_brand.brand_identifier)
+
+    if find_brand.present? && find_brand.brand_category_items.build(brand_data_hash[:categorization_info]).save
+
+      puts "Brand: #{brand_data_hash[:brand_info][:name]} created!"
+
+      if find_brand.logo.blank?
+        create_brand.logo.attach(brand_data_hash[:logo_info]) # unless find_brand.logo.attached?
+        puts "\tLogo successfully attached! [#{brand_data_hash[:logo_info][:filename]} -> #{brand_data_hash[:brand_info][:brand_identifier]}]\n"
+      else
+        puts "\tLogo already attached."
+      end # create_brand.logo.attach
+
+    end # create_brand.save! && ...
+
+  else
+    puts "Error: Account not created or present in DB!\n"
+  end # create_account.save!
+
+else
+  puts "Error: User not created or present in DB!\n"
+end # create_user.save!

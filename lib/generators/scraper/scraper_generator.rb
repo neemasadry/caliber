@@ -25,6 +25,7 @@ class ScraperGenerator < Rails::Generators::NamedBase
     empty_directory "db/seeds/scrapers/#{brand_identifier}"
     empty_directory "db/seeds/scrapers/#{brand_identifier}/files"
     empty_directory "db/seeds/scrapers/#{brand_identifier}/files/logos"
+    empty_directory "db/seeds/scrapers/#{brand_identifier}/files/avatars"
   end
 
   def create_files_from_templates
@@ -35,7 +36,12 @@ class ScraperGenerator < Rails::Generators::NamedBase
   end
 
   def add_directory_to_gitignore
-    inject_into_file ".gitignore", "/db/seeds/scrapers/#{brand_identifier}/files/*", :before => /^end/
+    # inject_into_file ".gitignore", "/db/seeds/scrapers/#{brand_identifier}/files/*", :before => /^end/
+    append_file '.gitignore' do
+        <<-EOF
+/db/seeds/scrapers/#{brand_identifier}/files/*
+         EOF
+      end
   end
 
 =begin
