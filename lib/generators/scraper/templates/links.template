@@ -15,18 +15,18 @@ SCRAPER_BRAND_REFERENCE = SCRAPER_BRAND_OBJECT.id
 
 presence_of_links              = BuiltLink.all.where(brand_id: BRAND_REFERENCE)
 presence_of_scraper_links      = ScraperBuiltLink.all.where(scraper_brand_id: BRAND_REFERENCE)
-presence_of_<%= brand_identifier %>_links = PeteAndPedroBuiltLink.all.where(scraper_brand_id: BRAND_REFERENCE)
+presence_of_<%= brand_identifier %>_links = <%= brand_model_name %>BuiltLink.all.where(scraper_brand_id: BRAND_REFERENCE)
 
 size_of_built_links         = presence_of_links.size
 size_of_scraper_built_links = presence_of_scraper_links.size
-size_of_<%= brand_identifier %>_built_links = presence_of_peteandpedro_links.size
+size_of_<%= brand_identifier %>_built_links = presence_of_<%= brand_identifier %>_links.size
 
 puts "----------------------------------------------------------------------------------------------------"
 
-if size_of_built_links >= 1 || size_of_scraper_built_links >= 1 || size_of_peteandpedro_built_links >= 1
+if size_of_built_links >= 1 || size_of_scraper_built_links >= 1 || size_of_<%= brand_identifier %>_built_links >= 1
   puts "BuiltLink: \t#{size_of_built_links} links present."
   puts "ScraperBuiltLink: \t#{size_of_scraper_built_links} links present."
-  puts "<%= brand_model_name.to_s %>BuiltLink: \t#{size_of_peteandpedro_built_links} links present."
+  puts "<%= brand_model_name.to_s %>BuiltLink: \t#{size_of_<%= brand_identifier %>_built_links} links present."
 
   presence_of_links.delete_all
   presence_of_scraper_links.delete_all
@@ -34,7 +34,7 @@ if size_of_built_links >= 1 || size_of_scraper_built_links >= 1 || size_of_petea
 
   size_of_built_links = presence_of_links.size
   size_of_scraper_built_links = presence_of_scraper_links
-  size_of_<%= brand_identifier %>_built_links = presence_of_peteandpedro_links.size
+  size_of_<%= brand_identifier %>_built_links = presence_of_<%= brand_identifier %>_links.size
 
   if size_of_built_links == 0 && size_of_scraper_built_links && size_of_<%= brand_identifier %>_built_links
     puts "\tAll links for #{BRAND_OBJECT.name} have been destroyed."

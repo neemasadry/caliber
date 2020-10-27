@@ -1,3 +1,22 @@
+# == Schema Information
+#
+# Table name: dior_built_links
+#
+#  id               :bigint           not null, primary key
+#  body_part        :string
+#  category         :string
+#  link_attributes  :jsonb            not null
+#  product_name     :string           not null
+#  product_url      :string           not null
+#  subcategory      :string
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  scraper_brand_id :bigint           not null
+#
+# Indexes
+#
+#  index_dior_built_links_on_scraper_brand_id  (scraper_brand_id)
+#
 class DiorBuiltLink < ApplicationRecord
 
   connects_to database: { writing: :scraper, reading: :scraper }

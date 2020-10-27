@@ -10,10 +10,43 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_14_151730) do
+ActiveRecord::Schema.define(version: 2020_10_23_185213) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "dior_built_links", force: :cascade do |t|
+    t.string "product_name", null: false
+    t.string "product_url", null: false
+    t.jsonb "link_attributes", default: {}, null: false
+    t.bigint "scraper_brand_id", null: false
+    t.string "body_part"
+    t.string "category"
+    t.string "subcategory"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["scraper_brand_id"], name: "index_dior_built_links_on_scraper_brand_id"
+  end
+
+  create_table "dior_products", force: :cascade do |t|
+    t.string "name", limit: 200, null: false
+    t.text "description", null: false
+    t.decimal "retail_price", precision: 10, scale: 2, null: false
+    t.integer "gender", null: false
+    t.string "type_of", limit: 50, null: false
+    t.text "product_url"
+    t.jsonb "fragrance_attributes", default: {}, null: false
+    t.jsonb "clothing_attributes", default: {}, null: false
+    t.jsonb "cosmetic_attributes", default: {}, null: false
+    t.jsonb "product_attributes", default: {}, null: false
+    t.bigint "scraper_brand_id", null: false
+    t.string "body_part"
+    t.string "category"
+    t.string "subcategory"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["scraper_brand_id"], name: "index_dior_products_on_scraper_brand_id"
+  end
 
   create_table "pete_and_pedro_built_links", force: :cascade do |t|
     t.string "product_name", null: false

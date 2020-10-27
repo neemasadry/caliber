@@ -1,3 +1,29 @@
+# == Schema Information
+#
+# Table name: dior_products
+#
+#  id                   :bigint           not null, primary key
+#  body_part            :string
+#  category             :string
+#  clothing_attributes  :jsonb            not null
+#  cosmetic_attributes  :jsonb            not null
+#  description          :text             not null
+#  fragrance_attributes :jsonb            not null
+#  gender               :integer          not null
+#  name                 :string(200)      not null
+#  product_attributes   :jsonb            not null
+#  product_url          :text
+#  retail_price         :decimal(10, 2)   not null
+#  subcategory          :string
+#  type_of              :string(50)       not null
+#  created_at           :datetime         not null
+#  updated_at           :datetime         not null
+#  scraper_brand_id     :bigint           not null
+#
+# Indexes
+#
+#  index_dior_products_on_scraper_brand_id  (scraper_brand_id)
+#
 class DiorProduct < ApplicationRecord
 
   connects_to database: { writing: :scraper, reading: :scraper }
