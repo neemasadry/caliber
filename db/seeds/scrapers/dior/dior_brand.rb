@@ -1,5 +1,4 @@
-AVATAR_PATH = "db/seeds/scrapers/dior/files/avatars/"
-LOGO_PATH = "db/seeds/scrapers/dior/files/logos/"
+require_relative 'shared/dior_vars.rb'
 
 user_data_hash = {
   user_info: {

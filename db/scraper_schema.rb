@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(version: 2020_10_23_185213) do
   create_table "dior_built_links", force: :cascade do |t|
     t.string "product_name", null: false
     t.string "product_url", null: false
+    t.integer "gender"
     t.jsonb "link_attributes", default: {}, null: false
     t.bigint "scraper_brand_id", null: false
     t.string "body_part"
@@ -51,6 +52,7 @@ ActiveRecord::Schema.define(version: 2020_10_23_185213) do
   create_table "pete_and_pedro_built_links", force: :cascade do |t|
     t.string "product_name", null: false
     t.string "product_url", null: false
+    t.integer "gender"
     t.jsonb "link_attributes", default: {}, null: false
     t.bigint "scraper_brand_id", null: false
     t.string "body_part"
@@ -129,6 +131,7 @@ ActiveRecord::Schema.define(version: 2020_10_23_185213) do
   create_table "scraper_built_links", force: :cascade do |t|
     t.string "product_name", null: false
     t.string "product_url", null: false
+    t.integer "gender"
     t.jsonb "link_attributes", default: {}, null: false
     t.bigint "scraper_brand_id", null: false
     t.string "body_part"

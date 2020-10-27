@@ -5,6 +5,7 @@
 #  id               :bigint           not null, primary key
 #  body_part        :string
 #  category         :string
+#  gender           :integer
 #  link_attributes  :jsonb            not null
 #  product_name     :string           not null
 #  product_url      :string           not null

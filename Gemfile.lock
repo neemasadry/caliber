@@ -1118,6 +1118,7 @@ GEM
       countries (~> 3.0)
       sort_alphabetical (~> 1.0)
     crass (1.0.6)
+    csv (3.1.7)
     datetime_picker_rails (0.0.7)
       momentjs-rails (>= 2.8.1)
     debug_inspector (0.0.3)
@@ -1515,6 +1516,7 @@ DEPENDENCIES
   capybara (>= 2.15)
   counter_culture (~> 2.0)
   country_select
+  csv
   devise (>= 4.7.1)
   devise-i18n (~> 1.9)
   devise_masquerade!

@@ -1,3 +1,5 @@
+require 'csv'
+
 # Initialize Mechanize
 agent                       = Mechanize.new
 agent.history_added         = Proc.new { sleep 0.5 }
@@ -10,9 +12,13 @@ BRAND_IDENTIFIER         = "peteandpedro"
 BRAND_NAME               = "Pete & Pedro"
 BRAND_OBJECT             = Brand.find_by(brand_identifier: BRAND_IDENTIFIER)
 BRAND_REFERENCE          = BRAND_OBJECT.id
+
 COLLECTIONS              = "/collections/"
 SCRAPER_BRAND_OBJECT     = ScraperBrand.find_by(brand_identifier: BRAND_IDENTIFIER)
 SCRAPER_BRAND_REFERENCE  = SCRAPER_BRAND_OBJECT.id
+
+CSV_PATH                 = "db/seeds/scrapers/peteandpedro/files/csvs/"
+current_timestamp        = Time.now.strftime("%Y%m%d%H") # Time format: YYYY MM DD HH (no spaces)
 
 presence_of_links              = BuiltLink.all.where(brand_id: BRAND_REFERENCE)
 presence_of_scraper_links      = ScraperBuiltLink.all.where(scraper_brand_id: BRAND_REFERENCE)
@@ -88,12 +94,13 @@ collections.each do |collection_key, collection_values_hash|
     if !product_entry.present?
       puts full_product_path
       BuiltLink.create(
-        product_name: product_name,
-        product_url: full_product_path,
-        brand_id: BRAND_REFERENCE,
-        body_part_id: collection_values_hash[:body_part].id,
-        category_id: collection_values_hash[:category].id,
-        subcategory_id: collection_values_hash[:subcategory].id
+        product_name:   product_name,
+        product_url:    full_product_path,
+        brand_id:       BRAND_REFERENCE,
+        body_part_id:   collection_values_hash[:body_part].id,
+        category_id:    collection_values_hash[:category].id,
+        subcategory_id: collection_values_hash[:subcategory].id,
+        gender:         1
       )
       counter += 1
       total_counter += 1
@@ -103,12 +110,13 @@ collections.each do |collection_key, collection_values_hash|
 
     if !scraper_product_entry.present?
       ScraperBuiltLink.create(
-        product_name: product_name,
-        product_url: full_product_path,
+        product_name:     product_name,
+        product_url:      full_product_path,
         scraper_brand_id: SCRAPER_BRAND_REFERENCE,
-        body_part: collection_values_hash[:body_part].name,
-        category: collection_values_hash[:category].name,
-        subcategory: collection_values_hash[:subcategory].name
+        body_part:        collection_values_hash[:body_part].name,
+        category:         collection_values_hash[:category].name,
+        subcategory:      collection_values_hash[:subcategory].name,
+        gender:           1
       )
     else
       next
@@ -116,12 +124,13 @@ collections.each do |collection_key, collection_values_hash|
 
     if !peteandpedro_product_entry.present?
       PeteAndPedroBuiltLink.create(
-        product_name: product_name,
-        product_url: full_product_path,
+        product_name:     product_name,
+        product_url:      full_product_path,
         scraper_brand_id: SCRAPER_BRAND_REFERENCE,
-        body_part: collection_values_hash[:body_part].name,
-        category: collection_values_hash[:category].name,
-        subcategory: collection_values_hash[:subcategory].name
+        body_part:        collection_values_hash[:body_part].name,
+        category:         collection_values_hash[:category].name,
+        subcategory:      collection_values_hash[:subcategory].name,
+        gender:           1
       )
     else
       next
@@ -139,3 +148,21 @@ end
 puts "\n----------------------------------------------------------------------------------------"
 puts "Built #{total_counter} product URLs under #{BRAND_NAME} [#{BRAND_DOMAIN}]"
 puts "----------------------------------------------------------------------------------------"
+
+
+# Export data to CSV for back-up
+csv_filename = "#{current_timestamp}_peteandpedro_links.csv"
+csv_file = Rails.root.join(CSV_PATH, csv_filename)
+peteandpedro_built_links = PeteAndPedroBuiltLink.all
+
+CSV.open(csv_file, "wb") do |csv|
+  csv << ["built_link_id", "product_name", "product_url", "scraper_brand_id", "body_part", "category", "subcategory", "gender"]
+
+  csv_write_counter = 0
+  peteandpedro_built_links.each do |link_obj|
+    csv << [link_obj.id, link_obj.product_name, link_obj.product_url, link_obj.scraper_brand_id, link_obj.body_part,  link_obj.category, link_obj.subcategory, link_obj.gender]
+    csv_write_counter += 1
+  end
+
+  puts "#{csv_write_counter} link objects saved in #{csv_filename}."
+end

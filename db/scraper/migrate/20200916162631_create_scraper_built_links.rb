@@ -4,6 +4,7 @@ class CreateScraperBuiltLinks < ActiveRecord::Migration[6.0]
 
       t.string :product_name, null: false
       t.string :product_url, null: false
+      t.integer :gender, null: true
 
       t.jsonb :link_attributes, null: false, default: {}
 

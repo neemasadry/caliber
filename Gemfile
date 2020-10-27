@@ -115,6 +115,7 @@ gem 'jsonb_accessor', '~> 1.1'
 gem 'mechanize'
 gem 'down'
 gem 'activestorage-validator'
+gem 'csv'
 
 # gem 'wicked', '~> 1.3', '>= 1.3.4'
 gem 'discard', '~> 1.2'

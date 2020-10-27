@@ -3,6 +3,7 @@
 # Table name: built_links
 #
 #  id              :bigint           not null, primary key
+#  gender          :integer
 #  link_attributes :jsonb            not null
 #  product_name    :string           not null
 #  product_url     :string           not null

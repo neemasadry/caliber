@@ -200,6 +200,7 @@ ActiveRecord::Schema.define(version: 2020_09_29_151753) do
   create_table "built_links", force: :cascade do |t|
     t.string "product_name", null: false
     t.string "product_url", null: false
+    t.integer "gender"
     t.jsonb "link_attributes", default: {}, null: false
     t.bigint "brand_id", null: false
     t.bigint "body_part_id"

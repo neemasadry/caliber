@@ -62,12 +62,12 @@ built_links.each do |built_link|
 
   product_image_data = []
   scraper_image_data = []
-  peteandpedro_image_data = []
+  <%= brand_identifier %>_image_data = []
 
   page.search("...").each do |img|
     product_image_datum = {}
     scraper_image_datum = {}
-    peteandpedro_image_datum = {}
+    <%= brand_identifier %>_image_datum = {}
 
     img_src = img['src'].gsub("//", "https://")
 
@@ -84,13 +84,13 @@ built_links.each do |built_link|
     scraper_image_datum[:filename]          = tempfile.original_filename
     scraper_image_datum[:content_type]      = tempfile.content_type
 
-    peteandpedro_image_datum[:io]           = File.open(tempfile_path_filename)
-    peteandpedro_image_datum[:filename]     = tempfile.original_filename
-    peteandpedro_image_datum[:content_type] = tempfile.content_type
+    <%= brand_identifier %>_image_datum[:io]           = File.open(tempfile_path_filename)
+    <%= brand_identifier %>_image_datum[:filename]     = tempfile.original_filename
+    <%= brand_identifier %>_image_datum[:content_type] = tempfile.content_type
 
     product_image_data      << product_image_datum
     scraper_image_data      << scraper_image_datum
-    peteandpedro_image_data << peteandpedro_image_datum
+    <%= brand_identifier %>_image_data << <%= brand_identifier %>_image_datum
 
   end # page.search("#ProductPhotoImg").each
 
@@ -131,7 +131,7 @@ built_links.each do |built_link|
     created_scraper_product.images.attach(img_hash)
   end
 
-  created_peteandpedro_product = PeteAndPedroProduct.create(
+  created_<%= brand_identifier %>_product = <%= brand_model_name %>.create(
     name:                p_name,
     description:         p_description,
     retail_price:        p_retail_price,
@@ -144,8 +144,8 @@ built_links.each do |built_link|
     scraper_brand_id:    SCRAPER_BRAND_REFERENCE
   )
 
-  peteandpedro_image_data.each do |img_hash|
-    created_peteandpedro_product.images.attach(img_hash)
+  <%= brand_identifier %>_image_data.each do |img_hash|
+    created_<%= brand_identifier %>_product.images.attach(img_hash)
   end
 
   ProductBodyPartItem.new(product_id: created_product.id, body_part_id: p_body_part).save

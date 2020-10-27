@@ -1,15 +1,6 @@
-BRAND_IDENTIFIER        = "dior"
-BRAND_NAME              = "Dior"
-BRAND_OBJECT            = Brand.find_by(brand_identifier: BRAND_IDENTIFIER)
-BRAND_REFERENCE         = BRAND_OBJECT.id
-SCRAPER_BRAND_OBJECT    = ScraperBrand.find_by(brand_identifier: BRAND_IDENTIFIER)
-SCRAPER_BRAND_REFERENCE = SCRAPER_BRAND_OBJECT.id
-FILES_PATH              = Rails.root.join('db', 'seeds', 'scrapers')
-current_timestamp       = Time.now.strftime("%Y%m%d%H") # Time format: YYYY MM DD HH (no spaces)
-
 # Initialize Mechanize agent
-agent               = Mechanize.new
-agent.history_added = Proc.new { sleep 0.5 }
+agent                   = Mechanize.new
+agent.history_added     = Proc.new { sleep 0.5 }
 
 # Variables
 subcounter              = 1
@@ -17,13 +8,13 @@ total_counter           = 1
 
 built_links             = BuiltLink.all.where(brand_id: BRAND_REFERENCE)
 
-product_entries              = Product.all.where(brand_id: BRAND_REFERENCE)
-scraper_product_entries      = ScraperProduct.all.where(scraper_brand_id: BRAND_REFERENCE)
-dior_product_entries = Dior.all.where(scraper_brand_id: BRAND_REFERENCE)
+product_entries         = Product.all.where(brand_id: BRAND_REFERENCE)
+scraper_product_entries = ScraperProduct.all.where(scraper_brand_id: BRAND_REFERENCE)
+dior_product_entries    = Dior.all.where(scraper_brand_id: BRAND_REFERENCE)
 
-size_of_product_entries              = product_entries.size
-size_of_scraper_product_entries      = scraper_product_entries.size
-size_of_dior_product_entries = dior_product_entries.size
+size_of_product_entries         = product_entries.size
+size_of_scraper_product_entries = scraper_product_entries.size
+size_of_dior_product_entries    = dior_product_entries.size
 
 
 
@@ -43,10 +34,10 @@ end
 built_links.each do |built_link|
   page            = agent.get(built_link.product_url)
 
-  p_name          = nil
-  p_brand         = nil
-  p_description   = nil
-  p_retail_price  = nil
+  p_name          = page.xpath("/html/body/div[1]/div[1]/main/div/div[1]/div[2]/div/div[2]/div[1]/h1/span[1]").text.strip
+  p_brand         = BRAND_REFERENCE
+  p_description   = page.xpath("/html/body/div[1]/div[1]/main/div/div[1]/div[2]/div/div[2]/div[3]/div[1]/div/div").text.strip
+  p_retail_price  = page.xpath("/html/body/div[1]/div[1]/main/div/div[1]/div[2]/div/div[2]/div[2]/div[2]/span[1]").text.strip
   p_gender        = nil
   p_type_of       = nil
   p_ingredients   = nil
@@ -56,18 +47,18 @@ built_links.each do |built_link|
   p_category      = built_link.category_id
   p_subcategory   = built_link.subcategory_id
 
-
-  tempfile_path = "#{FILES_PATH}/#{BRAND_IDENTIFIER}/files/#{current_timestamp}_#{BRAND_IDENTIFIER}_images"
+  tempfile_folder_name = "#{current_timestamp}_#{BRAND_IDENTIFIER}_images"
+  tempfile_path = FILES_PATH + "/" + tempfile_folder_name
   FileUtils.mkdir(tempfile_path) unless File.exists?(tempfile_path)
 
   product_image_data = []
   scraper_image_data = []
-  peteandpedro_image_data = []
+  dior_image_data    = []
 
   page.search("...").each do |img|
     product_image_datum = {}
     scraper_image_datum = {}
-    peteandpedro_image_datum = {}
+    dior_image_datum    = {}
 
     img_src = img['src'].gsub("//", "https://")
 
@@ -84,13 +75,13 @@ built_links.each do |built_link|
     scraper_image_datum[:filename]          = tempfile.original_filename
     scraper_image_datum[:content_type]      = tempfile.content_type
 
-    peteandpedro_image_datum[:io]           = File.open(tempfile_path_filename)
-    peteandpedro_image_datum[:filename]     = tempfile.original_filename
-    peteandpedro_image_datum[:content_type] = tempfile.content_type
+    dior_image_datum[:io]           = File.open(tempfile_path_filename)
+    dior_image_datum[:filename]     = tempfile.original_filename
+    dior_image_datum[:content_type] = tempfile.content_type
 
-    product_image_data      << product_image_datum
-    scraper_image_data      << scraper_image_datum
-    peteandpedro_image_data << peteandpedro_image_datum
+    product_image_data << product_image_datum
+    scraper_image_data << scraper_image_datum
+    dior_image_data    << dior_image_datum
 
   end # page.search("#ProductPhotoImg").each
 
@@ -131,7 +122,7 @@ built_links.each do |built_link|
     created_scraper_product.images.attach(img_hash)
   end
 
-  created_peteandpedro_product = PeteAndPedroProduct.create(
+  created_dior_product = PeteAndPedroProduct.create(
     name:                p_name,
     description:         p_description,
     retail_price:        p_retail_price,
@@ -144,8 +135,8 @@ built_links.each do |built_link|
     scraper_brand_id:    SCRAPER_BRAND_REFERENCE
   )
 
-  peteandpedro_image_data.each do |img_hash|
-    created_peteandpedro_product.images.attach(img_hash)
+  dior_image_data.each do |img_hash|
+    created_dior_product.images.attach(img_hash)
   end
 
   ProductBodyPartItem.new(product_id: created_product.id, body_part_id: p_body_part).save
