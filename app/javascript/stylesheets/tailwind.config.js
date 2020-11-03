@@ -2,12 +2,30 @@
 // https://github.com/tailwindcss/tailwindcss/blob/master/stubs/defaultConfig.stub.js
 
 module.exports = {
+  // Opt-in to TailwindCSS future changes
+  future: {
+    defaultLineHeights: true,
+    purgeLayersByDefault: true,
+    removeDeprecatedGapUtilities: true,
+    standardFontWeights: true,
+  },
+
   plugins: [
     // Uncomment the following if you'd like to use TailwindUI
     //require('@tailwindcss/ui')({
     //  layout: 'sidebar',
     //})
   ],
+
+  // Purge unused TailwindCSS styles
+  purge: {
+    enabled: true,
+    content: [
+      './**/*.html.erb',
+      './app/helpers/**/*.rb',
+      './app/javascript/**/*.js',
+    ],
+  },
 
   // All the default values will be compiled unless they are overridden below
   theme: {
