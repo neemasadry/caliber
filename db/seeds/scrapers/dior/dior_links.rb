@@ -88,11 +88,11 @@ end
 nav_categories = {
 
   "womens-fashion": {
-    bags: [ "handbags" ], # , "tote-bags", "mini-bags-belt-bags", "messengers-backpacks"
-    # "ready-to-wear": [ "jackets", "coats", "dresses", "skirts", "tops", "pants-shorts", "knitwear", "t-shirts", "denim", "lingerie" ],
+    # bags: [ "handbags", "tote-bags", "mini-bags-belt-bags", "messengers-backpacks" ],
+    # "ready-to-wear": [ "jackets", "coats", "dresses", "skirts", "tops", "pants-shorts", "knitwear", "t-shirts", "denim", "lingerie" ], #
     # shoes: [ "pumps", "sneakers", "mules", "espadrilles", "flat-shoes", "sandals", "boots" ], # change "slides" to "mules"
     # "fashion-jewelry": [ "earrings", "necklaces", "bracelets", "rings", "brooches" ],
-    # accessories: [ "sunglasses", "evening-bags", "wallets-small-accessories", "straps", "belts", "ponchos", "silk-scarves-mitzah", "scarves-stoles", "hats-gloves", "beach-accessories" ],
+    accessories: [ "wallets-small-accessories", "straps", "belts", "ponchos", "silk-scarves-mitzah", "scarves-stoles", "hats-gloves", "beach-accessories" ], # "sunglasses", "evening-bags",
     # "fine-jewelry": [ "rings", "earrings", "necklaces", "bracelets", "engagement-wedding-rings" ]
   },
 =begin
@@ -159,6 +159,7 @@ product_entries.each do |product_entry|
     #next if dior_links.find_by(product_name: product_name).present? || dior_links.find_by(product_url: product_page_link_full_path).present?
 
     if BuiltLink.exists?(product_url: product_page_link_full_path)
+      puts "Skipped: #{product_page_link_full_path}"
       next
     else
       BuiltLink.create(
@@ -222,5 +223,8 @@ CSV.open(csv_file, "wb") do |csv|
     csv_write_counter += 1
   end
 
-  puts "#{csv_write_counter} link objects saved in #{csv_filename}."
+  puts "Table: dior_built_links"
+  puts "------------------------------------------"
+  puts "#{dior_built_links.size} total links"
+  puts "\t#{csv_write_counter} link saved in #{csv_filename}."
 end
