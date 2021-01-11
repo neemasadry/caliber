@@ -4,22 +4,17 @@
 module.exports = {
   // Opt-in to TailwindCSS future changes
   future: {
-    defaultLineHeights: true,
-    purgeLayersByDefault: true,
-    removeDeprecatedGapUtilities: true,
-    standardFontWeights: true,
   },
 
   plugins: [
-    // Uncomment the following if you'd like to use TailwindUI
-    //require('@tailwindcss/ui')({
-    //  layout: 'sidebar',
-    //})
+    require('@tailwindcss/forms'),
+    require('@tailwindcss/typography'),
+    require('@tailwindcss/aspect-ratio')
   ],
 
   // Purge unused TailwindCSS styles
   purge: {
-    enabled: true,
+    enabled: ["production", "staging"].includes(process.env.NODE_ENV),
     content: [
       './**/*.html.erb',
       './app/helpers/**/*.rb',

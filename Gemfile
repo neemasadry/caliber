@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby "~> 2.7"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem "rails", "~> 6.0.0"
+gem "rails", "~> 6.1.0"
 # Use postgresql as the database for Active Record
 gem "pg"
 # Use Puma as the app server
@@ -12,7 +12,7 @@ gem "puma", "~> 5.0"
 # Use SCSS for stylesheets
 gem "sass-rails", "~> 6.0"
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
-gem "webpacker", "~> 5.1"
+gem "webpacker", github: "rails/webpacker"
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem "turbolinks", "~> 5"
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -64,7 +64,7 @@ gem "tzinfo-data", platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # Jumpstart dependencies
 gem "jumpstart", path: "lib/jumpstart"
 
-gem "acts_as_tenant", github: "ErwinM/acts_as_tenant"
+gem "acts_as_tenant"
 gem "administrate", github: "excid3/administrate", branch: "jumpstart" # '~> 0.10.0'
 gem "administrate-field-active_storage", "~> 0.3.0"
 gem "attr_encrypted", "~> 3.1"
@@ -82,7 +82,7 @@ gem "pagy", "~> 3.7"
 gem "pay", "~> 2.2.0"
 gem "pg_search", "~> 2.3"
 gem "receipts", "~> 1.0.0"
-gem "ruby-oembed", "~> 0.13.0", require: "oembed"
+gem "ruby-oembed", "~> 0.14.0", require: "oembed"
 gem "turbolinks_render", "~> 0.9.12"
 
 # We always want the latest versions of these gems, so no version numbers
@@ -105,11 +105,11 @@ gem 'faraday', '~> 1.0', '>= 1.0.1'
 gem 'measured-rails', '~> 2.5', '>= 2.5.2'
 gem 'acts_as_favoritor', github: 'jonhue/acts_as_favoritor' # , '~> 5.0'
 gem 'acts_as_votable', '~> 0.12.1'
-gem 'acts-as-taggable-on', '~> 6.0'
+gem 'acts-as-taggable-on', '~> 6.0' #, github: 'kvokka/acts-as-taggable-on'
 gem 'country_select'
 gem 'faker', '~> 1.6', '>= 1.6.6'
 gem 'searchkick', '~> 4.3'
-gem 'friendly_id', '~> 5.2.4'
+gem 'friendly_id', '~> 5.4.0'
 gem 'jsonb_accessor', '~> 1.1'
 # gem 'ancestry', '~> 2.1'
 gem 'mechanize'

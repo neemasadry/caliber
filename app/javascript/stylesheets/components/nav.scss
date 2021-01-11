@@ -1,5 +1,5 @@
 .nav-link {
-  @apply block no-underline text-primary-500 px-2 py-1 text-base;
+  @apply block no-underline text-primary-500 px-2 py-1 text-base whitespace-nowrap;
   line-height: 30px;
 
   &:hover,
@@ -20,12 +20,12 @@
 }
 
 /* Highlights unread notifications with background color */
-[data-target="notifications.notification"]:not([data-read-at]) {
+[data-notifications-target="notification"]:not([data-read-at]) {
   @apply bg-gray-100;
 }
 
 /* Highlights uninteracted notifications with blue dot */
-[data-target="notifications.notification"]:not([data-interacted-at]) {
+[data-notifications-target="notification"]:not([data-interacted-at]) {
   [uninteracted] {
     @apply block;
   }
