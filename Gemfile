@@ -12,9 +12,7 @@ gem "puma", "~> 5.0"
 # Use SCSS for stylesheets
 gem "sass-rails", "~> 6.0"
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
-gem "webpacker", github: "rails/webpacker"
-# Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
-gem "turbolinks", "~> 5"
+gem "webpacker", "~> 6.0.0.pre.2"
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem "jbuilder", "~> 2.5"
 # Use Redis adapter to run Action Cable in production
@@ -71,6 +69,7 @@ gem "attr_encrypted", "~> 3.1"
 gem "devise", ">= 4.7.1"
 gem "devise-i18n", "~> 1.9"
 gem "devise_masquerade", github: "excid3/devise_masquerade"
+gem "hotwire-rails", "~> 0.1.2"
 gem "image_processing", "~> 1.9", ">= 1.9.2"
 gem "inline_svg", "~> 1.6"
 gem "invisible_captcha", "~> 1.0"
@@ -83,7 +82,6 @@ gem "pay", "~> 2.2.0"
 gem "pg_search", "~> 2.3"
 gem "receipts", "~> 1.0.0"
 gem "ruby-oembed", "~> 0.14.0", require: "oembed"
-gem "turbolinks_render", "~> 0.9.12"
 
 # We always want the latest versions of these gems, so no version numbers
 gem "omniauth", github: "omniauth/omniauth"
@@ -105,7 +103,7 @@ gem 'faraday', '~> 1.0', '>= 1.0.1'
 gem 'measured-rails', '~> 2.5', '>= 2.5.2'
 gem 'acts_as_favoritor', github: 'jonhue/acts_as_favoritor' # , '~> 5.0'
 gem 'acts_as_votable', '~> 0.12.1'
-gem 'acts-as-taggable-on', '~> 6.0' #, github: 'kvokka/acts-as-taggable-on'
+gem 'acts-as-taggable-on', '~> 7.0' #, github: 'kvokka/acts-as-taggable-on'
 gem 'country_select'
 gem 'faker', '~> 1.6', '>= 1.6.6'
 gem 'searchkick', '~> 4.3'

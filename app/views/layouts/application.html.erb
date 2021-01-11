@@ -13,9 +13,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <%# All assets are defined in Webpacker app/javascripts now %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_packs_with_chunks_tag 'application', 'data-turbo-track': 'reload' %>
+    <%= stylesheet_packs_with_chunks_tag 'application', media: 'all', 'data-turbo-track': 'reload' %>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbo-track': 'reload' %>
 
     <%# Be sure to add your own custom favicons %>
     <%= render "shared/favicons" %>
@@ -28,11 +28,6 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat:500,700&display=swap" rel="stylesheet">
     <!-- <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"> -->
     <!-- <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet"> -->
-
-<<<<<<< HEAD
-=======
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
->>>>>>> jumpstart/master
 
     <%= yield :head %>
   </head>

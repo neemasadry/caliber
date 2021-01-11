@@ -5,7 +5,7 @@
 
 // Rails functionality
 window.Rails = require("@rails/ujs")
-require("turbolinks").start()
+require("@hotwired/turbo-rails")
 require("@rails/activestorage").start()
 require("channels")
 require("trix")
@@ -23,7 +23,6 @@ import "src/actiontext"
 import "src/direct_uploads"
 import "src/forms"
 import "src/timezone"
-import "src/tooltips"
 
 import LocalTime from "local-time"
 LocalTime.start()

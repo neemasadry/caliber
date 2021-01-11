@@ -3,3 +3,4 @@ webpack: bin/webpack-dev-server
 redis: redis-server
 worker: bundle exec sidekiq
 guard: bundle exec guard
+# docker: docker-compose -f docker/docker-compose.dev.yml up

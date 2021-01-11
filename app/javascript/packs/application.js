@@ -9,25 +9,21 @@
 
 // Rails functionality
 window.Rails = require("@rails/ujs")
-require("turbolinks").start()
+require("@hotwired/turbo-rails")
 require("@rails/activestorage").start()
 require("channels")
 require("trix")
 require("@rails/actiontext")
 
-// Tailwind CSS
-import "stylesheets/application"
+// TailwindCSS
+import "stylesheets/application.scss"
 
 // Stimulus controllers
 import "controllers"
 
 // Jumpstart Pro & other Functionality
-import "src/actiontext"
-import "src/confirm"
-import "src/direct_uploads"
-import "src/forms"
-import "src/timezone"
-import "src/tooltips"
+const components = require.context("src", true)
+components.keys().forEach(components)
 
 import LocalTime from "local-time"
 LocalTime.start()

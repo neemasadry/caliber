@@ -18,4 +18,16 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   # end
   #
   # etc...
+
+  # To change the redirect URL after an account is connected, you can override the following methods:
+  #
+  # After sign up and sign in with OAuth
+  # def after_sign_in_path_for(resource)
+  #   root_path
+  # end
+  #
+  # After connecting an OAuth account while logged in
+  # def after_connect_redirect_path
+  #   user_connected_accounts_path
+  # end
 end
